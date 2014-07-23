@@ -2,7 +2,7 @@
 
 class EmployeeController extends BaseController
 {
-    function actionCreate(){
+    public function actionCreate(){
         $this->render('employeeForm');
     }
 }

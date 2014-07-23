@@ -74,7 +74,7 @@
                 </li>
 
                 <li class="">
-                    <a href="buttons_and_icons.html">
+                    <a href="/requestForm">
                         <i class="icon-star"></i>
                         <span>Date fields and date questions</span>
                     </a>
