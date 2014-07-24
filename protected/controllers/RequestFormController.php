@@ -8,22 +8,34 @@ class RequestFormController extends BaseController
      */
     public function actionIndex($id=1){//TODO: брать из url'a
         $questions = Question::getQuestion($id);
-        if(isset($_POST)){
+        if(isset($_POST)){//TODO:ориентироваться на $_POST из первой вкладки
             if(count($_POST['question'])){
                 $deletedQuestion = array_diff(array_keys($questions),Help::getIndex($_POST['question'],'id'));
                 #узнаем какие вопросы надо удалить или же добавить, обновляем все
                 foreach($_POST['question'] as $postQuestion){
-                    $newQuestion = ($postQuestion['id']>=1) ? $questions[$postQuestion['id']] : new Question();
+                    $newQuestion = $postQuestion['id']>=1 ? $questions[$postQuestion['id']] : new Question();
                     $newQuestion->attributes = $postQuestion;
                     $newQuestion->company_id=$id;
                     $newQuestion->save();
+                    Help::recommend($questions[$newQuestion->id]['answers']); //для дальнейших действий сделаем, что у всех будет как минимум пустой массив
+                    $deletedAnswer = array_diff(array_keys($questions[$newQuestion->id]['answers']),Help::getIndex($postQuestion['answer'],'id'));
+                    if(count($postQuestion['answer'])){
+                        foreach($postQuestion['answer'] as $postAnswer){
+                            $newAnswer = $postAnswer['id']>=1 && isset($questions[$newQuestion->id]['answers'][$postAnswer['id']]) ? $questions[$newQuestion->id]['answers'][$postAnswer['id']] : new Answer();
+                            $newAnswer->attributes = $postAnswer;
+                            $newAnswer->question_id = $newQuestion->id;
+                            $newAnswer->save();
+                        }
+                    }
+                    if(count($deletedAnswer))
+                        Answer::model()->deleteAllByAttributes(array('id'=>$deletedAnswer));
                 }
                 if(count($deletedQuestion))
                     Question::model()->deleteAllByAttributes(array('id'=>$deletedQuestion));
                 $questions = Question::getQuestion($id);
             }
             else{
-                Question::model()->deleteAllByAttributes(array('id'=>array_keys($questions)));
+                //Question::model()->deleteAllByAttributes(array('id'=>array_keys($questions)));
             }
         }
 

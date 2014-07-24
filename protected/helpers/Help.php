@@ -4,10 +4,7 @@ class Help{
 
     public static function dump($object, $ret=FALSE)
     {
-        if(!$ret)
-            echo '<pre>' . htmlspecialchars(print_r($object,true)) . '</pre>';
-        else
-            return '<pre>' . htmlspecialchars(print_r($object,true)) . '</pre>';
+        CVarDumper::dump($object, 10, true);
     }
 
     /**
@@ -22,5 +19,13 @@ class Help{
                 $strict ? $result[$item[$keys]] = $item[$keys] : $result[]=$item[$keys];
         }
         return $result;
+    }
+
+    /**
+     * Метод, который приведет массив к пустому, если такого массива не существует
+     * @param $array
+     */
+    public static function recommend(&$array){
+        $array = is_array($array) ? $array : array();
     }
 }
