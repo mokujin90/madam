@@ -4,208 +4,204 @@ $this->layout = 'companyLayout';
 ?>
 
 <ul class="nav nav-tabs" role="tablist">
-    <li class="active"><a href="http://terminland.art-kos.com/schedules_settings/schedules/#personal" role="tab" data-toggle="tab">Линые данные</a></li>
+    <li class="active"><a href="http://terminland.art-kos.com/schedules_settings/schedules/#personal" role="tab" data-toggle="tab">Личные данные</a></li>
     <li class=""><a href="http://terminland.art-kos.com/schedules_settings/schedules/#worktime" role="tab" data-toggle="tab">Рабочее время</a></li>
     <li><a href="http://terminland.art-kos.com/schedules_settings/schedules/#types" role="tab" data-toggle="tab">Типы назначений</a></li>
 </ul>
+<?php $form=$this->beginWidget('CActiveForm', array(
+    'id'=>'user-update-form',
+    'enableClientValidation'=>true,
+    'htmlOptions' => array('class' => 'form-horizontal')
+)); ?>
 <div class="tab-content">
-<div class="tab-pane active" id="personal">
-    <div class="col-xs-12 col-sm-8">
-        <form class="form-horizontal" role="form">
+    <div class="tab-pane active" id="personal">
+        <div class="col-xs-12 col-sm-8">
             <div class="form-group">
-                <label for="input1" class="col-xs-4 control-label">Имя</label>
+                <?= $form->labelEx($model,'login', array('class' => "col-xs-4 control-label")); ?>
                 <div class="col-xs-4">
-                    <input name="employer_name" type="text" class="form-control" id="input1" value="Natalia">
+                    <?=$form->textField($model,'login', array('class' => "form-control")); ?>
+                </div>
+                <div class="col-xs-4">
+                    <?= $form->error($model,'login'); ?>
                 </div>
             </div>
             <div class="form-group">
-                <label for="input2" class="col-xs-4 control-label">Фамилия</label>
+                <?= $form->labelEx($model,'password', array('class' => "col-xs-4 control-label")); ?>
                 <div class="col-xs-4">
-                    <input name="employer_secondname" type="text" class="form-control" id="input2" value="Demyanenko">
+                    <?=$form->textField($model,'password', array('class' => "form-control")); ?>
+                </div>
+                <div class="col-xs-4">
+                    <?= $form->error($model,'password'); ?>
                 </div>
             </div>
             <div class="form-group">
-                <label for="input3" class="col-xs-4 control-label">Описание</label>
+                <?= $form->labelEx($model,'name', array('class' => "col-xs-4 control-label")); ?>
                 <div class="col-xs-4">
-                    <input name="employer_description" type="text" class="form-control" id="input3" placeholder="Специальность">
+                    <?=$form->textField($model,'name', array('class' => "form-control")); ?>
+                </div>
+                <div class="col-xs-4">
+                    <?= $form->error($model,'name'); ?>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-xs-4 control-label">Длительность приема</label>
+                <?= $form->labelEx($model,'lastname', array('class' => "col-xs-4 control-label")); ?>
                 <div class="col-xs-4">
-                    <select name="employer_reception_duration" class="form-control">
-                        <option>10 минут</option>
-                        <option>15 минут</option>
-                        <option>20 минут</option>
-                        <option>30 минут</option>
-                        <option>60 минут</option>
-                        <option>Ручной</option>
-                    </select>
+                    <?=$form->textField($model,'lastname', array('class' => "form-control")); ?>
+                </div>
+                <div class="col-xs-4">
+                    <?= $form->error($model,'lastname'); ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <?= $form->labelEx($model,'description', array('class' => "col-xs-4 control-label")); ?>
+                <div class="col-xs-4">
+                    <?=$form->textField($model,'description', array('class' => "form-control", 'placeholder'=>"Специальность")); ?>
+                </div>
+                <div class="col-xs-4">
+                    <?= $form->error($model,'description'); ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <?= $form->labelEx($model,'calendar_delimit', array('class' => "col-xs-4 control-label")); ?>
+                <div class="col-xs-4">
+                    <?= $form->dropDownList($model, 'calendar_delimit', User::$calendarDelimit, array('class' => "form-control")); ?>
                 </div>
                 <div class="col-xs-1">
-                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="right" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i> Подробнее</div>
+                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="right" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
+                </div>
+                <div class="col-xs-3">
+                    <?= $form->error($model,'calendar_delimit'); ?>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-xs-4 control-label">Длительность назначений</label>
+                <?$data = User::$calendarDelimit + array('-1' => 'Автоматически');?>
+                <?= $form->labelEx($model,'calendar_front_delimit', array('class' => "col-xs-4 control-label")); ?>
                 <div class="col-xs-4">
-                    <select name="employer_appointments_duration" class="form-control">
-                        <option>10 минут</option>
-                        <option>15 минут</option>
-                        <option>20 минут</option>
-                        <option>30 минут</option>
-                        <option>60 минут</option>
-                        <option>Индивидуально</option>
-                        <option>Автоматично</option>
-                    </select>
+                    <?= $form->dropDownList($model, 'calendar_front_delimit', $data, array('class' => "form-control")); ?>
                 </div>
                 <div class="col-xs-1">
-                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="right" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i> Подробнее</div>
+                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="right" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
+                </div>
+                <div class="col-xs-3">
+                    <?= $form->error($model,'calendar_front_delimit'); ?>
                 </div>
             </div>
             <div class="form-group">
-                <label for="input4" class="col-xs-4 control-label">Синхронизация с CalDAV</label>
+                <?= $form->labelEx($model,'caldav', array('class' => "col-xs-4 control-label")); ?>
                 <div class="col-xs-4">
-                    <input name="calldav" type="text" class="form-control" id="input4">
+                    <?=$form->textField($model,'caldav', array('class' => "form-control")); ?>
                 </div>
                 <div class="col-xs-1">
-                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="right" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i> Подробнее</div>
+                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="right" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
+                </div>
+                <div class="col-xs-3">
+                    <?= $form->error($model,'caldav'); ?>
                 </div>
             </div>
-            <div class="form-group">
-                <hr>
-                <div class="col-lg-offset-5 col-lg-5">
-                    <button type="submit" class="btn btn-danger">Отменить</button>
-                    <button type="submit" class="btn btn-success">Сохранить</button>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-<?php $dayNames = array("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье");
-$scheduleArray = array(
-    0 => array(
-        array('startHour' => 12, 'startMin' => 30, 'endHour' =>18, 'endMin' =>0, 'enable' => false),
-        array('startHour' => 18, 'startMin' => 30, 'endHour' =>20, 'endMin' =>0, 'enable' => true),
-    ),
-    4 => array(
-        array('startHour' => 9, 'startMin' => 0, 'endHour' =>10, 'endMin' =>0, 'enable' => true),
-        array('startHour' => 15, 'startMin' => 30, 'endHour' =>20, 'endMin' =>0, 'enable' => true),
-        array('startHour' => 22, 'startMin' => 30, 'endHour' =>23, 'endMin' =>0, 'enable' => true),
-    )
-);
+    <?$scheduleArray = $model->restructSchedule();?>
+    <div class="tab-pane" id="worktime">
+        <div class="col-xs-12 col-sm-8">
+            <?
+                $scheduleUniqId = 0;
+                for($i = 0; $i < 7; $i++) {
+            ?>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box" style="margin-bottom:0">
+                        <div class="box-header blue-background">
+                            <div class="title"><?=Schedule::$dayNames[$i];?></div>
+                            <div class="actions">
+                                <div class="btn btn-link add-interval" data-day="<?=$i;?>"><i class="icon-plus"></i></div>
 
-?>
-<div class="tab-pane" id="worktime">
-    <div class="col-xs-12 col-sm-8">
-        <?php
-            $scheduleUniqId = 0;
-            for($i = 0; $i < 7; $i++) {
-        ?>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box" style="margin-bottom:0">
-                    <div class="box-header blue-background">
-                        <div class="title"><?=$dayNames[$i];?></div>
-                        <div class="actions">
-                            <div class="btn btn-link add-interval" data-day="<?=$i;?>"><i class="icon-plus"></i></div>
+                                <a class="btn box-collapse btn-link" href="#"><i></i></a>
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <div class="col-xs-12 day-interval-wrap" data-day="<?=$i;?>">
+                                <div class="row">
+                                    <div class="col-xs-1">
 
-                            <a class="btn box-collapse btn-link" href="#"><i></i></a>
+                                    </div>
+                                    <div class="col-xs-5 text-center">
+                                        Время от
+                                    </div>
+                                    <div class="col-xs-5 text-center">
+                                        Время до
+                                    </div>
+                                    <div class="col-xs-1 text-center">
+
+                                    </div>
+                                </div>
+                                <hr class="margin-10">
+                                <? if(isset($scheduleArray[$i])) foreach($scheduleArray[$i] as $scheduleRow){?>
+                                <div class="row">
+                                    <div class="col-xs-1">
+                                        <button type="button" class="btn btn-danger remove-interval">-</button>
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <div class="col-md-12 col-lg-5">
+                                            <select class="form-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][startHour]">
+                                                <? for($hour = 0; $hour < 24; $hour++) {
+                                                    echo "<option value='$hour' " . ($hour == $scheduleRow['startHour'] ? 'selected' : '') . ">" . ($hour < 10 ? "0$hour" : $hour) . "</option>";
+                                                }?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12 col-lg-2 time-delimit">:</div>
+                                        <div class="col-md-12 col-lg-5">
+                                            <select class="form-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][startMin]">
+                                                <? for($min = 0; $min < 60; $min+=5) {
+                                                    echo "<option value='$min' " . ($min == $scheduleRow['startMin'] ? 'selected' : '') . ">" . ($min < 10 ? "0$min" : $min) . "</option>";
+                                                }?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <div class="col-md-12 col-lg-5">
+                                            <select class="form-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][endHour]">
+                                                <? for($hour = 0; $hour < 24; $hour++) {
+                                                    echo "<option value='$hour' " . ($hour == $scheduleRow['endHour'] ? 'selected' : '') . ">" . ($hour < 10 ? "0$hour" : $hour) . "</option>";
+                                                }?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12 col-lg-2 time-delimit">:</div>
+                                        <div class="col-md-12 col-lg-5 ">
+                                            <select class="form-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][endMin]">
+                                                <? for($min = 0; $min < 60; $min+=5) {
+                                                    echo "<option value='$min' " . ($min == $scheduleRow['endMin'] ? 'selected' : '') . ">" . ($min < 10 ? "0$min" : $min) . "</option>";
+                                                }?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <label class="checkbox-inline">
+                                            <?=CHtml::checkBox("schedule[$i][$scheduleUniqId][enable]", $scheduleRow['enable']);?>
+                                        </label>
+                                    </div>
+                                </div>
+                                <hr class="margin-10">
+                                <? $scheduleUniqId++; }?>
+                            </div>
                         </div>
                     </div>
-                    <div class="box-content">
-                        <div class="col-xs-12 day-interval-wrap" data-day="<?=$i;?>">
-                            <div class="row">
-                                <div class="col-xs-1">
-
-                                </div>
-                                <div class="col-xs-5 text-center">
-                                    Время от
-                                </div>
-                                <div class="col-xs-5 text-center">
-                                    Время до
-                                </div>
-                                <div class="col-xs-1 text-center">
-
-                                </div>
-                            </div>
-                            <hr class="margin-10">
-                            <?php if(isset($scheduleArray[$i])) foreach($scheduleArray[$i] as $scheduleRow){?>
-                            <div class="row">
-                                <div class="col-xs-1">
-                                    <button type="button" class="btn btn-danger remove-interval">-</button>
-                                </div>
-                                <div class="col-xs-5">
-                                    <div class="col-md-12 col-lg-5">
-                                        <select class="form-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][startHour]">
-                                            <?php for($hour = 0; $hour < 24; $hour++) {
-                                                echo "<option value='$hour' " . ($hour == $scheduleRow['startHour'] ? 'selected' : '') . ">" . ($hour < 10 ? "0$hour" : $hour) . "</option>";
-                                            }?>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-12 col-lg-2 time-delimit">:</div>
-                                    <div class="col-md-12 col-lg-5">
-                                        <select class="form-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][startMin]">
-                                            <?php for($min = 0; $min < 60; $min+=5) {
-                                                echo "<option value='$min' " . ($min == $scheduleRow['startMin'] ? 'selected' : '') . ">" . ($min < 10 ? "0$min" : $min) . "</option>";
-                                            }?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-xs-5">
-                                    <div class="col-md-12 col-lg-5">
-                                        <select class="form-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][endHour]">
-                                            <?php for($hour = 0; $hour < 24; $hour++) {
-                                                echo "<option value='$hour' " . ($hour == $scheduleRow['endHour'] ? 'selected' : '') . ">" . ($hour < 10 ? "0$hour" : $hour) . "</option>";
-                                            }?>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-12 col-lg-2 time-delimit">:</div>
-                                    <div class="col-md-12 col-lg-5 ">
-                                        <select class="form-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][endMin]">
-                                            <?php for($min = 0; $min < 60; $min+=5) {
-                                                echo "<option value='$min' " . ($min == $scheduleRow['endMin'] ? 'selected' : '') . ">" . ($min < 10 ? "0$min" : $min) . "</option>";
-                                            }?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-xs-1">
-                                    <label class="checkbox-inline">
-                                        <?=CHtml::checkBox("schedule[$i][$scheduleUniqId][enable]", $scheduleRow['enable']);?>
-                                    </label>
-                                </div>
-                            </div>
-                            <hr class="margin-10">
-                            <?php $scheduleUniqId++; }?>
-                        </div>
-                    </div>
                 </div>
             </div>
+            <?}?>
+            <input type="hidden" id="shedule-uniq-iq" value="<?=$scheduleUniqId;?>"/>
         </div>
-        <?php }?>
-        <input type="hidden" id="shedule-uniq-iq" value="<?=$scheduleUniqId;?>"/>
-
-        <div class="row">
-            <hr>
-            <div class="col-lg-offset-8 col-lg-4">
-                <button type="submit" class="btn btn-danger">Отменить</button>
-                <button type="submit" class="btn btn-success">Сохранить</button>
-            </div>
+        <div class="col-xs-12 col-sm-4">
+            <h4>Рабочее время</h4>
+                        <span>
+                            Вставьте здесь свои рабочие часы в неделю, что. нажав на добавить работу в то время, день недели.
+                            Нажав на удалить соответствующие рабочие часы.
+                            Если вы хотите поделиться работу для онлайн-бронирования назначения, нажмите в последнем столбце
+                            одноименной флажок.
+                        </span>
         </div>
         </div>
-    <div class="col-xs-12 col-sm-4">
-        <h4>Рабочее время</h4>
-                    <span>
-                        Вставьте здесь свои рабочие часы в неделю, что. нажав на добавить работу в то время, день недели.
-                        Нажав на удалить соответствующие рабочие часы.
-                        Если вы хотите поделиться работу для онлайн-бронирования назначения, нажмите в последнем столбце
-                        одноименной флажок.
-                    </span>
-    </div>
-    </div>
-<div class="tab-pane" id="types">
-    <div class="col-xs-12 col-sm-8">
-        <form class="form-horizontal" role="form">
+    <div class="tab-pane" id="types">
+        <div class="col-xs-12 col-sm-8">
             <div class="form-group">
                 <label for="input1" class="col-xs-4 control-label">Ответы, одобрены для графика</label>
                 <div class="col-xs-8">
@@ -292,13 +288,21 @@ $scheduleArray = array(
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
-    <div class="col-xs-12 col-sm-4">
+        </div>
+        <div class="col-xs-12 col-sm-4">
 
+        </div>
+    </div>
+    <div class="form-group">
+        <hr>
+        <div class="col-lg-offset-5 col-lg-5">
+            <button class="btn btn-danger">Отменить</button>
+            <button type="submit" class="btn btn-success">Сохранить</button>
+        </div>
     </div>
 </div>
-</div>
+<? $this->endWidget(); ?>
+
 
 <div id="new-interval-item" class="hidden">
     <div class="row" id="super">
@@ -308,7 +312,7 @@ $scheduleArray = array(
         <div class="col-xs-5">
             <div class="col-md-12 col-lg-5">
                 <select class="form-control" name="startHour">
-                    <?php for($hour = 0; $hour < 24; $hour++) {
+                    <? for($hour = 0; $hour < 24; $hour++) {
                     echo "<option value='$hour'>" . ($hour < 10 ? "0$hour" : $hour) . "</option>";
                 }?>
                 </select>
@@ -316,7 +320,7 @@ $scheduleArray = array(
             <div class="col-md-12 col-lg-2 time-delimit">:</div>
             <div class="col-md-12 col-lg-5">
                 <select class="form-control" name="startMin">
-                    <?php for($min = 0; $min < 60; $min+=5) {
+                    <? for($min = 0; $min < 60; $min+=5) {
                     echo "<option value='$min'>" . ($min < 10 ? "0$min" : $min) . "</option>";
                 }?>
                 </select>
@@ -325,7 +329,7 @@ $scheduleArray = array(
         <div class="col-xs-5">
             <div class="col-md-12 col-lg-5">
                 <select class="form-control" name="endHour">
-                    <?php for($hour = 0; $hour < 24; $hour++) {
+                    <? for($hour = 0; $hour < 24; $hour++) {
                     echo "<option value='$hour'>" . ($hour < 10 ? "0$hour" : $hour) . "</option>";
                 }?>
                 </select>
@@ -333,7 +337,7 @@ $scheduleArray = array(
             <div class="col-md-12 col-lg-2 time-delimit">:</div>
             <div class="col-md-12 col-lg-5 ">
                 <select class="form-control" name="endMin">
-                    <?php for($min = 0; $min < 60; $min+=5) {
+                    <? for($min = 0; $min < 60; $min+=5) {
                     echo "<option value='$min'>" . ($min < 10 ? "0$min" : $min) . "</option>";
                 }?>
                 </select>
@@ -345,7 +349,6 @@ $scheduleArray = array(
             </label>
         </div>
     </div>
-
 </div>
 <script>
     $('.add-interval').click(function () {

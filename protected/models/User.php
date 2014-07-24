@@ -5,12 +5,33 @@
  *
  * The followings are the available columns in table 'User':
  * @property string $id
+ * @property string $company_id
  * @property string $login
  * @property string $password
  * @property integer $is_owner
+ * @property string $name
+ * @property string $lastname
+ * @property string $description
+ * @property integer $calendar_delimit
+ * @property integer $calendar_front_delimit
+ * @property string $caldav
+ * @property array $scheduleUpdate
+ *
+ * The followings are the available model relations:
+ * @property Schedule[] $schedules
+ * @property Company $id0
  */
 class User extends CActiveRecord
 {
+    public $scheduleUpdate;
+    static $calendarDelimit = array(
+        '10' => '10 минут',
+        '15' => '15 минут',
+        '20' => '20 минут',
+        '30' => '30 минут',
+        '60' => '60 минут',
+        '0' => 'Индивидуально',
+    );
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -37,11 +58,13 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('is_owner', 'numerical', 'integerOnly'=>true),
-			array('login, password', 'length', 'max'=>255),
+			array('company_id, login, password', 'required'),
+			array('is_owner, calendar_delimit, calendar_front_delimit', 'numerical', 'integerOnly'=>true),
+			array('company_id', 'length', 'max'=>11),
+			array('login, password, name, lastname, description, caldav', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, login, password, is_owner', 'safe', 'on'=>'search'),
+			array('id, company_id, login, password, is_owner, name, lastname, description, calendar_delimit, calendar_front_delimit, caldav', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,6 +76,9 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'schedules' => array(self::HAS_MANY, 'Schedule', 'user_id'),
+			'schedulesOrder' => array(self::HAS_MANY, 'Schedule', 'user_id', 'order' => 'day, start_hour, start_min'),
+			'id0' => array(self::BELONGS_TO, 'Company', 'id'),
 		);
 	}
 
@@ -63,9 +89,16 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'login' => 'Login',
-			'password' => 'Password',
+			'company_id' => 'Company',
+			'login' => Yii::t('main','Эл. почта'),
+			'password' => Yii::t('main','Пароль'),
 			'is_owner' => 'Is Owner',
+			'name' => Yii::t('main','Имя'),
+			'lastname' => Yii::t('main','Фамилия'),
+			'description' => Yii::t('main','Описание'),
+			'calendar_delimit' => Yii::t('main','Интервал приема'),
+			'calendar_front_delimit' => Yii::t('main','Интервал назначений'),
+			'caldav' => 'CalDav',
 		);
 	}
 
@@ -81,12 +114,28 @@ class User extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
+		$criteria->compare('company_id',$this->company_id,true);
 		$criteria->compare('login',$this->login,true);
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('is_owner',$this->is_owner);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('lastname',$this->lastname,true);
+		$criteria->compare('description',$this->description,true);
+		$criteria->compare('calendar_delimit',$this->calendar_delimit);
+		$criteria->compare('calendar_front_delimit',$this->calendar_front_delimit);
+		$criteria->compare('caldav',$this->caldav,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
+
+    public function restructSchedule()
+    {
+        $result = array();
+        foreach ($this->schedulesOrder as $item) {
+            $result[$item->day][] = array('startHour' => $item->start_hour, 'startMin' => $item->start_min, 'endHour' => $item->end_hour, 'endMin' => $item->end_min, 'enable' => $item->enable);
+        }
+        return $result;
+    }
 }

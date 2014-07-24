@@ -4,14 +4,14 @@
     <script src="http://www.bublinastudio.com/flattybs3/assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
 
     <!-- / bootstrap [required] -->
-    <link href="../css/bootstrap.css" media="all" rel="stylesheet" type="text/css">
+    <link href="/css/bootstrap.css" media="all" rel="stylesheet" type="text/css">
     <!-- / theme file [required] -->
-    <link href="../css/light-theme.css" media="all" id="color-settings-body-color" rel="stylesheet"
+    <link href="/css/light-theme.css" media="all" id="color-settings-body-color" rel="stylesheet"
           type="text/css">
     <!-- / coloring file [optional] (if you are going to use custom contrast color) -->
-    <link href="../css/theme-colors.css" media="all" rel="stylesheet" type="text/css">
+    <link href="/css/theme-colors.css" media="all" rel="stylesheet" type="text/css">
     <!-- / demo file [not required!] -->
-    <link href="../css/demo.css" media="all" rel="stylesheet" type="text/css">
+    <link href="/css/demo.css" media="all" rel="stylesheet" type="text/css">
 </head>
 <body class="contrast-red main-nav-opened">
 <header>
