@@ -5175,3 +5175,12 @@ hr.margin-10{
 .hidden{
     display: none;
 }
+.dropdown-menu.answer-icon{
+    min-width: 106px;
+}
+    .dropdown-menu.answer-icon>li{
+        float:left;
+    }
+        .dropdown-menu.answer-icon>li>a{
+            padding: 3px 10px;
+        }
