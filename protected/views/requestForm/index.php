@@ -3,8 +3,8 @@
     Yii::app()->clientScript->registerScriptFile('/js/main.js');
 ?>
 <ul class="nav nav-tabs">
-    <li class=""><a href="http://terminland.art-kos.com/general_settings/user/#user-data" data-toggle="tab">Данные пользователя</a></li>
-    <li class="active"><a href="http://terminland.art-kos.com/general_settings/user/#questions" data-toggle="tab">Вопросы</a></li>
+    <li class="active"><a href="http://terminland.art-kos.com/general_settings/user/#user-data" data-toggle="tab">Данные пользователя</a></li>
+    <li class=""><a href="http://terminland.art-kos.com/general_settings/user/#questions" data-toggle="tab">Вопросы</a></li>
 </ul>
 
 <!-- Tab panes -->
@@ -15,12 +15,12 @@
 )); ?>
     <div class="tab-content">
 
-        <div class="tab-pane " id="user-data">
+        <div class="tab-pane active" id="user-data">
             <?php $this->renderPartial('_user-data',array(
-                'questions'=>$questions,
+                'fields'=>$fields,
             )); ?>
         </div>
-        <div class="tab-pane active" id="questions">
+        <div class="tab-pane" id="questions">
             <?php $this->renderPartial('_questions',array(
                 'questions'=>$questions,
             )); ?>
@@ -114,8 +114,39 @@
                 <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="right" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
             </div>
             <div class="col-xs-2">
-                <button type="button" class="btn btn-default"><?=Yii::t('main','Иконка')?></button>
+                <div class="btn-group dropdown">
+                    <button class="btn dropdown-toggle" data-toggle="dropdown" style="margin-bottom:5px">
+                        <i class="icon-cloud-upload"></i>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu answer-icon">
+                        <?foreach(Answer::$icon as $icon):?>
+                            <li><a href="#"><i class="<?=$icon?>"></i></a></li>
+                        <?endforeach;?>
+                    </ul>
+                    <?=CHtml::hiddenField("icon",'icon-cloud-upload',array('class'=>'model-icon'))?>
+                </div>
             </div>
+        </div>
+    </div>
+</div>
+<div class="hidden" id="new-field-item">
+    <div class="form-group">
+        <?= CHtml::hiddenField('id','0')?>
+        <div class="col-xs-1">
+            <button type="button" class="btn btn-primary up-field">&uarr;</button>
+        </div>
+        <div class="col-xs-1">
+            <button type="button" class="btn btn-primary down-field">&darr;</button>
+        </div>
+        <div class="col-xs-1">
+            <button type="button" class="btn btn-danger remove-field">-</button>
+        </div>
+        <div class="col-xs-5">
+            <?= CHtml::textField('name','',array('class'=>"form-control"))?>
+        </div>
+        <div class="col-xs-4">
+            <?= CHtml::dropDownList('type','enabled', CompanyField::$params,array('class'=>'form-control'));?>
         </div>
     </div>
 </div>

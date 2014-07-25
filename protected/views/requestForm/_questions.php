@@ -3,7 +3,7 @@
     <ul class="nav nav-tabs">
         <?php $count=1;?>
         <?foreach($questions as $id=>$question):?>
-            <li data="<?=$count?>" class="<?if($count==1):?>active<?endif?>">
+            <li data-count="<?=$count?>" class="<?if($count==1):?>active<?endif?>">
                 <?=CHtml::link(Yii::t('main','Вопрос').' '.$count,array('RequestFormController/index','#'=>'q'.$count++),array('data-toggle'=>'tab'))?>
             </li>
         <?endforeach;?>
@@ -99,7 +99,18 @@
                                         <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="right" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
                                     </div>
                                     <div class="col-xs-2">
-                                        <button type="button" class="btn btn-default"><?=Yii::t('main','Иконка')?></button>
+                                        <div class="btn-group dropdown">
+                                            <button class="btn dropdown-toggle" data-toggle="dropdown" style="margin-bottom:5px">
+                                                <i class="<?=$answer->icon?>"></i>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu answer-icon">
+                                                <?foreach(Answer::$icon as $icon):?>
+                                                    <li><a href="#"><i class="<?=$icon?>"></i></a></li>
+                                                <?endforeach;?>
+                                            </ul>
+                                            <?=CHtml::hiddenField("question[".$count."][answer][".$countAnswer."][icon]",$answer->icon,array('class'=>'model-icon'))?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +127,7 @@
     <div id="button-panel" class="form-group">
         <hr>
         <div class="col-lg-offset-7 col-lg-5">
-            <button type="submit" class="btn btn-danger pull-right">Отменить</button>
+            <button type="button" class="btn btn-danger pull-right">Отменить</button>
             <button type="submit" class="btn btn-success pull-right">Сохранить</button>
         </div>
     </div>

@@ -10,6 +10,7 @@
  * @property string $hint
  * @property integer $type
  * @property integer $position
+
  *
  * The followings are the available model relations:
  * @property Answer[] $answers
