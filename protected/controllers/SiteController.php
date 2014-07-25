@@ -49,6 +49,11 @@ class SiteController extends BaseController
 		}
 	}
 
+    public function actionCompany($id)
+    {
+        $this->render('requestWizard');
+    }
+
 	/**
 	 * Displays the contact page
 	 */

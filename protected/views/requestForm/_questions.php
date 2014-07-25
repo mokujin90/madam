@@ -13,7 +13,6 @@
     </ul>
     <div id="question-tab" class="tab-content">
         <? $count=0;?>
-        <?php// Help::dump($questions);?>
         <?foreach($questions as $id=>$question):?>
             <div class="tab-pane <?if(++$count==1):?>active<?endif?>" id="q<?=$count?>">
                 <?=CHtml::hiddenField("question[".$count."][id]",$id)?>

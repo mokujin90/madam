@@ -1,6 +1,7 @@
 <?php
-/* @var $this SiteController */
-$this->layout = 'companyLayout';
+    $this->layout = 'companyLayout';
+    Yii::app()->clientScript->registerScriptFile('/js/datejs/core.js');
+    Yii::app()->clientScript->registerScriptFile('/js/datejs/date.js');
 ?>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -141,13 +142,13 @@ $this->layout = 'companyLayout';
                                 </div>
                                 <hr class="margin-10">
                                 <? if(isset($scheduleArray[$i])) foreach($scheduleArray[$i] as $scheduleRow){?>
-                                <div class="row">
+                                <div class="row interval-row">
                                     <div class="col-xs-1">
                                         <button type="button" class="btn btn-danger remove-interval">-</button>
                                     </div>
                                     <div class="col-xs-5">
                                         <div class="col-md-12 col-lg-5">
-                                            <select class="form-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][startHour]">
+                                            <select class="form-control start-hour-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][startHour]">
                                                 <? for($hour = 0; $hour < 24; $hour++) {
                                                     echo "<option value='$hour' " . ($hour == $scheduleRow['startHour'] ? 'selected' : '') . ">" . ($hour < 10 ? "0$hour" : $hour) . "</option>";
                                                 }?>
@@ -155,7 +156,7 @@ $this->layout = 'companyLayout';
                                         </div>
                                         <div class="col-md-12 col-lg-2 time-delimit">:</div>
                                         <div class="col-md-12 col-lg-5">
-                                            <select class="form-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][startMin]">
+                                            <select class="form-control start-min-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][startMin]">
                                                 <? for($min = 0; $min < 60; $min+=5) {
                                                     echo "<option value='$min' " . ($min == $scheduleRow['startMin'] ? 'selected' : '') . ">" . ($min < 10 ? "0$min" : $min) . "</option>";
                                                 }?>
@@ -164,7 +165,7 @@ $this->layout = 'companyLayout';
                                     </div>
                                     <div class="col-xs-5">
                                         <div class="col-md-12 col-lg-5">
-                                            <select class="form-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][endHour]">
+                                            <select class="form-control end-hour-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][endHour]">
                                                 <? for($hour = 0; $hour < 24; $hour++) {
                                                     echo "<option value='$hour' " . ($hour == $scheduleRow['endHour'] ? 'selected' : '') . ">" . ($hour < 10 ? "0$hour" : $hour) . "</option>";
                                                 }?>
@@ -172,7 +173,7 @@ $this->layout = 'companyLayout';
                                         </div>
                                         <div class="col-md-12 col-lg-2 time-delimit">:</div>
                                         <div class="col-md-12 col-lg-5 ">
-                                            <select class="form-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][endMin]">
+                                            <select class="form-control end-min-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][endMin]">
                                                 <? for($min = 0; $min < 60; $min+=5) {
                                                     echo "<option value='$min' " . ($min == $scheduleRow['endMin'] ? 'selected' : '') . ">" . ($min < 10 ? "0$min" : $min) . "</option>";
                                                 }?>
@@ -312,13 +313,13 @@ $this->layout = 'companyLayout';
 
 
 <div id="new-interval-item" class="hidden">
-    <div class="row" id="super">
+    <div class="row interval-row">
         <div class="col-xs-1">
             <button type="button" class="btn btn-danger remove-interval">-</button>
         </div>
         <div class="col-xs-5">
             <div class="col-md-12 col-lg-5">
-                <select class="form-control" name="startHour">
+                <select class="form-control start-hour-control" name="startHour">
                     <? for($hour = 0; $hour < 24; $hour++) {
                     echo "<option value='$hour'>" . ($hour < 10 ? "0$hour" : $hour) . "</option>";
                 }?>
@@ -326,7 +327,7 @@ $this->layout = 'companyLayout';
             </div>
             <div class="col-md-12 col-lg-2 time-delimit">:</div>
             <div class="col-md-12 col-lg-5">
-                <select class="form-control" name="startMin">
+                <select class="form-control start-min-control" name="startMin">
                     <? for($min = 0; $min < 60; $min+=5) {
                     echo "<option value='$min'>" . ($min < 10 ? "0$min" : $min) . "</option>";
                 }?>
@@ -335,7 +336,7 @@ $this->layout = 'companyLayout';
         </div>
         <div class="col-xs-5">
             <div class="col-md-12 col-lg-5">
-                <select class="form-control" name="endHour">
+                <select class="form-control end-hour-control" name="endHour">
                     <? for($hour = 0; $hour < 24; $hour++) {
                     echo "<option value='$hour'>" . ($hour < 10 ? "0$hour" : $hour) . "</option>";
                 }?>
@@ -343,7 +344,7 @@ $this->layout = 'companyLayout';
             </div>
             <div class="col-md-12 col-lg-2 time-delimit">:</div>
             <div class="col-md-12 col-lg-5 ">
-                <select class="form-control" name="endMin">
+                <select class="form-control end-min-control" name="endMin">
                     <? for($min = 0; $min < 60; $min+=5) {
                     echo "<option value='$min'>" . ($min < 10 ? "0$min" : $min) . "</option>";
                 }?>
@@ -381,5 +382,32 @@ $this->layout = 'companyLayout';
 
     $('#user-update-form .remove-user').click(function(){
         return confirm('Удалить?');
+    });
+
+    $('#user-update-form').submit(function(){
+        var defaultDate = new Date().clearTime();
+        $.each($('#worktime .row'), function(){ //each по дням
+            var $day = $(this);
+            $.each($('.interval-row', $day), function(){ //each по интервалам
+                var $current = $(this);
+                var currentDate = {
+                    START:defaultDate.clone().set({minute:parseInt($('.start-min-control', $current).val()), hour:parseInt($('.start-hour-control', $current).val())}),
+                    END:defaultDate.clone().set({minute:parseInt($('.end-min-control', $current).val()), hour:parseInt($('.end-hour-control', $current).val())})
+                };
+                if(currentDate.START == currentDate.END){ //начало и конец интервала совпадают
+                    $current.css('background', 'red');
+                    return true;
+                }
+                $.each($('.interval-row', $day), function(){ //сравниваем каждый с каждым
+                    var $other = $(this);
+                    if ($current == $other) {
+                        return true;
+                    }
+
+
+                });
+            });
+        });
+        return false;
     });
 </script>
