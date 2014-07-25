@@ -9,6 +9,8 @@ class BaseController extends CController
     public $mailer;
     public $user;
     public $mainMenuActiveId;
+    public $pageCaption = '';
+    public $pageIcon = 'cog';
 
     public function init()
     {

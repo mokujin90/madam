@@ -2,9 +2,18 @@
 
 class Help{
 
-    public static function dump($object, $ret=FALSE)
+    public static function dump($object, $die = true)
     {
         CVarDumper::dump($object, 10, true);
+        if ($die) {
+            die;
+        }
+    }
+
+    public static function dumpError($model)
+    {
+        CVarDumper::dump($model->getErrors(), 10, true);
+        die;
     }
 
     /**

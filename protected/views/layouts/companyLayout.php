@@ -2,7 +2,6 @@
 <html class=" js no-touch localstorage svg">
 <head>
     <script src="http://www.bublinastudio.com/flattybs3/assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
-
     <!-- / bootstrap [required] -->
     <link href="/css/bootstrap.css" media="all" rel="stylesheet" type="text/css">
     <!-- / theme file [required] -->
@@ -67,7 +66,7 @@
             </div>
             <ul class="nav nav-stacked">
                 <li class="">
-                    <a href="index.html">
+                    <a href="/company">
                         <i class="icon-dashboard"></i>
                         <span>Company data</span>
                     </a>
@@ -87,30 +86,26 @@
                 </li>
 
                 <li>
-                    <a class="dropdown-collapse " href="#">
+                    <a class="dropdown-collapse <?=$this->mainMenuActiveId=='employee'?'in':'';?>" href="#">
                         <i class="icon-cogs"></i>
                         <span>Schedules</span>
                         <i class="icon-angle-down angle-down"></i>
                     </a>
-                    <ul class="nav nav-stacked">
-                        <li class="">
-                            <a href="charts.html">
-                                <i class="icon-bar-chart"></i>
-                                <span>USER</span>
+                    <ul class="nav nav-stacked <?=$this->mainMenuActiveId=='employee'?'in':'';?>">
+                        <li class="<?=empty($_GET['id'])?'active':'';?>">
+                            <a href="/employee/create">
+                                <i class="icon-plus"></i>
+                                <span>Добавить работника</span>
                             </a>
                         </li>
-                        <li class="">
-                            <a href="address_book.html">
-                                <i class="icon-envelope"></i>
-                                <span>USER2</span>
+                        <?foreach(User::getMenuList() as $item){?>
+                        <li class="<?=(isset($_GET['id']) && $_GET['id']==$item->id)?'active':'';?>">
+                            <a href="/employee/update/id/<?=$item->id;?>">
+                                <i class="icon-user"></i>
+                                <span><?=$item->login;?></span>
                             </a>
                         </li>
-                        <li class="">
-                            <a href="chats.html">
-                                <i class="icon-comments"></i>
-                                <span>ADD</span>
-                            </a>
-                        </li>
+                        <?}?>
                     </ul>
                 </li>
                 <li class="">
@@ -136,8 +131,8 @@
                         <div class="col-sm-12">
                             <div class="page-header">
                                 <h1 class="pull-left">
-                                    <i class="icon-cog"></i>
-                                    <span>Closed navigation</span>
+                                    <i class="icon-<?=$this->pageIcon?>"></i>
+                                    <span><?=$this->pageCaption?></span>
                                 </h1>
 
                                 <div class="pull-right">

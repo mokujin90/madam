@@ -11,6 +11,11 @@ $this->layout = 'companyLayout';
 <?php $form=$this->beginWidget('CActiveForm', array(
     'id'=>'user-update-form',
     'enableClientValidation'=>true,
+    'clientOptions' => array(
+        'validateOnSubmit'=>true,
+        'validateOnChange'=>false,
+        'validateOnType'=>false,
+    ),
     'htmlOptions' => array('class' => 'form-horizontal')
 )); ?>
 <div class="tab-content">
@@ -19,7 +24,7 @@ $this->layout = 'companyLayout';
             <div class="form-group">
                 <?= $form->labelEx($model,'login', array('class' => "col-xs-4 control-label")); ?>
                 <div class="col-xs-4">
-                    <?=$form->textField($model,'login', array('class' => "form-control")); ?>
+                    <?=$form->emailField($model,'login', array('class' => "form-control", 'type' => 'email')); ?>
                 </div>
                 <div class="col-xs-4">
                     <?= $form->error($model,'login'); ?>
@@ -100,7 +105,7 @@ $this->layout = 'companyLayout';
             </div>
         </div>
     </div>
-    <?$scheduleArray = $model->restructSchedule();?>
+    <?$scheduleArray = $model->getScheduleByDay();?>
     <div class="tab-pane" id="worktime">
         <div class="col-xs-12 col-sm-8">
             <?
@@ -296,8 +301,10 @@ $this->layout = 'companyLayout';
     <div class="form-group">
         <hr>
         <div class="col-lg-offset-5 col-lg-5">
-            <button class="btn btn-danger">Отменить</button>
-            <button type="submit" class="btn btn-success">Сохранить</button>
+        <?if (!$model->isNewRecord) {?>
+            <a class="btn btn-danger remove-user" href="/employee/delete/id/<?=$model->id;?>">Удалить</a>
+        <?}?>
+        <button type="submit" class="btn btn-success">Сохранить</button>
         </div>
     </div>
 </div>
@@ -370,5 +377,9 @@ $this->layout = 'companyLayout';
             var row = $(this).closest('.row');
             row.next('hr').remove().end().remove();
         }
+    });
+
+    $('#user-update-form .remove-user').click(function(){
+        return confirm('Удалить?');
     });
 </script>

@@ -45,6 +45,7 @@ return array(
                 'gii/<controller:nw+>/<action:nw+>' => 'gii/<controller>/<action>',
 
                 '/'=>'site/index',
+                '/employee/create/'=>'/employee/update/',
             ),
         ),
     ),

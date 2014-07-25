@@ -19,11 +19,12 @@
  *
  * The followings are the available model relations:
  * @property Schedule[] $schedules
- * @property Company $id0
+ * @property Company $company
  */
 class User extends CActiveRecord
 {
     public $scheduleUpdate;
+
     static $calendarDelimit = array(
         '10' => '10 минут',
         '15' => '15 минут',
@@ -78,7 +79,7 @@ class User extends CActiveRecord
 		return array(
 			'schedules' => array(self::HAS_MANY, 'Schedule', 'user_id'),
 			'schedulesOrder' => array(self::HAS_MANY, 'Schedule', 'user_id', 'order' => 'day, start_hour, start_min'),
-			'id0' => array(self::BELONGS_TO, 'Company', 'id'),
+            'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
 		);
 	}
 
@@ -130,12 +131,65 @@ class User extends CActiveRecord
 		));
 	}
 
-    public function restructSchedule()
+    public function afterConstruct()
     {
+        parent::afterConstruct();
+        //Заполняет стандартные значения в расписание нового сотрудника (пн-пт с 8 - 17)
+        $this->scheduleUpdate = array();
+        for ($day = 0; $day < 5; $day++) {
+            $this->scheduleUpdate[$day][] = array('startHour' => 8, 'startMin' => 0, 'endHour' => 17, 'endMin' => 0, 'enable' => true);
+        }
+    }
+
+    protected function beforeValidate()
+    {
+        if ($this->isNewRecord) {
+            $this->company_id = Yii::app()->user->companyId;
+        }
+        return parent::beforeValidate();
+    }
+
+    protected function afterSave()
+    {
+        parent::afterSave();
+
+        if (isset($this->scheduleUpdate)) {
+            Schedule::model()->deleteAllByAttributes(array('user_id' => $this->id));
+            foreach ($this->scheduleUpdate as $day => $item) {
+                foreach ($item as $data) {
+                    $newSchedule = new Schedule();
+                    $newSchedule->user_id = $this->id;
+                    $newSchedule->day = $day;
+                    $newSchedule->start_hour = $data['startHour'];
+                    $newSchedule->start_min = $data['startMin'];
+                    $newSchedule->end_hour = $data['endHour'];
+                    $newSchedule->end_min = $data['endMin'];
+                    $newSchedule->enable = isset($data['enable']) ? $data['enable'] : 0;
+                    $newSchedule->save();
+                }
+            }
+        }
+    }
+
+    /**
+     * Существующая модель: Приводит модель к массиву вида: array[день][] = array(params)
+     * Новая модель: возвращает scheduleUpdate
+     */
+    public function getScheduleByDay()
+    {
+        if ($this->isNewRecord) {
+            return $this->scheduleUpdate;
+        }
         $result = array();
         foreach ($this->schedulesOrder as $item) {
             $result[$item->day][] = array('startHour' => $item->start_hour, 'startMin' => $item->start_min, 'endHour' => $item->end_hour, 'endMin' => $item->end_min, 'enable' => $item->enable);
         }
         return $result;
     }
+
+    public function getMenuList()
+    {
+        return User::model()->findAllByAttributes(array('company_id' => Yii::app()->user->companyId, 'is_owner' => '0'));
+    }
+
 }
