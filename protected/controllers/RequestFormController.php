@@ -7,7 +7,6 @@ class RequestFormController extends BaseController
         $this->pageCaption="Данные об анкете";
         $this->pageIcon = 'book';
         $this->mainMenuActiveId="question";
-
         return true;
     }
 
@@ -15,8 +14,8 @@ class RequestFormController extends BaseController
      * Работа с полями работников компании и анкетой с вопросами и ответами
      * @param int $id id компании
      */
-    public function actionIndex($id=1){//TODO: брать из url'a
-
+    public function actionIndex(){//TODO: брать из url'a
+        $id = Yii::app()->user->companyId;
         $questions = Question::getQuestion($id);
         $fields = CompanyField::model()->getFieldByCompany($id);
         if(isset($_POST['field'])){

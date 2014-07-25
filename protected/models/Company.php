@@ -52,8 +52,8 @@ class Company extends CActiveRecord
         // will receive user inputs.
         return array(
             array('country_id', 'required'),
-            array('address, country_id', 'numerical', 'integerOnly'=>true),
-            array('name, city, site', 'length', 'max'=>255),
+            array('country_id', 'numerical', 'integerOnly'=>true),
+            array('name,address, city, site', 'length', 'max'=>255),
             array('phone, mobile_phone, fax', 'length', 'max'=>20),
             array('email', 'length', 'max'=>100),
             array('description, zip', 'safe'),
@@ -71,6 +71,7 @@ class Company extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'country' => array(self::BELONGS_TO, 'Country', 'country_id'),
 			'companyFields' => array(self::HAS_MANY, 'CompanyField', 'company_id'),
 			'questions' => array(self::HAS_MANY, 'Question', 'company_id'),
 			'users' => array(self::HAS_MANY, 'User', 'company_id'),
@@ -85,7 +86,7 @@ class Company extends CActiveRecord
         return array(
             'id' => 'ID',
             'name' => Yii::t('main','Название'),
-            'address' => Yii::t('main','Адресс'),
+            'address' => Yii::t('main','Адрес'),
             'description' => Yii::t('main','Описание фирмы'),
             'zip' => Yii::t('main','Инлекс'),
             'city' => Yii::t('main','Город'),

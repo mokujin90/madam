@@ -89,7 +89,7 @@
         <div class="form-group">
             <hr>
             <div class="col-lg-offset-7 col-lg-6">
-                <button type="submit" name="yt0" class="btn btn-success"><?=Yii::t('main','Сохранить')?></button>
+                <button type="submit" value="1" name="save" class="btn btn-success"><?=Yii::t('main','Сохранить')?></button>
                 <button type="button" class="btn btn-danger" name="submit"><?=Yii::t('main','Отменить')?></button>
             </div>
         </div>

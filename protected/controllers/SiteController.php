@@ -49,9 +49,16 @@ class SiteController extends BaseController
 		}
 	}
 
-    public function actionCompany($id)
-    {
-        $this->render('requestWizard');
+    public function actionCompany($id){//todo:fake
+        $company = Company::model()->with('country')->findByPk($id);
+        if(is_null($company))
+            throw new CHttpException(404, Yii::t('main', 'Страница не найдена'));
+        $question = Question::getQuestion($id);
+        $fields = CompanyField::getActiveField($id);
+        if(isset($_POST) && $_POST['save']==1){
+            die('Ваша заявка принята');
+        }
+        $this->render('requestWizard',array('company'=>$company,'question'=>$question,'field'=>$fields));
     }
 
 	/**
