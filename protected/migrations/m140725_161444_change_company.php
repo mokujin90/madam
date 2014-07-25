@@ -16,9 +16,9 @@ class m140725_161444_change_company extends CDbMigration
          ADD COLUMN `site` VARCHAR(255) NULL AFTER `email`,
          ADD COLUMN `country_id` INT(3) NOT NULL AFTER `site`;";
         Yii::app()->db->createCommand($sql)->execute();
-        $sql = "INSERT INTO `madam`.`Country` (`id`, `name`) VALUES (NULL, 'Россия');";
+        $sql = "INSERT INTO `Country` (`id`, `name`) VALUES (NULL, 'Россия');";
         Yii::app()->db->createCommand($sql)->execute();
-        $sql = "UPDATE Country SET country_id=1;";
+        $sql = "UPDATE Company SET country_id=1;";
         Yii::app()->db->createCommand($sql)->execute();
         $sql = "ALTER TABLE `Company` ADD CONSTRAINT `CountryRelation` FOREIGN KEY (`country_id`) REFERENCES `Country`(`id`) ON UPDATE CASCADE ON DELETE NO ACTION; ";
         Yii::app()->db->createCommand($sql)->execute();

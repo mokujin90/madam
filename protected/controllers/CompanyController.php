@@ -18,6 +18,22 @@ class CompanyController extends BaseController
         $this->render('index',array('model'=>$model,'country'=>$country));
     }
 
+    public function actionSettings()
+    {
+        $this->pageCaption="Настройки";
+        $this->mainMenuActiveId="settings";
+
+        $id = Yii::app()->user->companyId;
+        $model = Company::model()->findByPk($id);
+
+        if (isset($_POST['Company'])) {
+            $model->attributes = $_POST['Company'];
+            $model->save();
+        }
+
+        $this->render('settings', array('model' => $model));
+    }
+
     public function actionUpdate($id)
     {
         $model=$this->loadModel($id);

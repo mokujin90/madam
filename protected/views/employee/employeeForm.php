@@ -11,12 +11,7 @@
 </ul>
 <?php $form=$this->beginWidget('CActiveForm', array(
     'id'=>'user-update-form',
-    'enableClientValidation'=>true,
-    'clientOptions' => array(
-        'validateOnSubmit'=>true,
-        'validateOnChange'=>false,
-        'validateOnType'=>false,
-    ),
+    'enableClientValidation'=>false,
     'htmlOptions' => array('class' => 'form-horizontal')
 )); ?>
 <div class="tab-content">
@@ -25,7 +20,7 @@
             <div class="form-group">
                 <?= $form->labelEx($model,'login', array('class' => "col-xs-4 control-label")); ?>
                 <div class="col-xs-4">
-                    <?=$form->emailField($model,'login', array('class' => "form-control", 'type' => 'email')); ?>
+                    <?=$form->emailField($model,'login', array('class' => "form-control", 'type' => 'email', 'required' => 'required')); ?>
                 </div>
                 <div class="col-xs-4">
                     <?= $form->error($model,'login'); ?>
@@ -34,7 +29,7 @@
             <div class="form-group">
                 <?= $form->labelEx($model,'password', array('class' => "col-xs-4 control-label")); ?>
                 <div class="col-xs-4">
-                    <?=$form->textField($model,'password', array('class' => "form-control")); ?>
+                    <?=$form->textField($model,'password', array('class' => "form-control", 'required' => 'required')); ?>
                 </div>
                 <div class="col-xs-4">
                     <?= $form->error($model,'password'); ?>
@@ -140,7 +135,7 @@
 
                                     </div>
                                 </div>
-                                <hr class="margin-10">
+                                <hr class="margin-0">
                                 <? if(isset($scheduleArray[$i])) foreach($scheduleArray[$i] as $scheduleRow){?>
                                 <div class="row interval-row">
                                     <div class="col-xs-1">
@@ -186,7 +181,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <hr class="margin-10">
+                                <hr class="margin-0">
                                 <? $scheduleUniqId++; }?>
                             </div>
                         </div>
@@ -371,7 +366,7 @@
             $(this).attr('name', 'schedule[' + day + '][' + scheduleUniqId + '][' + $(this).attr('name') + ']');
         });
         wrap.append(form);
-        wrap.append('<hr class="margin-10">');
+        wrap.append('<hr class="margin-0">');
     });
     $('#worktime').on('click', '.remove-interval', function () {
         if (confirm('Удалить?')) {
@@ -386,28 +381,47 @@
 
     $('#user-update-form').submit(function(){
         var defaultDate = new Date().clearTime();
+        var hasError = false;
+        $('#worktime .interval-row').removeClass('error');
         $.each($('#worktime .row'), function(){ //each по дням
             var $day = $(this);
-            $.each($('.interval-row', $day), function(){ //each по интервалам
+            $.each($('.interval-row', $day), function () { //each по интервалам
                 var $current = $(this);
                 var currentDate = {
                     START:defaultDate.clone().set({minute:parseInt($('.start-min-control', $current).val()), hour:parseInt($('.start-hour-control', $current).val())}),
                     END:defaultDate.clone().set({minute:parseInt($('.end-min-control', $current).val()), hour:parseInt($('.end-hour-control', $current).val())})
                 };
-                if(currentDate.START == currentDate.END){ //начало и конец интервала совпадают
-                    $current.css('background', 'red');
+                if (currentDate.START.compareTo(currentDate.END) >= 0) { //начало и конец интервала совпадают
+                    $current.addClass('error');
+                    hasError = true;
                     return true;
                 }
-                $.each($('.interval-row', $day), function(){ //сравниваем каждый с каждым
+                $.each($('.interval-row', $day), function () { //сравниваем каждый с каждым
                     var $other = $(this);
-                    if ($current == $other) {
+                    if ($current.is($other)) {
                         return true;
                     }
+                    var otherDate = {
+                        START:defaultDate.clone().set({minute:parseInt($('.start-min-control', $other).val()), hour:parseInt($('.start-hour-control', $other).val())}),
+                        END:defaultDate.clone().set({minute:parseInt($('.end-min-control', $other).val()), hour:parseInt($('.end-hour-control', $other).val())})
+                    };
 
-
+                    if (
+                            (currentDate.START.equals(otherDate.START) && currentDate.END.equals(otherDate.END)) || //интервалы совпадают
+                            (currentDate.START.compareTo(otherDate.START) > 0 && currentDate.START.compareTo(otherDate.END) < 0) || //начало внутри 2ого интервала
+                            (currentDate.START.compareTo(otherDate.START) > 0 && currentDate.START.compareTo(otherDate.END) < 0) //конец внутри 2ого интервала
+                        ) {
+                        $current.addClass('error');
+                        $other.addClass('error');
+                        hasError = true;
+                    }
                 });
             });
         });
-        return false;
+        if (hasError) {
+            $.jGrowl("Ошибки в рабочих интервалах.");
+            return false;
+        }
+        return true;
     });
 </script>

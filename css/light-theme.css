@@ -5170,8 +5170,8 @@ pre {
     font-size: 22px;
     text-align: center;
 }
-hr.margin-10{
-    margin: 10px 0;
+hr.margin-0{
+    margin: 0;
 }
 .hidden{
     display: none;
@@ -5188,4 +5188,13 @@ hr.margin-10{
 
 .step-content .question{
     overflow: hidden;
+}
+.day-interval-wrap .row{
+    padding-bottom: 10px;
+}
+.day-interval-wrap .row.interval-row{
+    padding: 10px 0;
+}
+.day-interval-wrap .row.interval-row.error{
+    background: #ff645f;
 }

@@ -5,6 +5,7 @@
     <!-- / bootstrap [required] -->
     <link href="/css/bootstrap.css" media="all" rel="stylesheet" type="text/css">
     <!-- / theme file [required] -->
+    <link href="http://www.bublinastudio.com/flattybs3/assets/stylesheets/plugins/jgrowl/jquery.jgrowl.min.css" media="all" rel="stylesheet" type="text/css">
     <link href="/css/light-theme.css" media="all" id="color-settings-body-color" rel="stylesheet"
           type="text/css">
     <!-- / coloring file [optional] (if you are going to use custom contrast color) -->
@@ -67,28 +68,29 @@
             <ul class="nav nav-stacked">
                 <li class="">
                     <a href="/company"  class="<?=$this->mainMenuActiveId=='company'?'in':'';?>">
-                        <i class="icon-dashboard"></i>
+                        <i class="icon-cog"></i>
                         <span>Company data</span>
                     </a>
                 </li>
 
                 <li class="">
-                    <a href="/requestForm" class="<?=$this->mainMenuActiveId=='question'?'in':'';?>">
-                        <i class="icon-star"></i>
-                        <span>Date fields and date questions</span>
+                    <a href="/company/settings"  class="<?=$this->mainMenuActiveId=='settings'?'in':'';?>">
+                        <i class="icon-cog"></i>
+                        <span>Settings</span>
                     </a>
                 </li>
+
                 <li class="">
-                    <a href="buttons_and_icons.html">
-                        <i class="icon-star"></i>
-                        <span>Online appointment booking</span>
+                    <a href="/requestForm" class="<?=$this->mainMenuActiveId=='question'?'in':'';?>">
+                        <i class="icon-question"></i>
+                        <span>Date fields and date questions</span>
                     </a>
                 </li>
 
                 <li>
                     <a class="dropdown-collapse <?=$this->mainMenuActiveId=='employee'?'in':'';?>" href="#">
-                        <i class="icon-cogs"></i>
-                        <span>Schedules</span>
+                        <i class="icon-group"></i>
+                        <span>Employees</span>
                         <i class="icon-angle-down angle-down"></i>
                     </a>
                     <ul class="nav nav-stacked <?=$this->mainMenuActiveId=='employee'?'in':'';?>">
@@ -111,13 +113,7 @@
                 <li class="">
                     <a href="tables.html">
                         <i class="icon-table"></i>
-                        <span>Test online appointment booking</span>
-                    </a>
-                </li>
-                <li class="">
-                    <a href="calendar.html">
-                        <i class="icon-calendar"></i>
-                        <span>Calendar</span>
+                        <span>Test online booking</span>
                     </a>
                 </li>
             </ul>
@@ -182,6 +178,7 @@
         type="text/javascript"></script>
 <!-- / theme file [required] -->
 <script src="http://www.bublinastudio.com/flattybs3/assets/javascripts/theme.js" type="text/javascript"></script>
+<script src="http://www.bublinastudio.com/flattybs3/assets/javascripts/plugins/jgrowl/jquery.jgrowl.min.js" type="text/javascript"></script>
 <!-- / demo file [not required!] -->
 <!-- / START - page related files and scripts [optional] -->
 
