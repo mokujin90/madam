@@ -1,9 +1,9 @@
 <?php
 
-class EmployeeController extends BaseController
-{
-    public function beforeAction()
-    {
+class EmployeeController extends BaseController{
+
+    protected function beforeAction($action){
+        parent::beforeAction($action);
         $this->mainMenuActiveId = 'employee';
         $this->pageIcon = 'user';
 

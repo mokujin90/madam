@@ -187,7 +187,7 @@ class User extends CActiveRecord
         return $result;
     }
 
-    public function getMenuList()
+    static public function getMenuList()
     {
         return User::model()->findAllByAttributes(array('company_id' => Yii::app()->user->companyId, 'is_owner' => '0'));
     }

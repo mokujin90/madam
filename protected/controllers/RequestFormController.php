@@ -2,11 +2,21 @@
 
 class RequestFormController extends BaseController
 {
+    protected function beforeAction($action){
+        parent::beforeAction($action);
+        $this->pageCaption="Данные об анкете";
+        $this->pageIcon = 'book';
+        $this->mainMenuActiveId="question";
+
+        return true;
+    }
+
     /**
      * Работа с полями работников компании и анкетой с вопросами и ответами
      * @param int $id id компании
      */
     public function actionIndex($id=1){//TODO: брать из url'a
+
         $questions = Question::getQuestion($id);
         $fields = CompanyField::model()->getFieldByCompany($id);
         if(isset($_POST['field'])){
