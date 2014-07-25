@@ -107,9 +107,8 @@ field = {
         var $wrap = $('#fields'),
             $countField =$('#count-field'),
             count = parseInt($countField.val())+1,
-            $clone = $('#new-field-item>.form-group');
+            $clone = $('#new-field-item>.form-group').clone();
         $countField.val(count);
-        console.log(count);
         $.each($('select,input', $clone), function () { //заменим имена
             $(this).attr('name', 'field[' + count + '][' + $(this).attr('name') + ']');
         });

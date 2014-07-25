@@ -23,10 +23,13 @@ class Help{
      */
     public static function getIndex($array,$keys,$strict=true){
         $result = array();
-        foreach($array as $item){
-            if(isset($item[$keys]))
-                $strict ? $result[$item[$keys]] = $item[$keys] : $result[]=$item[$keys];
+        if(is_array($array)){
+            foreach($array as $item){
+                if(isset($item[$keys]))
+                    $strict ? $result[$item[$keys]] = $item[$keys] : $result[]=$item[$keys];
+            }
         }
+
         return $result;
     }
 
@@ -36,5 +39,23 @@ class Help{
      */
     public static function recommend(&$array){
         $array = is_array($array) ? $array : array();
+    }
+
+    /**
+     * Из массива AR-объектов получить массив вида [id]=>нужное поле
+     * @param $cursor CActiveRecord[]
+     * @param $value ключ из модели, который должен быть в значении нового массива
+     * @param string $key
+     * @return array
+     */
+    public static function decorate($cursor,$value,$key='id'){
+        $result = array();
+        if(is_array($cursor)){
+            foreach($cursor as $item){
+                $result[$item->{$key}] = $item->{$value};
+            }
+        }
+
+        return $result;
     }
 }

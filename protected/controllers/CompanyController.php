@@ -4,7 +4,18 @@ class CompanyController extends BaseController
 {
     public function actionIndex()
     {
-        $this->render('index');
+        $this->pageCaption="Данные о компании";
+        $this->pageIcon = 'terminal';
+        $this->mainMenuActiveId="company";
+
+        $id = Yii::app()->user->companyId;
+        $model = Company::model()->findByPk($id);
+        $country = Country::model()->findAll(array('index'=>'id'));
+        if(isset($_POST['yt0']) && count($_POST['Company'])){
+            $model->attributes = $_POST['Company'];
+            $model->save();
+        }
+        $this->render('index',array('model'=>$model,'country'=>$country));
     }
 
     public function actionUpdate($id)

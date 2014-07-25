@@ -66,14 +66,14 @@
             </div>
             <ul class="nav nav-stacked">
                 <li class="">
-                    <a href="/company">
+                    <a href="/company"  class="<?=$this->mainMenuActiveId=='company'?'in':'';?>">
                         <i class="icon-dashboard"></i>
                         <span>Company data</span>
                     </a>
                 </li>
 
                 <li class="">
-                    <a href="/requestForm">
+                    <a href="/requestForm" class="<?=$this->mainMenuActiveId=='question'?'in':'';?>">
                         <i class="icon-star"></i>
                         <span>Date fields and date questions</span>
                     </a>

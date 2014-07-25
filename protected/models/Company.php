@@ -7,8 +7,18 @@
  * @property string $id
  * @property string $name
  * @property integer $address
+ * @property string $description
+ * @property string $zip
+ * @property string $city
+ * @property string $phone
+ * @property string $mobile_phone
+ * @property string $fax
+ * @property string $email
+ * @property string $site
+ * @property integer $country_id
  *
  * The followings are the available model relations:
+ * @property Country $country
  * @property CompanyField[] $companyFields
  * @property Question[] $questions
  * @property User[] $users
@@ -36,18 +46,22 @@ class Company extends CActiveRecord
 	/**
 	 * @return array validation rules for model attributes.
 	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('address', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>255),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('id, name, address', 'safe', 'on'=>'search'),
-		);
-	}
+    public function rules()
+    {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('country_id', 'required'),
+            array('address, country_id', 'numerical', 'integerOnly'=>true),
+            array('name, city, site', 'length', 'max'=>255),
+            array('phone, mobile_phone, fax', 'length', 'max'=>20),
+            array('email', 'length', 'max'=>100),
+            array('description, zip', 'safe'),
+            // The following rule is used by search().
+            // @todo Please remove those attributes that should not be searched.
+            array('id, name, address, description, zip, city, phone, mobile_phone, fax, email, site, country_id', 'safe', 'on'=>'search'),
+        );
+    }
 
 	/**
 	 * @return array relational rules.
@@ -68,11 +82,20 @@ class Company extends CActiveRecord
 	 */
 	public function attributeLabels()
 	{
-		return array(
-			'id' => 'ID',
-			'name' => 'Name',
-			'address' => 'Address',
-		);
+        return array(
+            'id' => 'ID',
+            'name' => Yii::t('main','Название'),
+            'address' => Yii::t('main','Адресс'),
+            'description' => Yii::t('main','Описание фирмы'),
+            'zip' => Yii::t('main','Инлекс'),
+            'city' => Yii::t('main','Город'),
+            'phone' => Yii::t('main','Телефон стационарный'),
+            'mobile_phone' => Yii::t('main','Телефон мобильный'),
+            'fax' => Yii::t('main','Факс'),
+            'email' => 'E-mail',
+            'site' => Yii::t('main','Адрес сайта'),
+            'country_id' => Yii::t('main','Выбор страны'),
+        );
 	}
 
 	/**
