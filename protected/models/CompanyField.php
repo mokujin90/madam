@@ -105,6 +105,14 @@ class CompanyField extends CActiveRecord
 		));
 	}
 
+    public function scopes()
+    {
+        return array(
+            'active'=>array(
+                'condition'=>'type="enabled" OR type="required"',
+            ),
+        );
+    }
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -119,4 +127,9 @@ class CompanyField extends CActiveRecord
     public static function getFieldByCompany($id){
         return CompanyField::model()->findAllByAttributes(array('company_id'=>$id),array('order'=>'position,is_userfield','index'=>'id'));
     }
+
+    public static function getActiveField($id){
+        return CompanyField::model()->active()->findAllByAttributes(array('company_id'=>$id),array('order'=>'position,is_userfield','index'=>'id'));
+    }
+
 }

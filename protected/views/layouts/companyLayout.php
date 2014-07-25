@@ -12,6 +12,7 @@
     <link href="/css/theme-colors.css" media="all" rel="stylesheet" type="text/css">
     <!-- / demo file [not required!] -->
     <link href="/css/demo.css" media="all" rel="stylesheet" type="text/css">
+    <title><?php echo isset($this->pageCaption) ? $this->pageCaption : Yii::app()->name; ?></title>
 </head>
 <body class="contrast-red main-nav-opened">
 <header>

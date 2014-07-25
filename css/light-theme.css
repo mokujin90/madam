@@ -5189,6 +5189,7 @@ hr.margin-0{
 .step-content .question{
     overflow: hidden;
 }
+
 .day-interval-wrap .row{
     padding-bottom: 10px;
 }
@@ -5196,5 +5197,8 @@ hr.margin-0{
     padding: 10px 0;
 }
 .day-interval-wrap .row.interval-row.error{
+    background: #ff645f;
+}
+input.error-value{
     background: #ff645f;
 }

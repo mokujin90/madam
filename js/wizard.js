@@ -1,6 +1,6 @@
 /*
  * Fuel UX Wizard
- * https://github.com/ExactTarget/fuelux
+ *
  *
  * Copyright (c) 2012 ExactTarget
  * Licensed under the MIT license.
@@ -108,7 +108,6 @@
         next: function () {
             var canMoveNext = (this.currentStep + 1 <= this.numSteps);
             var lastStep = (this.currentStep === this.numSteps);
-
             if (canMoveNext) {
                 var e = $.Event('change');
                 this.$element.trigger(e, {step: this.currentStep, direction: 'next'});
@@ -159,8 +158,12 @@
         $('body').on('mousedown.wizard.data-api', '.wizard', function () {
             var $this = $(this);
             if ($this.data('wizard')) return;
-            $this.wizard($this.data());
+            var wizard = $this.wizard($this.data());
+            wizard.on('finished', function (e, data) {
+               $('#save').click();
+            });
         });
+
     });
 
 })(jQuery);

@@ -1,5 +1,9 @@
 <?php
-/* @var $this SiteController */
+/**
+ * @var $this SiteController
+ * @var $company Company
+ * @var &question Question
+ */
 $this->layout = false;
 Yii::app()->clientScript->registerScriptFile('/js/wizard.js', CClientScript::POS_END);
 
@@ -26,21 +30,21 @@ Yii::app()->clientScript->registerScriptFile('/js/wizard.js', CClientScript::POS
     <nav id="main-nav">
         <div class="col-xs-12">
             <nav class="navbar navbar-default">
-                <div class="navbar-brand">Адрес</div>
+                <div class="navbar-brand"><?=Yii::t('main','Адрес')?></div>
             </nav>
             <div class="company-name col-xs-12">
-                Art-kos
+                <?=$company->name?>
             </div>
             <div class="company-address col-xs-12">
-                <div>Frunze</div>
-                <div>123 Mosk</div>
+                <div><?=$company->description?></div>
+                <div><?=$company['country']->name?> <?=$company->address?>, <?=$company->city?></div>
             </div>
             <div class="company-phone col-xs-12">
-                <div>Тел.: +38 0432 25 25 25</div>
-                <div>Мобильный: +38 123 999 88 77</div>
+                <div><?=Yii::t('main','Тел')?>.: <?=$company->phone?></div>
+                <div><?=Yii::t('main','Мобильный')?>: <?=$company->mobile_phone?></div>
             </div>
             <div class="company-email col-xs-12">
-                <div>E-mail: example@gmail.com</div>
+                <div>E-mail: <?=$company->email?></div>
             </div>
         </div>
     </nav>
@@ -80,197 +84,9 @@ Yii::app()->clientScript->registerScriptFile('/js/wizard.js', CClientScript::POS
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="box">
-                                <div class="box-content box-padding">
-                                    <div class="fuelux">
-                                        <div class="wizard">
-                                            <ul class="steps">
-                                                <li class="active" data-target="#step1">
-                                                    <span class="step">1</span>
-                                                </li>
-                                                <li data-target="#step2">
-                                                    <span class="step">2</span>
-                                                </li>
-                                            </ul>
-                                            <div class="actions">
-                                                <button class="btn btn-xs btn-prev"><i class="icon-arrow-left"></i>Prev
-                                                </button>
-                                                <button class="btn btn-xs btn-success btn-next" data-last="Finish">
-                                                    Next
-                                                    <i class="icon-arrow-right"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="step-content">
-                                            <hr class="hr-normal">
-                                            <form class="form" style="margin-bottom: 0;" method="post" action="#"
-                                                  accept-charset="UTF-8"><input name="authenticity_token" type="hidden">
-
-                                                <div class="step-pane active" id="step1">
-                                                    <div class="form-group">
-
-                                                        <div class="question">
-                                                            <div class="col-xs-12">
-                                                                <label class="control-label">Кто производитель вашего телефона?</label>
-                                                            </div>
-                                                            <div class="col-xs-11 col-xs-offset-1">
-                                                                Выберите модель телефона:
-                                                            </div>
-                                                            <div class="col-xs-11 col-xs-offset-1">
-                                                                <div class="form-group">
-                                                                    <div class="radio">
-                                                                        <label>
-                                                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">Nokia
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="radio">
-                                                                        <label>
-                                                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Samsung
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="radio">
-                                                                        <label>
-                                                                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option2">iPhone
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <hr class="hr-normal">
-
-
-                                                        <div class="question">
-                                                            <div class="col-xs-12">
-                                                                <label class="control-label">Что случилось с вашим телефоном?</label>
-                                                            </div>
-                                                            <div class="col-xs-11 col-xs-offset-1">
-                                                                Укажите что перестало работать в Вашем телефоне:
-                                                            </div>
-                                                            <div class="col-xs-11 col-xs-offset-1">
-                                                                <div class="form-group">
-                                                                    <div class="checkbox">
-                                                                        <label>
-                                                                            <input type="checkbox" value="">
-                                                                            Разбился екран
-                                                                        </label>
-                                                                        <i class="fa fa-question-circle small-ico">
-                                                                            <div class="hint">
-                                                                                Екран разбит и имеет много трещин
-                                                                            </div>
-                                                                        </i>
-                                                                    </div>
-                                                                    <div class="checkbox">
-                                                                        <label>
-                                                                            <input type="checkbox" value="">
-                                                                            Не работает динамик
-                                                                        </label>
-                                                                        <i class="fa fa-question-circle small-ico">
-                                                                            <div class="hint">
-                                                                                Я ничего не слышу когда мне звонят
-                                                                            </div>
-                                                                        </i>
-                                                                    </div>
-                                                                    <div class="checkbox">
-                                                                        <label>
-                                                                            <input type="checkbox" value="">
-                                                                            Не работает сенсор
-                                                                        </label>
-                                                                        <i class="fa fa-question-circle small-ico">
-                                                                            <div class="hint">
-                                                                                Сенсор не реагирует на нажатия
-                                                                            </div>
-                                                                        </i>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <hr class="hr-normal">
-
-                                                        <div class="question">
-                                                            <div class="col-xs-12">
-                                                                <label class="control-label">Как произошла поломка</label>
-                                                            </div>
-                                                            <div class="col-xs-11 col-xs-offset-1">
-                                                                Укажите, что послужило причиной появления неисправности:
-                                                            </div>
-                                                            <div class="col-xs-11 col-xs-offset-1">
-                                                                <div class="form-group">
-                                                                    <div class="checkbox">
-                                                                        <label>
-                                                                            <input type="checkbox" value="">
-                                                                            Падение
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="checkbox">
-                                                                        <label>
-                                                                            <input type="checkbox" value="">
-                                                                            Вода
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="checkbox">
-                                                                        <label>
-                                                                            <input type="checkbox" value="">
-                                                                            Я не знаю
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="step-pane" id="step2">
-                                                    <div class="form-group">
-                                                        <div class="controls">
-                                                            <label class="control-label" for="inputText">Имя</label>
-
-                                                            <div class="controls">
-                                                                <input class="form-control" id="inputText"
-                                                                       placeholder="Text field" type="text">
-                                                            </div>
-
-                                                            <hr class="hr-normal">
-
-                                                            <label class="control-label" for="inputText">Емейл</label>
-
-                                                            <div class="controls">
-                                                                <input class="form-control" id="inputText"
-                                                                       placeholder="Text field" type="text">
-                                                            </div>
-
-                                                            <hr class="hr-normal">
-
-
-                                                            <label class="control-label" for="inputText">Text field</label>
-
-                                                            <div class="controls">
-                                                                <input class="form-control" id="inputText"
-                                                                       placeholder="Text field" type="text">
-                                                            </div>
-
-                                                            <hr class="hr-normal">
-
-
-                                                            <label class="control-label" for="inputText">Text field</label>
-
-                                                            <div class="controls">
-                                                                <input class="form-control" id="inputText"
-                                                                       placeholder="Text field" type="text">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                            </form>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php
+                                $this->widget('WizardWidget',array('question'=>$question,'field'=>$field));
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -281,11 +97,7 @@ Yii::app()->clientScript->registerScriptFile('/js/wizard.js', CClientScript::POS
                         <div class="col-sm-6 text">
                             Copyright © 2013 Your Project Name
                         </div>
-                        <div class="col-sm-6 buttons">
-                            <a class="btn btn-link" href="http://www.bublinastudio.com/flatty">Preview</a>
-                            <a class="btn btn-link"
-                               href="https://wrapbootstrap.com/theme/flatty-flat-administration-template-WB0P6NR1N">Purchase</a>
-                        </div>
+
                     </div>
                 </div>
             </footer>

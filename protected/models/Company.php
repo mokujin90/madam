@@ -81,26 +81,28 @@ class Company extends CActiveRecord
             array('phone, mobile_phone, fax, sms_notice_phone', 'length', 'max' => 20),
             array('email', 'length', 'max' => 100),
             array('description, zip, hello_text', 'safe'),
+
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, name, address, description, zip, city, phone, mobile_phone, fax, email, site, country_id, url, booking_deadline, booking_interval, enable_mail_notice, mail_notice_address, enable_sms_notice, sms_notice_phone, hello_text, select_timetable', 'safe', 'on' => 'search'),
         );
     }
 
-    /**
-     * @return array relational rules.
-     */
-    public function relations()
-    {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
-        return array(
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
             'country' => array(self::BELONGS_TO, 'Country', 'country_id'),
-            'companyFields' => array(self::HAS_MANY, 'CompanyField', 'company_id'),
-            'questions' => array(self::HAS_MANY, 'Question', 'company_id'),
-            'users' => array(self::HAS_MANY, 'User', 'company_id'),
-        );
-    }
+			'companyFields' => array(self::HAS_MANY, 'CompanyField', 'company_id'),
+			'questions' => array(self::HAS_MANY, 'Question', 'company_id'),
+			'users' => array(self::HAS_MANY, 'User', 'company_id'),
+		);
+	}
+
 
     /**
      * @return array customized attribute labels (name=>label)
@@ -109,14 +111,14 @@ class Company extends CActiveRecord
     {
         return array(
             'id' => 'ID',
-            'name' => Yii::t('main', 'Название'),
-            'address' => Yii::t('main', 'Адресс'),
-            'description' => Yii::t('main', 'Описание фирмы'),
-            'zip' => Yii::t('main', 'Инлекс'),
-            'city' => Yii::t('main', 'Город'),
-            'phone' => Yii::t('main', 'Телефон стационарный'),
-            'mobile_phone' => Yii::t('main', 'Телефон мобильный'),
-            'fax' => Yii::t('main', 'Факс'),
+            'name' => Yii::t('main','Название'),
+            'address' => Yii::t('main','Адрес'),
+            'description' => Yii::t('main','Описание фирмы'),
+            'zip' => Yii::t('main','Индекс'),
+            'city' => Yii::t('main','Город'),
+            'phone' => Yii::t('main','Телефон стационарный'),
+            'mobile_phone' => Yii::t('main','Телефон мобильный'),
+            'fax' => Yii::t('main','Факс'),
             'email' => 'E-mail',
             'site' => Yii::t('main', 'Адрес сайта'),
             'country_id' => Yii::t('main', 'Выбор страны'),
