@@ -44,7 +44,10 @@ class RequestFormController extends BaseController
                     $newQuestion->attributes = $postQuestion;
                     $newQuestion->company_id=$id;
                     $newQuestion->save();
-                    Help::recommend($questions[$newQuestion->id]['answers']); //для дальнейших действий сделаем, что у всех будет как минимум пустой массив
+                    #для дальнейших действий сделаем, что у всех будет как минимум пустой массив
+                    $questions[$newQuestion->id]['answers'] = isset($questions[$newQuestion->id]['answers']) ? $questions[$newQuestion->id]['answers'] : array();
+                    $postQuestion['answer'] = isset($postQuestion['answer']) ? $postQuestion['answer'] : array();
+
                     $deletedAnswer = array_diff(array_keys($questions[$newQuestion->id]['answers']),Help::getIndex($postQuestion['answer'],'id'));
                     if(count($postQuestion['answer'])){
                         foreach($postQuestion['answer'] as $postAnswer){

@@ -11,7 +11,7 @@ class CompanyController extends BaseController
         $id = Yii::app()->user->companyId;
         $model = Company::model()->findByPk($id);
         $country = Country::model()->findAll(array('index'=>'id'));
-        if($_POST['save']==1 && count($_POST['Company'])){
+        if(isset($_POST['save']) && count($_POST['Company'])){
             $model->attributes = $_POST['Company'];
             $model->save();
         }

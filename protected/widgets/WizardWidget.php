@@ -50,7 +50,8 @@ class WizardWidget extends CWidget{
      * @return string
      */
     public function drawField($field){
-        $type = array('char'=>'textField','mail'=>'emailField','numerical'=>'numberField');
+        //$type = array('char'=>'textField','mail'=>'emailField','numerical'=>'numberField');
+        $type = array('char'=>'textField','mail'=>'textField','numerical'=>'textField');
         $result='';
         $result.=CHtml::label(Yii::t('main',$field->name),'field_'.$field->id.'_label',array('class'=>'control-label')).
             CHtml::openTag('div',array('class'=>'controls')).

@@ -112,7 +112,7 @@
                     </ul>
                 </li>
                 <li class="">
-                    <a href="tables.html">
+                    <a href="/site/company/id/1" target="_blank">
                         <i class="icon-table"></i>
                         <span>Test online booking</span>
                     </a>

@@ -55,7 +55,7 @@ class SiteController extends BaseController
             throw new CHttpException(404, Yii::t('main', 'Страница не найдена'));
         $question = Question::getQuestion($id);
         $fields = CompanyField::getActiveField($id);
-        if(isset($_POST) && $_POST['save']==1){
+        if(isset($_POST['save'])){
             die('Ваша заявка принята');
         }
         $this->render('requestWizard',array('company'=>$company,'question'=>$question,'field'=>$fields));

@@ -59,7 +59,7 @@
                     <div class="step-pane" id="step2" data-type="fields">
                         <div class="form-group">
                             <div class="controls">
-                                <?$numItems = count($question);
+                                <?$numItems = count($field);
                                 $i = 0;?>
                                 <?foreach($field as $item):?>
                                     <?=$this->drawField($item)?>
