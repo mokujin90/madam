@@ -107,4 +107,16 @@ class Request extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    /**
+     * Создадим объект Request после прохождения визарда пользователем
+     * @param $params
+     */
+    static public function create($params){
+        $new = new Request();
+        $new->attributes = $params;
+        $new->create_date=Help::currentDate();
+       $new->save();
+        return $new;
+    }
 }

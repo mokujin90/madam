@@ -105,4 +105,39 @@ class RequestQuestion extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    /**
+     * Метод по переданному ключу 'answer' массива $_POST создаст нужные записи в БД по ответам пользователя
+     * @param $post $_POST['Answer']
+     * @param $request_id
+     */
+    static public function createByPost($post,$request_id){
+        if(count($post)<1 || is_null($post))
+            return false;
+        foreach($post as $questionId=>$answer){
+            is_array($answer) ?
+                self::multiCreate($answer,array('request_id'=>$request_id,'question_id'=>$questionId)) :
+                self::create(array('request_id'=>$request_id,'question_id'=>$questionId,'answer_id'=>$answer));
+        }
+    }
+
+    /**
+     * Воспользуемся yii'ишным методом для массового создания записи
+     * @param $answerId массив с id'ишниками ответов
+     * @param $params данные с ключами как в AR
+     */
+    static protected function multiCreate($answersId,$params){
+        $insertRow = array();
+        $builder=Yii::app()->db->schema->commandBuilder;
+        foreach($answersId as $id){
+            $insertRow[]=array('request_id'=>$params['request_id'],'question_id'=>$params['question_id'],'answer_id'=>$id);
+        }
+        $command=$builder->createMultipleInsertCommand('RequestQuestion',$insertRow);
+        $command->execute();
+    }
+    static protected function create($params){
+        $new = new RequestQuestion();
+        $new->attributes = $params;
+        return $new->save();
+    }
 }
