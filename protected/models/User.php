@@ -24,6 +24,7 @@
 class User extends CActiveRecord
 {
     public $scheduleUpdate;
+    public $answered;
 
     static $calendarDelimit = array(
         '10' => '10 минут',
@@ -167,6 +168,22 @@ class User extends CActiveRecord
                     $newSchedule->enable = isset($data['enable']) ? $data['enable'] : 0;
                     $newSchedule->save();
                 }
+            }
+        }
+        if (isset($this->answered)) {
+
+            $user2answer = User2Answer::model()->findAllByAttributes(array('user_id'=>$this->id),array('index'=>'answer_id')); //пришлось заного запрашивать эти данные
+            $deletedAnswer = array_diff(array_keys($user2answer),array_keys($this->answered)); //удаленные ответы
+            $addedAnswer = array_diff(array_keys($this->answered),array_keys($user2answer));
+            if(count($addedAnswer)){
+                foreach ($addedAnswer as $item) {
+                    $new = new User2Answer();
+                    $new->attributes=array('user_id'=>$this->id,'answer_id'=>$item);
+                    $new->save();
+                }
+            }
+            if(count($deletedAnswer)){
+                User2Answer::model()->deleteAllByAttributes(array('user_id'=>$this->id,'answer_id'=>$deletedAnswer));
             }
         }
     }

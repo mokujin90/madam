@@ -1,7 +1,7 @@
 <?php
 
 class Help{
-
+    const DATETIME="Y-m-d H:i:s";
     public static function dump($object, $die = true)
     {
         CVarDumper::dump($object, 10, true);
@@ -57,5 +57,9 @@ class Help{
         }
 
         return $result;
+    }
+
+    public static function currentDate($format=self::DATETIME){
+        return date($format);
     }
 }
