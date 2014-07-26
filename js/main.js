@@ -20,16 +20,17 @@ var question = {
             question.remove();
             question.sortedIndex();
         });
-        $(document).on('click.answer','button.add-answer',function(e){
+        $(document).on('click.answer','#question-tab .add-answer',function(e){
             question.addAnswer();
+            return false;
         });
-        $(document).on('click.answer','button.remove-answer',function(e){
+        $(document).on('click.answer','#question-tab .remove-answer',function(e){
             var $this = $(this);
             //if($this.closest('.answers').find('.answer').length!=1){
 
                 question.removeAnswer($this);
             //}
-
+            return false;
         });
         $(document).on('click.answer','.answers .dropdown-menu.answer-icon>li>a',function(e){
             var $this = $(this),
@@ -37,6 +38,13 @@ var question = {
                 $dropdown = $this.closest('.btn-group.dropdown');
             $dropdown.removeClass('open').find('.model-icon').val(icon);
             $dropdown.find('.btn.dropdown-toggle i').attr('class',icon);
+            return false;
+        });
+        $(document).on("click", ".box .box-collapse", function(e) {
+            var box;
+            box = $(this).parents(".box").first();
+            box.toggleClass("box-collapsed");
+            e.preventDefault();
             return false;
         });
 

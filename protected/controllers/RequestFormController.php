@@ -60,8 +60,12 @@ class RequestFormController extends BaseController
                     if(count($deletedAnswer))
                         Answer::model()->deleteAllByAttributes(array('id'=>$deletedAnswer));
                 }
-                if(count($deletedQuestion))
+                if(count($deletedQuestion)){
+                    if (count($deletedQuestion) == 1) {
+                        $deletedQuestion = array_pop($deletedQuestion);
+                    }
                     Question::model()->deleteAllByAttributes(array('id'=>$deletedQuestion));
+                }
                 $questions = Question::getQuestion($id);
             }
             else{

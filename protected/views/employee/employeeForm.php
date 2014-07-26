@@ -5,9 +5,9 @@
 ?>
 
 <ul class="nav nav-tabs" role="tablist">
-    <li class="active"><a href="http://terminland.art-kos.com/schedules_settings/schedules/#personal" role="tab" data-toggle="tab">Личные данные</a></li>
-    <li class=""><a href="http://terminland.art-kos.com/schedules_settings/schedules/#worktime" role="tab" data-toggle="tab">Рабочее время</a></li>
-    <li><a href="http://terminland.art-kos.com/schedules_settings/schedules/#types" role="tab" data-toggle="tab">Типы назначений</a></li>
+    <li class="active"><a href="/#personal" role="tab" data-toggle="tab">Личные данные</a></li>
+    <li class=""><a href="/#worktime" role="tab" data-toggle="tab">Рабочее время</a></li>
+    <li><a href="/#types" role="tab" data-toggle="tab">Типы назначений</a></li>
 </ul>
 <?php $form=$this->beginWidget('CActiveForm', array(
     'id'=>'user-update-form',

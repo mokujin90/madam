@@ -5,13 +5,15 @@
  * @var &question Question
  */
 $this->layout = false;
-Yii::app()->clientScript->registerScriptFile('/js/wizard.js', CClientScript::POS_END);
-
 ?>
 <html class=" js no-touch localstorage svg">
 <head>
-    <script src="http://www.bublinastudio.com/flattybs3/assets/javascripts/jquery/jquery.min.js"
-            type="text/javascript"></script>
+    <script src="/js/jquery.min.js" type="text/javascript"></script>
+
+    <?Yii::app()->clientScript->registerScriptFile('/js/bootstrap.js', CClientScript::POS_END);?>
+    <?Yii::app()->clientScript->registerScriptFile('/js/theme.js', CClientScript::POS_END);?>
+    <?Yii::app()->clientScript->registerScriptFile('/js/wizard.js', CClientScript::POS_END);?>
+
     <!-- / bootstrap [required] -->
     <link href="/css/bootstrap.css" media="all" rel="stylesheet" type="text/css">
     <!-- / theme file [required] -->
@@ -56,12 +58,12 @@ Yii::app()->clientScript->registerScriptFile('/js/wizard.js', CClientScript::POS
                         <div class="col-sm-12">
                             <div class="page-header">
                                 <h1 class="pull-left">
-                                    <i class="icon-edit"></i>
-                                    <span>Wizard</span>
+                                    <i class="icon-magic"></i>
+                                    <span><?=$company->name?></span>
                                 </h1>
 
                                 <div class="pull-right">
-                                    <ul class="breadcrumb">
+                                    <!--ul class="breadcrumb">
                                         <li>
                                             <a href="index.html">
                                                 <i class="icon-bar-chart"></i>
@@ -77,7 +79,7 @@ Yii::app()->clientScript->registerScriptFile('/js/wizard.js', CClientScript::POS
                                             <i class="icon-angle-right"></i>
                                         </li>
                                         <li class="active">Wizard</li>
-                                    </ul>
+                                    </ul-->
                                 </div>
                             </div>
                         </div>
@@ -104,11 +106,6 @@ Yii::app()->clientScript->registerScriptFile('/js/wizard.js', CClientScript::POS
         </div>
     </section>
 </div>
-
-<script src="http://www.bublinastudio.com/flattybs3/assets/javascripts/bootstrap/bootstrap.js"
-        type="text/javascript"></script>
-<!-- / theme file [required] -->
-<script src="http://www.bublinastudio.com/flattybs3/assets/javascripts/theme.js" type="text/javascript"></script>
 
 </body>
 </html>

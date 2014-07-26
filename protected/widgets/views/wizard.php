@@ -63,11 +63,10 @@
                                 $i = 0;?>
                                 <?foreach($field as $item):?>
                                     <?=$this->drawField($item)?>
-                                <?endforeach?>
-
                                 <?if(++$i !== $numItems):?>
                                     <hr class="hr-normal">
                                 <?endif;?>
+                                <?endforeach?>
                             </div>
                         </div>
                     </div>

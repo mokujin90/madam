@@ -35,7 +35,6 @@
     </div>
     <div id="button-panel" class="form-group">
         <hr>
-            <button type="button" class="btn btn-danger pull-right"><?=Yii::t('main','Отменить')?></button>
             <button type="submit" class="btn btn-success pull-right"><?=Yii::t('main','Сохранить')?></button>
             <button type="button" class="add-field btn btn-primary pull-right"><?=Yii::t('main','Добавить поле')?></button>
     </div>

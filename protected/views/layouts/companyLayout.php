@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html class=" js no-touch localstorage svg">
 <head>
-    <script src="http://www.bublinastudio.com/flattybs3/assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/jquery.min.js" type="text/javascript"></script>
     <!-- / bootstrap [required] -->
     <link href="/css/bootstrap.css" media="all" rel="stylesheet" type="text/css">
     <!-- / theme file [required] -->
-    <link href="http://www.bublinastudio.com/flattybs3/assets/stylesheets/plugins/jgrowl/jquery.jgrowl.min.css" media="all" rel="stylesheet" type="text/css">
+    <link href="/css/jquery.jgrowl.min.css" media="all" rel="stylesheet" type="text/css">
     <link href="/css/light-theme.css" media="all" id="color-settings-body-color" rel="stylesheet"
           type="text/css">
     <!-- / coloring file [optional] (if you are going to use custom contrast color) -->
@@ -13,6 +13,11 @@
     <!-- / demo file [not required!] -->
     <link href="/css/demo.css" media="all" rel="stylesheet" type="text/css">
     <title><?php echo isset($this->pageCaption) ? $this->pageCaption : Yii::app()->name; ?></title>
+
+
+    <?Yii::app()->clientScript->registerScriptFile('/js/bootstrap.js', CClientScript::POS_END);?>
+    <?Yii::app()->clientScript->registerScriptFile('/js/theme.js', CClientScript::POS_END);?>
+    <?Yii::app()->clientScript->registerScriptFile('/js/jquery.jgrowl.min.js', CClientScript::POS_END);?>
 </head>
 <body class="contrast-red main-nav-opened">
 <header>
@@ -30,20 +35,20 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="user_profile.html">
+                        <a href="#">
                             <i class="icon-user"></i>
                             Profile
                         </a>
                     </li>
                     <li>
-                        <a href="user_profile.html">
+                        <a href="#">
                             <i class="icon-cog"></i>
                             Settings
                         </a>
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="sign_in.html">
+                        <a href="/user/logout">
                             <i class="icon-signout"></i>
                             Sign out
                         </a>
@@ -58,7 +63,7 @@
     <nav id="main-nav">
         <div class="navigation">
             <div class="search">
-                <form action="search_results.html" method="get">
+                <form action="#" method="get">
                     <div class="search-wrapper">
                         <input value="" class="search-query form-control" placeholder="Search..." autocomplete="off" name="q"
                                type="text">
@@ -133,9 +138,9 @@
                                 </h1>
 
                                 <div class="pull-right">
-                                    <ul class="breadcrumb">
+                                    <!--ul class="breadcrumb">
                                         <li>
-                                            <a href="index.html">
+                                            <a href="#">
                                                 <i class="icon-bar-chart"></i>
                                             </a>
                                         </li>
@@ -147,7 +152,7 @@
                                             <i class="icon-angle-right"></i>
                                         </li>
                                         <li class="active">Closed navigation</li>
-                                    </ul>
+                                    </ul-->
                                 </div>
                             </div>
                         </div>
@@ -163,9 +168,7 @@
                             Copyright © 2013 Your Project Name
                         </div>
                         <div class="col-sm-6 buttons">
-                            <a class="btn btn-link" href="http://www.bublinastudio.com/flatty">Preview</a>
-                            <a class="btn btn-link"
-                               href="https://wrapbootstrap.com/theme/flatty-flat-administration-template-WB0P6NR1N">Purchase</a>
+
                         </div>
                     </div>
                 </div>
@@ -173,17 +176,6 @@
         </div>
     </section>
 </div>
-<!-- / jquery [required] -->
-<!-- / jquery mobile (for touch events) -->
-<script src="http://www.bublinastudio.com/flattybs3/assets/javascripts/bootstrap/bootstrap.js"
-        type="text/javascript"></script>
-<!-- / theme file [required] -->
-<script src="http://www.bublinastudio.com/flattybs3/assets/javascripts/theme.js" type="text/javascript"></script>
-<script src="http://www.bublinastudio.com/flattybs3/assets/javascripts/plugins/jgrowl/jquery.jgrowl.min.js" type="text/javascript"></script>
-<!-- / demo file [not required!] -->
-<!-- / START - page related files and scripts [optional] -->
-
-<!-- / END - page related files and scripts [optional] -->
 
 </body>
 </html>

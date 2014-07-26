@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="input3" class="col-lg-4 control-label"><?=Yii::t('main','Выбор страны')?></label>
+            <label class="col-lg-4 control-label"><?=Yii::t('main','Выбор страны')?></label>
             <div class="col-lg-8">
                 <?=CHtml::dropDownList('Company[country_id]',$model->country_id,Help::decorate($country,'name'),array('class'=>"form-control"))?>
             </div>
@@ -88,9 +88,8 @@
 
         <div class="form-group">
             <hr>
-            <div class="col-lg-offset-7 col-lg-6">
+            <div class="col-lg-6">
                 <button type="submit" value="1" name="save" class="btn btn-success"><?=Yii::t('main','Сохранить')?></button>
-                <button type="button" class="btn btn-danger" name="submit"><?=Yii::t('main','Отменить')?></button>
             </div>
         </div>
     </div>

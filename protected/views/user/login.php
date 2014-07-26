@@ -73,7 +73,7 @@ $this->layout = false;
 
                             <div class="text-center">
                                 <hr class="hr-normal">
-                                <a href="forgot_password.html">Forgot your password?</a>
+                                <!--a href="#">Forgot your password?</a-->
                             </div>
                         </div>
                     </div>
@@ -84,11 +84,10 @@ $this->layout = false;
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="text-center">
-                                <a href="sign_up.html">
+                                <!--a href="#">
                                     <i class="icon-user"></i>
-                                    New to Flatty?
                                     <strong>Sign up</strong>
-                                </a>
+                                </a-->
                             </div>
                         </div>
                     </div>
