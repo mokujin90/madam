@@ -56,6 +56,8 @@ class SiteController extends BaseController
         $question = Question::getQuestion($id);
         $fields = CompanyField::getActiveField($id);
         if(isset($_POST) && $_POST['save']==1){
+            $request = new Request();
+            $request->user_id=Yii::app()->user->id;
             die('Ваша заявка принята');
         }
         $this->render('requestWizard',array('company'=>$company,'question'=>$question,'field'=>$fields));

@@ -203,7 +203,7 @@
         </div>
     <div class="tab-pane" id="types">
         <div class="col-xs-12 col-sm-8">
-            <div class="form-group">
+            <div class="hidden form-group">
                 <label for="input1" class="col-xs-4 control-label">Ответы, одобрены для графика</label>
                 <div class="col-xs-8">
                     <div class="radio">
@@ -220,75 +220,21 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="input1" class="col-xs-4 control-label">What is your mobile phone?</label>
-                <div class="col-xs-8">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="">
-                            Nokia
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="">
-                            Samsung
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="">
-                            iPhone
-                        </label>
+            <?foreach($question as $item):?>
+                <div class="form-group">
+                    <label for="input1" class="col-xs-4 control-label"><?=$item->text?></label>
+                    <div class="col-xs-8">
+                        <?foreach($item['answers'] as $answer):?>
+                            <div class="checkbox">
+                                <label>
+                                    <?=CHtml::checkBox('question['.$answer->id.'][]',isset($user2answer[$answer->id])?true:false)?><?=$answer->text?>
+                                </label>
+                            </div>
+                        <?endforeach?>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="input1" class="col-xs-4 control-label">What's wrong with phone?</label>
-                <div class="col-xs-8">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="">
-                            crashed screen
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="">
-                            Speaker does not work
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="">
-                            Keyboard does not work
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="input1" class="col-xs-4 control-label">What happened to the phone?</label>
-                <div class="col-xs-8">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="">
-                            Fell into the water
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="">
-                            Fell to the ground
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="">
-                            moved car
-                        </label>
-                    </div>
-                </div>
-            </div>
+            <?endforeach;?>
+
         </div>
         <div class="col-xs-12 col-sm-4">
 

@@ -24,7 +24,12 @@ var question = {
             question.addAnswer();
         });
         $(document).on('click.answer','button.remove-answer',function(e){
-            question.removeAnswer($(this));
+            var $this = $(this);
+            //if($this.closest('.answers').find('.answer').length!=1){
+
+                question.removeAnswer($this);
+            //}
+
         });
         $(document).on('click.answer','.answers .dropdown-menu.answer-icon>li>a',function(e){
             var $this = $(this),
@@ -34,7 +39,6 @@ var question = {
             $dropdown.find('.btn.dropdown-toggle i').attr('class',icon);
             return false;
         });
-
 
     },
     add:function(){
