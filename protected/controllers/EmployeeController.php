@@ -37,7 +37,7 @@ class EmployeeController extends BaseController{
             }
         }
         $user2answer = $model->isNewRecord ? array() : User2Answer::getAnswerByUser($model->id);
-        $this->render('employeeForm', array('model' => $model,'question'=>$question,'user2answer'=>$user2answer));
+        $this->render('index', array('model' => $model,'question'=>$question,'user2answer'=>$user2answer));
     }
 
     public function actionDelete($id = null)

@@ -8,6 +8,7 @@
 $( document ).ready(function() {
     question.init();
     field.init();
+    employee.init();
 });
 
 var question = {
@@ -144,4 +145,87 @@ field = {
         }
     }
 
+},
+employee = {
+    init:function(){
+        $('.add-interval').click(function () {
+            var day = $(this).data('day');
+            var scheduleUniqId = parseInt($('#shedule-uniq-iq').val());
+            var wrap = $('.day-interval-wrap[data-day=' + day + ']');
+
+            $('#shedule-uniq-iq').val(scheduleUniqId + 1);
+
+            var form = $('#new-interval-item>.row').clone();
+            $.each($('select, input', form), function () {
+                $(this).attr('name', 'schedule[' + day + '][' + scheduleUniqId + '][' + $(this).attr('name') + ']');
+            });
+            wrap.append(form);
+            wrap.append('<hr class="margin-0">');
+        });
+        $('#worktime').on('click', '.remove-interval', function () {
+            if (common.deleteConfirm()) {
+                var row = $(this).closest('.row');
+                row.next('hr').remove().end().remove();
+            }
+        });
+
+        $('#user-update-form .remove-user').click(function(){
+            return common.deleteConfirm();
+        });
+
+        $('#user-update-form').submit(function(){
+            return employee.validateWorktime();
+        });
+
+    },
+    validateWorktime:function(){
+        var defaultDate = new Date().clearTime();
+        var hasError = false;
+        $('#worktime .interval-row').removeClass('error');
+        $.each($('#worktime .row'), function(){ //each по дням
+            var $day = $(this);
+            $.each($('.interval-row', $day), function () { //each по интервалам
+                var $current = $(this);
+                var currentDate = {
+                    START:defaultDate.clone().set({minute:parseInt($('.start-min-control', $current).val()), hour:parseInt($('.start-hour-control', $current).val())}),
+                    END:defaultDate.clone().set({minute:parseInt($('.end-min-control', $current).val()), hour:parseInt($('.end-hour-control', $current).val())})
+                };
+                if (currentDate.START.compareTo(currentDate.END) >= 0) { //начало и конец интервала совпадают
+                    $current.addClass('error');
+                    hasError = true;
+                    return true;
+                }
+                $.each($('.interval-row', $day), function () { //сравниваем каждый с каждым
+                    var $other = $(this);
+                    if ($current.is($other)) {
+                        return true;
+                    }
+                    var otherDate = {
+                        START:defaultDate.clone().set({minute:parseInt($('.start-min-control', $other).val()), hour:parseInt($('.start-hour-control', $other).val())}),
+                        END:defaultDate.clone().set({minute:parseInt($('.end-min-control', $other).val()), hour:parseInt($('.end-hour-control', $other).val())})
+                    };
+
+                    if (
+                        (currentDate.START.equals(otherDate.START) && currentDate.END.equals(otherDate.END)) || //интервалы совпадают
+                            (currentDate.START.compareTo(otherDate.START) > 0 && currentDate.START.compareTo(otherDate.END) < 0) || //начало внутри 2ого интервала
+                            (currentDate.START.compareTo(otherDate.START) > 0 && currentDate.START.compareTo(otherDate.END) < 0) //конец внутри 2ого интервала
+                        ) {
+                        $current.addClass('error');
+                        $other.addClass('error');
+                        hasError = true;
+                    }
+                });
+            });
+        });
+        if (hasError) {
+            $.jGrowl("Ошибки в рабочих интервалах.");
+            return false;
+        }
+        return true;
+    }
+},
+common = {
+    deleteConfirm:function(){
+        return (confirm('Удалить?'));
+    }
 }

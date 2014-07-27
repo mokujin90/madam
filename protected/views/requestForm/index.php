@@ -24,7 +24,7 @@
             <?php $this->renderPartial('_questions',array(
                 'questions'=>$questions,
             )); ?>
-
+        </div>
     </div>
 <?php $this->endWidget(); ?>
 <div class="hidden" id="new-question-item">
