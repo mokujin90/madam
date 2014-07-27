@@ -3,8 +3,8 @@
     Yii::app()->clientScript->registerScriptFile('/js/main.js');
 ?>
 <ul class="nav nav-tabs">
-    <li class="active"><?=CHtml::link(Yii::t('main','Данные пользователя'),array('RequestFormController/index','#'=>'user-data'),array('data-toggle'=>'tab'))?></li>
-    <li class=""><?=CHtml::link(Yii::t('main','Вопросы'),array('RequestFormController/index','#'=>'questions'),array('data-toggle'=>'tab'))?></li>
+    <li class="active"><?=CHtml::link(Yii::t('main','Данные пользователя'),array('RequestForm/index','#'=>'user-data'),array('data-toggle'=>'tab'))?></li>
+    <li class=""><?=CHtml::link(Yii::t('main','Вопросы'),array('RequestForm/index','#'=>'questions'),array('data-toggle'=>'tab'))?></li>
 </ul>
 
 <!-- Tab panes -->

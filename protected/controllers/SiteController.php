@@ -20,13 +20,18 @@ class SiteController extends BaseController
 			),
 		);
 	}
+    public function actionPanel($status=null){
+        $this->layout='simple';
 
+        $this->render('index',array('status'=>$status));
+    }
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
 	 */
 	public function actionIndex()
 	{
+
         //$this->layout = '//layouts/column1';
 
 		// renders the view file 'protected/views/site/index.php'
@@ -50,15 +55,18 @@ class SiteController extends BaseController
 	}
 
     public function actionCompany($id){//todo:fake
+        $this->layout='simple';
         $company = Company::model()->with('country')->findByPk($id);
         if(is_null($company))
             throw new CHttpException(404, Yii::t('main', 'Страница не найдена'));
         $question = Question::getQuestion($id);
         $fields = CompanyField::getActiveField($id);
         if(isset($_POST['save'])){
-            $request = new Request();
-            $request->user_id=Yii::app()->user->id;
-            die('Ваша заявка принята');
+            if( !is_null($request=Request::create(array('user_id'=>2,'start_time'=>Help::currentDate(),'end_time'=>Help::currentDate() ))) ){
+                RequestQuestion::createByPost($_POST['answer'],$request->id);
+                RequestField::createByPost($_POST['field'],$request->id);
+                $this->redirect(Yii::app()->createUrl('site/panel',array('status'=>'1')));
+            }
         }
         $this->render('requestWizard',array('company'=>$company,'question'=>$question,'field'=>$fields));
     }

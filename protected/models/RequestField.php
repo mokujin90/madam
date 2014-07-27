@@ -104,4 +104,21 @@ class RequestField extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    /**
+     * Создадим несколько записей с ответами пользователей в полях
+     * @param $params
+     */
+    static public function createByPost($post,$request_id){
+        if(is_null($post)) return false;
+        $insertRow = array();
+        $builder=Yii::app()->db->schema->commandBuilder;
+        foreach($post as $fieldId => $value){
+            if($value=='')
+                continue;
+            $insertRow[]=array('request_id'=>$request_id,'field_id'=>$fieldId,'value'=>$value);
+        }
+        $command=$builder->createMultipleInsertCommand('RequestField',$insertRow);
+        $command->execute();
+    }
 }
