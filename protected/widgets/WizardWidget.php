@@ -16,8 +16,10 @@ class WizardWidget extends CWidget{
      * @var $field CompanyField[]
      */
     public $field;
+
+    public $skin="wizard";
     public function run(){
-        $this->render('wizard',array('question'=>$this->question,'field'=>$this->field));
+        $this->render($this->skin,array('question'=>$this->question,'field'=>$this->field));
     }
 
     /**
@@ -50,10 +52,9 @@ class WizardWidget extends CWidget{
      * @return string
      */
     public function drawField($field){
-        //$type = array('char'=>'textField','mail'=>'emailField','numerical'=>'numberField');
-        $type = array('char'=>'textField','mail'=>'textField','numerical'=>'textField');
+        $type = array('char'=>'textField','mail'=>'emailField','numerical'=>'numberField');
         $result='';
-        $result.=CHtml::label(Yii::t('main',$field->name),'field_'.$field->id.'_label',array('class'=>'control-label')).
+        $result.=CHtml::label(Yii::t('main',$field->name),'field_'.$field->id.'_label',array('class'=>$field->type!='required' ? 'init control-label':'control-label')).
             CHtml::openTag('div',array('class'=>'controls')).
                 CHtml::$type[$field->validator]('field['.$field->id.']','',array('class'=>'form-control','required'=>$field->type=="required" ? true : false)).
             CHtml::closeTag('div');
