@@ -13,7 +13,7 @@ class CalendarController extends BaseController
 
     public function actionEvent($id=null,$start=null,$end=null){
         $this->blockJquery();
-        if(is_null($id)){//если создаем новую запись вставим из get'a дату начала и конца
+        if(empty($id)){//если создаем новую запись вставим из get'a дату начала и конца
             $model = new Request();
             $model->start_time = $start;
             $model->end_time = $end;
@@ -25,7 +25,7 @@ class CalendarController extends BaseController
         $companyId = Yii::app()->user->companyId;
         $question = Question::getQuestion($companyId);
         $field = CompanyField::getFieldByCompany($companyId);
-        if(isset($_POST) && $_POST['save']==1){
+        if(isset($_POST['save'])){
             $model->user_id = 1; //TODO: подставить нужного
             $model->start_time = $_POST['event']['date']." ".$_POST['event']['start_time'];
             $model->end_time = $_POST['event']['date']." ".$_POST['event']['end_time'];

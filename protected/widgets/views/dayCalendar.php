@@ -41,7 +41,19 @@
                     <?if($enable[$hour]):?>
                         <td>
                             <?foreach($eventInterval[$hour] as $event):?>
-                                <?=CHtml::tag('span', array('class' => ("event-interval label label-success " .(isset($event['event']) ? "label-info" : '')), 'data-start' => $event['start']->format(Help::DATETIME), 'data-end' => $event['end']->format(Help::DATETIME) , 'data-id' =>(isset($event['event']) ? $event['event'] : false)), $event['start']->format('H:i') . ' - ' . $event['end']->format('H:i'))?>
+                                <?=CHtml::link(
+                                    ($event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
+                                    array('calendar/event',
+                                        'start' => $event['start']->format(Help::DATETIME),
+                                        'end' => $event['end']->format(Help::DATETIME),
+                                        'id' =>(isset($event['event']) ? $event['event'] : 0)
+                                    ),
+                                    array(
+                                        'class' => ("event label label-success " .(isset($event['event']) ? "label-info" : '')),
+                                        'data-start' => $event['start']->format(Help::DATETIME),
+                                        'data-end' => $event['end']->format(Help::DATETIME),
+                                        'data-id' =>(isset($event['event']) ? $event['event'] : false)
+                                    ))?>
                             <?endforeach?>
                         </td>
                         <td></td>
