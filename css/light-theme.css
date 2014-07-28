@@ -5236,3 +5236,29 @@ input.error-value{
     background: #29d;
     height:2px;
 }
+
+#create-event{
+    width: 785px;
+    margin:0;
+}
+    #create-event .row{
+        margin:0;
+    }
+        #create-event .row .box{
+            width: 385px;
+            display: inline-block;
+            vertical-align: top;
+        }
+#create-event .datetime-setting .input-group{
+    width:300px;
+}
+label.init{
+    font-weight: 100;
+}
+#create-event .datetime-setting .setting{
+    display: inline-block;
+    width: 385px;
+}
+.bootstrap-datetimepicker-widget{
+    z-index: 999999!important;
+}

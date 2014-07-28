@@ -16,6 +16,8 @@
  */
 class Request extends CActiveRecord
 {
+    public $field;
+    public $request;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -108,6 +110,14 @@ class Request extends CActiveRecord
 		return parent::model($className);
 	}
 
+    protected function beforeValidate()
+    {
+        // Если новая запись - присваиваем id автора т timestamp
+        if($this->getIsNewRecord()){
+            $this->create_date=new CDbExpression('NOW()');
+        }
+        return parent::beforeValidate();
+    }
     /**
      * Создадим объект Request после прохождения визарда пользователем
      * @param $params
@@ -115,7 +125,6 @@ class Request extends CActiveRecord
     static public function create($params){
         $new = new Request();
         $new->attributes = $params;
-        $new->create_date=Help::currentDate();
        $new->save();
         return $new;
     }

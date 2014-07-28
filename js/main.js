@@ -144,7 +144,26 @@ field = {
             $downer.after($group);
         }
     }
+},
+modal={
+    init:function(){
+        $('.event').fancybox({
+            type: 'ajax'
+        });
+    }
+},
 
+event={
+    init:function(){
+        $('.timepicker-input').datetimepicker({
+            pickDate: false
+        });
+        $('.datepicker-input').datetimepicker({});
+        $('button.cancel').click(function(){
+            console.log('33');
+            $.fancybox.close();
+        });
+    }
 },
 employee = {
     init:function(){

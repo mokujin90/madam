@@ -10,24 +10,6 @@
 
 <body>
 
-    <?php if (Yii::app()->controller->action->id != 'index') { ?>
-    <ul class="breadcrumbs">
-        <?php
-        if (count($this->breadcrumbs)) {
-            foreach ($this->breadcrumbs as $pathItem) {
-                if (isset($pathItem['url']) && count($this->breadcrumbs) > 1) {
-                    echo '<li class="">';
-                    echo '<a class="" href="' . $pathItem['url'] . '">' . CHtml::encode($pathItem['name']) . '</a>';
-                } else {
-                    echo '<li class="">';
-                    echo CHtml::encode($pathItem['name']);
-                }
-                echo '</li>';
-            }
-        }
-        ?>
-    </ul>
-    <?php } ?>
 
 <?php echo $content; ?>
 

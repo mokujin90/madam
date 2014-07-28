@@ -4,7 +4,7 @@
  * @var $field CompanyField[]
  */
 ?>
-<div class="box">
+<div class="dialog">
     <div class="box-content box-padding">
         <div class="fuelux">
             <div class="wizard">

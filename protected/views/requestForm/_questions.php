@@ -90,7 +90,7 @@
                                             <div class="col-xs-3">
                                                 <div class="">
                                                     MIN
-                                                    <?=CHtml::textField("question[".$count."][answer][".$countAnswer."][min]",$answer->min,array('class'=>'form-control'))?>
+                                                    <?=CHtml::numberField("question[".$count."][answer][".$countAnswer."][min]",$answer->min,array('class'=>'form-control'))?>
                                                     ABBR
                                                     <?=CHtml::textField("question[".$count."][answer][".$countAnswer."][abbr]",$answer->abbr,array('class'=>'form-control'))?>
                                                 </div>
