@@ -119,4 +119,15 @@ class Request extends CActiveRecord
        $new->save();
         return $new;
     }
+
+    static public function getRequestWithDate(){//TODO: collapse duplicate requests (start/end)
+        $result = array();
+        $model = Request::model()->findAll(array('order' => 'start_time'));
+        foreach($model as $item){
+            $item->start_time = new DateTime($item->start_time);
+            $item->end_time = new DateTime($item->end_time);
+            $result[] = $item;
+        }
+        return $result;
+    }
 }

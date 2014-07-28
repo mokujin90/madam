@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: Manekineko
- * Date: 26.07.14
- * Time: 0:27
- * To change this template use File | Settings | File Templates.
- */
+
 class WizardWidget extends CWidget{
     /**
      * @var $question Question[]
