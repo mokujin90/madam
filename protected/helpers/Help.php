@@ -62,4 +62,12 @@ class Help{
     public static function currentDate($format=self::DATETIME){
         return date($format);
     }
+
+    /**
+     * По дате отдаст номера дня недели в формате проекта, а не ISO-8601 (т.е. -1)
+     * @param $date
+     */
+    public static function getWeekDay($date){
+        return date('N', strtotime( $date))-1;
+    }
 }
