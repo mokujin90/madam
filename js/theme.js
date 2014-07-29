@@ -195,6 +195,7 @@
         el = $(this);
         if (el.data("popover") === undefined) {
           el.popover({
+            html:true,
             placement: el.data("placement") || "top",
             container: "body"
           });
@@ -278,7 +279,9 @@
           date: "icon-calendar",
           up: "icon-arrow-up",
           down: "icon-arrow-down"
-        }
+        },
+          defaultDate: new Date(),
+          language: 'ru'
       });
       $(".timepicker-input").datetimepicker({
         pickDate: false,

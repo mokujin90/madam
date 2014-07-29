@@ -7,7 +7,7 @@
                 <div class="form-group">
                     <div class="controls">
                         <?foreach($field as $item):?>
-                            <?=$this->drawField($item,is_null($request['requestFields'][$item->id]) ? null : $request['requestFields'][$item->id]->value)?>
+                            <?=$this->drawField($item,!isset($request['requestFields'][$item->id]) ? null : $request['requestFields'][$item->id]->value)?>
                         <?endforeach?>
                     </div>
                 </div>

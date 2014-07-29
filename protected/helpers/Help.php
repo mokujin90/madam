@@ -70,4 +70,19 @@ class Help{
     public static function getWeekDay($date){
         return date('N', strtotime( $date))-1;
     }
+
+    public static function getDayText($date, $is_week = false) {
+        $dateVal = isset($date) ? $date: new DateTime();
+        if($is_week){
+            $day = $dateVal->format('N') - 1;
+            $dateVal->modify("-$day days");
+            $text = $dateVal->format('d.m.Y');
+            $text .= ' - ';
+            $dateVal->modify("+6 days");
+            $text .= $dateVal->format('d.m.Y');
+            return $text;
+        } else {
+            return $dateVal->format('d.m.Y');
+        }
+    }
 }

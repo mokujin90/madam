@@ -121,6 +121,10 @@ class Request extends CActiveRecord
         if(Schedule::isRequest($this))
             return parent::beforeValidate();
     }
+    protected function afterDelete(){
+        parent::afterDelete();
+        $this->clearQuestionAndField();
+    }
     /**
      * Создадим объект Request после прохождения визарда пользователем
      * @param $params
@@ -132,9 +136,9 @@ class Request extends CActiveRecord
         return $new;
     }
 
-    static public function getRequestWithDate(){//TODO: collapse duplicate requests (start/end)
+    static public function getRequestWithDate($user_id){//TODO: collapse duplicate requests (start/end)
         $result = array();
-        $model = Request::model()->findAll(array('order' => 'start_time'));
+        $model = Request::model()->findAllByAttributes(array('user_id' => $user_id), array('order' => 'start_time'));
         foreach($model as $item){
             $item->start_time = new DateTime($item->start_time);
             $item->end_time = new DateTime($item->end_time);
