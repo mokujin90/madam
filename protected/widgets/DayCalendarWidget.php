@@ -29,7 +29,7 @@ class DayCalendarWidget extends CWidget{
 
     public function run()
     {
-        if($this->mode == "day"){
+        if ($this->mode == "day") {
             $this->render('dayCalendar');
         } else {
             $this->render('weekCalendar');
@@ -40,26 +40,28 @@ class DayCalendarWidget extends CWidget{
     /**
      * @return array - массив доступных часов для событий
      */
-    public function getEnableHours($dayOfWeek = null) {
+    public function getEnableHours($dayOfWeek = null)
+    {
         $dayOfWeek = $dayOfWeek !== null ? $dayOfWeek : $this->date->format('N') - 1;
 
         $enableHour = array();
-        for($i = 0; $i < 24; $i++){
+        for ($i = 0; $i < 24; $i++) {
             $enableHour[$i] = false;
         }
 
         $schedule = isset($this->shedule[$dayOfWeek]) ? $this->shedule[$dayOfWeek] : array();
-        foreach($schedule as $interval) {
-            for($h = (int)$interval['startHour']; $h < (int)$interval['endHour'] + ((int)$interval['endMin'] > 0 ? 1 : 0); $h++){
+        foreach ($schedule as $interval) {
+            for ($h = (int)$interval['startHour']; $h < (int)$interval['endHour'] + ((int)$interval['endMin'] > 0 ? 1 : 0); $h++) {
                 $enableHour[$h] = true;
             }
         }
         return $enableHour;
     }
 
-    public function getEnableHoursForWeek() {
+    public function getEnableHoursForWeek()
+    {
         $result = array();
-        foreach($this->shedule as $day=>$obj){
+        foreach ($this->shedule as $day => $obj) {
             $result[$day] = $this->getEnableHours($day);
         }
         return $result;
@@ -68,7 +70,8 @@ class DayCalendarWidget extends CWidget{
     /**
      * @return array - интервалы новых и заполненных событий
      */
-    public function getEventLinks($date = null) {
+    public function getEventLinks($date = null)
+    {
         $date = $date ? $date : $this->date;
         $dayOfWeek = $date->format('N') - 1;
 
@@ -80,10 +83,10 @@ class DayCalendarWidget extends CWidget{
         }
 
         $dateDefault = clone $date;
-        $dateDefault->setTime(0,0,0);
+        $dateDefault->setTime(0, 0, 0);
 
         $schedule = isset($this->shedule[$dayOfWeek]) ? $this->shedule[$dayOfWeek] : array();
-        foreach($schedule as $interval) { //заполение поинтервально (интервалы указываются в рабочем времени сотрудиника)
+        foreach ($schedule as $interval) { //заполение поинтервально (интервалы указываются в рабочем времени сотрудиника)
             $eventEnd = false;
             $dateStart = clone $dateDefault; //начинаем с начала интервала
             $dateStart->setTime((int)$interval['startHour'], (int)$interval['startMin']);
@@ -98,7 +101,7 @@ class DayCalendarWidget extends CWidget{
             }
 
 
-            if($dateEnd != $dateEndInterval && $dateStart < $dateEndInterval){ //есть неполный интервал, наример 45 минут при часовом разделении (3:00-3:45)
+            if ($dateEnd != $dateEndInterval && $dateStart < $dateEndInterval) { //есть неполный интервал, наример 45 минут при часовом разделении (3:00-3:45)
                 $dateEnd = $dateEndInterval;
                 $this->generateInterval($requests, &$dateStart, &$dateEnd, &$enableHour, &$eventEnd, $calendarDelimit);
             }
@@ -111,8 +114,9 @@ class DayCalendarWidget extends CWidget{
     /**
      * Создает совбодный интервал или событие из базы.
      */
-    private function generateInterval($requests, $dateStart, $dateEnd, $enableHour, $eventEnd, $calendarDelimit){
-        foreach($requests as $item) { //ищем брни, которые начинаются в текущем интервале-событии
+    private function generateInterval($requests, $dateStart, $dateEnd, $enableHour, $eventEnd, $calendarDelimit)
+    {
+        foreach ($requests as $item) { //ищем брни, которые начинаются в текущем интервале-событии
             if ($item->start_time == $dateStart) { //начало интервала совпало с началом брони
                 $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $item->end_time, 'event' => $item->id, 'model' => $item);
                 $eventEnd = $item->end_time;
@@ -125,13 +129,13 @@ class DayCalendarWidget extends CWidget{
                 break;
             }
         }
-        if($eventEnd != false && $eventEnd < $dateEnd) { //бронь не перекрывет интервал-событие полностью
+        if ($eventEnd != false && $eventEnd < $dateEnd) { //бронь не перекрывет интервал-событие полностью
             $dateStart = clone $eventEnd;
             $eventEnd = false;
             return;
         }
 
-        if($eventEnd == false) { //в этом интервале-событии нет брони
+        if ($eventEnd == false) { //в этом интервале-событии нет брони
             $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $dateEnd);
         }
 
@@ -140,8 +144,8 @@ class DayCalendarWidget extends CWidget{
         $dateEnd = clone $dateStart;
         $dateEnd->modify("+ $calendarDelimit minutes");
 
-        if(isset($eventEnd) && $dateEnd > $eventEnd){ //бронь закончилась в этом интервале
-            if($dateStart < $eventEnd){
+        if (isset($eventEnd) && $dateEnd > $eventEnd) { //бронь закончилась в этом интервале
+            if ($dateStart < $eventEnd) {
                 $dateStart = clone $eventEnd;
             }
             $eventEnd = false;
@@ -149,9 +153,10 @@ class DayCalendarWidget extends CWidget{
     }
 
 
-    public function getEventLinksForWeek() {
+    public function getEventLinksForWeek()
+    {
         $result = array();
-        foreach($this->shedule as $day=>$obj){
+        foreach ($this->shedule as $day => $obj) {
             $date = clone $this->mondayOfWeek;
             $date->modify("+ $day days");
             $result[$day] = $this->getEventLinks($date);
@@ -159,11 +164,28 @@ class DayCalendarWidget extends CWidget{
         return $result;
     }
 
-    public function getEventHint($request){
+    public function getEventHint($request)
+    {
         $html = '';
-        foreach($request->requestFields as $field){
+        foreach ($request->requestFields as $field) {
             $html .= "{$field->field->name}: <b>{$field->value}</b><br>";
         }
         return $html;
+    }
+
+    public function getEventClass($event)
+    {
+        $class = "event label";
+        if (isset($event['event'])) {
+            $class .= " has-popover";
+            if (isset($_GET['target']) && $_GET['target'] == $event['event']) {
+                $class .= " label-important";
+            } else {
+                $class .= " label-info";
+            }
+        } else {
+            $class .= " label-success";
+        }
+        return $class;
     }
 }

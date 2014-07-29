@@ -2,7 +2,7 @@
 
 class CalendarController extends BaseController
 {
-	public function actionIndex($id)
+	public function actionIndex($id, $date = null)
 	{
         $this->layout = 'companyLayout';
         $this->pageCaption=Yii::t('main',"Календарь");
@@ -13,11 +13,13 @@ class CalendarController extends BaseController
         if (!$user) {
             throw new CHttpException(404, Yii::t('main', 'Page not found.'));
         }
-
-		$this->render('index', array('user' => $user));
+        if(isset($date)){
+            $date = new DateTime($date);
+        }
+		$this->render('index', array('user' => $user, 'date' => $date));
 	}
 
-    public function actionEvent($id=null,$start=null,$end=null,$userId=2){
+    public function actionEvent($id=null,$start=null,$end=null,$user_id){
         $this->blockJquery();
         if(empty($id)){//если создаем новую запись вставим из get'a дату начала и конца
             $model = new Request();
@@ -31,7 +33,7 @@ class CalendarController extends BaseController
         $question = Question::getQuestion($companyId);
         $field = CompanyField::getFieldByCompany($companyId);
         if(isset($_POST['save'])){
-            $model->user_id = $userId; //TODO: подставить нужного
+            $model->user_id = $user_id; //TODO: подставить нужного
             $model->start_time = $_POST['event']['date']." ".$_POST['event']['start_time'];
             $model->end_time = $_POST['event']['date']." ".$_POST['event']['end_time'];
             if($model->save()){
@@ -39,7 +41,7 @@ class CalendarController extends BaseController
                 RequestQuestion::createByPost($_POST['answer'],$model->id);
                 RequestField::createByPost($_POST['field'],$model->id);
             }
-            $this->redirect(Yii::app()->request->urlReferrer);
+            $this->redirect(array('/calendar/index/', 'id' => $user_id, 'date' => $_POST['event']['date'], 'target' => $model->id));
         }
         $this->render('event',array('model'=>$model,'question'=>$question,'field'=>$field,'date'=>$model->getDiscreteDate()));
     }

@@ -40,10 +40,11 @@
                                     array('calendar/event',
                                         'start' => $event['start']->format(Help::DATETIME),
                                         'end' => $event['end']->format(Help::DATETIME),
+                                        'user_id' => $this->user->id,
                                         'id' =>(isset($event['event']) ? $event['event'] : 0)
                                     ),
                                     array(
-                                        'class' => ("event label label-success " .(isset($event['event']) ? "has-popover label-info" : '')),
+                                        'class' => $this->getEventClass($event),
                                         'data-start' => $event['start']->format(Help::DATETIME),
                                         'data-end' => $event['end']->format(Help::DATETIME),
                                         'data-id' =>(isset($event['event']) ? $event['event'] : false),

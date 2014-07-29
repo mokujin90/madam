@@ -52,12 +52,14 @@ Yii::app()->clientScript->registerCssFile('/css/bootstrap-datetimepicker.min.css
 <div class="tab-content" id="calendar-tab-content">
     <div class="tab-pane active" id="day-calendar">
         <?php $this->renderPartial('_dayCalendar',array(
-        'user' => $user
+        'user' => $user,
+        'date' => $date
     )); ?>
     </div>
     <div class="tab-pane" id="week-calendar">
         <?php $this->renderPartial('_weekCalendar',array(
-        'user' => $user
+        'user' => $user,
+        'date' => $date
     )); ?>
     </div>
 </div>

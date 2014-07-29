@@ -1,7 +1,7 @@
 <div class="col-sm-12">
     <div class="box bordered-box blue-border" style="margin-bottom:0;">
         <div class="box-header blue-background">
-            <div class="title"><?=Yii::t('main','Неделя')?></div>
+            <div class="title"><?=Yii::t('main','Неделя')?> <?=Help::getDayText($date, true);?></div>
             <div class="actions">
                 <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i>
                 </a>
