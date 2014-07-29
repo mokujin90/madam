@@ -150,7 +150,15 @@ field = {
 modal={
     init:function(){
         $('.event').fancybox({
-            type: 'ajax'
+            type: 'ajax',
+            ajax: {
+                complete: function(jqXHR, textStatus) {
+                    $('.timepicker-input').datetimepicker({
+                        pickDate: false
+                    });
+                    $('.datepicker-input').datetimepicker({});
+                }
+            }
         });
     }
 },
@@ -161,10 +169,41 @@ event={
             pickDate: false,
             forceParse:false
         });*/
-        $('.datepicker-input').datetimepicker({});
+        //$('.datepicker-input').datetimepicker({});
         $('button.cancel').click(function(){
             $.fancybox.close();
         });
+        $('button.remove').click(function(){
+            if(common.deleteConfirm()==true){
+                var request_id = $('#request_id').val(),
+                    url = '/calendar/delete/id/'+request_id;
+                window.location = url;
+            }
+        });
+        $("#create-event").submit(function() {
+            var user_id = $('#user_id').val(),
+                request_id = $('#request_id').val(),
+                url = '/calendar/event/user_id/'+user_id+'/id/'+request_id;
+
+            $.ajax({
+                url:url,
+                type: "POST",
+                data: $(this).serialize()+'&ajax=1', // serializes the form's elements.
+                success: function(data)
+                {
+                    var data = JSON.parse(data);
+                    if( typeof data.error != "undefined" ){
+                        $.jGrowl(data.error);
+                    }
+                    if( typeof data.redirect != "undefined" ){
+                        window.location = data.redirect;
+                    }
+                }
+            });
+
+            return false; // avoid to execute the actual submit of the form.
+        });
+
     }
 },
 employee = {

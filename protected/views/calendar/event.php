@@ -3,6 +3,11 @@
 Yii::app()->clientScript->registerScriptFile('/js/moment.min.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerScriptFile('/js/bootstrap-datetimepicker.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerCssFile('/css/bootstrap-datetimepicker.min.css');
+
+
+Yii::app()->clientScript->registerScriptFile('/js/jquery.jgrowl.min.js', CClientScript::POS_END);
+Yii::app()->clientScript->registerCssFile('/css/jquery.jgrowl.min.css');
+
 Yii::app()->clientScript->registerScriptFile('/js/main.js', CClientScript::POS_END);
 Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript::POS_END);
 ?>
@@ -49,9 +54,12 @@ Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript:
             </div>
         </div>
     </div>
-
+    <?=CHtml::hiddenField('user_id',$model->user_id,array('id'=>'user_id'))?>
+    <?=CHtml::hiddenField('request_id',$model->id,array('id'=>'request_id'))?>
     <button name="save" value="1" class="save btn btn-success" type="submit"><i class="icon-save"></i> <?=Yii::t('main',$model->isNewRecord? 'Создать' : 'Сохранить')?></button>
     <button class="cancel btn btn-primary" type="button"><?=Yii::t('main','Отменить')?></button>
-
+    <?if(!$model->isNewRecord):?>
+        <button class="remove btn btn-danger" type="button"><?=Yii::t('main','Удалить')?></button>
+    <?endif;?>
     <?php $this->endWidget(); ?>
 </div>

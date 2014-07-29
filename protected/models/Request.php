@@ -121,6 +121,10 @@ class Request extends CActiveRecord
         if(Schedule::isRequest($this))
             return parent::beforeValidate();
     }
+    protected function afterDelete(){
+        parent::afterDelete();
+        $this->clearQuestionAndField();
+    }
     /**
      * Создадим объект Request после прохождения визарда пользователем
      * @param $params

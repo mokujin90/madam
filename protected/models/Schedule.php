@@ -112,7 +112,7 @@ class Schedule extends CActiveRecord
      * По переданной AR модели Request попробует найти рамки в которые укладывается
      * @param $request Request
      */
-    static public function isRequest($request){
+    static public function isRequest(&$request){
         $week = Help::getWeekDay($request->start_time); //текущий день недели
         $start = new DateTime($request->start_time);
         $end = new DateTime($request->end_time);
@@ -130,11 +130,16 @@ class Schedule extends CActiveRecord
                 $criteria->addCondition('id != :id');
                 $criteria->params += array(':id'=>$request->id);
                 $anyRequest = Request::model()->findAll($criteria);
-            if(count($anyRequest))
+            if(count($anyRequest)){
+                $request->addError('start_date','Новое событие накладывается на уже существующее');
                 return false; //если есть еще какие-то события "налазящие" на текущее не дадим сохранять
-
+            }
             return true;
         }
-        return false;
+        else{
+            $request->addError('start_date','На данное время нет времени у специалистов');
+            return false;
+        }
+
     }
 }

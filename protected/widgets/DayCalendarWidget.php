@@ -97,13 +97,13 @@ class DayCalendarWidget extends CWidget{
             $dateEndInterval->setTime((int)$interval['endHour'], (int)$interval['endMin']);
 
             while ($dateEnd <= $dateEndInterval) { //пока текущий интервал-событие в пределах рабочего времени сотрудника
-                $this->generateInterval($requests, &$dateStart, &$dateEnd, &$enableHour, &$eventEnd, $calendarDelimit);
+                $this->generateInterval($requests, $dateStart, $dateEnd, $enableHour, $eventEnd, $calendarDelimit);
             }
 
 
             if ($dateEnd != $dateEndInterval && $dateStart < $dateEndInterval) { //есть неполный интервал, наример 45 минут при часовом разделении (3:00-3:45)
                 $dateEnd = $dateEndInterval;
-                $this->generateInterval($requests, &$dateStart, &$dateEnd, &$enableHour, &$eventEnd, $calendarDelimit);
+                $this->generateInterval($requests, $dateStart, $dateEnd, $enableHour, $eventEnd, $calendarDelimit);
             }
         }
 
@@ -114,7 +114,7 @@ class DayCalendarWidget extends CWidget{
     /**
      * Создает совбодный интервал или событие из базы.
      */
-    private function generateInterval($requests, $dateStart, $dateEnd, $enableHour, $eventEnd, $calendarDelimit)
+    private function generateInterval($requests, &$dateStart, &$dateEnd, &$enableHour, &$eventEnd, $calendarDelimit)
     {
         foreach ($requests as $item) { //ищем брни, которые начинаются в текущем интервале-событии
             if ($item->start_time == $dateStart) { //начало интервала совпало с началом брони

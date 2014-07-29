@@ -29,19 +29,28 @@ class CalendarController extends BaseController
         else{ #заберем данные о редактируемом событии с вопросами и полями, на которые уже отвечали
             $model = Request::model()->with('requestFields','requestQuestions')->findByPk($id);
         }
+        $model->user_id = $user_id;
         $companyId = Yii::app()->user->companyId;
         $question = Question::getQuestion($companyId);
         $field = CompanyField::getFieldByCompany($companyId);
-        if(isset($_POST['save'])){
+        if(isset($_POST['ajax'])){
+            $result = array();
             $model->user_id = $user_id; //TODO: подставить нужного
             $model->start_time = $_POST['event']['date']." ".$_POST['event']['start_time'];
             $model->end_time = $_POST['event']['date']." ".$_POST['event']['end_time'];
-            if($model->save()){
-                $model->clearQuestionAndField();
-                RequestQuestion::createByPost($_POST['answer'],$model->id);
-                RequestField::createByPost($_POST['field'],$model->id);
+            if(!$model->validate()){
+                $result['error']=$this->drawError($model->getErrors());
             }
-            $this->redirect(array('/calendar/index/', 'id' => $user_id, 'date' => $_POST['event']['date'], 'target' => $model->id));
+            else{
+                if($model->save()){
+                    $model->clearQuestionAndField();
+                    RequestQuestion::createByPost($_POST['answer'],$model->id);
+                    RequestField::createByPost($_POST['field'],$model->id);
+                }
+                $result['redirect'] = $this->createUrl('/calendar/index',array('id' => $user_id, 'date' => $_POST['event']['date'], 'target' => $model->id));
+            }
+            echo json_encode($result);
+            Yii::app()->end();
         }
         $this->render('event',array('model'=>$model,'question'=>$question,'field'=>$field,'date'=>$model->getDiscreteDate()));
     }
@@ -51,6 +60,13 @@ class CalendarController extends BaseController
         $this->render('test');
     }
 
+    public function actionDelete($id){
+        $model = Request::model()->findByPk($id);
+        if($model){
+            $model->delete();
+        }
+        $this->redirect(Yii::app()->request->urlReferrer);
+    }
     public function actionChangeCalendarDate($user_id, $date, $active_tab = 'day'){
         $user = User::model()->findByPk($user_id);
         if (!$user) {
