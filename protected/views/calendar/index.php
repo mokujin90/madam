@@ -7,39 +7,9 @@ Yii::app()->clientScript->registerScriptFile('/js/moment.min.js', CClientScript:
 Yii::app()->clientScript->registerScriptFile('/js/locales/bootstrap-datetimepicker.ru.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerScriptFile('/js/bootstrap-datetimepicker.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerCssFile('/css/bootstrap-datetimepicker.min.css');
+Yii::app()->clientScript->registerScript('calendarInit', 'calendar.init()', CClientScript::POS_END);
 ?>
-<script>
-    var calendarOnChange = false;
-    $(function(){
-        $("#calendar-datepicker").on('change.dp', function(e) {
-            if(calendarOnChange){
-                return;
-            } else {
-                calendarOnChange = true;
-                $.ajax({
-                    type: 'GET',
-                    url: '/calendar/changeCalendarDate',
-                    async: true,
-                    dataType: 'html',
-                    data: {
-                        date: $("#calendar-datepicker").data("DateTimePicker").getDate().format('YYYY-MM-DD'),
-                        user_id: $("#user_id").val(),
-                        active_tab: $('#calendar-tabs .active').data('tab')
-                    },
-                    error: function () {
-                        $.jGrowl("Ошибка сервера");
-                        calendarOnChange = false;
-                    },
-                    success: function (data) {
-                        $('#calendar-tab-content').html(data);
-                        calendarOnChange = false;
-                        $.jGrowl("Календарь обновлен");
-                    }
-                });
-            }
-        });
-    })
-</script>
+
 <ul class="nav nav-tabs" id="calendar-tabs">
     <li class="active" data-tab="day"><a data-toggle="tab" href="/calendar/index#day-calendar">День</a></li>
     <li class="" data-tab="week"><a data-toggle="tab" href="/calendar/index#week-calendar">Неделя</a></li>

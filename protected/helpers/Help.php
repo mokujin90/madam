@@ -85,4 +85,9 @@ class Help{
             return $dateVal->format('d.m.Y');
         }
     }
+
+    public static function getDate($date){
+        $dateVal = isset($date) ? $date: new DateTime();
+        return $dateVal->format('Y-m-d');
+    }
 }

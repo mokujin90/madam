@@ -11,6 +11,8 @@ $( document ).ready(function() {
     employee.init();
 });
 
+var calendarOnChange = false;
+
 var question = {
     init:function(){
         $('#add-question').click(function(){
@@ -151,10 +153,10 @@ modal={
             type: 'ajax',
             ajax: {
                 complete: function(jqXHR, textStatus) {
-                    $('.timepicker-input').datetimepicker({
+                    /*$('.timepicker-input').datetimepicker({
                         pickDate: false
                     });
-                    $('.datepicker-input').datetimepicker({});
+                    $('.datepicker-input').datetimepicker({});*/
                 }
             }
         });
@@ -167,7 +169,20 @@ event={
             pickDate: false,
             forceParse:false
         });*/
-        //$('.datepicker-input').datetimepicker({});
+        $(".datepicker-input-fb").datetimepicker({
+            pickTime: false,
+            icons: {
+                time: "icon-time",
+                date: "icon-calendar",
+                up: "icon-arrow-up",
+                down: "icon-arrow-down"
+            },
+            defaultDate: new Date(),
+            language: 'ru'
+        });
+        $.mask.definitions['2'] = "[0-2]";
+        $.mask.definitions['5'] = "[0-5]";
+        $('.time-mask').mask("29:59");
         $('button.cancel').click(function(){
             $.fancybox.close();
         });
@@ -280,6 +295,43 @@ employee = {
             return false;
         }
         return true;
+    }
+},
+calendar = {
+    init:function(){
+        $("#calendar-datepicker").on('change.dp', function(e) {
+            calendar.refresh($("#calendar-datepicker").data("DateTimePicker").getDate().format('YYYY-MM-DD'));
+        });
+        $(document).on('click', '.action-refresh', function(){
+            calendar.refresh($(this).data('date'));
+        });
+    },
+    refresh:function(date){
+        if(calendarOnChange){
+            return;
+        } else {
+            calendarOnChange = true;
+            $.ajax({
+                type: 'GET',
+                url: '/calendar/changeCalendarDate',
+                async: true,
+                dataType: 'html',
+                data: {
+                    date: date,
+                    user_id: $("#user_id").val(),
+                    active_tab: $('#calendar-tabs .active').data('tab')
+                },
+                error: function () {
+                    $.jGrowl("Ошибка сервера");
+                    calendarOnChange = false;
+                },
+                success: function (data) {
+                    $('#calendar-tab-content').html(data);
+                    calendarOnChange = false;
+                    $.jGrowl("Календарь обновлен");
+                }
+            });
+        }
     }
 },
 common = {
