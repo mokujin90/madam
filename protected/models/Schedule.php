@@ -116,6 +116,10 @@ class Schedule extends CActiveRecord
         $week = Help::getWeekDay($request->start_time); //текущий день недели
         $start = new DateTime($request->start_time);
         $end = new DateTime($request->end_time);
+        if ($start >= $end) {
+            $request->addError('start_date','Начало должно быть раньше окончания');
+            return false;
+        }
         #соберем время начала и время конца в удобном виде для нашей системы
         $date = array('start_hour'=>$start->format('H'),'start_min'=>$start->format('i'),'end_hour'=>$end->format('H'),'end_min'=>$end->format('i'));
         $criteria = new CDbCriteria;
