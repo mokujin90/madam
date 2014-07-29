@@ -125,10 +125,12 @@ class Schedule extends CActiveRecord
         $schedule = Schedule::model()->findAll($criteria);
         if(count($schedule)){#если такое время есть, то теперь вторая часть валидации - попробуем найти такие же уже запланированные события
             $criteria = new CDbCriteria;
-                $criteria->addBetweenCondition('start_time',$request->start_time,$request->end_time);
-                $criteria->addBetweenCondition('end_time',$request->start_time,$request->end_time,'OR');
+                $criteria->addCondition(':start > start_time AND :start < end_time');
+                $criteria->addCondition(':end > start_time AND :end < end_time','OR');
+                //$criteria->addBetweenCondition('start_time',$request->start_time,$request->end_time);
+                //$criteria->addBetweenCondition('end_time',$request->start_time,$request->end_time,'OR');
                 $criteria->addCondition('id != :id');
-                $criteria->params += array(':id'=>$request->id);
+                $criteria->params += array(':id'=>$request->id,':start'=>$request->start_time,':end'=>$request->end_time);
                 $anyRequest = Request::model()->findAll($criteria);
             if(count($anyRequest)){
                 $request->addError('start_date','Новое событие накладывается на уже существующее');
