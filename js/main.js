@@ -155,12 +155,12 @@ modal={
 
 event={
     init:function(){
-        $('.timepicker-input').datetimepicker({
-            pickDate: false
-        });
+        /*$('.timepicker-input').datetimepicker({
+            pickDate: false,
+            forceParse:false
+        });*/
         $('.datepicker-input').datetimepicker({});
         $('button.cancel').click(function(){
-            console.log('33');
             $.fancybox.close();
         });
     }

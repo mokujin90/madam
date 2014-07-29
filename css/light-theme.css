@@ -5249,6 +5249,9 @@ input.error-value{
             display: inline-block;
             vertical-align: top;
         }
+#create-event .datetime-setting .row .box{
+    width: 370px;
+}
 #create-event .datetime-setting .input-group{
     width:300px;
 }

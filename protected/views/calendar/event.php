@@ -4,7 +4,7 @@ Yii::app()->clientScript->registerScriptFile('/js/moment.min.js', CClientScript:
 Yii::app()->clientScript->registerScriptFile('/js/bootstrap-datetimepicker.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerCssFile('/css/bootstrap-datetimepicker.min.css');
 Yii::app()->clientScript->registerScriptFile('/js/main.js', CClientScript::POS_END);
-Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript::POS_READY);
+Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript::POS_END);
 ?>
 <div>
     <?php $form=$this->beginWidget('CActiveForm', array(
@@ -15,18 +15,18 @@ Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript:
     )); ?>
 
     <?
-        $this->widget('WizardWidget',array('question'=>$question,'field'=>$field,'skin'=>'dialog'));
+        $this->widget('WizardWidget',array('question'=>$question,'field'=>$field,'skin'=>'dialog','request'=>$model));
     ?>
     <div class="box datetime-setting">
         <div class="box-header green-background">
             <div class="title"><i class="icon-comments-alt"></i> <?=Yii::t('main','Время события')?></div>
         </div>
-        <div class="row box-content box-no-padding">
+        <div class="row box-content">
             <div class="date box">
                 <div class="controls">
                     <?=CHtml::label(Yii::t('main','Дата события:'),"datepicker")?>
                     <div class="datepicker-input input-group" id="datepicker">
-                        <?=CHtml::textField('event[date]','',array('class'=>'form-control','data-format'=>"YYYY-MM-DD",'placeholder'=>Yii::t('main','Укажите дату')))?>
+                        <?=CHtml::textField('event[date]',$date['date'],array('class'=>'form-control','data-format'=>"YYYY-MM-DD",'placeholder'=>Yii::t('main','Укажите дату')))?>
                         <span class="input-group-addon"><span data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></span></span>
                     </div>
                 </div>
@@ -35,14 +35,14 @@ Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript:
                 <div class="controls">
                     <?=CHtml::label(Yii::t('main','Время начала:'),"")?>
                     <div class="timepicker-input input-group" id="timepicker">
-                        <?=CHtml::textField('event[start_time]','',array('class'=>'form-control','data-format'=>"HH:mm",'placeholder'=>Yii::t('main','Время начала')))?>
+                        <?=CHtml::textField('event[start_time]',$date['start'],array('class'=>'form-control','data-format'=>"hh:mm",'placeholder'=>Yii::t('main','Время начала')))?>
                         <span class="input-group-addon"><span class="icon-time"></span></span>
                     </div>
                 </div>
                 <div class="controls">
                     <?=CHtml::label(Yii::t('main','Время конца:'),"")?>
                     <div class="timepicker-input input-group" id="timepicker">
-                        <?=CHtml::textField('event[end_time]','',array('class'=>'form-control','data-format'=>"HH:mm",'placeholder'=>Yii::t('main','Время окончания')))?>
+                        <?=CHtml::textField('event[end_time]',$date['end'],array('class'=>'form-control','data-format'=>"hh:mm",'placeholder'=>Yii::t('main','Время окончания')))?>
                         <span class="input-group-addon"><span class="icon-time"></span></span>
                     </div>
                 </div>

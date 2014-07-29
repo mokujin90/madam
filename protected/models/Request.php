@@ -51,8 +51,8 @@ class Request extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'requestFields' => array(self::HAS_MANY, 'RequestField', 'request_id'),
-			'requestQuestions' => array(self::HAS_MANY, 'RequestQuestion', 'request_id'),
+			'requestFields' => array(self::HAS_MANY, 'RequestField', 'request_id','index'=>'field_id'),
+			'requestQuestions' => array(self::HAS_MANY, 'RequestQuestion', 'request_id','index'=>'answer_id'),
 		);
 	}
 
@@ -116,7 +116,10 @@ class Request extends CActiveRecord
         if($this->getIsNewRecord()){
             $this->create_date=new CDbExpression('NOW()');
         }
-        return parent::beforeValidate();
+        #1. Предвалидация того, что в выбранный промежуток у этого человека есть свободное время
+
+        if(Schedule::isRequest($this))
+            return parent::beforeValidate();
     }
     /**
      * Создадим объект Request после прохождения визарда пользователем
@@ -138,5 +141,23 @@ class Request extends CActiveRecord
             $result[] = $item;
         }
         return $result;
+    }
+
+    /**
+     * Метод из текущей модели раздели атрибуты $start_date и $end_date отдельно на три строки, дата, время начала и конца
+     */
+    public function getDiscreteDate(){
+        $start = new DateTime($this->start_time);
+        $end = new DateTime($this->end_time);
+        return array(
+            'start'=>$start->format('H:i'),
+            'end'=>$end->format('H:i'),
+            'date'=>$start->format('Y-m-d')
+        );
+    }
+
+    public function clearQuestionAndField(){
+        RequestField::model()->deleteAllByAttributes(array('request_id'=>$this->id));
+        RequestQuestion::model()->deleteAllByAttributes(array('request_id'=>$this->id));
     }
 }

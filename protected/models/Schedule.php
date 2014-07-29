@@ -107,4 +107,34 @@ class Schedule extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+    /**
+     * По переданной AR модели Request попробует найти рамки в которые укладывается
+     * @param $request Request
+     */
+    static public function isRequest($request){
+        $week = Help::getWeekDay($request->start_time); //текущий день недели
+        $start = new DateTime($request->start_time);
+        $end = new DateTime($request->end_time);
+        #соберем время начала и время конца в удобном виде для нашей системы
+        $date = array('start_hour'=>$start->format('H'),'start_min'=>$start->format('i'),'end_hour'=>$end->format('H'),'end_min'=>$end->format('i'));
+        $criteria = new CDbCriteria;
+        $criteria->addCondition('(start_hour<:start_hour OR (start_hour=:start_hour AND start_min<=:start_min) )AND (end_hour>:end_hour OR (end_hour=:end_hour AND end_min>=:end_min))');
+        $criteria->addCondition('user_id = :user_id AND day = :week AND enable = 1');
+        $criteria->params = array(':user_id'=>$request->user_id,':week'=>$week)+$date;
+        $schedule = Schedule::model()->findAll($criteria);
+        if(count($schedule)){#если такое время есть, то теперь вторая часть валидации - попробуем найти такие же уже запланированные события
+            $criteria = new CDbCriteria;
+                $criteria->addBetweenCondition('start_time',$request->start_time,$request->end_time);
+                $criteria->addBetweenCondition('end_time',$request->start_time,$request->end_time,'OR');
+                $criteria->addCondition('id != :id');
+                $criteria->params += array(':id'=>$request->id);
+                $anyRequest = Request::model()->findAll($criteria);
+            if(count($anyRequest))
+                return false; //если есть еще какие-то события "налазящие" на текущее не дадим сохранять
+
+            return true;
+        }
+        return false;
+    }
 }
