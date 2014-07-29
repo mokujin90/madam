@@ -163,6 +163,29 @@ event={
         $('button.cancel').click(function(){
             $.fancybox.close();
         });
+        $("#create-event").submit(function() {
+            var url = '/calendar/event/';
+            $.ajax({
+                url:url,
+                type: "POST",
+                data: $(this).serialize()+'&ajax=1', // serializes the form's elements.
+                success: function(data)
+                {
+                    console.log(data);
+                    var data = JSON.parse(data);
+                    console.log(data);
+                    if( typeof data.error != "undefined" ){
+                        $.jGrowl(data.error);
+                    }
+                    if( typeof data.redirect != "undefined" ){
+                        window.location = data.redirect;
+                    }
+                }
+            });
+
+            return false; // avoid to execute the actual submit of the form.
+        });
+
     }
 },
 employee = {

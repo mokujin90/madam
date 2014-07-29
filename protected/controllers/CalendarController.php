@@ -24,17 +24,26 @@ class CalendarController extends BaseController
         $companyId = Yii::app()->user->companyId;
         $question = Question::getQuestion($companyId);
         $field = CompanyField::getFieldByCompany($companyId);
-        if(isset($_POST['save'])){
+        if(isset($_POST['ajax'])){
+            $result = array();
             $model->user_id = $userId; //TODO: подставить нужного
             $model->start_time = $_POST['event']['date']." ".$_POST['event']['start_time'];
             $model->end_time = $_POST['event']['date']." ".$_POST['event']['end_time'];
-            if($model->save()){
-                $model->clearQuestionAndField();
-                RequestQuestion::createByPost($_POST['answer'],$model->id);
-                RequestField::createByPost($_POST['field'],$model->id);
+            if(!$model->validate()){
+                $result['error']=$this->drawError($model->getErrors());
             }
-            $this->redirect(Yii::app()->request->urlReferrer);
+            else{
+                if($model->save()){
+                    $model->clearQuestionAndField();
+                    RequestQuestion::createByPost($_POST['answer'],$model->id);
+                    RequestField::createByPost($_POST['field'],$model->id);
+                }
+                $result['redirect'] = Yii::app()->request->urlReferrer;
+            }
+            echo json_encode($result);
+            Yii::app()->end();
         }
+
         $this->render('event',array('model'=>$model,'question'=>$question,'field'=>$field,'date'=>$model->getDiscreteDate()));
     }
 
