@@ -125,8 +125,8 @@ class Schedule extends CActiveRecord
         $schedule = Schedule::model()->findAll($criteria);
         if(count($schedule)){#если такое время есть, то теперь вторая часть валидации - попробуем найти такие же уже запланированные события
             $criteria = new CDbCriteria;
-                $criteria->addBetweenCondition('start_time',$request->start_time,$request->end_time);
-                $criteria->addBetweenCondition('end_time',$request->start_time,$request->end_time,'OR');
+                $criteria->addCondition("(start_time > '{$request->start_time}' AND start_time < '{$request->end_time}')");
+                $criteria->addCondition("(end_time > '{$request->start_time}' AND start_time < '{$request->end_time}')",'OR');
                 $criteria->addCondition('id != :id');
                 $criteria->params += array(':id'=>$request->id);
                 $anyRequest = Request::model()->findAll($criteria);

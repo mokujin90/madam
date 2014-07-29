@@ -153,10 +153,10 @@ modal={
             type: 'ajax',
             ajax: {
                 complete: function(jqXHR, textStatus) {
-                    $('.timepicker-input').datetimepicker({
+                    /*$('.timepicker-input').datetimepicker({
                         pickDate: false
                     });
-                    $('.datepicker-input').datetimepicker({});
+                    $('.datepicker-input').datetimepicker({});*/
                 }
             }
         });
@@ -169,7 +169,20 @@ event={
             pickDate: false,
             forceParse:false
         });*/
-        //$('.datepicker-input').datetimepicker({});
+        $(".datepicker-input-fb").datetimepicker({
+            pickTime: false,
+            icons: {
+                time: "icon-time",
+                date: "icon-calendar",
+                up: "icon-arrow-up",
+                down: "icon-arrow-down"
+            },
+            defaultDate: new Date(),
+            language: 'ru'
+        });
+        $.mask.definitions['2'] = "[0-2]";
+        $.mask.definitions['5'] = "[0-5]";
+        $('.time-mask').mask("29:59");
         $('button.cancel').click(function(){
             $.fancybox.close();
         });

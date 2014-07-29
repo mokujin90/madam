@@ -156,7 +156,8 @@ class Request extends CActiveRecord
         return array(
             'start'=>$start->format('H:i'),
             'end'=>$end->format('H:i'),
-            'date'=>$start->format('Y-m-d')
+            'date'=>$start->format('Y-m-d'),
+            'date_formatted' => $start->format('m/d/Y')
         );
     }
 

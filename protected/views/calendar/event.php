@@ -2,8 +2,10 @@
 /* @var $this CalendarController */
 Yii::app()->clientScript->registerScriptFile('/js/moment.min.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerScriptFile('/js/bootstrap-datetimepicker.js', CClientScript::POS_HEAD);
+Yii::app()->clientScript->registerScriptFile('/js/locales/bootstrap-datetimepicker.ru.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerCssFile('/css/bootstrap-datetimepicker.min.css');
 
+Yii::app()->clientScript->registerScriptFile('/js/jquery.maskedinput.min.js', CClientScript::POS_HEAD);
 
 Yii::app()->clientScript->registerScriptFile('/js/jquery.jgrowl.min.js', CClientScript::POS_END);
 Yii::app()->clientScript->registerCssFile('/css/jquery.jgrowl.min.css');
@@ -15,7 +17,8 @@ Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript:
     <?php $form=$this->beginWidget('CActiveForm', array(
         'htmlOptions'=>array(
             'role'=>"form",
-            'id'=>'create-event'
+            'id'=>'create-event',
+            'class' => 'validate-form'
         ),
     )); ?>
 
@@ -30,8 +33,8 @@ Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript:
             <div class="date box">
                 <div class="controls">
                     <?=CHtml::label(Yii::t('main','Дата события:'),"datepicker")?>
-                    <div class="datepicker-input input-group" id="datepicker">
-                        <?=CHtml::textField('event[date]',$date['date'],array('class'=>'form-control','data-format'=>"YYYY-MM-DD",'placeholder'=>Yii::t('main','Укажите дату')))?>
+                    <div class="datepicker-input-fb input-group" id="datepicker" data-date-format="YYYY-MM-DD">
+                        <?=CHtml::textField('event[date]',$date['date'],array('class'=>'form-control','placeholder'=>Yii::t('main','Укажите дату')))?>
                         <span class="input-group-addon"><span data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></span></span>
                     </div>
                 </div>
@@ -39,15 +42,15 @@ Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript:
             <div class="time box">
                 <div class="controls">
                     <?=CHtml::label(Yii::t('main','Время начала:'),"")?>
-                    <div class="timepicker-input input-group" id="timepicker">
-                        <?=CHtml::textField('event[start_time]',$date['start'],array('class'=>'form-control','data-format'=>"hh:mm",'placeholder'=>Yii::t('main','Время начала')))?>
+                    <div class="timepicker-input-fb input-group" id="timepicker">
+                        <?=CHtml::textField('event[start_time]',$date['start'],array('class'=>'form-control time-mask','data-format'=>"hh:mm",'placeholder'=>Yii::t('main','Время начала')))?>
                         <span class="input-group-addon"><span class="icon-time"></span></span>
                     </div>
                 </div>
                 <div class="controls">
                     <?=CHtml::label(Yii::t('main','Время конца:'),"")?>
-                    <div class="timepicker-input input-group" id="timepicker">
-                        <?=CHtml::textField('event[end_time]',$date['end'],array('class'=>'form-control','data-format'=>"hh:mm",'placeholder'=>Yii::t('main','Время окончания')))?>
+                    <div class="timepicker-input-fb input-group" id="timepicker">
+                        <?=CHtml::textField('event[end_time]',$date['end'],array('class'=>'form-control time-mask','data-format'=>"hh:mm",'placeholder'=>Yii::t('main','Время окончания')))?>
                         <span class="input-group-addon"><span class="icon-time"></span></span>
                     </div>
                 </div>
