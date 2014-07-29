@@ -3,11 +3,7 @@
         <div class="box-header blue-background">
             <div class="title"><?=Yii::t('main','Неделя')?> <?=Help::getDayText($date, true);?></div>
             <div class="actions">
-                <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i>
-                </a>
-
-                <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
-                </a>
+                <a class="btn action-refresh btn-xs btn-link" href="#" data-date="<?=Help::getDate($date);?>"><i class="icon-refresh"></i></a>
             </div>
         </div>
         <div class="box-content box-no-padding">
