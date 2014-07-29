@@ -23,12 +23,6 @@
                 <th class="col-xs-1 text-center time-col">
                     Time
                 </th>
-                <th>
-                    E-mail
-                </th>
-                <th>
-                    Status
-                </th>
                 <th></th>
             </tr>
             </thead>
@@ -49,10 +43,12 @@
                                         'id' =>(isset($event['event']) ? $event['event'] : 0)
                                     ),
                                     array(
-                                        'class' => ("event label label-success " .(isset($event['event']) ? "label-info" : '')),
+                                        'class' => ("event label label-success " .(isset($event['event']) ? "has-popover label-info" : '')),
                                         'data-start' => $event['start']->format(Help::DATETIME),
                                         'data-end' => $event['end']->format(Help::DATETIME),
-                                        'data-id' =>(isset($event['event']) ? $event['event'] : false)
+                                        'data-id' =>(isset($event['event']) ? $event['event'] : false),
+                                        'data-content' =>(isset($event['event']) ? $this->getEventHint($event['model']) : false),
+                                        'data-placement' => 'top',
                                     ))?>
                             <?endforeach?>
                         </td>

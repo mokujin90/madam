@@ -2,11 +2,17 @@
 
 class CalendarController extends BaseController
 {
-	public function actionIndex()
+	public function actionIndex($id)
 	{
         $this->layout = 'companyLayout';
+        $this->pageCaption=Yii::t('main',"Календарь");
+        $this->pageIcon = 'calendar';
+        $this->mainMenuActiveId="calendar";
 
-        $user = User::model()->findByPk(19);
+        $user = User::model()->findByPk($id);
+        if (!$user) {
+            throw new CHttpException(404, Yii::t('main', 'Page not found.'));
+        }
 
 		$this->render('index', array('user' => $user));
 	}
@@ -41,5 +47,15 @@ class CalendarController extends BaseController
     public function actionTest(){
         $this->layout = 'simple';
         $this->render('test');
+    }
+
+    public function actionChangeCalendarDate($user_id, $date, $active_tab = 'day'){
+        $user = User::model()->findByPk($user_id);
+        if (!$user) {
+            echo Yii::t('main', 'Пользователь не существует');
+        } else {
+            $date = new DateTime($date);
+            echo $this->renderPartial('_ajaxCalendar', array('user' => $user, 'date' => $date, 'active_tab' => $active_tab));
+        }
     }
 }

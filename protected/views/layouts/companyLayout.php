@@ -100,14 +100,14 @@
                         <i class="icon-angle-down angle-down"></i>
                     </a>
                     <ul class="nav nav-stacked <?=$this->mainMenuActiveId=='employee'?'in':'';?>">
-                        <li class="<?=empty($_GET['id'])?'active':'';?>">
+                        <li class="<?=empty($_GET['id']) && $this->mainMenuActiveId=='employee' ?'active':'';?>">
                             <a href="/employee/create">
                                 <i class="icon-plus"></i>
                                 <span>Добавить работника</span>
                             </a>
                         </li>
                         <?foreach(User::getMenuList() as $item){?>
-                        <li class="<?=(isset($_GET['id']) && $_GET['id']==$item->id)?'active':'';?>">
+                        <li class="<?=$this->mainMenuActiveId=='employee' && (isset($_GET['id']) && $_GET['id']==$item->id)?'active':'';?>">
                             <a href="/employee/update/id/<?=$item->id;?>">
                                 <i class="icon-user"></i>
                                 <span><?=$item->login;?></span>
@@ -121,6 +121,23 @@
                         <i class="icon-table"></i>
                         <span>Test online booking</span>
                     </a>
+                </li>
+                <li>
+                    <a class="dropdown-collapse <?=$this->mainMenuActiveId=='calendar'?'in':'';?>" href="#">
+                        <i class="icon-calendar"></i>
+                        <span>Calendar</span>
+                        <i class="icon-angle-down angle-down"></i>
+                    </a>
+                    <ul class="nav nav-stacked <?=$this->mainMenuActiveId=='calendar'?'in':'';?>">
+                        <?foreach(User::getMenuList() as $item){?>
+                        <li class="<?=($this->mainMenuActiveId=='calendar' && isset($_GET['id']) && $_GET['id']==$item->id)?'active':'';?>">
+                            <a href="/calendar/index/id/<?=$item->id;?>">
+                                <i class="icon-user"></i>
+                                <span><?=$item->login;?></span>
+                            </a>
+                        </li>
+                        <?}?>
+                    </ul>
                 </li>
             </ul>
         </div>

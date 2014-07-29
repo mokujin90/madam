@@ -192,13 +192,16 @@ class User extends CActiveRecord
      * Существующая модель: Приводит модель к массиву вида: array[день][] = array(params)
      * Новая модель: возвращает scheduleUpdate
      */
-    public function getScheduleByDay()
+    public function getScheduleByDay($withDisable = true)
     {
         if ($this->isNewRecord) {
             return $this->scheduleUpdate;
         }
         $result = array();
         foreach ($this->schedulesOrder as $item) {
+            if ($item->enable == 0 && !$withDisable) {
+                continue;
+            }
             $result[$item->day][] = array('startHour' => $item->start_hour, 'startMin' => $item->start_min, 'endHour' => $item->end_hour, 'endMin' => $item->end_min, 'enable' => $item->enable);
         }
         return $result;
