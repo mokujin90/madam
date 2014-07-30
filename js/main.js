@@ -332,6 +332,20 @@ calendar = {
                 }
             });
         }
+    },
+    search:function(){
+        var userId = $('#user_id').val();
+        $("#find-event").submit(function() {
+            var url = '/calendar/index/id/'+userId+'/';
+            $.ajax({
+                url:url,type: "POST",data: $(this).serialize()+'&search=1',
+                success: function(data)
+                {
+                   $('#search-result').html(data);
+                }
+            });
+            return false;
+        });
     }
 },
 common = {

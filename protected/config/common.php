@@ -14,6 +14,7 @@ return array(
     'import' => array(
         'application.controllers.*',
         'application.models.*',
+        'application.models.form.*',
         'application.components.*',
         'application.helpers.*',
         'application.widgets.*',

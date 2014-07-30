@@ -16,7 +16,15 @@ class CalendarController extends BaseController
         if(isset($date)){
             $date = new DateTime($date);
         }
-		$this->render('index', array('user' => $user, 'date' => $date));
+        $find = new Find();
+        if(isset($_POST['search']) && Yii::app()->request->isAjaxRequest){
+            $find->attributes = $_POST['Find'];
+            $find->userId = $id;
+            $result = $find->search($id);
+            echo $find->render($result);
+            Yii::app()->end();
+        }
+		$this->render('index', array('user' => $user, 'date' => $date,'find'=>$find));
 	}
 
     public function actionEvent($id=null,$start=null,$end=null,$user_id){

@@ -17,6 +17,7 @@ Yii::app()->clientScript->registerScript('calendarInit', 'calendar.init()', CCli
             <?=CHtml::textField('event[date]','',array('class'=>'form-control','data-format'=>"YYYY-MM-DD",'placeholder'=>Yii::t('main','Укажите дату')))?>
             <span class="input-group-addon"><span data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></span></span>
         </div>
+    <li class="" data-tab="week"><a data-toggle="tab" href="/calendar/index#find"><?=Yii::t('main','Поиск')?></a></li>
 </ul>
     <?=CHtml::hiddenField('user_id', $user->id, array('id' => 'user_id'));?>
 <div class="tab-content" id="calendar-tab-content">
@@ -31,5 +32,12 @@ Yii::app()->clientScript->registerScript('calendarInit', 'calendar.init()', CCli
         'user' => $user,
         'date' => $date
     )); ?>
+    </div>
+    <div class="tab-pane" id="find">
+        <?php $this->renderPartial('_find',array(
+            'user' => $user,
+            'date' => $date,
+            'find'=>$find,
+        )); ?>
     </div>
 </div>
