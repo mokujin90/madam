@@ -142,7 +142,7 @@ class Request extends CActiveRecord
         foreach($model as $item){
             $item->start_time = new DateTime($item->start_time);
             $item->end_time = new DateTime($item->end_time);
-            $result[] = $item;
+            $result[$item->start_time->format(Help::DATETIME)][] = $item;
         }
         return $result;
     }

@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="box-content box-no-padding">
-            <?php $this->widget('DayCalendarWidget',array('user' => $user, 'mode' => 'week', 'date' => isset($date) ? $date : false)); ?>
+            <?php $this->widget('CalendarWidget',array('user' => $user, 'mode' => 'week', 'date' => isset($date) ? $date : false)); ?>
         </div>
     </div>
 </div>

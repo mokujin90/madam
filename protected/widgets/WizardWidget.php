@@ -55,7 +55,7 @@ class WizardWidget extends CWidget{
      */
     private function getAnswerRadio($answerId,$answerArray,$requestId=null,$count=0){
         //Help::dump(array($answerId,$answerArray,$requestId,$count),false);
-        if((is_null($requestId) && $count==0) || !is_null($requestId) && isset($answerArray[$answerId])){
+        if((empty($answerArray) && $count==0) || isset($answerArray[$answerId])){
             return true;
         }
         else{
@@ -63,7 +63,7 @@ class WizardWidget extends CWidget{
         }
     }
     private function getAnswerCheck($answerId,$answerArray,$requestId=null,$count=0){
-        if(!is_null($requestId) && isset($answerArray[$answerId])){
+        if(isset($answerArray[$answerId])){
             return true;
         }
         else{

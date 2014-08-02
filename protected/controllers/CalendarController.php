@@ -21,13 +21,13 @@ class CalendarController extends BaseController
             $find->attributes = $_POST['Find'];
             $find->userId = $id;
             $result = $find->search($id);
-            echo $find->render($result);
+            echo $this->renderPartial('_findResult', array('findResult' => $result));
             Yii::app()->end();
         }
 		$this->render('index', array('user' => $user, 'date' => $date,'find'=>$find));
 	}
 
-    public function actionEvent($id=null,$start=null,$end=null,$user_id){
+    public function actionEvent($id=null,$start=null,$end=null,$user_id, $copy = null){
         $this->blockJquery();
         if(empty($id)){//если создаем новую запись вставим из get'a дату начала и конца
             $model = new Request();
@@ -36,6 +36,13 @@ class CalendarController extends BaseController
         }
         else{ #заберем данные о редактируемом событии с вопросами и полями, на которые уже отвечали
             $model = Request::model()->with('requestFields','requestQuestions')->findByPk($id);
+            if (!empty($copy)) {
+                $modelCopy = new Request();
+                $modelCopy->attributes = $model->attributes;
+                $modelCopy['requestQuestions'] = $model['requestQuestions'];
+                $modelCopy['requestFields'] = $model['requestFields'];
+                $model = $modelCopy;
+            }
         }
         $model->user_id = $user_id;
         $companyId = Yii::app()->user->companyId;

@@ -1,6 +1,6 @@
 <?
 /**
- * @var $this DayCalendarWidget
+ * @var $this CalendarWidget
  */
 ?>
 <style>
@@ -51,7 +51,8 @@
             <?$eventInterval = $this->getEventLinksForWeek();?>
             <?$enable = $this->getEnableHoursForWeek();?>
             <?for($hour = 0; $hour < 24; $hour++):?>
-                <?=CHtml::openTag('tr')?>
+                <?if(!$this->disabledHour($enable, $hour)):?>
+                <tr>
                     <td class="col-xs-1 text-center time-col"><?=$hour?>:00</td>
                     <?foreach($this->shedule as $day=>$obj):?>
                         <?if($enable[$day][$hour]):?>
@@ -67,9 +68,8 @@
                                     ),
                                     array(
                                         'class' => "inline-200 " . $this->getEventClass($event),
-                                        'data-start' => $event['start']->format(Help::DATETIME),
-                                        'data-end' => $event['end']->format(Help::DATETIME),
-                                        'data-id' =>(isset($event['event']) ? $event['event'] : false)
+                                        'data-content' =>(isset($event['event']) ? $this->getEventHint($event['model']) : false),
+                                        'data-placement' => 'top',
                                     ))?>
                                 <br>
                                 <?endforeach?>
@@ -78,7 +78,8 @@
                             <td class="disable"><span class="inline-200"><i class="icon-remove-sign"></i> Недоступно</span></td>
                         <?endif?>
                     <?endforeach?>
-                <?=CHtml::closeTag('tr')?>
+                </tr>
+                <?endif?>
             <?endfor?>
 
             </tbody>

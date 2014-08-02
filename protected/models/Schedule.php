@@ -130,17 +130,35 @@ class Schedule extends CActiveRecord
         if(count($schedule)){#если такое время есть, то теперь вторая часть валидации - попробуем найти такие же уже запланированные события
             $criteria = new CDbCriteria;
 
-                $criteria->addCondition("(start_time > '{$request->start_time}' AND start_time < '{$request->end_time}')");
-                $criteria->addCondition("(end_time > '{$request->start_time}' AND start_time < '{$request->end_time}')",'OR');
+                $criteria->addCondition("(start_time > :start AND start_time < :end)");
+                $criteria->addCondition("(end_time > :start AND end_time < :end)",'OR');
                 $criteria->params += array(':start'=>$request->start_time,':end'=>$request->end_time);
                 if(!is_null($request->id)){ //для нового события id еще не существует
                     $criteria->addCondition('id != :id');
                     $criteria->params += array(':id'=>$request->id);
                 }
                 $anyRequest = Request::model()->findAll($criteria);
-            if(count($anyRequest)){
+            if(count($anyRequest)){ //есть пересечение с другим событием
                 $request->addError('start_date','Новое событие накладывается на уже существующее');
                 return false; //если есть еще какие-то события "налазящие" на текущее не дадим сохранять
+            } else { //проверка на пареллельное событие
+                $user = User::model()->findByPk($request->user_id);
+                if (!$user){
+                    $request->addError('user_id', 'Undefined user_id');
+                    return false;
+                }
+                $criteria = new CDbCriteria;
+                $criteria->addCondition("(start_time = :start AND end_time = :end)");
+                $criteria->params += array(':start' => $request->start_time, ':end' => $request->end_time);
+                $groupRequestCount = Request::model()->count($criteria);
+                if ($groupRequestCount != 0) { //есть параллельное событие
+                    if ($groupRequestCount < $user->group_size) {
+                        return true;
+                    } else {
+                        $request->addError('start_date', 'Превышен максимальный размер группы: ' . $user->group_size . ' чел.');
+                        return false;
+                    }
+                }
             }
             return true;
         }
