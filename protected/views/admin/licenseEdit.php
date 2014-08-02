@@ -5,7 +5,7 @@
         'class'=>'form form-horizontal'
     )
 )); ?>
-    <?php $this->renderPartial('/admin/_license', array('model'=>$model,'form'=>$form)); ?>
+    <?php $this->renderPartial('/admin/_license', array('model'=>$model,'form'=>$form, 'style' => '')); ?>
 <div class="col-lg-6">
     <button type="submit" value="1" name="save" class="btn btn-success"><?=$model->isNewRecord ? 'Create' : 'Save'?></button>
 </div>

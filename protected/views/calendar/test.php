@@ -2,11 +2,11 @@
 <div class="main-box-body clearfix">
     <div class="col-md-3 col-sm-6 col-xs-12 pricing-package">
         <div class="pricing-package-inner">
-            <div class="package-header">
+            <div class="package-header blue-background">
                 <div class="stars text-center">
                     <i class="icon-star"></i>
                 </div>
-                <h3>Стартовая</h3>
+                <h3></i>Стартовая</h3>
             </div>
             <div class="package-content">
                 <div class="package-price">FREE</span>
@@ -69,13 +69,13 @@
                         phone_help
                     </li>
                 </ul>
-                <a class="buy-action btn btn-inverse" href="#"><i class="icon-money"></i> Купить</a>
+                <a class="buy-action btn disabled" href="#"><i class="icon-ok"></i> Действует</a>
             </div>
         </div>
     </div>
     <div class="col-md-3 col-sm-6 col-xs-12 pricing-package">
         <div class="pricing-package-inner">
-            <div class="package-header purple-bg">
+            <div class="package-header purple-background">
                 <div class="stars text-center">
                     <i class="icon-star"></i>
                     <i class="icon-star"></i>
@@ -150,7 +150,7 @@
     </div>
     <div class="col-md-3 col-sm-6 col-xs-12 pricing-package">
         <div class="pricing-package-inner">
-            <div class="package-header red-bg">
+            <div class="package-header red-background">
                 <div class="stars text-center">
                     <i class="icon-star"></i>
                     <i class="icon-star"></i>
@@ -225,7 +225,7 @@
     </div>
     <div class="col-md-3 col-sm-6 col-xs-12 pricing-package">
         <div class="pricing-package-inner">
-            <div class="package-header yellow-bg">
+            <div class="package-header orange-background">
                 <div class="stars text-center">
                     <i class="icon-star"></i>
                     <i class="icon-star"></i>
@@ -246,7 +246,7 @@
             </div>
         </div>
         <div class="pricing-package-inner">
-            <div class="package-header yellow-bg">
+            <div class="package-header orange-background">
                 <div class="stars text-center">
                     <i class="icon-user"></i>
                 </div>
@@ -264,7 +264,7 @@
             </div>
         </div>
         <div class="pricing-package-inner">
-            <div class="package-header gray-bg">
+            <div class="package-header muted-background">
                 <div class="stars text-center">
                     <i class="icon-envelope"></i>
                 </div>
@@ -278,7 +278,7 @@
                         + 100 SMS
                     </li>
                 </ul>
-                <a class="buy-action btn btn-inverse disabled" href="#"><i class="icon-money"></i> Купить</a>
+                <a class="buy-action btn btn-inverse disabled" href="#"><i class="icon-lock"></i> Не доступно</a>
             </div>
         </div>
     </div>
