@@ -18,6 +18,7 @@
     <?Yii::app()->clientScript->registerScriptFile('/js/bootstrap.js', CClientScript::POS_END);?>
     <?Yii::app()->clientScript->registerScriptFile('/js/theme.js', CClientScript::POS_END);?>
     <?Yii::app()->clientScript->registerScriptFile('/js/jquery.jgrowl.min.js', CClientScript::POS_END);?>
+    <?Yii::app()->clientScript->registerScriptFile('/js/admin.js', CClientScript::POS_END);?>
 </head>
 <body class="contrast-red main-nav-opened">
 <header>
@@ -73,77 +74,13 @@
             </div>
             <ul class="nav nav-stacked">
                 <li class="">
-                    <a href="/company"  class="<?=$this->mainMenuActiveId=='company'?'in':'';?>">
-                        <i class="icon-cog"></i>
-                        <span>Company data</span>
-                    </a>
-                </li>
-
-                <li class="">
-                    <a href="/company/settings"  class="<?=$this->mainMenuActiveId=='settings'?'in':'';?>">
-                        <i class="icon-cog"></i>
-                        <span>Settings</span>
-                    </a>
-                </li>
-
-                <li class="">
-                    <a href="/requestForm" class="<?=$this->mainMenuActiveId=='question'?'in':'';?>">
-                        <i class="icon-question"></i>
-                        <span>Date fields and date questions</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a class="dropdown-collapse <?=$this->mainMenuActiveId=='employee'?'in':'';?>" href="#">
-                        <i class="icon-group"></i>
-                        <span>Employees</span>
-                        <i class="icon-angle-down angle-down"></i>
-                    </a>
-                    <ul class="nav nav-stacked <?=$this->mainMenuActiveId=='employee'?'in':'';?>">
-                        <li class="<?=empty($_GET['id']) && $this->mainMenuActiveId=='employee' ?'active':'';?>">
-                            <a href="/employee/create">
-                                <i class="icon-plus"></i>
-                                <span>Добавить работника</span>
-                            </a>
-                        </li>
-                        <?foreach(User::getMenuList() as $item){?>
-                        <li class="<?=$this->mainMenuActiveId=='employee' && (isset($_GET['id']) && $_GET['id']==$item->id)?'active':'';?>">
-                            <a href="/employee/update/id/<?=$item->id;?>">
-                                <i class="icon-user"></i>
-                                <span><?=$item->login;?></span>
-                            </a>
-                        </li>
-                        <?}?>
-                    </ul>
+                    <?php echo CHtml::link('<i class="icon-cog"></i><span>Base License</span>',array('AdminLicense/index'),array('class'=>$this->mainMenuActiveId=='baseLicense'?'in':''))?>
                 </li>
                 <li class="">
-                    <a href="/site/company/id/1" target="_blank">
-                        <i class="icon-table"></i>
-                        <span>Test online booking</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-collapse <?=$this->mainMenuActiveId=='calendar'?'in':'';?>" href="#">
-                        <i class="icon-calendar"></i>
-                        <span>Calendar</span>
-                        <i class="icon-angle-down angle-down"></i>
-                    </a>
-                    <ul class="nav nav-stacked <?=$this->mainMenuActiveId=='calendar'?'in':'';?>">
-                        <?foreach(User::getMenuList() as $item){?>
-                        <li class="<?=($this->mainMenuActiveId=='calendar' && isset($_GET['id']) && $_GET['id']==$item->id)?'active':'';?>">
-                            <a href="/calendar/index/id/<?=$item->id;?>">
-                                <i class="icon-user"></i>
-                                <span><?=$item->login;?></span>
-                            </a>
-                        </li>
-                        <?}?>
-                    </ul>
+                    <?php echo CHtml::link('<i class="icon-cog"></i><span>Company</span>',array('AdminCompany/index'),array('class'=>$this->mainMenuActiveId=='company'?'in':''))?>
                 </li>
                 <li class="">
-                    <a href="/company/more"  class="<?=$this->mainMenuActiveId=='more'?'in':'';?>">
-                        <i class="icon-cog"></i>
-                        <span>Donat</span>
-                    </a>
+                    <?php echo CHtml::link('<i class="icon-cog"></i><span>Approve</span>',array('AdminCompany/approveList'),array('class'=>$this->mainMenuActiveId=='approve'?'in':''))?>
                 </li>
             </ul>
         </div>

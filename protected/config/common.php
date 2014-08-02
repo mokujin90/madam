@@ -40,7 +40,7 @@ return array(
         'urlManager' => array(
             'showScriptName' => false,
             'urlFormat' => 'path',
-            'caseSensitive' => 'false',
+            'caseSensitive' => false,
             'rules' => array(
                 'gii' => 'gii',
                 'gii/<controller:nw+>' => 'gii/<controller>',
