@@ -352,4 +352,17 @@ common = {
     deleteConfirm:function(){
         return (confirm('Удалить?'));
     }
+},
+more ={
+    init:function(){
+        $('#manual-edit').click(function(){
+            var $license = $('#license-form');
+            $license.toggle();
+            return false;
+        });
+    }
+}
+$.urlParam = function(name){
+    var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
+    return results[1] || 0;
 }

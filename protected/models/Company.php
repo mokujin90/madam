@@ -96,6 +96,7 @@ class Company extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'company2Licenses' => array(self::HAS_MANY, 'Company2License', 'company_id','order'=>'date DESC'),
             'country' => array(self::BELONGS_TO, 'Country', 'country_id'),
 			'companyFields' => array(self::HAS_MANY, 'CompanyField', 'company_id'),
 			'questions' => array(self::HAS_MANY, 'Question', 'company_id'),
@@ -170,5 +171,12 @@ class Company extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
+    }
+    protected function afterSave()
+    {
+        parent::afterSave();
+        $license = new Company2License;
+        $license->attributes = array('license_id'=>License::DEFAULT_LICENSE_ID,'company_id'=>$this->id,'is_agree'=>1,'date'=>Help::currentDate());
+        $license->save();
     }
 }

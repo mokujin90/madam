@@ -130,8 +130,8 @@ class Schedule extends CActiveRecord
         if(count($schedule)){#если такое время есть, то теперь вторая часть валидации - попробуем найти такие же уже запланированные события
             $criteria = new CDbCriteria;
 
-                $criteria->addCondition("(start_time > '{$request->start_time}' AND start_time < '{$request->end_time}')");
-                $criteria->addCondition("(end_time > '{$request->start_time}' AND start_time < '{$request->end_time}')",'OR');
+                $criteria->addCondition("(start_time > :start AND start_time < :end)");
+                $criteria->addCondition("(end_time > :start AND start_time < :end)",'OR');
                 $criteria->params += array(':start'=>$request->start_time,':end'=>$request->end_time);
                 if(!is_null($request->id)){ //для нового события id еще не существует
                     $criteria->addCondition('id != :id');
