@@ -71,7 +71,10 @@ class CalendarController extends BaseController
     }
 
     public function actionTest(){
-        $this->layout = 'simple';
+        $this->layout = 'companyLayout';
+        $this->pageCaption=Yii::t('main',"Календарь");
+        $this->pageIcon = 'calendar';
+        $this->mainMenuActiveId="calendar";
         $this->render('test');
     }
 
