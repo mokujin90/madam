@@ -1,6 +1,6 @@
 <?php
 
-class DayCalendarWidget extends CWidget{
+class CalendarWidget extends CWidget{
     /**
      * @var $question Question[]
      */
@@ -117,15 +117,25 @@ class DayCalendarWidget extends CWidget{
     private function generateInterval($requests, &$dateStart, &$dateEnd, &$enableHour, &$eventEnd, $calendarDelimit)
     {
         foreach ($requests as $item) { //ищем брни, которые начинаются в текущем интервале-событии
-            if ($item->start_time == $dateStart) { //начало интервала совпало с началом брони
-                $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $item->end_time, 'event' => $item->id, 'model' => $item);
-                $eventEnd = $item->end_time;
+            if ($item[0]->start_time == $dateStart) { //начало интервала совпало с началом брони
+                foreach ($item as $eventItem) { //выводим всех людей записанных на это время
+                    $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $eventItem->end_time, 'event' => $eventItem->id, 'model' => $eventItem);
+                }
+                if ($this->user->group_size > count($item)) { //выводим бронь для нового члена группы, если остались места
+                    $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $item[0]->end_time);
+                }
+                $eventEnd = $item[0]->end_time;
                 break;
-            } else if ($item->start_time > $dateStart && $item->start_time < $dateEnd) { //до начала брони есть участок свободного времени
+            } else if ($item[0]->start_time > $dateStart && $item[0]->start_time < $dateEnd) { //до начала брони есть участок свободного времени
                 //выделяем участок свободного времени до брони в отдельный интервал-событие
                 $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $item->start_time);
-                $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $item->start_time, 'end' => clone $item->end_time, 'event' => $item->id, 'model' => $item);
-                $eventEnd = $item->end_time;
+                foreach ($item as $eventItem) { //выводим всех людей записанных на это время
+                    $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $eventItem->start_time, 'end' => clone $eventItem->end_time, 'event' => $eventItem->id, 'model' => $eventItem);
+                }
+                if ($this->user->group_size > count($item)) { //выводим бронь для нового члена группы, если остались места
+                    $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $item[0]->end_time);
+                }
+                $eventEnd = $item[0]->end_time;
                 break;
             }
         }
@@ -164,10 +174,13 @@ class DayCalendarWidget extends CWidget{
         return $result;
     }
 
-    public function getEventHint($request)
+    public function getEventHint($request, $required = false)
     {
         $html = '';
         foreach ($request->requestFields as $field) {
+            if ($required && $field->field->type != 'required') {
+                continue;
+            }
             $html .= "{$field->field->name}: <b>{$field->value}</b><br>";
         }
         return $html;
@@ -187,5 +200,27 @@ class DayCalendarWidget extends CWidget{
             $class .= " label-success";
         }
         return $class;
+    }
+
+    public function disabledDay($enableHours)
+    {
+        for ($hour = 0; $hour < 24; $hour++) {
+            if ($enableHours[$hour]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Проверяет заблокирован ли час на протяжении всей недели.
+     */
+    public function disabledHour($enableHours, $hour){
+        foreach($this->shedule as $day=>$obj) {
+            if($enableHours[$day][$hour]){
+                return false;
+            }
+        }
+        return true;
     }
 }

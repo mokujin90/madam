@@ -61,7 +61,7 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('company_id, login, password', 'required'),
-			array('is_owner, calendar_delimit, calendar_front_delimit', 'numerical', 'integerOnly'=>true),
+			array('is_owner, calendar_delimit, calendar_front_delimit, group_size', 'numerical', 'integerOnly'=>true),
 			array('company_id', 'length', 'max'=>11),
 			array('login, password, name, lastname, description, caldav', 'length', 'max'=>255),
 			// The following rule is used by search().
@@ -98,6 +98,7 @@ class User extends CActiveRecord
 			'name' => Yii::t('main','Имя'),
 			'lastname' => Yii::t('main','Фамилия'),
 			'description' => Yii::t('main','Описание'),
+			'group_size' => Yii::t('main','Кол-во человек на прием'),
 			'calendar_delimit' => Yii::t('main','Интервал приема'),
 			'calendar_front_delimit' => Yii::t('main','Интервал назначений'),
 			'caldav' => 'CalDav',

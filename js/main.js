@@ -326,7 +326,8 @@ calendar = {
                     calendarOnChange = false;
                 },
                 success: function (data) {
-                    $('#calendar-tab-content').html(data);
+                    $('#day-calendar, #week-calendar').remove();
+                    $('#calendar-tab-content').append(data);
                     calendarOnChange = false;
                     $.jGrowl("Календарь обновлен");
                 }
@@ -336,6 +337,7 @@ calendar = {
     search:function(){
         var userId = $('#user_id').val();
         $("#find-event").submit(function() {
+            $('#search-result').empty();
             var url = '/calendar/index/id/'+userId+'/';
             $.ajax({
                 url:url,type: "POST",data: $(this).serialize()+'&search=1',

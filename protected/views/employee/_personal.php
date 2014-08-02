@@ -45,6 +45,18 @@
         </div>
     </div>
     <div class="form-group">
+        <?= $form->labelEx($model,'group_size', array('class' => "col-xs-4 control-label")); ?>
+        <div class="col-xs-4">
+            <?= $form->numberField($model, 'group_size', array('class' => "form-control", 'min' => 1)); ?>
+        </div>
+        <div class="col-xs-1">
+            <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="right" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
+        </div>
+        <div class="col-xs-3">
+            <?= $form->error($model,'group_size'); ?>
+        </div>
+    </div>
+    <div class="form-group">
         <?= $form->labelEx($model,'calendar_delimit', array('class' => "col-xs-4 control-label")); ?>
         <div class="col-xs-4">
             <?= $form->dropDownList($model, 'calendar_delimit', User::$calendarDelimit, array('class' => "form-control")); ?>
