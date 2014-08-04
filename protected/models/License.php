@@ -173,4 +173,12 @@ class License extends CActiveRecord
         return $this->is_system==0 ? 0 : $this->base_lvl;
     }
 
+    public static function getStandardLicense(){
+        return License::model()->findAllByAttributes(array('id'=>array_keys(License::$base)));
+    }
+
+    public function getClass($field){
+        return $this->{$field}==0 ? "has-nofeature" : "has-feature";
+    }
+
 }

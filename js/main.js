@@ -360,6 +360,7 @@ more ={
         $('#manual-edit').click(function(){
             var $license = $('#license-form');
             $license.toggle();
+            $("html, body").animate({ scrollTop: $('#edit-license').position().top }, "slow");
             return false;
         });
     }

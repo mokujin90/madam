@@ -1,5 +1,6 @@
 <?php
-$this->widget('zii.widgets.grid.CGridView', array(
+$this->widget('bootstrap.widgets.TbGridView', array(
+    'type'=>'striped',
     'dataProvider'=>$dataProvider,
     'columns'=>array(
         'date',

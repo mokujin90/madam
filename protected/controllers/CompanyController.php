@@ -55,13 +55,13 @@ class CompanyController extends BaseController
 
     public function actionMore($type=''){
 
-        $companyId = Yii::app()->user->companyId;
-        $oldLicense = Company2License::getLicenseBycompany($companyId);
-
-        $manual = $oldLicense['license']->getLicenseType()!=0 ? new License() : $oldLicense['license'];
-
+        $companyId = Yii::app()->user->companyId; //текущий id компании
+        $oldLicense = Company2License::getLicenseBycompany($companyId); //текущая лицензия пользователя
+        $manual = $oldLicense['license']->getLicenseType()!=0 ? new License() : $oldLicense['license']; //новая лицензия на случай индивидуальной
         $newCompany2License = new Company2License;
         $newCompany2License->company_id = $companyId;
+        $standardLicense = License::getStandardLicense();
+
         if(isset($_POST) && $type!=''){
             $default = array('sms','employee','manual',1,2,3);
             if(!in_array($type,$default))
@@ -96,6 +96,6 @@ class CompanyController extends BaseController
             }
             $this->redirect($this->createUrl('employee/create'));
         }
-        $this->render('more',array('oldLicense'=>$oldLicense,'manual'=>$manual,'companyId'=>$companyId));
+        $this->render('more',array('oldLicense'=>$oldLicense,'manual'=>$manual,'companyId'=>$companyId,'standard'=>$standardLicense));
     }
 }
