@@ -83,8 +83,8 @@ Yii::app()->clientScript->registerScript('calendarInit', 'more.init()', CClientS
         'style'=>"display:none;"
     )
 )); ?>
-    <?php $this->renderPartial('/admin/_license', array('model'=>$manual,'form'=>$form)); ?>
+    <?php $this->renderPartial('/admin/_license', array('model'=>$manual,'form'=>$form, 'style' => '')); ?>
     <div class="col-lg-6">
-        <button type="submit" value="1" name="save" class="btn btn-success"><?=$model->isNewRecord ? 'Create' : 'Save'?></button>
+        <button type="submit" value="1" name="save" class="btn btn-success">Save</button>
     </div>
 <?php $this->endWidget(); ?>

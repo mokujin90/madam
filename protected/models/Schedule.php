@@ -131,6 +131,7 @@ class Schedule extends CActiveRecord
             $criteria = new CDbCriteria;
 
                 $criteria->addCondition("(start_time > :start AND start_time < :end)");
+                $criteria->addCondition("(end_time > :start AND end_time < :end)",'OR');
                 $criteria->params += array(':start'=>$request->start_time,':end'=>$request->end_time);
                 if(!is_null($request->id)){ //для нового события id еще не существует
                     $criteria->addCondition('id != :id');

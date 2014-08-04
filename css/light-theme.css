@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=PT+Sans&subset=latin,cyrillic);
 @media (max-width: 767px) {
   .text-center-xs {
     text-align: center; } }
@@ -1511,7 +1512,7 @@ a .icon-flip-vertical:before {
   font-style: normal; }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: Montserrat;
+  font-family: 'PT Sans', sans-serif;
   font-weight: 400;
   color: #222222; }
 
@@ -3823,7 +3824,6 @@ body {
     margin-right: 30px;
     padding: 0 20px;
     color: #424242;
-    font-family: Montserrat;
     font-size: 20px;
     position: relative;
     -webkit-border-radius: 0 !important;
@@ -4004,7 +4004,7 @@ input[type="color"],
     position: absolute;
     top: 0;
     left: 0;
-    font-family: Montserrat; }
+    font-family: 'PT Sans', sans-serif; }
   .timeline li:first-child:before, .timeline li:last-child:before {
     content: "";
     width: 10px;
@@ -4049,7 +4049,7 @@ input[type="color"],
       margin-top: -2px;
       left: -20px; }
   .timeline li .title {
-    font-family: Montserrat;
+    font-family: 'PT Sans', sans-serif;
     margin-left: 70px;
     padding: 2px 0;
     font-size: 16px; }
@@ -4073,7 +4073,7 @@ input[type="color"],
     float: left; }
   .invoice .invoice-header .invoice-title {
     font-size: 30px;
-    font-family: Montserrat; }
+      font-family: 'PT Sans', sans-serif; }
     @media screen and (max-width: 768px) {
       .invoice .invoice-header .invoice-title {
         float: none;
@@ -4082,7 +4082,7 @@ input[type="color"],
   .invoice .invoice-header .invoice-number {
     float: right;
     font-size: 30px;
-    font-family: Montserrat; }
+      font-family: 'PT Sans', sans-serif; }
     @media screen and (max-width: 768px) {
       .invoice .invoice-header .invoice-number {
         float: none;
@@ -4090,7 +4090,7 @@ input[type="color"],
     .invoice .invoice-header .invoice-number .invoice-name {
       color: #999999; }
 .invoice .info .lead {
-  font-family: Montserrat; }
+    font-family: 'PT Sans', sans-serif; }
 .invoice .seller:after, .invoice .seller:before, .invoice .buyer:after, .invoice .buyer:before {
   content: "";
   display: table; }
@@ -4103,7 +4103,7 @@ input[type="color"],
   font-size: 20px;
   color: #999999; }
 .invoice .seller .lead, .invoice .buyer .lead {
-  font-family: Montserrat; }
+    font-family: 'PT Sans', sans-serif; }
 .invoice .seller address, .invoice .buyer address {
   float: left;
   margin-left: 20px;
@@ -4111,7 +4111,7 @@ input[type="color"],
 .invoice table {
   margin-top: 20px; }
 .invoice .subtotal {
-  font-family: Montserrat;
+    font-family: 'PT Sans', sans-serif;
   font-size: 30px; }
 .invoice .comment {
   margin-top: 40px; }
@@ -4138,7 +4138,7 @@ input[type="color"],
     text-align: center;
     padding: 20px 0 50px 0;
     font-size: 20px;
-    font-family: Montserrat;
+      font-family: 'PT Sans', sans-serif;
     background-color: #dddddd; }
   .pricing-tables .pricing-table .price {
     width: 30%;
@@ -4153,7 +4153,7 @@ input[type="color"],
     text-align: center;
     color: white;
     margin-left: -15%;
-    font-family: Montserrat; }
+      font-family: 'PT Sans', sans-serif; }
     .pricing-tables .pricing-table .price span {
       vertical-align: middle; }
   .pricing-tables .pricing-table .features {
@@ -4237,7 +4237,7 @@ body.error {
     font-size: 100px;
     color: white;
     padding: 30px 0 40px 0;
-    font-family: Montserrat; }
+      font-family: 'PT Sans', sans-serif; }
     @media (min-width: 768px) {
       body.error .error-container-header {
         padding: 10px 0 40px 0; } }

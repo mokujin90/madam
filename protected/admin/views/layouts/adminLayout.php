@@ -49,7 +49,7 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="/user/logout">
+                        <a href="/admin/logout">
                             <i class="icon-signout"></i>
                             Sign out
                         </a>
