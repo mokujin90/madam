@@ -18,7 +18,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'name' => 'approv',
             'type' => 'raw',
             'value' => 'CHtml::link("<button type=\"button\" value=\"1\" name=\"save\" class=\"btn btn-success\">Оплатить</button>",
-                         array("AdminCompany/approve","id" => $data->id))',
+                         array("adminCompany/approve","id" => $data->id))',
         ),
     ),
 ));

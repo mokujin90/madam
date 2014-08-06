@@ -74,13 +74,13 @@
             </div>
             <ul class="nav nav-stacked">
                 <li class="">
-                    <?php echo CHtml::link('<i class="icon-cog"></i><span>Base License</span>',array('AdminLicense/index'),array('class'=>$this->mainMenuActiveId=='baseLicense'?'in':''))?>
+                    <?php echo CHtml::link('<i class="icon-cog"></i><span>Base License</span>',array('adminLicense/index'),array('class'=>$this->mainMenuActiveId=='baseLicense'?'in':''))?>
                 </li>
                 <li class="">
-                    <?php echo CHtml::link('<i class="icon-cog"></i><span>Company</span>',array('AdminCompany/index'),array('class'=>$this->mainMenuActiveId=='company'?'in':''))?>
+                    <?php echo CHtml::link('<i class="icon-cog"></i><span>Company</span>',array('adminCompany/index'),array('class'=>$this->mainMenuActiveId=='company'?'in':''))?>
                 </li>
                 <li class="">
-                    <?php echo CHtml::link('<i class="icon-cog"></i><span>Approve</span>',array('AdminCompany/approveList'),array('class'=>$this->mainMenuActiveId=='approve'?'in':''))?>
+                    <?php echo CHtml::link('<i class="icon-cog"></i><span>Approve</span>',array('adminCompany/approveList'),array('class'=>$this->mainMenuActiveId=='approve'?'in':''))?>
                 </li>
             </ul>
         </div>
