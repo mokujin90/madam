@@ -72,6 +72,7 @@
                 </form>
             </div>
             <ul class="nav nav-stacked">
+                <?if(Yii::app()->user->owner):?>
                 <li class="">
                     <a href="/company"  class="<?=$this->mainMenuActiveId=='company'?'in':'';?>">
                         <i class="icon-cog"></i>
@@ -141,10 +142,25 @@
                 </li>
                 <li class="">
                     <a href="/company/more"  class="<?=$this->mainMenuActiveId=='more'?'in':'';?>">
-                        <i class="icon-cog"></i>
-                        <span>Donat</span>
+                        <i class="icon-shopping-cart"></i>
+                        <span>License</span>
                     </a>
                 </li>
+                <?else:?>
+                    <li class="">
+                        <a href="/site/company/id/1" target="_blank">
+                            <i class="icon-table"></i>
+                            <span>Test online booking</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/calendar/index/id/<?=Yii::app()->user->id;?>" class="<?=$this->mainMenuActiveId=='calendar'?'in':'';?>">
+                            <i class="icon-calendar"></i>
+                            <span>Calendar</span>
+                        </a>
+                    </li>
+                <?endif?>
+
             </ul>
         </div>
     </nav>
@@ -178,6 +194,15 @@
                                     </ul-->
                                 </div>
                             </div>
+                            <?if(Company::isBlock()):?>
+                            <div class="alert alert-danger alert-dismissable">
+                                <h4>
+                                    <i class="icon-lock"></i>
+                                    <?=Yii::t('main','Блокировка')?>
+                                </h4>
+                                <?=Yii::t('main','Возможность создавать/редактировать события заблокирована.')?>
+                            </div>
+                            <?endif?>
                         </div>
                     </div>
                     <?php echo $content; ?>

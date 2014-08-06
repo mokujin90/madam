@@ -29,22 +29,29 @@ class BaseController extends CController
     }
 
 
-    /*public function filters()
+    public function filters()
     {
         return array(
             'accessControl',
-            'roleAccessControl'
+            //'roleAccessControl'
         );
-    }*/
+    }
 
-    /*public function accessRules()
+   public function accessRules()
     {
         return array(
             array('deny',
-                'users' => array('?'),
+                'controllers' => array('company', 'employee', 'requestForm'),
+                'expression' => '($user->getOwner() == 0)'
+            ),
+            array('allow',
+                'users' => array('@'),
+            ),
+            array('deny',
+                'users' => array('*'),
             ),
         );
-    }*/
+    }
 
 
     /*public function filterRoleAccessControl($filterChain)
@@ -73,7 +80,11 @@ class BaseController extends CController
 
     public function redirectByRole()
     {
-        $this->redirect('/employee/create');
+        if (Yii::app()->user->owner) {
+            $this->redirect('/company');
+        } else {
+            $this->redirect('/calendar/index/id/' . Yii::app()->user->id);
+        }
         //$this->redirect('/');
     }
 

@@ -44,6 +44,7 @@
             <?= $form->error($model,'description'); ?>
         </div>
     </div>
+    <?if(Company2License::enableGroupEvent()):?>
     <div class="form-group">
         <?= $form->labelEx($model,'group_size', array('class' => "col-xs-4 control-label")); ?>
         <div class="col-xs-4">
@@ -56,6 +57,7 @@
             <?= $form->error($model,'group_size'); ?>
         </div>
     </div>
+    <?endif?>
     <div class="form-group">
         <?= $form->labelEx($model,'calendar_delimit', array('class' => "col-xs-4 control-label")); ?>
         <div class="col-xs-4">

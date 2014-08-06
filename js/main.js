@@ -53,20 +53,39 @@ var question = {
 
     },
     add:function(){
-        var $wrap = $('#question-tab'),
-            $countTab = $('#count-tab'),
-            count = parseInt($countTab.val())+1,
-            $navigation = $('#questions .nav-tabs'),
-            $clone = $('#new-question-item>.tab-pane').clone();
-        $countTab.val(count); //новое количество вкладок
-        $.each($('textarea, input', $clone), function () { //заменим имена
-            $(this).attr('name', 'question[' + count + '][' + $(this).attr('name') + ']');
+        $.ajax({
+            type: 'GET',
+            url: '/requestForm/checkQuestionCount',
+            async: false,
+            dataType: 'json',
+            data: {
+                count: $('#question-tab>.tab-pane').length+1
+            },
+            error: function () {
+                $.jGrowl("Ошибка сервера");
+                calendarOnChange = false;
+            },
+            success: function (data) {
+                if (data.success) { //dont try to eval this code, server will kill your questions
+                    var $wrap = $('#question-tab'),
+                        $countTab = $('#count-tab'),
+                        count = parseInt($countTab.val())+1,
+                        $navigation = $('#questions .nav-tabs'),
+                        $clone = $('#new-question-item>.tab-pane').clone();
+                    $countTab.val(count); //новое количество вкладок
+                    $.each($('textarea, input', $clone), function () { //заменим имена
+                        $(this).attr('name', 'question[' + count + '][' + $(this).attr('name') + ']');
+                    });
+                    $clone.attr({id:'q'+count});
+                    $navigation.append('<li data-count="'+count+'"><a data-toggle="tab" href="/RequestFormController/index#q'+count+'">Вопрос '+count+'</a></li>');
+                    $navigation.find('li').removeClass('active').last().addClass('active');
+                    $wrap.find('.tab-pane').removeClass('active');
+                    $wrap.append($clone);
+                } else {
+                    $.jGrowl(data.error);
+                }
+            }
         });
-        $clone.attr({id:'q'+count});
-        $navigation.append('<li data-count="'+count+'"><a data-toggle="tab" href="/RequestFormController/index#q'+count+'">Вопрос '+count+'</a></li>');
-        $navigation.find('li').removeClass('active').last().addClass('active');
-        $wrap.find('.tab-pane').removeClass('active');
-        $wrap.append($clone);
     },
 
     remove:function(){

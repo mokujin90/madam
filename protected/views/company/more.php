@@ -98,8 +98,9 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
         </div>
     </div>
     <?if($oldLicense['license']->getLicenseType()!=0):?>
+        <?$enableEmployee = ($oldLicense->employee_upgrade+$oldLicense['license']->employee+1 <= $oldLicense['license']->max_employee )?>
         <div class="pricing-package-inner">
-            <div class="package-header orange-background">
+            <div class="package-header <?=$enableEmployee ? 'orange-background': 'muted-background'?>">
                 <div class="stars text-center">
                     <i class="icon-user"></i>
                 </div>
@@ -113,7 +114,7 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
                         + 1 работник(график)
                     </li>
                 </ul>
-                <?if($oldLicense->employee_upgrade+$oldLicense['license']->employee+100 <= $oldLicense['license']->max_employee ):?>
+                <?if($enableEmployee):?>
                     <a id="manual-edit" class="buy-action btn btn-inverse" href="<?=$this->createUrl('company/more',array('type'=>'employee'))?>"><i class="icon-money"></i> Купить</a>
                 <?else:?>
                     <a class="buy-action btn btn-inverse disabled" href="#"><i class="icon-lock"></i> Не доступно</a>
@@ -121,8 +122,9 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
 
             </div>
         </div>
-        <div class="pricing-package-inner">
-            <div class="package-header muted-background">
+    <?$enableSms = ($oldLicense->sms_upgrade+$oldLicense['license']->sms+100 <= $oldLicense['license']->max_sms )?>
+    <div class="pricing-package-inner">
+            <div class="package-header <?=$enableSms ? 'orange-background': 'muted-background'?>">
                 <div class="stars text-center">
                     <i class="icon-envelope"></i>
                 </div>
@@ -136,7 +138,7 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
                         + 100 SMS
                     </li>
                 </ul>
-                <?if($oldLicense->sms_upgrade+$oldLicense['license']->sms+100 <= $oldLicense['license']->max_sms ):?>
+                <?if($enableSms):?>
                     <a id="manual-edit" class="buy-action btn btn-inverse" href="<?=$this->createUrl('company/more',array('type'=>'sms'))?>"><i class="icon-money"></i> Купить</a>
                 <?else:?>
                     <a class="buy-action btn btn-inverse disabled" href="#"><i class="icon-lock"></i> Не доступно</a>

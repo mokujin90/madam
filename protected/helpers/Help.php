@@ -76,18 +76,27 @@ class Help{
         if($is_week){
             $day = $dateVal->format('N') - 1;
             $dateVal->modify("-$day days");
-            $text = $dateVal->format('d.m.Y');
+            $text = $dateVal->format('d/m/Y');
             $text .= ' - ';
             $dateVal->modify("+6 days");
-            $text .= $dateVal->format('d.m.Y');
+            $text .= $dateVal->format('d/m/Y');
             return $text;
         } else {
-            return $dateVal->format('d.m.Y');
+            return $dateVal->format('d/m/Y');
         }
     }
 
     public static function getDate($date){
         $dateVal = isset($date) ? $date: new DateTime();
         return $dateVal->format('Y-m-d');
+    }
+
+    /**
+     * dd/mm/YYYY -> YYYY-mm-dd
+     */
+    public static function formatDate($date)
+    {
+        $dateExp = explode('/', $date);
+        return $dateExp[2] . '-' . $dateExp[1] . '-' . $dateExp[0];
     }
 }

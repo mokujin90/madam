@@ -13,8 +13,8 @@ Yii::app()->clientScript->registerScript('calendarInit', 'calendar.init()', CCli
 <ul class="nav nav-tabs" id="calendar-tabs">
     <li class="active" data-tab="day"><a data-toggle="tab" href="/calendar/index#day-calendar"><?=Yii::t('main','День')?></a></li>
     <li class="" data-tab="week"><a data-toggle="tab" href="/calendar/index#week-calendar"><?=Yii::t('main','Неделя')?></a></li>
-        <div class="datepicker-input input-group col-xs-4 pull-right" id="calendar-datepicker">
-            <?=CHtml::textField('event[date]','',array('class'=>'form-control','data-format'=>"YYYY-MM-DD",'placeholder'=>Yii::t('main','Укажите дату')))?>
+        <div class="datepicker-input input-group col-xs-4 pull-right" id="calendar-datepicker" data-date-format="DD/MM/YYYY">
+            <?=CHtml::textField('event[date]','',array('class'=>'form-control','placeholder'=>Yii::t('main','Укажите дату')))?>
             <span class="input-group-addon"><span data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></span></span>
         </div>
     <li class="" data-tab="find"><a data-toggle="tab" href="/calendar/index#find"><?=Yii::t('main','Поиск')?></a></li>

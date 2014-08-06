@@ -179,4 +179,10 @@ class Company extends CActiveRecord
         $license->attributes = array('license_id'=>License::DEFAULT_LICENSE_ID,'company_id'=>$this->id,'is_agree'=>1,'date'=>Help::currentDate());
         $license->save();
     }
+
+    public static function isBlock()
+    {
+        $company = Company::model()->findByPk(Yii::app()->user->companyId);
+        return $company->is_block;
+    }
 }

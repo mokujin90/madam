@@ -18,6 +18,8 @@ class CalendarController extends BaseController
         }
         $find = new Find();
         if(isset($_POST['search']) && Yii::app()->request->isAjaxRequest){
+            $_POST['Find']['startDate'] = !empty($_POST['Find']['startDate']) ? Help::formatDate($_POST['Find']['startDate']) : null;
+            $_POST['Find']['endDate'] = !empty($_POST['Find']['endDate']) ? Help::formatDate($_POST['Find']['endDate']) : null;
             $find->attributes = $_POST['Find'];
             $find->userId = $id;
             $result = $find->search($id);
@@ -51,8 +53,8 @@ class CalendarController extends BaseController
         if(isset($_POST['ajax'])){
             $result = array();
             $model->user_id = $user_id; //TODO: подставить нужного
-            $model->start_time = $_POST['event']['date']." ".$_POST['event']['start_time'];
-            $model->end_time = $_POST['event']['date']." ".$_POST['event']['end_time'];
+            $model->start_time = Help::formatDate($_POST['event']['date'])." ".$_POST['event']['start_time'];
+            $model->end_time = Help::formatDate($_POST['event']['date'])." ".$_POST['event']['end_time'];
             if(!$model->validate()){
                 $result['error']=$this->drawError($model->getErrors());
             }
@@ -62,7 +64,7 @@ class CalendarController extends BaseController
                     RequestQuestion::createByPost($_POST['answer'],$model->id);
                     RequestField::createByPost($_POST['field'],$model->id);
                 }
-                $result['redirect'] = $this->createUrl('/calendar/index',array('id' => $user_id, 'date' => $_POST['event']['date'], 'target' => $model->id));
+                $result['redirect'] = $this->createUrl('/calendar/index',array('id' => $user_id, 'date' => Help::formatDate($_POST['event']['date']), 'target' => $model->id));
             }
             echo json_encode($result);
             Yii::app()->end();

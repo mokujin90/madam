@@ -25,16 +25,16 @@
                 <div class="form-group">
                     <?php echo $form->labelEx($find,'startDate',array('class'=>'col-md-2 control-label'))?>
                     <div class="col-md-5">
-                        <div class="datepicker-input input-group pull-right" id="calendar-datepicker">
-                            <?php echo $form->textField($find,'startDate',array('class'=>'form-control','data-format'=>"YYYY-MM-DD", 'id'=>"start_date")) ?><span class="input-group-addon"><span data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></span></span>
+                        <div class="datepicker-input input-group pull-right" id="calendar-datepicker" data-date-format="DD/MM/YYYY">
+                            <?php echo $form->textField($find,'startDate',array('class'=>'form-control', 'id'=>"start_date")) ?><span class="input-group-addon"><span data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></span></span>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <?php echo $form->labelEx($find,'endDate',array('class'=>'col-md-2 control-label'))?>
                     <div class="col-md-5">
-                        <div class="datepicker-input input-group pull-right" id="calendar-datepicker">
-                            <?php echo $form->textField($find,'endDate',array('class'=>'form-control','data-format'=>"YYYY-MM-DD", 'id'=>"end_date")) ?><span class="input-group-addon"><span data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></span></span>
+                        <div class="datepicker-input input-group pull-right" id="calendar-datepicker" data-date-format="DD/MM/YYYY">
+                            <?php echo $form->textField($find,'endDate',array('class'=>'form-control', 'id'=>"end_date")) ?><span class="input-group-addon"><span data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></span></span>
                         </div>
                     </div>
 

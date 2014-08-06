@@ -33,8 +33,8 @@ Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript:
             <div class="date box">
                 <div class="controls">
                     <?=CHtml::label(Yii::t('main','Дата события:'),"datepicker")?>
-                    <div class="datepicker-input-fb input-group" id="datepicker" data-date-format="YYYY-MM-DD">
-                        <?=CHtml::textField('event[date]',$date['date'],array('class'=>'form-control','placeholder'=>Yii::t('main','Укажите дату')))?>
+                    <div class="datepicker-input-fb input-group" id="datepicker" data-date-format="DD/MM/YYYY">
+                        <?=CHtml::textField('event[date]',$date['date_formatted'],array('class'=>'form-control','placeholder'=>Yii::t('main','Укажите дату')))?>
                         <span class="input-group-addon"><span data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></span></span>
                     </div>
                 </div>

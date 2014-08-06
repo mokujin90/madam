@@ -21,6 +21,10 @@ class EmployeeController extends BaseController{
 
         if($model->isNewRecord){
             $this->pageCaption = 'Новый работник';
+            if (!Company2License::enableNewEmployee()) {
+                $this->render('employeeLimit');
+                return;
+            }
         } else {
             $this->pageCaption = $model->login;
         }

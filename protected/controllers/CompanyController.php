@@ -54,6 +54,9 @@ class CompanyController extends BaseController
     }
 
     public function actionMore($type=''){
+        $this->pageCaption="Лицензия";
+        $this->pageIcon = 'shopping-cart';
+        $this->mainMenuActiveId="more";
 
         $companyId = Yii::app()->user->companyId; //текущий id компании
         $oldLicense = Company2License::getLicenseBycompany($companyId); //текущая лицензия пользователя

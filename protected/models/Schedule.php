@@ -113,6 +113,17 @@ class Schedule extends CActiveRecord
      * @param $request Request
      */
     static public function isRequest(&$request){
+        if ($company = Company::model()->findByPk(Yii::app()->user->companyId)) {
+            if ($company->is_block) {
+                $request->addError('start_date', 'Возможность создавать/редактировать события заблокирована.');
+                return false;
+            }
+        }
+        if ($request->isNewRecord && !Company2License::enableNewEvent($request->user_id)) {
+            $request->addError('start_date', 'Достигнуто максимальное кол-во событий(в месяц) для вашей лицензии.');
+            return false;
+        }
+
         $week = Help::getWeekDay($request->start_time); //текущий день недели
         $start = new DateTime($request->start_time);
         $end = new DateTime($request->end_time);
@@ -130,16 +141,16 @@ class Schedule extends CActiveRecord
         if(count($schedule)){#если такое время есть, то теперь вторая часть валидации - попробуем найти такие же уже запланированные события
             $criteria = new CDbCriteria;
 
-                $criteria->addCondition("(start_time > :start AND start_time < :end)");
-                $criteria->addCondition("(end_time > :start AND end_time < :end)",'OR');
-                $criteria->params += array(':start'=>$request->start_time,':end'=>$request->end_time);
+                $criteria->addCondition("user_id = :user_id");
+                $criteria->addCondition("((start_time > :start AND start_time < :end) OR (end_time > :start AND end_time < :end))");
+                $criteria->params += array(':user_id' => $request->user_id, ':start'=>$request->start_time,':end'=>$request->end_time);
                 if(!is_null($request->id)){ //для нового события id еще не существует
                     $criteria->addCondition('id != :id');
                     $criteria->params += array(':id'=>$request->id);
                 }
                 $anyRequest = Request::model()->findAll($criteria);
             if(count($anyRequest)){ //есть пересечение с другим событием
-                $request->addError('start_date','Новое событие накладывается на уже существующее');
+                $request->addError('start_date', 'Новое событие накладывается на уже существующее');
                 return false; //если есть еще какие-то события "налазящие" на текущее не дадим сохранять
             } else { //проверка на пареллельное событие
                 $user = User::model()->findByPk($request->user_id);
@@ -148,10 +159,19 @@ class Schedule extends CActiveRecord
                     return false;
                 }
                 $criteria = new CDbCriteria;
+                $criteria->addCondition("user_id = :user_id");
                 $criteria->addCondition("(start_time = :start AND end_time = :end)");
-                $criteria->params += array(':start' => $request->start_time, ':end' => $request->end_time);
+                $criteria->params = array(':user_id' => $request->user_id, ':start' => $request->start_time, ':end' => $request->end_time);
+                if(!is_null($request->id)){ //для нового события id еще не существует
+                    $criteria->addCondition('id != :id');
+                    $criteria->params += array(':id'=>$request->id);
+                }
                 $groupRequestCount = Request::model()->count($criteria);
                 if ($groupRequestCount != 0) { //есть параллельное событие
+                    if (!Company2License::enableGroupEvent()) {
+                        $request->addError('start_date', 'Групповые события не доступны для вашей лицензии.');
+                        return false;
+                    }
                     if ($groupRequestCount < $user->group_size) {
                         return true;
                     } else {

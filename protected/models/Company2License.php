@@ -121,15 +121,19 @@ class Company2License extends CActiveRecord
     }
     /**
      * Вернет последнюю лицензию прикрепленную к компании вместе с моделью лицензии по её id
-     * @param $companyId
      */
-    static public function getCurrentLicense($id){
+    static public function getLicenseById($id){
         return Company2License::model()->with('license')->findByAttributes(array('id'=>$id),array('order'=>'date DESC'));
     }
-    static public function getLicenseBycompany($companyId){
+
+    static public function getCurrentLicense(){
+        $companyId = Yii::app()->user->companyId;
         return Company2License::model()->with('license')->findByAttributes(array('company_id'=>$companyId),array('order'=>'date DESC'));
     }
 
+    static public function getLicenseBycompany($companyId){
+        return Company2License::model()->with('license')->findByAttributes(array('company_id'=>$companyId),array('order'=>'date DESC'));
+    }
     static public function getNotApproved(){
         $criteria = new CDbCriteria;
         $criteria->join = 'JOIN (SELECT company_id, MAX(date) date FROM Company2License GROUP BY company_id) t2 ON t.company_id = t2.company_id AND t.date = t2.date';
@@ -138,4 +142,41 @@ class Company2License extends CActiveRecord
         return $criteria;
     }
 
+    /**
+     * @return bool - возможно ли добавить нового работника
+     */
+    static public function enableNewEmployee(){
+        $companyId = Yii::app()->user->companyId;
+        $ebableEmployeeCount = Company2License::getCurrentLicense()->license->employee;
+        $employeeCount = User::model()->countByAttributes(array('company_id' => $companyId, 'is_owner' => 0));
+        return $employeeCount < $ebableEmployeeCount;
+    }
+
+    /**
+     * @return mixed - возможно ли исп групповые события
+     */
+    static public function enableGroupEvent(){
+        return Company2License::getCurrentLicense()->license->group_event;
+    }
+
+    /**
+     * @return bool - возможно ли добавить новое событие в течение месяца
+     */
+    static public function enableNewEvent($user_id)
+    {
+        $today = new DateTime();
+        $start = new DateTime($today->format('Y-m-01 00:00:00'));
+        $end = clone $start;
+        $end->modify('+ 1 month');
+
+        $enableEventCount = Company2License::getCurrentLicense()->license->event;
+
+        $criteria = new CDbCriteria();
+        $criteria->addColumnCondition(array('user_id' => $user_id));
+        $criteria->addBetweenCondition('create_date', $start->format(Help::DATETIME), $end->format(Help::DATETIME));
+
+        $eventCount = Request::model()->count($criteria);
+
+        return $eventCount < $enableEventCount;
+    }
 }

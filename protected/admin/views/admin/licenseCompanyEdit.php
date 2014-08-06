@@ -18,11 +18,14 @@ Yii::app()->clientScript->registerScript('license', 'license.init()', CClientScr
         'class'=>'form form-horizontal'
     )
 )); ?>
-
- <?php echo CHtml::dropDownList('license_type',$current['license']->getLicenseType(),array(License::$base[1]=>Yii::t('main','1 уровень'),
+<div class="col-sm-12">
+    <div class="form-group">
+    <?php echo CHtml::dropDownList('license_type',$current['license']->getLicenseType(),array(License::$base[1]=>Yii::t('main','1 уровень'),
     License::$base[2]=>Yii::t('main','2 уровень'),License::$base[3]=>Yii::t('main','3 уровень'),
-    License::$base[0]=>Yii::t('main','Индивидуальный набор')))?>
-
+    License::$base[0]=>Yii::t('main','Индивидуальный набор')),
+    array('class' => 'form-control'))?>
+    </div>
+</div>
     <?php $this->renderPartial('/admin/_license', array('model'=>$model,'form'=>$form,'style' => $current['license']->getLicenseType()==0 ? '' : 'display:none;')); ?>
 
 

@@ -113,9 +113,10 @@ class Request extends CActiveRecord
     protected function beforeValidate()
     {
         // Если новая запись - присваиваем id автора т timestamp
-        if($this->getIsNewRecord()){
+        if($this->isNewRecord){
             $this->create_date=new CDbExpression('NOW()');
         }
+
         #1. Предвалидация того, что в выбранный промежуток у этого человека есть свободное время
 
         if(Schedule::isRequest($this))
@@ -157,7 +158,7 @@ class Request extends CActiveRecord
             'start'=>$start->format('H:i'),
             'end'=>$end->format('H:i'),
             'date'=>$start->format('Y-m-d'),
-            'date_formatted' => $start->format('m/d/Y')
+            'date_formatted' => $start->format('d/m/Y')
         );
     }
 

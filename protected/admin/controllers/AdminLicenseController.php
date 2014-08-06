@@ -11,7 +11,8 @@ class AdminLicenseController extends BaseController{
     public function actionIndex()
     {
         $this->mainMenuActiveId = 'baseLicense';
-        $this->pageIcon = 'user';
+        $this->pageCaption = 'Base License';
+
         $licenses = License::model()->system()->findAll();
         $this->render('/admin/baseLicense',array('licenses'=>$licenses));
     }

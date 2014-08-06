@@ -13,12 +13,14 @@ class CalendarWidget extends CWidget{
      * @var $field CompanyField[]
      */
     public $user;
+    public $enableGroupEvent;
     public $shedule;
 
     public $mode = "day";
 
     public function init()
     {
+        $this->enableGroupEvent = Company2License::enableGroupEvent();
         $this->date = !empty($this->date) ? $this->date : new DateTime();
         $this->shedule = $this->user->getScheduleByDay(false);
 
@@ -121,7 +123,7 @@ class CalendarWidget extends CWidget{
                 foreach ($item as $eventItem) { //выводим всех людей записанных на это время
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $eventItem->end_time, 'event' => $eventItem->id, 'model' => $eventItem);
                 }
-                if ($this->user->group_size > count($item)) { //выводим бронь для нового члена группы, если остались места
+                if ($this->enableGroupEvent && $this->user->group_size > count($item)) { //выводим бронь для нового члена группы, если остались места
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $item[0]->end_time);
                 }
                 $eventEnd = $item[0]->end_time;
@@ -132,7 +134,7 @@ class CalendarWidget extends CWidget{
                 foreach ($item as $eventItem) { //выводим всех людей записанных на это время
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $eventItem->start_time, 'end' => clone $eventItem->end_time, 'event' => $eventItem->id, 'model' => $eventItem);
                 }
-                if ($this->user->group_size > count($item)) { //выводим бронь для нового члена группы, если остались места
+                if ($this->enableGroupEvent && $this->user->group_size > count($item)) { //выводим бронь для нового члена группы, если остались места
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $item[0]->end_time);
                 }
                 $eventEnd = $item[0]->end_time;

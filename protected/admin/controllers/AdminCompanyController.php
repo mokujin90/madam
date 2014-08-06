@@ -11,7 +11,7 @@ class AdminCompanyController extends BaseController{
     public function actionIndex()
     {
         $this->mainMenuActiveId = 'company';
-        $this->pageIcon = 'user';
+        $this->pageCaption = 'Company';
 
         $dataProvider = new CActiveDataProvider('Company', array(
             'criteria' => array(
@@ -28,7 +28,7 @@ class AdminCompanyController extends BaseController{
      * @param $id Company2Lecense id
      */
     public function actionEditLicense($id){
-        $company2license = Company2License::getCurrentLicense($id);
+        $company2license = Company2License::getLicenseById($id);
         $model = $company2license['license']->getLicenseType()==0 ? $company2license['license'] : new License(); //чистая форма, по умолчанию
         if(is_null($company2license) || !count($company2license['license'])){
             throw new CHttpException(404, 'The requested page does not exist.');
@@ -64,6 +64,8 @@ class AdminCompanyController extends BaseController{
     }
 
     public function actionApproveList(){
+        $this->mainMenuActiveId = 'approve';
+        $this->pageCaption = 'Approve';
         $criteria = Company2License::getNotApproved();
 
         $dataProvider = new CActiveDataProvider('Company2License', array(
@@ -81,6 +83,13 @@ class AdminCompanyController extends BaseController{
         $model->save();
         $this->redirect(Yii::app()->request->urlReferrer);
 
+    }
+    public function actionChangeBlockStatus($id, $status){
+        if($company = Company::model()->findByPk($id)){
+            $company->is_block = $status ? 0 : 1;
+            $company->save();
+        }
+        $this->redirect(Yii::app()->request->urlReferrer);
     }
 
 }

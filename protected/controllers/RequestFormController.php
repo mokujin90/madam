@@ -38,8 +38,14 @@ class RequestFormController extends BaseController
                 CompanyField::model()->deleteAllByAttributes(array('id'=>$deletedField));
             if(count($_POST['question'])){
                 $deletedQuestion = array_diff(array_keys($questions),Help::getIndex($_POST['question'],'id'));
+                $maxQuestionCount = Company2License::getCurrentLicense()->license->question;
+                $count = 0;
                 #узнаем какие вопросы надо удалить или же добавить, обновляем все
                 foreach($_POST['question'] as $postQuestion){
+                    $count++;
+                    if ($count > $maxQuestionCount) {
+                        break;
+                    }
                     $newQuestion = $postQuestion['id']>=1 ? $questions[$postQuestion['id']] : new Question();
                     $newQuestion->attributes = $postQuestion;
                     $newQuestion->company_id=$id;
@@ -75,5 +81,18 @@ class RequestFormController extends BaseController
         }
 
         $this->render('index',array('questions'=>$questions,'fields'=>$fields));
+    }
+
+    /**
+     * Проверяет доступен ли новый вопрос для данной лицензии
+     * @param $count - новое кол-во вопрсов
+     */
+    public function actionCheckQuestionCount($count)
+    {
+        if (Company2License::getCurrentLicense()->license->question >= $count) {
+            echo json_encode(array('success' => 1));
+            return;
+        }
+        echo json_encode(array('success' => 0, 'error' => Yii::t('main', "Достигнуто максимальное кол-во вопросов для вашей лицензии.")));
     }
 }
