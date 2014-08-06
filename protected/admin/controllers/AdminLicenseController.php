@@ -1,6 +1,6 @@
 <?php
 
-class AdminLicenseController extends BaseController{
+class AdminLicenseController extends AdminBaseController{
 
     protected function beforeAction($action){
         parent::beforeAction($action);

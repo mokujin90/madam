@@ -13,7 +13,7 @@
     <!-- / demo file [not required!] -->
     <link href="/css/demo.css" media="all" rel="stylesheet" type="text/css">
     <title><?php echo isset($this->pageCaption) ? $this->pageCaption : Yii::app()->name; ?></title>
-
+    <meta charset="utf-8">
 
     <?Yii::app()->clientScript->registerScriptFile('/js/bootstrap.js', CClientScript::POS_END);?>
     <?Yii::app()->clientScript->registerScriptFile('/js/theme.js', CClientScript::POS_END);?>
