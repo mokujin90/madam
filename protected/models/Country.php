@@ -95,4 +95,8 @@ class Country extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    static public function getArray($country){
+        return Help::decorate($country,'name');
+    }
 }
