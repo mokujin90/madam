@@ -25,7 +25,7 @@ class User extends CActiveRecord
 {
     public $scheduleUpdate;
     public $answered;
-
+    public $password_repeat;
     static $calendarDelimit = array(
         '10' => '10 минут',
         '15' => '15 минут',
@@ -60,6 +60,8 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+            array('login','unique','attributeName'=>'login'),
+            array('login', 'email'),
 			array('company_id, login, password', 'required'),
 			array('is_owner, calendar_delimit, calendar_front_delimit, group_size', 'numerical', 'integerOnly'=>true),
 			array('company_id', 'length', 'max'=>11),
@@ -67,7 +69,10 @@ class User extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, company_id, login, password, is_owner, name, lastname, description, calendar_delimit, calendar_front_delimit, caldav', 'safe', 'on'=>'search'),
-		);
+            //регистрация, обновление
+            array('password_repeat', 'compare', 'compareAttribute'=>'password', 'on'=>'signup'),
+            array('password_repeat', 'required','on'=>'signup'),
+        );
 	}
 
 	/**
@@ -92,7 +97,7 @@ class User extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'company_id' => 'Company',
-			'login' => Yii::t('main','Эл. почта'),
+			'login' => Yii::t('main','Логин'),
 			'password' => Yii::t('main','Пароль'),
 			'is_owner' => 'Is Owner',
 			'name' => Yii::t('main','Имя'),
@@ -145,7 +150,7 @@ class User extends CActiveRecord
 
     protected function beforeValidate()
     {
-        if ($this->isNewRecord) {
+        if ($this->isNewRecord && $this->is_owner!=1) {
             $this->company_id = Yii::app()->user->companyId;
         }
         return parent::beforeValidate();

@@ -42,6 +42,42 @@ class UserController extends BaseController
         $this->redirect(Yii::app()->homeUrl);
     }
 
+    public function actionRegister(){
+        $user = new User('signup');
+        $company = new Company();
+        $country = Country::model()->findAll();
+
+        if(Yii::app()->request->isAjaxRequest )
+        {
+            $user->attributes = $_POST['User'];
+            $isValidation = CActiveForm::validate($user,array('login'));
+            if($isValidation!='[]'){
+               echo $isValidation;
+                Yii::app()->end();
+            }
+        }
+        if(isset($_POST['User']) && isset($_POST['Company'])){
+            $user->attributes = $_POST['User'];
+            $company->attributes = $_POST['Company'];
+            if($company->save()){
+                $user->is_owner = 1;
+                $user->company_id = $company->id;
+                if($user->save()){
+                    $identity=new UserIdentity($user->login,$user->password);
+                    $identity->authenticate();
+                    Yii::app()->user->login($identity,0);
+                    echo CJSON::encode(array(
+                        'status'=>'success',
+                        'url'=>$this->createUrl('site/index')
+                    ));
+                    Yii::app()->end();
+                }
+
+            }
+        }
+        $this->render('register', array('user' => $user,'company'=>$company,'country'=>Country::model()->getArray($country)));
+    }
+
     public function getBreadcrumbs()
     {
         static $count = 0;
