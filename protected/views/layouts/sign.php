@@ -34,16 +34,18 @@
             </div>
             <div class="login-container-footer">
                 <div class="container">
+                    <?if($this->showRegisterLink):?>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="text-center">
-                                <a href="#">
+                                <a href="/user/register">
                                     <i class="icon-user"></i>
-                                    <strong>Sign up</strong>
+                                    <strong>Register</strong>
                                 </a>
                             </div>
                         </div>
                     </div>
+                    <?endif?>
                 </div>
             </div>
         </div>

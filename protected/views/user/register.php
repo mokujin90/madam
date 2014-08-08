@@ -99,8 +99,8 @@ $this->layout = 'sign';
             </div>
             <div class="form-group">
                 <div class="controls with-icon-over-input">
-                    <?php echo $form->textField($company,'url',array('placeholder' =>'Url', 'class' => 'form-control')); ?>
-                    <?php echo $form->error($company,'url'); ?>
+                    <?php echo $form->textField($company,'site',array('placeholder' =>'Site', 'class' => 'form-control')); ?>
+                    <?php echo $form->error($company,'site'); ?>
                 </div>
             </div>
 
