@@ -99,4 +99,9 @@ class Help{
         $dateExp = explode('/', $date);
         return $dateExp[2] . '-' . $dateExp[1] . '-' . $dateExp[0];
     }
+
+    public static function formatDateICal($dateTime)
+    {
+        return $dateTime->format('Ymd') . "T" . $dateTime->format('His');
+    }
 }

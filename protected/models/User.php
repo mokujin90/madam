@@ -155,6 +155,50 @@ class User extends CActiveRecord
     {
         parent::afterSave();
 
+        if ($this->isNewRecord && $this->is_owner != 1) {
+            $transaction = Yii::app()->db_baikal->beginTransaction();
+            try {
+                $user = new BaikalUser();
+                $user->username = $this->id;
+                $user->digesta1 = md5($user->username . ':' . 'BaikalDAV' . ':' . $this->password);
+                if ($user->save()) {
+                    $calendar = new BaikalCalendar();
+                    $calendar->id = $user->id;
+                    $calendar->principaluri = "principals/" . $this->id;
+                    $calendar->displayname = "Termin Calendar";
+                    $calendar->uri = "default";
+                    $calendar->ctag = 1;
+                    $calendar->description = "Termin Calendar";
+                    $calendar->components = "VEVENT";
+                    if (!$calendar->save()) {
+                        throw new CException('Transaction failed');
+                    }
+                    $principal = new BaikalPrincipal();
+                    $principal->id = $user->id;
+                    $principal->uri = "principals/" . $this->id;
+                    $principal->email = $this->login;
+                    $principal->displayname = $this->login;
+                    if (!$principal->save()) {
+                        throw new CException('Transaction failed');
+                    }
+                    $adbook = new BaikalAddressbook();
+                    $adbook->id = $user->id;
+                    $adbook->principaluri = "principals/" . $this->id;
+                    $adbook->uri = "default";
+                    $adbook->displayname = $this->login;
+
+                    if (!$adbook->save()) {
+                        throw new CException('Transaction failed');
+                    }
+
+                } else {
+                    throw new CException('Transaction failed');
+                }
+                $transaction->commit();
+            } catch (Exception $ex) {
+                $transaction->rollback();
+            }
+        }
         if (isset($this->scheduleUpdate)) {
             Schedule::model()->deleteAllByAttributes(array('user_id' => $this->id));
             foreach ($this->scheduleUpdate as $day => $item) {
@@ -188,7 +232,18 @@ class User extends CActiveRecord
             }
         }
     }
-
+    protected function afterDelete(){
+        parent::afterDelete();
+        if ($this->is_owner != 1) {
+            if($calendar = BaikalCalendar::model()->findByAttributes(array('principaluri' => 'principals/' . $this->id))){
+                BaikalEvent::model()->deleteAllByAttributes(array('calendarid' => $calendar->id));
+                $calendar->delete();
+            }
+            BaikalUser::model()->deleteAllByAttributes(array('username' => $this->id));
+            BaikalPrincipal::model()->deleteAllByAttributes(array('uri' => 'principals/' . $this->id));
+            BaikalAddressbook::model()->deleteAllByAttributes(array('principaluri' => 'principals/' . $this->id));
+        }
+    }
     /**
      * Существующая модель: Приводит модель к массиву вида: array[день][] = array(params)
      * Новая модель: возвращает scheduleUpdate

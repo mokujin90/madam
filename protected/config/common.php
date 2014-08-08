@@ -26,6 +26,7 @@ return array(
     // application components
     'components' => array(
         'db' => $db_connection_array,
+        'db_baikal' => $db_connection_array_baikal,
         'bootstrap'=>array(
             'class'=>'bootstrap.components.Bootstrap',
         ),
