@@ -168,13 +168,12 @@ class User extends CActiveRecord
                 $user->digesta1 = md5($user->username . ':' . 'BaikalDAV' . ':' . $this->password);
                 if ($user->save()) {
                     $calendar = new BaikalCalendar();
-                    $calendar->id = $user->id;
                     $calendar->principaluri = "principals/" . $this->id;
                     $calendar->displayname = "Termin Calendar";
                     $calendar->uri = "default";
                     $calendar->ctag = 1;
                     $calendar->description = "Termin Calendar";
-                    $calendar->components = "VEVENT";
+                    $calendar->components = "VEVENT,VTODO";
                     if (!$calendar->save()) {
                         throw new CException('Transaction failed');
                     }
@@ -240,9 +239,11 @@ class User extends CActiveRecord
     protected function afterDelete(){
         parent::afterDelete();
         if ($this->is_owner != 1) {
-            if($calendar = BaikalCalendar::model()->findByAttributes(array('principaluri' => 'principals/' . $this->id))){
-                BaikalEvent::model()->deleteAllByAttributes(array('calendarid' => $calendar->id));
-                $calendar->delete();
+            if($calendars = BaikalCalendar::model()->findAllByAttributes(array('principaluri' => 'principals/' . $this->id))){
+                foreach($calendars as $calendar){
+                    BaikalEvent::model()->deleteAllByAttributes(array('calendarid' => $calendar->id));
+                    $calendar->delete();
+                }
             }
             BaikalUser::model()->deleteAllByAttributes(array('username' => $this->id));
             BaikalPrincipal::model()->deleteAllByAttributes(array('uri' => 'principals/' . $this->id));

@@ -87,10 +87,20 @@
     <div class="form-group">
         <label class="col-xs-4 control-label">CalDav ID</label>
         <div class="col-xs-4">
-            <span class="form-control"><?=$model->id?></span>
+            <input class="form-control" value="<?=$model->id?>">
         </div>
         <div class="col-xs-1">
             <div class="btn has-popover" data-content="http://caldav.wconsults.ru/ cal.php/principals/<b>{CalDavID}</b>/<br>login: <b>{CalDavID}</b><br>password: <b>{userPassword}</b>" data-placement="right" data-title="CalDav Settings:" data-original-title="" title=""><i class="icon-question"></i></div>
+        </div>
+        <div class="col-xs-3">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-4 control-label">CalDav URI</label>
+        <div class="col-xs-4">
+            <input class="form-control" value="http://caldav.wconsults.ru/cal.php/principals/<?=$model->id?>/">
+        </div>
+        <div class="col-xs-1">
         </div>
         <div class="col-xs-3">
         </div>

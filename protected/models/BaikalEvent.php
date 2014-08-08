@@ -133,7 +133,7 @@ class BaikalEvent extends BaikalActiveRecord
         if (!$request = Request::model()->with('requestFields')->findByPk($requestId)) {
             return;
         }
-        if(!$calendar = BaikalCalendar::model()->findByAttributes(array('principaluri' => 'principals/' . $request->user_id))){
+        if(!$calendar = BaikalCalendar::model()->findByAttributes(array('principaluri' => 'principals/' . $request->user_id, 'uri' => 'default'))){
             return;
         }
         $now = new DateTime();
