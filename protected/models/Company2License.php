@@ -18,6 +18,9 @@
  */
 class Company2License extends CActiveRecord
 {
+    public $name;
+    public $type;
+    public $companyId;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -40,7 +43,7 @@ class Company2License extends CActiveRecord
 			array('date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, license_id, company_id, is_agree, date, employee_upgrade, sms_upgrade', 'safe', 'on'=>'search'),
+			array('id, license_id, company_id, is_agree, date, employee_upgrade, sms_upgrade,name,type,companyId', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -90,15 +93,19 @@ class Company2License extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
+        $criteria->with = array( 'company' );
+        $criteria->with = array( 'license' );
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('license_id',$this->license_id,true);
 		$criteria->compare('company_id',$this->company_id,true);
 		$criteria->compare('is_agree',$this->is_agree);
-		$criteria->compare('date',$this->date,true);
+		$criteria->compare('t.date',$this->date,true);
 		$criteria->compare('employee_upgrade',$this->employee_upgrade);
 		$criteria->compare('sms_upgrade',$this->sms_upgrade);
-
+        $criteria->compare( 'company.name', $this->name, true );
+        $criteria->compare( 'license.type', $this->type, true );
+        $criteria->compare( 'company.id', $this->companyId, true );
+        $criteria->mergeWith(Company2License::getNotApproved());
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
