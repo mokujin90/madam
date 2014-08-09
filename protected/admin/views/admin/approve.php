@@ -3,7 +3,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'type'=>'striped',
     'template'=>"{items}{pager}",
     'filter'=>$model,
-    'afterAjaxUpdate' => 'reinstallDatePicker', // (#1)
+    'afterAjaxUpdate' => 'reinstallDatePicker', // #1()
     'dataProvider'=>$model->search(),
     'columns'=>array(
         array(
@@ -19,7 +19,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                     ),
                     'defaultOptions' => array(  // (#3)
                         'showOn' => 'focus',
-                        'dateFormat' => 'yy/mm/dd',
+                        'dateFormat' => 'yy-mm-dd',
                         'showOtherMonths' => true,
                         'selectOtherMonths' => true,
                         'changeMonth' => true,
@@ -54,6 +54,6 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 Yii::app()->clientScript->registerScript('re-install-date-picker', "
 function reinstallDatePicker(id, data) {
         //use the same parameters that you had set in your widget else the datepicker will be refreshed by default
-    $('#datepicker_for_due_date').datepicker(jQuery.extend({showMonthAfterYear:false},jQuery.datepicker.regional['ru'],{'dateFormat':'yy/mm/dd'}));
+    $('#datepicker_for_due_date').datepicker(jQuery.extend({showMonthAfterYear:false},jQuery.datepicker.regional['ru'],{'dateFormat':'yy-mm-dd'}));
 }
 ");

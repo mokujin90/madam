@@ -65,6 +65,7 @@ class User extends CActiveRecord
 			array('company_id, login, password', 'required'),
 			array('is_owner, calendar_delimit, calendar_front_delimit, group_size', 'numerical', 'integerOnly'=>true),
 			array('company_id', 'length', 'max'=>11),
+			array('password', 'length', 'min'=>4),
 			array('login, password, name, lastname, description, caldav', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

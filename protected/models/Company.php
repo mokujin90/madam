@@ -147,7 +147,7 @@ class Company extends CActiveRecord
 
         $criteria = new CDbCriteria;
         $criteria->with = array( 'company2Licenses' );
-        $criteria->compare('id', $this->id, true);
+        $criteria->compare('t.id', $this->id, true);
         $criteria->compare('name', $this->name, true);
         $criteria->compare('address', $this->address, true);
         $criteria->compare('description', $this->description, true);
