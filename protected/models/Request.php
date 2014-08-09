@@ -114,7 +114,7 @@ class Request extends CActiveRecord
     {
         // Если новая запись - присваиваем id автора т timestamp
         if($this->isNewRecord){
-            $this->create_date=new CDbExpression('NOW()');
+            $this->create_date = date(Help::DATETIME);
         }
 
         #1. Предвалидация того, что в выбранный промежуток у этого человека есть свободное время
@@ -125,6 +125,11 @@ class Request extends CActiveRecord
     protected function afterDelete(){
         parent::afterDelete();
         $this->clearQuestionAndField();
+        BaikalEvent::deleteEvent($this->baikal_event_id, $this->user_id);
+    }
+    protected function afterSave()
+    {
+        parent::afterSave();
     }
     /**
      * Создадим объект Request после прохождения визарда пользователем

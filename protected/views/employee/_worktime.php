@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="col-xs-1">
                                     <label class="checkbox-inline">
-                                        <?=CHtml::checkBox("schedule[$i][$scheduleUniqId][enable]", $scheduleRow['enable']);?>
+                                        <?=CHtml::checkBox("schedule[$i][$scheduleUniqId][enable]", !empty($scheduleRow['enable']));?>
                                     </label>
                                 </div>
                             </div>

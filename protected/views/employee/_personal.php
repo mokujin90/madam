@@ -83,16 +83,27 @@
             <?= $form->error($model,'calendar_front_delimit'); ?>
         </div>
     </div>
+    <?if(!$model->isNewRecord):?>
     <div class="form-group">
-        <?= $form->labelEx($model,'caldav', array('class' => "col-xs-4 control-label")); ?>
+        <label class="col-xs-4 control-label">CalDav ID</label>
         <div class="col-xs-4">
-            <?=$form->textField($model,'caldav', array('class' => "form-control")); ?>
+            <input class="form-control" value="<?=$model->id?>">
         </div>
         <div class="col-xs-1">
-            <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="right" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
+            <div class="btn has-popover" data-content="http://caldav.wconsults.ru/ cal.php/principals/<b>{CalDavID}</b>/<br>login: <b>{CalDavID}</b><br>password: <b>{userPassword}</b>" data-placement="right" data-title="CalDav Settings:" data-original-title="" title=""><i class="icon-question"></i></div>
         </div>
         <div class="col-xs-3">
-            <?= $form->error($model,'caldav'); ?>
         </div>
     </div>
+    <div class="form-group">
+        <label class="col-xs-4 control-label">CalDav URI</label>
+        <div class="col-xs-4">
+            <input class="form-control" value="http://caldav.wconsults.ru/cal.php/principals/<?=$model->id?>/">
+        </div>
+        <div class="col-xs-1">
+        </div>
+        <div class="col-xs-3">
+        </div>
+    </div>
+    <?endif?>
 </div>

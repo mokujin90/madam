@@ -3,6 +3,8 @@ class UserController extends BaseController
 {
     public $defaultAction = 'login';
 
+    public $showRegisterLink = true;
+
     public function filters()
     {
         return array(
@@ -43,6 +45,7 @@ class UserController extends BaseController
     }
 
     public function actionRegister(){
+        $this->showRegisterLink = false;
         $user = new User('signup');
         $company = new Company();
         $country = Country::model()->findAll();

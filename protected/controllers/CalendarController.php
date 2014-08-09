@@ -63,6 +63,7 @@ class CalendarController extends BaseController
                     $model->clearQuestionAndField();
                     RequestQuestion::createByPost($_POST['answer'],$model->id);
                     RequestField::createByPost($_POST['field'],$model->id);
+                    BaikalEvent::updateEvent($model->id);
                 }
                 $result['redirect'] = $this->createUrl('/calendar/index',array('id' => $user_id, 'date' => Help::formatDate($_POST['event']['date']), 'target' => $model->id));
             }
