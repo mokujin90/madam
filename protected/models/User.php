@@ -160,7 +160,7 @@ class User extends CActiveRecord
     {
         parent::afterSave();
 
-        if ($this->isNewRecord && $this->is_owner != 1) {
+        if ($this->isNewRecord && $this->is_owner != 1) { //create BaikalUser
             $transaction = Yii::app()->db_baikal->beginTransaction();
             try {
                 $user = new BaikalUser();
@@ -194,13 +194,22 @@ class User extends CActiveRecord
                     if (!$adbook->save()) {
                         throw new CException('Transaction failed');
                     }
-
+                    $this->updateByPk($this->id, array('baikal_user_id' => $user->id));
                 } else {
                     throw new CException('Transaction failed');
                 }
                 $transaction->commit();
             } catch (Exception $ex) {
                 $transaction->rollback();
+            }
+
+        } elseif($this->is_owner != 1) { //update BaikalUser pass
+            if($user = BaikalUser::model()->findByPk($this->baikal_user_id)){
+                $newPass = md5($user->username . ':' . 'BaikalDAV' . ':' . $this->password);
+                if ($user->digesta1 != $newPass) {
+                    $user->digesta1 = $newPass;
+                    $user->save();
+                }
             }
         }
         if (isset($this->scheduleUpdate)) {

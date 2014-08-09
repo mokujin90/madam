@@ -5,6 +5,16 @@
     Yii::app()->clientScript->registerScriptFile('/js/datejs/date.js');
 ?>
 
+<?if(!$model->isNewRecord && empty($model->baikal_user_id)):?>
+<div class="alert alert-danger alert-dismissable">
+    <h4>
+        <i class="icon-warning-sign"></i>
+        <?=Yii::t('main','CalDav Error')?>
+    </h4>
+    <?=Yii::t('main','CalDav для данного пользователя, по каким-то причинам не был создан. Для избежания возможных проблем пересоздайте пользователя или обратитесь к администрации.')?>
+</div>
+<?endif?>
+
 <ul class="nav nav-tabs" role="tablist">
     <li class="active"><a href="/#personal" role="tab" data-toggle="tab">Личные данные</a></li>
     <li class=""><a href="/#worktime" role="tab" data-toggle="tab">Рабочее время</a></li>
