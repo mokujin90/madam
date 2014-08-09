@@ -5271,3 +5271,12 @@ hr.event-hr{
 .overflow-hidden{
     overflow: hidden;
 }
+
+#ui-datepicker-div{
+    top: 48px !important;
+}
+
+.filter-container input
+{
+    max-width: 55px;
+}

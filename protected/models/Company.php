@@ -34,6 +34,7 @@
  */
 class Company extends CActiveRecord
 {
+
     static $bookingDeadline = array(
         '1' => '1 час',
         '2' => '2 часa',
@@ -48,7 +49,7 @@ class Company extends CActiveRecord
         '6' => '6 месяцев',
         '12' => '1 год',
     );
-
+    public $license;
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -145,7 +146,7 @@ class Company extends CActiveRecord
         // should not be searched.
 
         $criteria = new CDbCriteria;
-
+        $criteria->with = array( 'company2Licenses' );
         $criteria->compare('id', $this->id, true);
         $criteria->compare('name', $this->name, true);
         $criteria->compare('address', $this->address, true);
@@ -168,6 +169,7 @@ class Company extends CActiveRecord
         $criteria->compare('hello_text', $this->hello_text, true);
         $criteria->compare('select_timetable', $this->select_timetable);
 
+        $criteria->compare( 'company2Licenses.id', $this->license, true );
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));

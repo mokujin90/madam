@@ -13,15 +13,12 @@ class AdminCompanyController extends AdminBaseController{
         $this->mainMenuActiveId = 'company';
         $this->pageCaption = 'Company';
 
-        $dataProvider = new CActiveDataProvider('Company', array(
-            'criteria' => array(
-                'with' => array('company2Licenses'),
-            ),
-            'pagination' => array(
-                'pageSize' => 20,
-            ),
-        ));
-        $this->render('/admin/company',array('dataProvider' => $dataProvider,));
+        $model = new Company('search');
+        $model->unsetAttributes();
+        if(isset($_GET['Company']))
+            $model->attributes=$_GET['Company'];
+
+        $this->render('/admin/company',array('model' => $model,));
     }
 
     /**
@@ -66,15 +63,12 @@ class AdminCompanyController extends AdminBaseController{
     public function actionApproveList(){
         $this->mainMenuActiveId = 'approve';
         $this->pageCaption = 'Approve';
-        $criteria = Company2License::getNotApproved();
 
-        $dataProvider = new CActiveDataProvider('Company2License', array(
-            'criteria' => $criteria,
-            'pagination' => array(
-                'pageSize' => 20,
-            ),
-        ));
-        $this->render('/admin/approve',array('dataProvider' => $dataProvider,));
+        $model = new Company2License('search');
+        $model->unsetAttributes();
+        if(isset($_GET['Company2License']))
+            $model->attributes=$_GET['Company2License'];
+        $this->render('/admin/approve',array('model'=>$model));
     }
 
     public function actionApprove($id){

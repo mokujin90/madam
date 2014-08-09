@@ -1,8 +1,11 @@
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
     'type'=>'striped',
-    'dataProvider' => $dataProvider,
+    'template'=>"{items}{pager}",
+    'filter'=>$model,
+    'dataProvider'=>$model->search(),
     'columns' => array(
+        'id',
         'name',
         'description',
         'city',
@@ -11,6 +14,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         'email',
         array(
             'name' => 'license',
+            'filter'=>false,
             'type' => 'raw',
             'value' => 'CHtml::link(Yii::t("main","Лицензия"),
                          array("adminCompany/editLicense","id" => $data->company2Licenses[0]->id), array("class" => "btn btn-success"))',
