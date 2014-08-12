@@ -138,6 +138,10 @@ class Company2License extends CActiveRecord
         return Company2License::model()->with('license')->findByAttributes(array('company_id'=>$companyId),array('order'=>'date DESC'));
     }
 
+    /**
+     * @param $companyId
+     * @return Company2License
+     */
     static public function getLicenseBycompany($companyId){
         return Company2License::model()->with('license')->findByAttributes(array('company_id'=>$companyId),array('order'=>'date DESC'));
     }
@@ -185,5 +189,17 @@ class Company2License extends CActiveRecord
         $eventCount = Request::model()->count($criteria);
 
         return $eventCount < $enableEventCount;
+    }
+
+    /**
+     * Попробует посчитать сколько осталось дней с начала активации лицензии, если это не базовая
+     */
+    public function getLastDay(){
+        $day = 30;
+        //ловить нечего
+        if($this->license_id==License::$base[1])
+            return '';
+        $different = Help::dateDiff(Help::currentDate(),$this->date);
+        return $day - $different['days_total'];
     }
 }

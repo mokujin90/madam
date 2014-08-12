@@ -58,8 +58,10 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
                         </li>
                     <?endforeach;?>
                 </ul>
-                <?if($license->id<=$oldLicense->license_id && $oldLicense['license']->getLicenseType()!=0):?>
+                <?if($license->id==$oldLicense->license_id && $oldLicense['license']->getLicenseType()!=0):?>
                     <a class="buy-action btn disabled" href="#"><i class="icon-ok"></i> Действует</a>
+                <?elseif($license->id<$oldLicense->license_id && $oldLicense['license']->getLicenseType()!=0):?>
+                    <a class="buy-action btn btn-inverse disabled" href="#"><i class="icon-lock"></i> Купить</a>
                 <?else:?>
                     <a class="buy-action btn btn-inverse" href="<?=$this->createUrl('company/more',array('type'=>$count))?>"><i class="icon-money"></i> Купить</a>
                 <?endif;?>
