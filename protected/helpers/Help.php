@@ -106,7 +106,7 @@ class Help{
     }
 
     /**
-     * Метод Череша
+     * Метод ***еша
      * @param $d1
      * @param $d2
      * @return array

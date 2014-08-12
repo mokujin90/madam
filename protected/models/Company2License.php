@@ -198,7 +198,7 @@ class Company2License extends CActiveRecord
     static public function enableOption($option){
         return Company2License::getCurrentLicense()->license[$option];
     }
-    
+
     /**
      * Попробует посчитать сколько осталось дней с начала активации лицензии, если это не базовая
      */
