@@ -1899,6 +1899,11 @@ header .navbar {
   @media (max-width: 767px) {
     #main-nav-bg {
       width: 0; } }
+@media (max-width : 420px) {
+    #main-nav-bg {
+        display: none;
+    }
+}
   @media print {
     #main-nav-bg {
       display: none; } }
@@ -1927,6 +1932,14 @@ header .navbar {
     #main-nav {
       width: 0;
       overflow: hidden; } }
+  @media (max-width : 420px) {
+      #main-nav {
+        width: 100% !important;
+        position: relative;
+        left: 0;
+        top: 0;
+    }
+  }
   @media print {
     #main-nav {
       display: none; } }
@@ -2222,6 +2235,11 @@ body {
   @media (max-width: 767px) {
     #content {
       margin-left: 0; } }
+    @media (max-width : 420px) {
+        #content {
+            margin-left: 0 !important;
+        }
+    }
   @media print {
     #content {
       margin-left: 0 !important; } }

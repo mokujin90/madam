@@ -83,7 +83,7 @@
             <?= $form->error($model,'calendar_front_delimit'); ?>
         </div>
     </div>
-    <?if(!$model->isNewRecord):?>
+    <?if(!$model->isNewRecord && Company2License::enableOption('caldav')):?>
     <div class="form-group">
         <label class="col-xs-4 control-label">CalDav ID</label>
         <div class="col-xs-4">

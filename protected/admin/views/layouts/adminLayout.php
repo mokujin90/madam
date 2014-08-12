@@ -63,15 +63,6 @@
     <div id="main-nav-bg"></div>
     <nav id="main-nav">
         <div class="navigation">
-            <div class="search">
-                <form action="#" method="get">
-                    <div class="search-wrapper">
-                        <input value="" class="search-query form-control" placeholder="Search..." autocomplete="off" name="q"
-                               type="text">
-                        <button class="btn btn-link icon-search" name="button" type="submit"></button>
-                    </div>
-                </form>
-            </div>
             <ul class="nav nav-stacked">
                 <li class="">
                     <?php echo CHtml::link('<i class="icon-cog"></i><span>Base License</span>',array('adminLicense/index'),array('class'=>$this->mainMenuActiveId=='baseLicense'?'in':''))?>

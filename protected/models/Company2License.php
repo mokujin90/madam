@@ -154,7 +154,8 @@ class Company2License extends CActiveRecord
      */
     static public function enableNewEmployee(){
         $companyId = Yii::app()->user->companyId;
-        $ebableEmployeeCount = Company2License::getCurrentLicense()->license->employee;
+        $license = Company2License::getCurrentLicense();
+        $ebableEmployeeCount = $license->license->employee + $license->employee_upgrade;
         $employeeCount = User::model()->countByAttributes(array('company_id' => $companyId, 'is_owner' => 0));
         return $employeeCount < $ebableEmployeeCount;
     }
@@ -185,5 +186,12 @@ class Company2License extends CActiveRecord
         $eventCount = Request::model()->count($criteria);
 
         return $eventCount < $enableEventCount;
+    }
+
+    /**
+     * @return mixed - доступна ли опция компании
+     */
+    static public function enableOption($option){
+        return Company2License::getCurrentLicense()->license[$option];
     }
 }

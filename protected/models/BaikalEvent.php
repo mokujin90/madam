@@ -130,6 +130,9 @@ class BaikalEvent extends BaikalActiveRecord
      */
     public static function updateEvent($requestId)
     {
+        if (!Company2License::enableOption('caldav')) {
+            return;
+        }
         if (!$request = Request::model()->with('requestFields')->findByPk($requestId)) {
             return;
         }
