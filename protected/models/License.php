@@ -181,4 +181,11 @@ class License extends CActiveRecord
         return $this->{$field}==0 ? "has-nofeature" : "has-feature";
     }
 
+    /**
+     * Вернет либо нормальное имя лицензии (если базовая), либо стандартное "Индивидуальная"
+     */
+    public function getName(){
+        return $this->is_system==1 ? $this->request_text : "Индивидуальная лицензия";
+    }
+
 }

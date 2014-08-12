@@ -6,7 +6,7 @@ $adminEmail = 'example@example.com';
 $local_db['name'] = "termin";
 $local_db['host'] = '127.0.0.1';
 $local_db['username'] = 'root';
-$local_db['password'] = '123';
+$local_db['password'] = '';
 
 $db_connection_array = array(
     'class' => 'CDbConnection',
