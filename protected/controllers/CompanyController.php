@@ -100,7 +100,8 @@ class CompanyController extends BaseController
             $this->redirect($this->createUrl('employee/create'));
         }
         $lastPhrase = $oldLicense->license_id==License::$base[1] ? '' : "Осталось ".$oldLicense->getLastDay()." ".Help::getNumEnding($oldLicense->getLastDay(),array('день','дня','дней'));
-        $this->pageCaption="Лицензия. Действует &laquo;".$oldLicense['license']->getName()."&raquo;. ".$lastPhrase;
-        $this->render('more',array('oldLicense'=>$oldLicense,'manual'=>$manual,'companyId'=>$companyId,'standard'=>$standardLicense));
+        $this->pageCaption="Лицензия";
+        $licenseAlert = "Действует &laquo;".$oldLicense['license']->getName()."&raquo;. ".$lastPhrase;
+        $this->render('more',array('oldLicense'=>$oldLicense,'manual'=>$manual,'companyId'=>$companyId,'standard'=>$standardLicense, 'licenseAlert' => $licenseAlert));
     }
 }

@@ -17,6 +17,12 @@ $data = array(
 $check=array('control_dialog','group_event','email_confirm','sms_confirm','email_reminder','sms_reminder','multilanguage','event_confirm','email_event','sms_event','caldav','email_help','phone_help');
 ?>
 <?Yii::app()->clientScript->registerCssFile('/css/pricetab.css');?>
+<div class="col-xs-12">
+    <div class="alert alert-info alert-dismissable">
+        <i class="icon-info-sign"></i> <?=$licenseAlert?>
+    </div>
+</div>
+
 <div class="main-box-body clearfix">
 <?$count=1?>
 <?foreach($standard as $license):?>
