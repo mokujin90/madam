@@ -139,19 +139,19 @@
 <div class="hidden" id="new-field-item">
     <div class="form-group">
         <?= CHtml::hiddenField('id','0')?>
-        <div class="col-xs-1">
-            <button type="button" class="btn btn-primary up-field">&uarr;</button>
+        <div class="col-xs-12 col-sm-1">
+            <button type="button" class="col-xs-12 btn btn-primary up-field">&uarr;</button>
         </div>
-        <div class="col-xs-1">
-            <button type="button" class="btn btn-primary down-field">&darr;</button>
+        <div class="col-xs-12 col-sm-1">
+            <div type="button" class="col-xs-12 btn btn-primary down-field">&darr;</div>
         </div>
-        <div class="col-xs-1">
-            <button type="button" class="btn btn-danger remove-field">-</button>
+        <div class="col-xs-12 col-sm-1">
+            <button type="button" class="col-xs-12 btn btn-danger remove-field">-</button>
         </div>
-        <div class="col-xs-5">
+        <div class="col-xs-12 col-sm-5">
             <?= CHtml::textField('name','',array('class'=>"form-control"))?>
         </div>
-        <div class="col-xs-4">
+        <div class="col-xs-12 col-sm-4">
             <?= CHtml::dropDownList('type','enabled', CompanyField::$params,array('class'=>'form-control'));?>
         </div>
     </div>
