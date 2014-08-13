@@ -45,15 +45,14 @@
         'question'=>$question,
     )); ?>
     </div>
-  </div>
-    <div class="form-group">
-        <hr>
-        <div class="col-lg-offset-5 col-lg-5">
-        <?if (!$model->isNewRecord) {?>
-            <a class="btn btn-danger remove-user" href="/employee/delete/id/<?=$model->id;?>">Удалить</a>
-        <?}?>
-        <button type="submit" class="btn btn-success">Сохранить</button>
-        </div>
+</div>
+<div class="form-group col-xs-12">
+    <hr>
+    <div class="col-lg-offset-5 col-lg-5">
+    <?if (!$model->isNewRecord) {?>
+        <a class="btn btn-danger remove-user" href="/employee/delete/id/<?=$model->id;?>">Удалить</a>
+    <?}?>
+    <button type="submit" class="btn btn-success">Сохранить</button>
     </div>
 </div>
 <? $this->endWidget(); ?>
