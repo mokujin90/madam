@@ -104,4 +104,8 @@ class CompanyController extends BaseController
         $licenseAlert = "Действует &laquo;".$oldLicense['license']->getName()."&raquo;. ".$lastPhrase;
         $this->render('more',array('oldLicense'=>$oldLicense,'manual'=>$manual,'companyId'=>$companyId,'standard'=>$standardLicense, 'licenseAlert' => $licenseAlert));
     }
+
+    function actionTest(){
+        $this->render('test');
+    }
 }

@@ -1,5 +1,5 @@
 <div class="row">
-        <div class="box">
+        <div class="box col-xs-12 col-sm-6">
             <div class="box-header green-background">
                 <div class="title"><i class="icon-comments-alt"></i> <?=Yii::t('main','Пользовательские поля')?></div>
             </div>
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="box">
+        <div class="box col-xs-12 col-sm-6">
             <div class="box-header blue-background">
                 <div class="title"><i class="icon-book"></i> <?=Yii::t('main','Вопросы')?></div>
             </div>

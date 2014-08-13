@@ -1,5 +1,5 @@
 <?$scheduleArray = $model->getScheduleByDay();?>
-<div class="col-xs-12 col-sm-8">
+<div class="col-xs-12 col-lg-8">
     <?
     $scheduleUniqId = 0;
     for($i = 0; $i < 7; $i++) {
@@ -34,19 +34,19 @@
                             <hr class="margin-0">
                             <? if(isset($scheduleArray[$i])) foreach($scheduleArray[$i] as $scheduleRow){?>
                             <div class="row interval-row">
-                                <div class="col-xs-1">
-                                    <button type="button" class="btn btn-danger remove-interval">-</button>
+                                <div class="col-xs-12 col-sm-1">
+                                    <button type="button" class="col-xs-12 btn btn-danger remove-interval"><span class="hidden-xs">-</span><span class="hidden-sm hidden-md hidden-lg">Удалить</span></button>
                                 </div>
-                                <div class="col-xs-5">
-                                    <div class="col-md-12 col-lg-5">
+                                <div class="col-xs-6 col-sm-5">
+                                    <div class="col-sm-12 col-md-5">
                                         <select class="form-control start-hour-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][startHour]">
                                             <? for($hour = 0; $hour < 24; $hour++) {
                                             echo "<option value='$hour' " . ($hour == $scheduleRow['startHour'] ? 'selected' : '') . ">" . ($hour < 10 ? "0$hour" : $hour) . "</option>";
                                         }?>
                                         </select>
                                     </div>
-                                    <div class="col-md-12 col-lg-2 time-delimit">:</div>
-                                    <div class="col-md-12 col-lg-5">
+                                    <div class="col-sm-12 col-md-2 time-delimit">:</div>
+                                    <div class="col-sm-12 col-md-5">
                                         <select class="form-control start-min-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][startMin]">
                                             <? for($min = 0; $min < 60; $min+=5) {
                                             echo "<option value='$min' " . ($min == $scheduleRow['startMin'] ? 'selected' : '') . ">" . ($min < 10 ? "0$min" : $min) . "</option>";
@@ -54,16 +54,16 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-xs-5">
-                                    <div class="col-md-12 col-lg-5">
+                                <div class="col-xs-6 col-sm-5">
+                                    <div class="col-sm-12 col-md-5">
                                         <select class="form-control end-hour-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][endHour]">
                                             <? for($hour = 0; $hour < 24; $hour++) {
                                             echo "<option value='$hour' " . ($hour == $scheduleRow['endHour'] ? 'selected' : '') . ">" . ($hour < 10 ? "0$hour" : $hour) . "</option>";
                                         }?>
                                         </select>
                                     </div>
-                                    <div class="col-md-12 col-lg-2 time-delimit">:</div>
-                                    <div class="col-md-12 col-lg-5 ">
+                                    <div class="col-sm-12 col-md-2 time-delimit">:</div>
+                                    <div class="col-sm-12 col-md-5">
                                         <select class="form-control end-min-control" name="schedule[<?=$i;?>][<?=$scheduleUniqId;?>][endMin]">
                                             <? for($min = 0; $min < 60; $min+=5) {
                                             echo "<option value='$min' " . ($min == $scheduleRow['endMin'] ? 'selected' : '') . ">" . ($min < 10 ? "0$min" : $min) . "</option>";
@@ -71,7 +71,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-xs-1">
+                                <div class="col-sm-1">
                                     <label class="checkbox-inline">
                                         <?=CHtml::checkBox("schedule[$i][$scheduleUniqId][enable]", !empty($scheduleRow['enable']));?>
                                     </label>
@@ -87,7 +87,7 @@
         <?}?>
     <input type="hidden" id="shedule-uniq-iq" value="<?=$scheduleUniqId;?>"/>
 </div>
-<div class="col-xs-12 col-sm-4">
+<div class="col-xs-12 col-lg-4">
     <h4>Рабочее время</h4>
                         <span>
                             Вставьте здесь свои рабочие часы в неделю, что. нажав на добавить работу в то время, день недели.

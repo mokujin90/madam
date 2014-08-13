@@ -4669,6 +4669,9 @@ td.visible-lg {
 .hidden-xs {
   display: block !important; }
 
+.hidden-xs.question-text{
+    display: inline-block !important;
+}
 tr.hidden-xs {
   display: table-row !important; }
 
@@ -4677,7 +4680,8 @@ td.hidden-xs {
   display: table-cell !important; }
 
 @media (max-width: 767px) {
-  .hidden-xs {
+    .hidden-xs.question-text,
+    .hidden-xs {
     display: none !important; }
 
   tr.hidden-xs {

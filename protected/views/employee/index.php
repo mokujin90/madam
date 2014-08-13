@@ -61,19 +61,19 @@
 
 <div id="new-interval-item" class="hidden">
     <div class="row interval-row">
-        <div class="col-xs-1">
-            <button type="button" class="btn btn-danger remove-interval">-</button>
+        <div class="col-xs-12 col-sm-1">
+            <button type="button" class="col-xs-12 btn btn-danger remove-interval"><span class="hidden-xs">-</span><span class="hidden-sm hidden-md hidden-lg">Удалить</span></button>
         </div>
-        <div class="col-xs-5">
-            <div class="col-md-12 col-lg-5">
+        <div class="col-xs-6 col-sm-5">
+            <div class="col-sm-12 col-md-5">
                 <select class="form-control start-hour-control" name="startHour">
                     <? for($hour = 0; $hour < 24; $hour++) {
                     echo "<option value='$hour'>" . ($hour < 10 ? "0$hour" : $hour) . "</option>";
                 }?>
                 </select>
             </div>
-            <div class="col-md-12 col-lg-2 time-delimit">:</div>
-            <div class="col-md-12 col-lg-5">
+            <div class="col-sm-12 col-md-2 time-delimit">:</div>
+            <div class="col-sm-12 col-md-5">
                 <select class="form-control start-min-control" name="startMin">
                     <? for($min = 0; $min < 60; $min+=5) {
                     echo "<option value='$min'>" . ($min < 10 ? "0$min" : $min) . "</option>";
@@ -81,16 +81,16 @@
                 </select>
             </div>
         </div>
-        <div class="col-xs-5">
-            <div class="col-md-12 col-lg-5">
+        <div class="col-xs-6 col-sm-5">
+            <div class="col-sm-12 col-md-5">
                 <select class="form-control end-hour-control" name="endHour">
                     <? for($hour = 0; $hour < 24; $hour++) {
                     echo "<option value='$hour'>" . ($hour < 10 ? "0$hour" : $hour) . "</option>";
                 }?>
                 </select>
             </div>
-            <div class="col-md-12 col-lg-2 time-delimit">:</div>
-            <div class="col-md-12 col-lg-5 ">
+            <div class="col-sm-12 col-md-2 time-delimit">:</div>
+            <div class="col-sm-12 col-md-5">
                 <select class="form-control end-min-control" name="endMin">
                     <? for($min = 0; $min < 60; $min+=5) {
                     echo "<option value='$min'>" . ($min < 10 ? "0$min" : $min) . "</option>";
@@ -98,7 +98,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-xs-1">
+        <div class="col-sm-1">
             <label class="checkbox-inline">
                 <?=CHtml::checkBox("enable", 0);?>
             </label>

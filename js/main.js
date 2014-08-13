@@ -77,7 +77,7 @@ var question = {
                         $(this).attr('name', 'question[' + count + '][' + $(this).attr('name') + ']');
                     });
                     $clone.attr({id:'q'+count});
-                    $navigation.append('<li data-count="'+count+'"><a data-toggle="tab" href="/RequestFormController/index#q'+count+'">Вопрос '+count+'</a></li>');
+                    $navigation.append('<li data-count="'+count+'"><a data-toggle="tab" href="/RequestFormController/index#q'+count+'"><span class="hidden-xs question-text">Вопрос</span> '+count+'</a></li>');
                     $navigation.find('li').removeClass('active').last().addClass('active');
                     $wrap.find('.tab-pane').removeClass('active');
                     $wrap.append($clone);
@@ -100,7 +100,7 @@ var question = {
     sortedIndex:function(){
         var index = 1;
         $.each($('#questions .nav-tabs li'), function () { //заменим имена
-            $(this).find('a').text('Вопрос '+index++);
+            $(this).find('a').html('<span class="hidden-xs question-text">Вопрос</span> '+index++);
         });
     },
     addAnswer:function(){

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html class=" js no-touch localstorage svg">
 <head>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <script src="/js/jquery.min.js" type="text/javascript"></script>
     <!-- / bootstrap [required] -->
     <link href="/css/bootstrap.css" media="all" rel="stylesheet" type="text/css">

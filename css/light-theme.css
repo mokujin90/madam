@@ -1899,7 +1899,7 @@ header .navbar {
   @media (max-width: 767px) {
     #main-nav-bg {
       width: 0; } }
-@media (max-width : 420px) {
+@media (max-width : 620px) {
     #main-nav-bg {
         display: none;
     }
@@ -1932,7 +1932,7 @@ header .navbar {
     #main-nav {
       width: 0;
       overflow: hidden; } }
-  @media (max-width : 420px) {
+  @media (max-width : 620px) {
       #main-nav {
         width: 100% !important;
         position: relative;
@@ -2235,7 +2235,7 @@ body {
   @media (max-width: 767px) {
     #content {
       margin-left: 0; } }
-    @media (max-width : 420px) {
+    @media (max-width : 620px) {
         #content {
             margin-left: 0 !important;
         }
@@ -5256,29 +5256,32 @@ input.error-value{
 }
 
 #create-event{
-    width: 785px;
-    margin:0;
+    /*width: 785px;
+    margin:0;*/
+    margin:16px 0;
+    padding: 0;
+    max-width: 785px;
 }
     #create-event .row{
         margin:0;
     }
         #create-event .row .box{
-            width: 385px;
+            /*width: 385px;
             display: inline-block;
-            vertical-align: top;
+            vertical-align: top;*/
         }
 #create-event .datetime-setting .row .box{
-    width: 370px;
+    /*width: 370px;*/
 }
 #create-event .datetime-setting .input-group{
-    width:300px;
+    /*width:300px;*/
 }
 label.init{
     font-weight: 100;
 }
 #create-event .datetime-setting .setting{
-    display: inline-block;
-    width: 385px;
+    /*display: inline-block;
+    width: 385px;*/
 }
 .bootstrap-datetimepicker-widget{
     z-index: 999999!important;
@@ -5311,4 +5314,14 @@ hr.event-hr{
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
     transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.remove-interval,
+.form-group .remove-field,
+.form-group .up-field,
+.form-group .down-field{
+    min-width: 32px;
+}
+.text-label-important{
+    text-align: left !important;
 }

@@ -18,14 +18,14 @@ Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript:
         'htmlOptions'=>array(
             'role'=>"form",
             'id'=>'create-event',
-            'class' => 'validate-form'
+            'class' => 'validate-form col-xs-12'
         ),
     )); ?>
 
     <?
         $this->widget('WizardWidget',array('question'=>$question,'field'=>$field,'skin'=>'dialog','request'=>$model));
     ?>
-    <div class="box datetime-setting">
+    <div class="box datetime-setting col-xs-12">
         <div class="box-header green-background">
             <div class="title"><i class="icon-comments-alt"></i> <?=Yii::t('main','Время события')?></div>
         </div>
