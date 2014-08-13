@@ -28,10 +28,10 @@
                 </div>
                 <?= CHtml::hiddenField('field['.$count.'][id]',$field->id)?>
                 <div class="col-xs-12 col-sm-5">
-                    <?= CHtml::textField('field['.$count.'][name]',$field->name,array('class'=>"form-control"))?>
+                    <?= CHtml::textField('field['.$count.'][name]',$field->name,array('readonly' => ($field->is_userfield!=1), 'class'=>"form-control"))?>
                 </div>
                 <div class="col-xs-12 col-sm-4">
-                    <?= CHtml::dropDownList('field['.$count.'][type]',$field->type, CompanyField::$params,array('class'=>'form-control'));?>
+                    <?= CHtml::dropDownList('field['.$count.'][type]',$field->type, CompanyField::$params,array('class'=>'form-control' . ($field->is_userfield!=1 ? ' hidden' : '')));?>
                 </div>
             </div>
 

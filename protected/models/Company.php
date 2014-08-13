@@ -177,9 +177,30 @@ class Company extends CActiveRecord
     protected function afterSave()
     {
         parent::afterSave();
-        $license = new Company2License;
-        $license->attributes = array('license_id'=>License::DEFAULT_LICENSE_ID,'company_id'=>$this->id,'is_agree'=>1,'date'=>Help::currentDate());
-        $license->save();
+        if($this->isNewRecord){
+            $license = new Company2License;
+            $license->attributes = array('license_id'=>License::DEFAULT_LICENSE_ID,'company_id'=>$this->id,'is_agree'=>1,'date'=>Help::currentDate());
+            $license->save();
+
+            $field = new CompanyField();
+            $field->company_id = $this->id;
+            $field->is_userfield = 0;
+            $field->name = 'Email';
+            $field->type = 'required';
+            $field->validator = 'mail';
+            $field->save();
+
+            $field = new CompanyField();
+            $field->company_id = $this->id;
+            $field->is_userfield = 0;
+            $field->name = 'Phone';
+            $field->type = 'required';
+            $field->validator = 'numerical';
+            $field->save();
+        }
+
+
+
     }
 
     public static function isBlock()

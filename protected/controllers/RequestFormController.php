@@ -36,7 +36,7 @@ class RequestFormController extends BaseController
             }
             if(count($deletedField))
                 CompanyField::model()->deleteAllByAttributes(array('id'=>$deletedField));
-            if(count($_POST['question'])){
+            if(isset($_POST['question']) && count($_POST['question'])){
                 $deletedQuestion = array_diff(array_keys($questions),Help::getIndex($_POST['question'],'id'));
                 $maxQuestionCount = Company2License::getCurrentLicense()->license->question;
                 $count = 0;
