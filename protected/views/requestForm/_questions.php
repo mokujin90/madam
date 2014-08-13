@@ -2,8 +2,8 @@
     <h4><?=Yii::t('main','Составьте вопросы')?></h4>
     <div class="form-group">
         <div class="col-xs-12">
-            <button type="button" id="remove-question" class="btn btn-danger pull-right"><?= Yii::t('main','Удалить вопрос')?></button>
-            <button type="button" id="add-question" class="btn btn-success pull-left"><?= Yii::t('main','Добавить вопрос')?></button>
+            <button type="button" id="remove-question" class="btn btn-danger pull-right"><?= Yii::t('main','Удалить')?> <span class="hidden-xs question-text"><?=Yii::t('main','вопрос')?></span></button>
+            <button type="button" id="add-question" class="btn btn-success pull-left"><?= Yii::t('main','Добавить')?> <span class="hidden-xs question-text"><?=Yii::t('main','вопрос')?></span></button>
         </div>
     </div>
     <ul class="nav nav-tabs">
