@@ -29,6 +29,13 @@ class CalendarController extends BaseController
 		$this->render('index', array('user' => $user, 'date' => $date,'find'=>$find));
 	}
 
+    /**
+     * @param null $id Id собатия, в том случае если мы редактируем уже созданный
+     * @param null $start дата начала события, если мы создаем
+     * @param null $end
+     * @param $user_id
+     * @param null $copy
+     */
     public function actionEvent($id=null,$start=null,$end=null,$user_id, $copy = null){
         $this->blockJquery();
         if(empty($id)){//если создаем новую запись вставим из get'a дату начала и конца
@@ -50,16 +57,20 @@ class CalendarController extends BaseController
         $companyId = Yii::app()->user->companyId;
         $question = Question::getQuestion($companyId);
         $field = CompanyField::getFieldByCompany($companyId);
+        $oldBlockStatus = $model->is_block;
         if(isset($_POST['ajax'])){
             $result = array();
             $model->user_id = $user_id; //TODO: подставить нужного
             $model->start_time = Help::formatDate($_POST['event']['date'])." ".$_POST['event']['start_time'];
             $model->end_time = Help::formatDate($_POST['event']['date'])." ".$_POST['event']['end_time'];
-            if(!$model->validate()){
+            $model->is_block = $_POST['event']['is_block'];
+            $isValidate = !($model->is_block==1 && $oldBlockStatus==0);
+            //валидируем только тогда, когда мы не пытаемся заблокировать запись
+            if(!$model->validate() && $isValidate){
                 $result['error']=$this->drawError($model->getErrors());
             }
             else{
-                if($model->save()){
+                if($model->save($isValidate)){
                     $model->clearQuestionAndField();
                     RequestQuestion::createByPost($_POST['answer'],$model->id);
                     RequestField::createByPost($_POST['field'],$model->id);

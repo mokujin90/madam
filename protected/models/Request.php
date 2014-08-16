@@ -36,7 +36,7 @@ class Request extends CActiveRecord
 		return array(
 			array('user_id, start_time, end_time', 'required'),
 			array('user_id', 'length', 'max'=>10),
-			array('create_date', 'safe'),
+			array('create_date,is_block', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, user_id, create_date, start_time, end_time', 'safe', 'on'=>'search'),
@@ -67,6 +67,7 @@ class Request extends CActiveRecord
 			'create_date' => 'Create Date',
 			'start_time' => 'Start Time',
 			'end_time' => 'End Time',
+            'is_block' => 'Is block',
 		);
 	}
 

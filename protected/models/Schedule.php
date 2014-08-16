@@ -145,7 +145,7 @@ class Schedule extends CActiveRecord
                 $criteria->addCondition("((start_time > :start AND start_time < :end) OR (end_time > :start AND end_time < :end))");
                 $criteria->params += array(':user_id' => $request->user_id, ':start'=>$request->start_time,':end'=>$request->end_time);
                 if(!is_null($request->id)){ //для нового события id еще не существует
-                    $criteria->addCondition('id != :id');
+                    $criteria->addCondition('id != :id AND is_block=0');
                     $criteria->params += array(':id'=>$request->id);
                 }
                 $anyRequest = Request::model()->findAll($criteria);

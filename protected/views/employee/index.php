@@ -46,7 +46,7 @@
     )); ?>
     </div>
 </div>
-<div class="form-group col-xs-12">
+<div class="">
     <hr>
     <div class="col-lg-offset-5 col-lg-5">
     <?if (!$model->isNewRecord) {?>
