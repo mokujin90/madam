@@ -59,7 +59,7 @@
                             <div class="event-wrap">
                                 <div class="event-begin">
                                     <?=CHtml::link(
-                                    ($event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
+                                    ($this->isBlockIcon($event['model']) . $event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
                                     array('calendar/event',
                                         'start' => $event['start']->format(Help::DATETIME),
                                         'end' => $event['end']->format(Help::DATETIME),
