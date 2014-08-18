@@ -64,6 +64,8 @@ class CalendarController extends BaseController
             $model->user_id = $user_id; //TODO: подставить нужного
             $model->start_time = Help::formatDate($_POST['event']['date'])." ".$_POST['event']['start_time'];
             $model->end_time = Help::formatDate($_POST['event']['date'])." ".$_POST['event']['end_time'];
+            $model->is_block = isset($_POST['event']['is_block']) ? $_POST['event']['is_block'] : 0;
+
             $isValidate = !($model->is_block==1 && $oldBlockStatus==0);
             //валидируем только тогда, когда мы не пытаемся заблокировать запись
             if(!$model->validate() && $isValidate){

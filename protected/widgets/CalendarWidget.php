@@ -123,7 +123,7 @@ class CalendarWidget extends CWidget{
                 foreach ($item as $eventItem) { //выводим всех людей записанных на это время
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $eventItem->end_time, 'event' => $eventItem->id, 'model' => $eventItem);
                 }
-                if ($this->enableGroupEvent && $this->user->group_size > count($item)) { //выводим бронь для нового члена группы, если остались места
+                if ($this->enableGroupEvent && $this->user->group_size > $this->activeCount($item)) { //выводим бронь для нового члена группы, если остались места
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $item[0]->end_time);
                 }
                 $eventEnd = $item[0]->end_time;
@@ -134,7 +134,7 @@ class CalendarWidget extends CWidget{
                 foreach ($item as $eventItem) { //выводим всех людей записанных на это время
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $eventItem->start_time, 'end' => clone $eventItem->end_time, 'event' => $eventItem->id, 'model' => $eventItem);
                 }
-                if ($this->enableGroupEvent && $this->user->group_size > count($item)) { //выводим бронь для нового члена группы, если остались места
+                if ($this->enableGroupEvent && $this->user->group_size > $this->activeCount($item)) { //выводим бронь для нового члена группы, если остались места
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $item[0]->end_time);
                 }
                 $eventEnd = $item[0]->end_time;
@@ -164,6 +164,19 @@ class CalendarWidget extends CWidget{
         }
     }
 
+    /**
+     * @param $itemArr - массив параллельных событий
+     * @return int - кол-во параллельных незаблокированных событий
+     */
+    private function activeCount($itemArr){
+        $count = 0;
+        foreach($itemArr as $item){
+            if(!$item->is_block){
+                $count++;
+            }
+        }
+        return $count;
+    }
 
     public function getEventLinksForWeek()
     {
@@ -224,5 +237,9 @@ class CalendarWidget extends CWidget{
             }
         }
         return true;
+    }
+
+    public function isBlockIcon($model){
+        return $model->is_block ? '<i class="icon-lock"></i> ' : '';
     }
 }
