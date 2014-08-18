@@ -85,4 +85,5 @@ class WizardWidget extends CWidget{
         return $result;
     }
 
+
 }

@@ -39,6 +39,12 @@ Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript:
                     </div>
                 </div>
             </div>
+            <div class="date">
+                <div class="controls">
+                    <?=CHtml::label(Yii::t('main','Статус:'),"datepicker")?>
+                    <?php echo CHtml::dropDownList('event[status]',$model->status,Request::$status,array('class'=>'form-control'))?>
+                </div>
+            </div>
             <div class="time box">
                 <div class="controls">
                     <?=CHtml::label(Yii::t('main','Время начала:'),"")?>
@@ -54,6 +60,8 @@ Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript:
                         <span class="input-group-addon"><span class="icon-time"></span></span>
                     </div>
                 </div>
+                <?=CHtml::label(Yii::t('main','Комментарий:'),"")?>
+                <?php echo CHtml::textArea('event[comment]',$model->comment,array('class'=>"form-control"))?>
             </div>
         </div>
     </div>

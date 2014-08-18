@@ -36,7 +36,7 @@ class CalendarController extends BaseController
      * @param $user_id
      * @param null $copy
      */
-    public function actionEvent($id=null,$start=null,$end=null,$user_id, $copy = null){
+    public function actionEvent($id=null,$start=null,$end=null,$user_id, $copy = null,$edit=0){
         $this->blockJquery();
         if(empty($id)){//если создаем новую запись вставим из get'a дату начала и конца
             $model = new Request();
@@ -60,10 +60,10 @@ class CalendarController extends BaseController
         $oldBlockStatus = $model->is_block;
         if(isset($_POST['ajax'])){
             $result = array();
+            $model->attributes = $_POST['event'];
             $model->user_id = $user_id; //TODO: подставить нужного
             $model->start_time = Help::formatDate($_POST['event']['date'])." ".$_POST['event']['start_time'];
             $model->end_time = Help::formatDate($_POST['event']['date'])." ".$_POST['event']['end_time'];
-            $model->is_block = $_POST['event']['is_block'];
             $isValidate = !($model->is_block==1 && $oldBlockStatus==0);
             //валидируем только тогда, когда мы не пытаемся заблокировать запись
             if(!$model->validate() && $isValidate){
@@ -81,7 +81,8 @@ class CalendarController extends BaseController
             echo json_encode($result);
             Yii::app()->end();
         }
-        $this->render('event',array('model'=>$model,'question'=>$question,'field'=>$field,'date'=>$model->getDiscreteDate()));
+        $view = ($edit==1 || is_null($id) ) ? 'event' : 'printEvent'; //без параметра или новый выводим в виде для редактирования
+        $this->render($view,array('model'=>$model,'question'=>$question,'field'=>$field,'date'=>$model->getDiscreteDate()));
     }
 
     public function actionTest(){

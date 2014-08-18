@@ -18,6 +18,10 @@ class Request extends CActiveRecord
 {
     public $field;
     public $request;
+    const STATUS_IN_PROGRESS=0;
+    const STATUS_DECIDED=1;
+    const STATUS_CANCELED=2;
+    static $status = array(self::STATUS_IN_PROGRESS=>"В процессе", self::STATUS_DECIDED=>"Решено", self::STATUS_CANCELED=>'Отменено');
 	/**
 	 * @return string the associated database table name
 	 */
@@ -36,7 +40,7 @@ class Request extends CActiveRecord
 		return array(
 			array('user_id, start_time, end_time', 'required'),
 			array('user_id', 'length', 'max'=>10),
-			array('create_date,is_block', 'safe'),
+			array('create_date,is_block,comment,status', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, user_id, create_date, start_time, end_time', 'safe', 'on'=>'search'),

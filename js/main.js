@@ -170,6 +170,7 @@ modal={
     init:function(){
         $('.event').fancybox({
             type: 'ajax',
+            width:800,
             ajax: {
                 complete: function(jqXHR, textStatus) {
                     /*$('.timepicker-input').datetimepicker({
@@ -179,9 +180,14 @@ modal={
                 }
             }
         });
+        $('.print').click(function(){
+            $('#create-event').printElement();
+        });
+        $('button.cancel').click(function(){
+            $.fancybox.close();
+        });
     }
 },
-
 event={
     init:function(){
         /*$('.timepicker-input').datetimepicker({
@@ -384,6 +390,7 @@ more ={
         });
     }
 }
+
 $.urlParam = function(name){
     var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
     return results[1] || 0;
