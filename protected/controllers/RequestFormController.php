@@ -17,7 +17,7 @@ class RequestFormController extends BaseController
     public function actionIndex(){//TODO: брать из url'a
         $id = Yii::app()->user->companyId;
         $questions = Question::getQuestion($id);
-        $fields = CompanyField::model()->getFieldByCompany($id);
+        $fields = CompanyField::model()->getFieldByCompany($id, true);
         if(isset($_POST['field'])){
             $positionField=0;
             $deletedField = array_diff(array_keys($fields),Help::getIndex($_POST['field'],'id'));
@@ -77,7 +77,7 @@ class RequestFormController extends BaseController
             else{
                 //Question::model()->deleteAllByAttributes(array('id'=>array_keys($questions)));
             }
-            $fields = CompanyField::model()->getFieldByCompany($id);
+            $fields = CompanyField::model()->getFieldByCompany($id, true);
         }
 
         $this->render('index',array('questions'=>$questions,'fields'=>$fields));

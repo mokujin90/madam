@@ -124,8 +124,8 @@ class CompanyField extends CActiveRecord
 		return parent::model($className);
 	}
 
-    public static function getFieldByCompany($id){
-        return CompanyField::model()->findAllByAttributes(array('company_id'=>$id),array('order'=>'position,is_userfield','index'=>'id','condition'=>'type!="disabled"'));
+    public static function getFieldByCompany($id, $withDisabled = false){
+        return CompanyField::model()->findAllByAttributes(array('company_id'=>$id),array('order'=>'position,is_userfield','index'=>'id','condition'=> ($withDisabled ? '' : 'type!="disabled"')));
     }
 
     public static function getActiveField($id){

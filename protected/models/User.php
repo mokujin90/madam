@@ -32,7 +32,8 @@ class User extends CActiveRecord
         '20' => '20 минут',
         '30' => '30 минут',
         '60' => '60 минут',
-        '0' => 'Индивидуально',
+        '120' => '2 часа',
+        //'0' => 'Индивидуально',
     );
 	/**
 	 * Returns the static model of the specified AR class.

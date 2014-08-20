@@ -35,14 +35,16 @@
     .event-wrap{
         width: 100%;
         max-width: 200px;
-        overflow: hidden;
+        display: inline-block;
     }
     .event-wrap .event-info{
+        width: 100%;
         background-color: #ACA8DA;
         max-width: 200px;
         padding: 5px 30px 5px 5px;
         position: relative;
         text-align: left;
+        display: inline-block;
     }
     .event-wrap .event-info .comment-text{
         white-space: nowrap;
@@ -110,6 +112,7 @@
                                                 'data-title' => (isset($event['event']) ? ($this->getEventAbbr($event['model'])) : false),
                                                 'data-placement' => 'top',
                                             ))?>
+                                            <br>
                                             <div class="event-info">
                                                 <?=CHtml::checkBox('', false, array('data-day' => $day, 'value' => $event['model']->id, 'class' => 'event-cb'))?>
                                                 <?=$this->getEventStatus($event['model'])?>
@@ -118,6 +121,8 @@
                                                 <?=$this->getCopyLink($event)?>
                                             </div>
                                         </div>
+                                    <br>
+
                                     <?else:?>
                                         <?=CHtml::link(
                                             ($event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
