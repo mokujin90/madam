@@ -43,6 +43,7 @@
         'form'=>$form,
         'model'=>$model,
         'question'=>$question,
+        'user2answer'=>$user2answer
     )); ?>
     </div>
 </div>
