@@ -8,7 +8,7 @@
                 <div class="controls">
                     <?
                         foreach($field as $item){
-                            echo "<b>".$item->name."</b>: ".$request['requestFields'][$item->id]->value."<br/>";
+                            echo "<b>".$item->name."</b>: ". (isset($request['requestFields'][$item->id]) ? $request['requestFields'][$item->id]->value : '---')."<br/>";
                         }
                     ?>
                 </div>

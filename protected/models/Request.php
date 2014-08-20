@@ -22,6 +22,7 @@ class Request extends CActiveRecord
     const STATUS_DECIDED=1;
     const STATUS_CANCELED=2;
     static $status = array(self::STATUS_IN_PROGRESS=>"В процессе", self::STATUS_DECIDED=>"Решено", self::STATUS_CANCELED=>'Отменено');
+    static $statusClass = array(self::STATUS_IN_PROGRESS=>"text-blue", self::STATUS_DECIDED=>"text-purple", self::STATUS_CANCELED=>'text-red');
 	/**
 	 * @return string the associated database table name
 	 */

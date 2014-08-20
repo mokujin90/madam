@@ -91,6 +91,12 @@ class Help{
         return $dateVal->format('Y-m-d');
     }
 
+    public static function getModifyDate($date, $modify){
+        $dateVal = isset($date) ? clone $date: new DateTime();
+        $dateVal->modify($modify);
+        return $dateVal->format('Y-m-d');
+    }
+
     /**
      * dd/mm/YYYY -> YYYY-mm-dd
      */

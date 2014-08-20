@@ -170,7 +170,6 @@ modal={
     init:function(){
         $('.event').fancybox({
             type: 'ajax',
-            width:800,
             ajax: {
                 complete: function(jqXHR, textStatus) {
                     /*$('.timepicker-input').datetimepicker({
@@ -330,6 +329,90 @@ calendar = {
         $(document).on('click', '.action-refresh', function(){
             calendar.refresh($(this).data('date'));
         });
+        $(document).on('click', '.block-all-action, .unblock-all-action', function(){
+            var $wrap = $(this).closest('.box');
+            var block = $(this).data('block');
+            var eventsID = calendar.getEventByCb($wrap);
+            if(eventsID.length){
+                $.ajax({
+                    type: 'GET',
+                    url: '/calendar/groupBlockEvent',
+                    async: false,
+                    data: {
+                        block: block,
+                        id: eventsID
+                    },
+                    error: function () {
+                        $.jGrowl("Ошибка сервера");
+                    },
+                    success: function (data) {
+                        calendar.refresh($('.current-date', $wrap).data('date'));
+                    }
+                });
+            }
+        });
+
+        $(document).on('click', '.print-all-action', function(){
+            var $wrap = $(this).closest('.box');
+            var eventsID = calendar.getEventByCb($wrap);
+            if(eventsID.length){
+                $.ajax({
+                    type: 'GET',
+                    url: '/calendar/groupPrintEvent',
+                    async: false,
+                    dataType: 'html',
+                    data: {
+                        id: eventsID
+                    },
+                    error: function () {
+                        $.jGrowl("Ошибка сервера");
+                    },
+                    success: function (data) {
+                        $('#print-list').html(data).printElement();
+                    }
+                });
+            }
+        });
+
+        $(document).on('click', '.delete-all-action', function(){
+            var $wrap = $(this).closest('.box');
+            var eventsID = calendar.getEventByCb($wrap);
+            if(eventsID.length && common.deleteConfirm()){
+                $.ajax({
+                    type: 'GET',
+                    url: '/calendar/groupDeleteEvent',
+                    async: false,
+                    data: {
+                        id: eventsID
+                    },
+                    error: function () {
+                        $.jGrowl("Ошибка сервера");
+                    },
+                    success: function (data) {
+                        calendar.refresh($('.current-date', $wrap).data('date'));
+                    }
+                });
+            }
+        });
+        $(document).on('change', '.event-cb-all', function(){
+            var $wrap = $(this).closest('.box');
+            $('.event-cb', $wrap).attr('checked', $(this).attr('checked') ? true : false);
+        });
+        $(document).on('change', '.event-cb-day', function(){
+            var $wrap = $(this).closest('.box');
+            var day = $(this).val();
+            $('.event-cb[data-day=' + day + ']', $wrap).attr('checked', $(this).attr('checked') ? true : false);
+        });
+    },
+    getEventByCb:function($wrap){
+        $cb = $('.event-cb:checked', $wrap);
+        var idArr = [];
+        if($cb.length){
+            $.each($cb, function(){
+                idArr.push($(this).val());
+            });
+        }
+        return idArr;
     },
     refresh:function(date){
         if(calendarOnChange){

@@ -8,6 +8,7 @@ Yii::app()->clientScript->registerScriptFile('/js/locales/bootstrap-datetimepick
 Yii::app()->clientScript->registerScriptFile('/js/bootstrap-datetimepicker.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerCssFile('/css/bootstrap-datetimepicker.min.css');
 Yii::app()->clientScript->registerScript('calendarInit', 'calendar.init()', CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile('/js/extension/jquery.print.js', CClientScript::POS_END);
 ?>
 
 <ul class="nav nav-tabs" id="calendar-tabs">
@@ -40,4 +41,8 @@ Yii::app()->clientScript->registerScript('calendarInit', 'calendar.init()', CCli
             'find'=>$find,
         )); ?>
     </div>
+</div>
+
+<div class="hidden">
+    <div id="print-list"></div>
 </div>

@@ -130,7 +130,7 @@ class CalendarWidget extends CWidget{
                 break;
             } else if ($item[0]->start_time > $dateStart && $item[0]->start_time < $dateEnd) { //до начала брони есть участок свободного времени
                 //выделяем участок свободного времени до брони в отдельный интервал-событие
-                $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $item->start_time);
+                $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $item[0]->start_time);
                 foreach ($item as $eventItem) { //выводим всех людей записанных на это время
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $eventItem->start_time, 'end' => clone $eventItem->end_time, 'event' => $eventItem->id, 'model' => $eventItem);
                 }
@@ -201,6 +201,18 @@ class CalendarWidget extends CWidget{
         return $html;
     }
 
+    public function getEventAbbr($eventModel)
+    {
+        $result = array();
+        Request::model()->with('requestQuestions', 'requestQuestions.answer')->findByPk($eventModel->id);
+        foreach ($eventModel->requestQuestions as $question) {
+            if (!empty($question->answer->abbr)) {
+                $result[] = $question->answer->abbr;
+            }
+        }
+        return implode(', ', $result);
+    }
+
     public function getEventClass($event)
     {
         $class = "event label";
@@ -241,5 +253,157 @@ class CalendarWidget extends CWidget{
 
     public function isBlockIcon($model){
         return $model->is_block ? '<i class="icon-lock"></i> ' : '';
+    }
+
+    public function getDayCalendarHourRow($hourEventInterval, $hour)
+    {
+        $rowArr = array();
+        $rowCount = 0;
+        foreach ($hourEventInterval as $event) {
+            if (isset($event['event'])) {
+                $rowArr[]= $this->getDayCalendarEventRow($event);
+            } else {
+                $rowArr[]= $this->getDayCalendarFreeRow($event);
+            }
+            $rowCount++;
+        }
+        $th = CHtml::tag('td', array('class' => 'text-center time-col', 'rowspan' => $rowCount), "$hour:00");
+        $rowArr[0] = $th . (isset($rowArr[0]) ? $rowArr[0] : CHtml::tag('td', array('colspan' => 8), ''));
+        $html = '';
+        $firstRow = true;
+        foreach ($rowArr as $row) {
+            $html .= CHtml::tag('tr', $firstRow ? array('class' => 'first-row') : array(), $row);
+            $firstRow = false;
+        }
+        return $html;
+    }
+
+    public function getEventStatus($eventModel)
+    {
+        $html = CHtml::tag('i', array('class' => 'icon-circle ' . Request::$statusClass[$eventModel->status]), '');
+       /*if ($eventModel->is_block) {
+            $html .= ' ';
+            $html .= CHtml::tag('i', array('class' => 'icon-lock'), '');
+        }*/
+
+        return $html;
+    }
+    private function getDayCalendarEventRow($event){
+        $row = CHtml::openTag('td');//cb
+        $row .= CHtml::checkBox('', false, array('value' => $event['model']->id, 'class' => 'event-cb'));
+        $row .= CHtml::closeTag('td');
+
+        $row .= CHtml::openTag('td');//status
+        $row .= $this->getEventStatus($event['model']);
+        $row .= CHtml::closeTag('td');
+
+        $row .= CHtml::openTag('td');//time
+        $row .= CHtml::link(
+            ($this->isBlockIcon($event['model']) . $event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
+            array('calendar/event',
+                'start' => $event['start']->format(Help::DATETIME),
+                'end' => $event['end']->format(Help::DATETIME),
+                'user_id' => $this->user->id,
+                'id' => $event['event']
+            ),
+            array(
+                'class' => $this->getEventClass($event),
+            ));
+        $row .= CHtml::closeTag('td');
+
+        $row .= CHtml::openTag('td');//copy
+        $row .= $this->getCopyLink($event);
+        $row .= CHtml::closeTag('td');
+
+        $row .= CHtml::openTag('td', array('class' => 'text-left')); //ABBR
+        $row .= $this->getEventAbbr($event['model']);
+        $row .= CHtml::closeTag('td');
+
+        $row .= CHtml::openTag('td', array('class' => 'text-left')); //hint
+        $row .= $this->getEventHint($event['model'], true);
+        $row .= CHtml::closeTag('td');
+
+        $row .= CHtml::openTag('td', array('class' => 'text-left')); //comment
+        $row .= $event['model']->comment;
+        $row .= CHtml::closeTag('td');
+
+        $row .= CHtml::openTag('td'); //edit
+        $row .= CHtml::link(
+            '<i class="icon-pencil"></i>',
+            array('calendar/event',
+                'start' => $event['start']->format(Help::DATETIME),
+                'end' => $event['end']->format(Help::DATETIME),
+                'user_id' => $this->user->id,
+                'id' => $event['event'],
+            ),
+            array(
+                'class' => "event label label-info",
+                'title' => Yii::t('main', 'Редактировать'),
+            ));
+        $row .= CHtml::closeTag('td');
+
+        return $row;
+    }
+    public function getCopyLink($event){
+        return CHtml::link(
+            '<i class="icon-copy"></i>',
+            array('calendar/event',
+                'start' => $event['start']->format(Help::DATETIME),
+                'end' => $event['end']->format(Help::DATETIME),
+                'user_id' => $this->user->id,
+                'id' => $event['event'],
+                'copy' => 1,
+                'edit' => 1
+            ),
+            array(
+                'class' => "event label label-info copy-event",
+                'title' => Yii::t('main', 'Копировать'),
+            ));
+    }
+    private function getDayCalendarFreeRow($event){
+        $row = CHtml::tag('td'); //cb
+        $row .= CHtml::tag('td'); //status
+        $row .= CHtml::openTag('td');//time
+
+        $row .= CHtml::link(
+            ($event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
+            array('calendar/event',
+                'start' => $event['start']->format(Help::DATETIME),
+                'end' => $event['end']->format(Help::DATETIME),
+                'user_id' => $this->user->id,
+                'edit' => 1
+            ),
+            array(
+                'class' => $this->getEventClass($event),
+                'data-start' => $event['start']->format(Help::DATETIME),
+            ));
+        $row .= CHtml::closeTag('td');
+        $row .= CHtml::tag('td'); //copy
+        $row .= CHtml::tag('td', array('class' => 'text-left')); //ABBR
+        $row .= CHtml::tag('td', array('class' => 'text-left')); //hint
+        $row .= CHtml::tag('td', array('class' => 'text-left')); //comment
+        $row .= CHtml::openTag('td'); //edit
+        $row .= CHtml::link(
+            '<i class="icon-plus"></i>',
+            array('calendar/event',
+                'start' => $event['start']->format(Help::DATETIME),
+                'end' => $event['end']->format(Help::DATETIME),
+                'user_id' => $this->user->id,
+                'edit' => 1
+            ),
+            array(
+                'class' => $this->getEventClass($event),
+                'data-start' => $event['start']->format(Help::DATETIME),
+                'title' => Yii::t('main', 'Создать'),
+            ));
+        $row .= CHtml::closeTag('td');
+
+        return $row;
+    }
+
+    public function getTitleWeekDate($day){
+        $dateVal = clone $this->mondayOfWeek;
+        $dateVal->modify("+ $day day");
+        return $dateVal->format('d.m.Y');
     }
 }

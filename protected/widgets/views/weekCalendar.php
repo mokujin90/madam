@@ -21,6 +21,7 @@
         display: inline-block;
         width: 100%;
         max-width: 200px;
+        min-width: 120px;
         text-align: center;
     }
     #week-calendar .disable{
@@ -31,6 +32,39 @@
     .label-success[href]:hover, .label-success[href]:focus,
     .label-info[href]:hover, .label-info[href]:focus {
         background-color: #31b0d5; }
+    .event-wrap{
+        width: 100%;
+        max-width: 200px;
+        overflow: hidden;
+    }
+    .event-wrap .event-info{
+        background-color: #ACA8DA;
+        max-width: 200px;
+        padding: 5px 30px 5px 5px;
+        position: relative;
+        text-align: left;
+    }
+    .event-wrap .event-info .comment-text{
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        position: absolute;
+        width: 100%;
+        padding-right: 50px;
+        padding-left: 30px;
+        left: 20px;
+    }
+    .event-wrap .event-info .copy-event{
+        position: absolute;
+        right: 5px;
+        top: 6px;
+    }
+    #week-calendar td{
+        text-align: center;
+    }
+    span.th-day{
+        padding-right: 12px;
+    }
 </style>
 <div class="responsive-table">
     <div class="scrollable-area">
@@ -42,7 +76,9 @@
                 </th>
                 <?foreach($this->shedule as $day=>$obj):?>
                     <th>
-                        <span class="inline-200"><?=$this->dayName[$day]?></span>
+
+                        <span class="inline-200 th-day"><?=CHtml::checkBox('', false, array('value' => $day, 'class' => 'event-cb-day'))?> <?=$this->dayName[$day]?></span>
+                        <span class="inline-200"><?=$this->getTitleWeekDate($day)?></span>
                     </th>
                 <?endforeach?>
             </tr>
@@ -58,20 +94,45 @@
                         <?if($enable[$day][$hour]):?>
                             <td>
                                 <?foreach($eventInterval[$day][$hour] as $event):?>
-                                <?=CHtml::link(
-                                    ($event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
-                                    array('calendar/event',
-                                        'start' => $event['start']->format(Help::DATETIME),
-                                        'end' => $event['end']->format(Help::DATETIME),
-                                        'user_id' => $this->user->id,
-                                        'id' =>(isset($event['event']) ? $event['event'] : 0)
-                                    ),
-                                    array(
-                                        'class' => "inline-200 " . $this->getEventClass($event),
-                                        'data-content' =>(isset($event['event']) ? $this->getEventHint($event['model']) : false),
-                                        'data-placement' => 'top',
-                                    ))?>
-                                <br>
+                                    <?if(isset($event['event'])):?>
+                                        <div class="event-wrap">
+                                        <?=CHtml::link(
+                                            ($event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
+                                            array('calendar/event',
+                                                'start' => $event['start']->format(Help::DATETIME),
+                                                'end' => $event['end']->format(Help::DATETIME),
+                                                'user_id' => $this->user->id,
+                                                'id' =>(isset($event['event']) ? $event['event'] : 0)
+                                            ),
+                                            array(
+                                                'class' => "inline-200 " . $this->getEventClass($event),
+                                                'data-content' =>(isset($event['event']) ? ($this->getEventHint($event['model'])) : false),
+                                                'data-title' => (isset($event['event']) ? ($this->getEventAbbr($event['model'])) : false),
+                                                'data-placement' => 'top',
+                                            ))?>
+                                            <div class="event-info">
+                                                <?=CHtml::checkBox('', false, array('data-day' => $day, 'value' => $event['model']->id, 'class' => 'event-cb'))?>
+                                                <?=$this->getEventStatus($event['model'])?>
+                                                <?=$this->isBlockIcon($event['model'])?>
+                                                <?=CHtml::tag('span', array('class' => 'comment-text ' . ($event['model']->is_block ? 'block-margin' : '')), $event['model']->comment);?>
+                                                <?=$this->getCopyLink($event)?>
+                                            </div>
+                                        </div>
+                                    <?else:?>
+                                        <?=CHtml::link(
+                                            ($event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
+                                            array('calendar/event',
+                                                'start' => $event['start']->format(Help::DATETIME),
+                                                'end' => $event['end']->format(Help::DATETIME),
+                                                'user_id' => $this->user->id,
+                                                'id' =>(isset($event['event']) ? $event['event'] : 0),
+                                                'edit' => 1
+                                            ),
+                                            array(
+                                                'class' => "inline-200 " . $this->getEventClass($event),
+                                            ))?>
+                                        <br>
+                                    <?endif;?>
                                 <?endforeach?>
                             </td>
                         <?else:?>

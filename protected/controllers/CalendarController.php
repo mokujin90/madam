@@ -87,22 +87,42 @@ class CalendarController extends BaseController
         $this->render($view,array('model'=>$model,'question'=>$question,'field'=>$field,'date'=>$model->getDiscreteDate()));
     }
 
-    public function actionTest(){
-        $this->layout = 'companyLayout';
-        $this->pageCaption=Yii::t('main',"Календарь");
-        $this->pageIcon = 'calendar';
-        $this->mainMenuActiveId="calendar";
-        $this->render('test');
+    public function actionGroupBlockEvent($block)
+    {
+        $events = Request::model()->findAllByPk($_REQUEST['id']);
+        foreach ($events as $event) {
+            if ($event->is_block != $block) {
+                $event->is_block = $block;
+                $event->save();
+            }
+        }
     }
 
-    public function actionDelete($id){
+    public function actionGroupDeleteEvent()
+    {
+        $events = Request::model()->findAllByPk($_REQUEST['id']);
+        foreach ($events as $event) {
+            $event->delete();
+        }
+    }
+
+    public function actionGroupPrintEvent()
+    {
+        $events = Request::model()->with('requestQuestions', 'requestQuestions.answer', 'requestFields', 'requestFields.field')->findAllByPk($_REQUEST['id'], array('order' => 'start_time'));
+        echo $this->renderPartial('_printEventList', array('events' => $events));
+    }
+
+    public function actionDelete($id)
+    {
         $model = Request::model()->findByPk($id);
-        if($model){
+        if ($model) {
             $model->delete();
         }
         $this->redirect(Yii::app()->request->urlReferrer);
     }
-    public function actionChangeCalendarDate($user_id, $date, $active_tab = 'day'){
+
+    public function actionChangeCalendarDate($user_id, $date, $active_tab = 'day')
+    {
         $user = User::model()->findByPk($user_id);
         if (!$user) {
             echo Yii::t('main', 'Пользователь не существует');
