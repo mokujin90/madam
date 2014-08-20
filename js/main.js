@@ -245,6 +245,10 @@ event={
 },
 employee = {
     init:function(){
+        $( "input.user-type-answer" ).change(function() {
+            $('#option_all_answer').prop('checked') == true ? $('#user-answer').slideUp() : $('#user-answer').slideDown();
+        });
+
         $('.add-interval').click(function () {
             var day = $(this).data('day');
             var scheduleUniqId = parseInt($('#shedule-uniq-iq').val());

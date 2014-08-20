@@ -32,6 +32,7 @@ class EmployeeController extends BaseController{
         $question = Question::getQuestion($companyId);
 
         if (isset($_POST['User'])) {
+
             $model->attributes = $_POST['User'];
             $model->scheduleUpdate = isset($_POST['schedule']) ? $_POST['schedule'] : array();
             $model->answered = isset($_POST['question']) ? $_POST['question'] : array();
