@@ -105,6 +105,34 @@ class Request extends CActiveRecord
 		));
 	}
 
+    /**
+     * Скопируем из текущего $this все связи и прочее в запись Request c id переданным в параметраъ
+     * @param $idRequest Request
+     */
+    public function copyRequest($idRequest){
+        $donorRequest = Request::findByPk($idRequest);
+        if(!is_null($donorRequest)){
+            $donorRequest->attributes = $this->attributes;
+            if($donorRequest->save()){
+                //сохраним поля для этого реквеста
+                $requestField = RequestField::model()->findAllByAttributes(array('request_id'=>$this->id));
+                foreach($requestField as $copy){
+                    $donorField = new RequestField();
+                    $donorField->attributes = $copy->attributes;
+                    $donorField->request_id = $idRequest;
+                    $donorField->save();
+                }
+                //сохраним ответы на вопроы
+                $requestQuestion = RequestQuestion::model()->findAllByAttributes(array('request_id'=>$this->id));
+                foreach($requestQuestion as $copy){
+                    $donorQuestion = new RequestQuestion();
+                    $donorQuestion->attributes = $copy->attributes;
+                    $donorQuestion->request_id = $idRequest;
+                    $donorQuestion->save();
+                }
+            }
+        }
+    }
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

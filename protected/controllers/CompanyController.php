@@ -106,6 +106,8 @@ class CompanyController extends BaseController
     }
 
     function actionTest(){
-        $this->render('test');
+        $request = Request::model()->findByPk(109);
+        $request->copyRequest(110);
+        //$this->render('test');
     }
 }
