@@ -396,6 +396,22 @@ calendar = {
             }
         });
 
+        $(document).on('click', '.export-ics-all-action, .export-csv-all-action', function () {
+            var $wrap = $(this).closest('.box');
+            var eventsID = calendar.getEventByCb($wrap);
+            if (eventsID.length) {
+                var params = '';
+                $.each(eventsID, function () {
+                    if (!params.length) {
+                        params = 'id[]=' + this;
+                    } else {
+                        params += '&id[]=' + this;
+                    }
+                });
+                $(this).attr('href', '/calendar/groupExport' + $(this).data('format') + 'Event?' + params);
+            }
+        });
+
         $(document).on('click', '.delete-all-action', function(){
             var $wrap = $(this).closest('.box');
             var eventsID = calendar.getEventByCb($wrap);

@@ -177,7 +177,7 @@ class BaikalEvent extends BaikalActiveRecord
         $calendar->saveCounters(array('ctag' => 1));
     }
 
-    public static function geniCal($request, $createDate, $startDate, $endDate){
+    public static function geniCal($request, $createDate, $startDate, $endDate, $withoutWrap = false){
         $required = '';
         $other = '';
         foreach ($request->requestFields as $field) {
@@ -187,8 +187,19 @@ class BaikalEvent extends BaikalActiveRecord
                 $required .= "{$field->field->name}: {$field->value}; ";
             }
         }
-
-        $iCal =
+        if($withoutWrap){
+            $iCal =
+"BEGIN:VEVENT
+DTSTAMP:". Help::formatDateICal($createDate) . "Z
+DTSTART;TZID=Europe/Moscow:". Help::formatDateICal($startDate) . "
+DTEND;TZID=Europe/Moscow:". Help::formatDateICal($endDate) . "
+SUMMARY:$required
+DESCRIPTION:$other
+CLASS:PUBLIC
+UID:" . $request->id . "-caldavtermin
+END:VEVENT";
+        } else {
+            $iCal =
 "BEGIN:VCALENDAR
 VERSION:2.0
 CALSCALE:GREGORIAN
@@ -202,6 +213,7 @@ CLASS:PUBLIC
 UID:" . $request->id . "-caldavtermin
 END:VEVENT
 END:VCALENDAR";
+        }
         return $iCal;
     }
 }

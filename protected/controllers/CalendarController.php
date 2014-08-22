@@ -124,6 +124,73 @@ class CalendarController extends BaseController
         echo $this->renderPartial('_printEventList', array('events' => $events));
     }
 
+    public function actionGroupExportIcsEvent()
+    {
+        $events = Request::model()->findAllByPk($_REQUEST['id']);
+        $content = '';
+        foreach($events as $event){
+            $createDate = new DateTime($event->create_date);
+            $startDate = new DateTime($event->start_time);
+            $endDate = new DateTime($event->end_time);
+            $content .= BaikalEvent::geniCal($event, $createDate, $startDate, $endDate, true) . "\n";
+        }
+        $content = "BEGIN:VCALENDAR\nVERSION:2.0\nMETHOD:PUBLISH\n" . $content . "END:VCALENDAR";
+        $date = new DateTime();
+        $this->export('TerminExport' . $date->format('YmdHis') . '.ics', $content);
+    }
+
+    public function actionGroupExportCsvEvent()
+    {
+        $events = Request::model()->findAllByPk($_REQUEST['id'], array('order' => 'start_time'));
+        $header = array(
+            Yii::t('main', 'Дата'),
+            Yii::t('main', 'Начало'),
+            Yii::t('main', 'Конец'),
+            Yii::t('main', 'Статус'),
+        );
+        $companyFields = CompanyField::model()->findAllByAttributes(array('company_id' => Yii::app()->user->companyId, 'type' => array('required', 'enabled')));
+        foreach ($companyFields as $field) {
+            $header[] = $field->name;
+        }
+        $header[] = Yii::t('main', 'Комментарий');
+        $content =  implode(';', $header) . ";\n";
+        foreach ($events as $event) {
+            $startDate = new DateTime($event->start_time);
+            $endDate = new DateTime($event->end_time);
+
+            $row = array();
+            $row[] = $startDate->format('d/m/Y');
+            $row[] = $startDate->format('H:i');
+            $row[] = $endDate->format('H:i');
+            $row[] = Request::$status[$event->status];
+            foreach ($companyFields as $field) {
+                $exist = false;
+                foreach($event->requestFields as $rfield){
+                    if($rfield->field_id == $field->id){
+                        $exist = true;
+                        $row[] = $rfield->value;
+                    }
+                }
+                if (!$exist) {
+                    $row[] = "";
+                }
+            }
+            $row[] = $event->comment;
+
+            $content .= implode(';', $row) . ";\n";
+        }
+        $date = new DateTime();
+        $this->export('TerminExport' . $date->format('YmdHis') . '.csv', $content);
+    }
+    private function export($fileName, $content){
+        header("Cache-Control: public");
+        header("Content-Type: application/octet-stream; ");
+        header("Content-Description: File Transfer");
+        header('Content-Disposition: attachment;filename="'.$fileName.'"');
+        header('Cache-Control: max-age=0');
+        echo $content; //тут достаточно вывести получившийся файл
+    }
+
     public function actionDelete($id)
     {
         $model = Request::model()->findByPk($id);

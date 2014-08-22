@@ -114,13 +114,4 @@ class SiteController extends BaseController
         return parent::getBreadcrumbs();
     }
 
-    public function actionExport($file='contact.txt'){
-        //$name = dirname(__FILE__).'/../../data/lol.txt';
-        header("Cache-Control: public");
-        header("Content-Type: application/octet-stream; ");
-        header("Content-Description: File Transfer");
-        header('Content-Disposition: attachment;filename="'.$file.'"');
-        header('Cache-Control: max-age=0');
-        echo "lol!!!"; //тут достаточно вывести получившийся файл
-    }
 }

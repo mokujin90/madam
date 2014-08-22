@@ -21,6 +21,13 @@
                         </li>
                         <li class="divider"></li>
                         <li>
+                            <a href="#" class="export-ics-all-action" data-format="Ics"><i class="icon-download-alt"></i> <?=Yii::t('main','Экспорт *.ics')?></a>
+                        </li>
+                        <li>
+                            <a href="#" class="export-csv-all-action" data-format="Csv"><i class="icon-download-alt"></i> <?=Yii::t('main','Экспорт *.csv')?></a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
                             <a href="#" class="delete-all-action"><i class="icon-trash"></i> <?=Yii::t('main','Удалить')?></a>
                         </li>
                     </ul>
