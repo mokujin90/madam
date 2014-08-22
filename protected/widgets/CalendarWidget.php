@@ -123,7 +123,7 @@ class CalendarWidget extends CWidget{
                 foreach ($item as $eventItem) { //выводим всех людей записанных на это время
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $eventItem->end_time, 'event' => $eventItem->id, 'model' => $eventItem);
                 }
-                if ($this->enableGroupEvent && $this->user->group_size > $this->activeCount($item)) { //выводим бронь для нового члена группы, если остались места
+                if (($this->enableGroupEvent && $this->user->group_size > $this->activeCount($item)) || !$this->activeCount($item)) { //выводим бронь для нового члена группы, если остались места
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $item[0]->end_time);
                 }
                 $eventEnd = $item[0]->end_time;
@@ -134,7 +134,7 @@ class CalendarWidget extends CWidget{
                 foreach ($item as $eventItem) { //выводим всех людей записанных на это время
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $eventItem->start_time, 'end' => clone $eventItem->end_time, 'event' => $eventItem->id, 'model' => $eventItem);
                 }
-                if ($this->enableGroupEvent && $this->user->group_size > $this->activeCount($item)) { //выводим бронь для нового члена группы, если остались места
+                if (($this->enableGroupEvent && $this->user->group_size > $this->activeCount($item)) || !$this->activeCount($item)) { //выводим бронь для нового члена группы, если остались места
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $item[0]->end_time);
                 }
                 $eventEnd = $item[0]->end_time;
@@ -255,6 +255,10 @@ class CalendarWidget extends CWidget{
         return $model->is_block ? '<i class="icon-lock"></i> ' : '';
     }
 
+    public function isRepeatIcon($model){
+        return $model->repeat_event_id ? '<i class="icon-repeat"></i> ' : '';
+    }
+
     public function getDayCalendarHourRow($hourEventInterval, $hour)
     {
         $rowArr = array();
@@ -299,7 +303,7 @@ class CalendarWidget extends CWidget{
 
         $row .= CHtml::openTag('td');//time
         $row .= CHtml::link(
-            ($this->isBlockIcon($event['model']) . $event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
+            ($this->isBlockIcon($event['model']) . $this->isRepeatIcon($event['model']) . $event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
             array('calendar/event',
                 'start' => $event['start']->format(Help::DATETIME),
                 'end' => $event['end']->format(Help::DATETIME),

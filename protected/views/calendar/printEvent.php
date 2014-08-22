@@ -45,6 +45,21 @@ Yii::app()->clientScript->registerScript('modal', 'modal.init()', CClientScript:
             </div>
         </div>
     </div>
+    <?if($model->repeat_event_id):?>
+        <div class="box datetime-setting col-xs-12">
+            <div class="box-header green-background">
+                <div class="title"><i class="icon-repeat"></i> <?=Yii::t('main','Повтор события')?></div>
+            </div>
+            <div class="row box-content">
+                <? $repeatData = $model->getRepeatData();?>
+                <div class="date">
+                    <b>Начало:</b> <?=$repeatData['start']->format('d/m/Y')?><br>
+                    <b>Конец:</b> <?=$repeatData['end']->format('d/m/Y')?><br>
+                    <b>Общее кол-во событий:</b> <?=$repeatData['count']?>
+                </div>
+            </div>
+        </div>
+    <?endif?>
     <?=CHtml::hiddenField('user_id',$model->user_id,array('id'=>'user_id'))?>
     <?=CHtml::hiddenField('request_id',$model->id,array('id'=>'request_id'))?>
     <button href="<?=$this->createUrl('calendar/event',array('user_id'=>$model->user_id,'id'=>$model->id,'edit'=>1))?>" name="save" value="1" class="edit event btn btn-success" type="button"><i class="icon-cogs"></i> <?=Yii::t('main','Изменить даты')?></button>

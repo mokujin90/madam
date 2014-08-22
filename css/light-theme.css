@@ -5325,3 +5325,6 @@ hr.event-hr{
 .text-label-important{
     text-align: left !important;
 }
+#repeat-event-box{
+    display: none;
+}

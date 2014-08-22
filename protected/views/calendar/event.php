@@ -65,6 +65,71 @@ Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript:
             </div>
         </div>
     </div>
+    <?if($model->repeat_event_id):?>
+    <div class="box datetime-setting col-xs-12">
+        <div class="box-header green-background">
+            <div class="title"><i class="icon-repeat"></i> <?=Yii::t('main','Повтор события')?></div>
+        </div>
+        <div class="row box-content">
+            <? $repeatData = $model->getRepeatData();?>
+            <div class="date">
+                <b>Начало:</b> <?=$repeatData['start']->format('d/m/Y')?><br>
+                <b>Конец:</b> <?=$repeatData['end']->format('d/m/Y')?><br>
+                <b>Общее кол-во событий:</b> <?=$repeatData['count']?>
+            </div>
+        </div>
+    </div>
+    <?else:?>
+    <div class="box datetime-setting col-xs-12">
+        <div class="box-header green-background">
+            <div class="title"><?=CHtml::checkBox('repeat_booking')?> <i class="icon-repeat"></i> <?=Yii::t('main','Повтор события')?></div>
+        </div>
+        <div class="row box-content" id="repeat-event-box">
+            <div class="date box">
+                <div class="controls">
+                    <?=CHtml::label(Yii::t('main','Начало'),"datepicker")?>
+                    <div class="datepicker-input-fb input-group" id="datepicker" data-date-format="DD/MM/YYYY">
+                        <?=CHtml::textField('repeat[start]',$date['date_formatted'],array('class'=>'form-control','placeholder'=>Yii::t('main','Укажите дату')))?>
+                        <span class="input-group-addon"><span data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <div class="controls">
+                    <?$dayName = array("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс")?>
+
+                    <?=CHtml::label(Yii::t('main','Дни недели'),"datepicker")?><br>
+                    <?$days = $model->user->getScheduleByDay(false);
+                    foreach($days as $day=>$obj):?>
+                        <label><?=CHtml::checkBox('repeat[days][]', $day == $date['day'], array('value' => $day))?> <?=$dayName[$day]?></label>&nbsp
+                    <?endforeach?>
+                </div>
+            </div>
+            <div class="box">
+                <div class="controls">
+                    <label>
+                        <?=CHtml::radioButton('repeat[type]', true, array('value'=>Request::REPEAT_TO_COUNT))?>
+                        <?=Yii::t('main','Кол-во доп. событий')?>
+                    </label>
+
+                    <?=CHtml::numberField('repeat[count]', 1,array('min' => 1, 'max'=> 40, 'class'=>'form-control','placeholder'=>Yii::t('main','Кол-во событий')))?>
+                </div>
+            </div>
+            <div class="date box">
+                <div class="controls">
+                    <label>
+                        <?=CHtml::radioButton('repeat[type]', false, array('value'=>Request::REPEAT_TO_DATE))?>
+                        <?=Yii::t('main','Конец')?>
+                    </label>
+                    <div class="datepicker-input-fb input-group" data-date-format="DD/MM/YYYY">
+                        <?=CHtml::textField('repeat[end]',$date['date_formatted'],array('class'=>'form-control','placeholder'=>Yii::t('main','Укажите дату')))?>
+                        <span class="input-group-addon"><span data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?endif?>
     <?=CHtml::hiddenField('user_id',$model->user_id,array('id'=>'user_id'))?>
     <?=CHtml::hiddenField('request_id',$model->id,array('id'=>'request_id'))?>
     <button name="save" value="1" class="save btn btn-success" type="submit"><i class="icon-save"></i> <?=Yii::t('main',$model->isNewRecord? 'Создать' : 'Сохранить')?></button>
@@ -77,3 +142,4 @@ Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript:
 
     <?php $this->endWidget(); ?>
 </div>
+<div class="hidden" id="repeat-event-error"></div>

@@ -21,6 +21,8 @@ class Request extends CActiveRecord
     const STATUS_IN_PROGRESS=0;
     const STATUS_DECIDED=1;
     const STATUS_CANCELED=2;
+    const REPEAT_TO_COUNT=1;
+    const REPEAT_TO_DATE=2;
     static $status = array(self::STATUS_IN_PROGRESS=>"В процессе", self::STATUS_DECIDED=>"Решено", self::STATUS_CANCELED=>'Отменено');
     static $statusClass = array(self::STATUS_IN_PROGRESS=>"text-blue", self::STATUS_DECIDED=>"text-purple", self::STATUS_CANCELED=>'text-red');
 	/**
@@ -56,6 +58,7 @@ class Request extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 			'requestFields' => array(self::HAS_MANY, 'RequestField', 'request_id','index'=>'field_id'),
 			'requestQuestions' => array(self::HAS_MANY, 'RequestQuestion', 'request_id','index'=>'answer_id'),
 		);
@@ -106,30 +109,25 @@ class Request extends CActiveRecord
 	}
 
     /**
-     * Скопируем из текущего $this все связи и прочее в запись Request c id переданным в параметраъ
-     * @param $idRequest Request
+     * Скопируем из текущего $this все связи и прочее в запись $donorRequest
      */
-    public function copyRequest($idRequest){
-        $donorRequest = Request::findByPk($idRequest);
+    public function copyRequestRelation($donorRequest){
         if(!is_null($donorRequest)){
-            $donorRequest->attributes = $this->attributes;
-            if($donorRequest->save()){
-                //сохраним поля для этого реквеста
-                $requestField = RequestField::model()->findAllByAttributes(array('request_id'=>$this->id));
-                foreach($requestField as $copy){
-                    $donorField = new RequestField();
-                    $donorField->attributes = $copy->attributes;
-                    $donorField->request_id = $idRequest;
-                    $donorField->save();
-                }
-                //сохраним ответы на вопроы
-                $requestQuestion = RequestQuestion::model()->findAllByAttributes(array('request_id'=>$this->id));
-                foreach($requestQuestion as $copy){
-                    $donorQuestion = new RequestQuestion();
-                    $donorQuestion->attributes = $copy->attributes;
-                    $donorQuestion->request_id = $idRequest;
-                    $donorQuestion->save();
-                }
+            //сохраним поля для этого реквеста
+            $requestField = RequestField::model()->findAllByAttributes(array('request_id'=>$this->id));
+            foreach($requestField as $copy){
+                $donorField = new RequestField();
+                $donorField->attributes = $copy->attributes;
+                $donorField->request_id = $donorRequest->id;
+                $donorField->save();
+            }
+            //сохраним ответы на вопроы
+            $requestQuestion = RequestQuestion::model()->findAllByAttributes(array('request_id'=>$this->id));
+            foreach($requestQuestion as $copy){
+                $donorQuestion = new RequestQuestion();
+                $donorQuestion->attributes = $copy->attributes;
+                $donorQuestion->request_id = $donorRequest->id;
+                $donorQuestion->save();
             }
         }
     }
@@ -197,12 +195,96 @@ class Request extends CActiveRecord
             'start'=>$start->format('H:i'),
             'end'=>$end->format('H:i'),
             'date'=>$start->format('Y-m-d'),
-            'date_formatted' => $start->format('d/m/Y')
+            'date_formatted' => $start->format('d/m/Y'),
+            'day' => $start->format('N') - 1
         );
     }
 
     public function clearQuestionAndField(){
         RequestField::model()->deleteAllByAttributes(array('request_id'=>$this->id));
         RequestQuestion::model()->deleteAllByAttributes(array('request_id'=>$this->id));
+    }
+
+    public function createRepeatEvents ($post) {
+        $errorEvents = array();
+        if (empty($post['start']) || empty($post['days'])) {
+            return $errorEvents;
+        }
+        $thisStart = new DateTime($this->start_time);
+        $thisEnd = new DateTime($this->end_time);
+        $start = new DateTime(Help::formatDate($post['start']) . $thisStart->format(' H:i:s'));
+        $end = new DateTime(Help::formatDate($post['start']) . $thisEnd->format(' H:i:s'));
+        $finalCount = null;
+        $finalEnd = null;
+        if($post['type'] == self::REPEAT_TO_COUNT) {
+            if (empty($post['count'])) {
+                return $errorEvents;
+            }
+            $finalCount = (int)$post['count'];
+            if ($finalCount < 1) {
+                return $errorEvents;
+            }
+            $finalCount = $finalCount > 40 ? 40 : $finalCount;
+        } elseif($post['type'] == self::REPEAT_TO_DATE) {
+            if (empty($post['end'])) {
+                return $errorEvents;
+            }
+            $finalEnd = new DateTime(Help::formatDate($post['end']) . $thisStart->format(' H:i:s'));
+            if($finalEnd < $start){
+                return $errorEvents;
+            }
+        }
+        $this->repeat_event_id = $this->id;
+        $count = 0; // считаем события не включая текущее.
+        $successCount = 0;
+
+        do {
+            if($start != $thisStart && in_array($start->format('N') - 1, $post['days'])){
+                $event = new Request();
+                $event->attributes = $this->attributes;
+                $event->repeat_event_id = $this->id;
+                $event->start_time = $start->format(Help::DATETIME);
+                $event->end_time = $end->format(Help::DATETIME);
+                $event->baikal_event_id = NULL;
+                if($event->save()){
+                    $successCount++;
+                    $this->copyRequestRelation($event);
+                    BaikalEvent::updateEvent($event->id);
+                } else {
+                    $errorEvents[] = array('start' => $start->format(Help::DATETIME), 'end' => $end->format(Help::DATETIME), 'error' => Help::drawError($event->getErrors()));
+                }
+                $count++;
+            }
+            $start->modify('+ 1 day');
+            $end->modify('+ 1 day');
+        } while ((!empty($finalCount) && $count < $finalCount) || (!empty($finalEnd) && $start <= $finalEnd));
+
+        if ($successCount > 0) {
+            $this->repeat_event_id = $this->id;
+            $this->save(true);
+        }
+        if(count($errorEvents)){
+            if ($successCount > 0) {
+                $errorEvents['total'] = array('error' => 'Создано ' . $successCount . '/' . $count, 'type' => 1);
+            } else {
+                $errorEvents['total'] = array('error' => 'Невозможно создать серию событий.', 'type' => 2);
+            }
+        }
+        return $errorEvents;
+    }
+
+    public function getRepeatData()
+    {
+        $events = Request::model()->findAllByAttributes(array('repeat_event_id' => $this->repeat_event_id), array('order' => 'start_time'));
+        $data = array('count' => count($events), 'start' => null, 'end' => null);
+        foreach ($events as $event) {
+            if (empty($data['start'])) {
+                $data['start'] = $event->start_time;
+            }
+            $data['end'] = $event->end_time;
+        }
+        $data['start'] = empty($data['start']) ? new DateTime() : new DateTime($data['start']);
+        $data['end'] = empty($data['end']) ? new DateTime() : new DateTime($data['end']);
+        return $data;
     }
 }

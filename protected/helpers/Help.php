@@ -166,4 +166,18 @@ class Help{
         }
         return $ending;
     }
+
+    /**
+     * По массиву из любой модели будет формировать список из ошибок для jGrowl
+     * @param $errors
+     */
+    public static function drawError($errors){
+        $result = '';
+        foreach($errors as $field){
+            foreach($field as $error){
+                $result.=$error."<br/>";
+            }
+        }
+        return $result;
+    }
 }

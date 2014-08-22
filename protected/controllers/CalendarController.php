@@ -26,6 +26,13 @@ class CalendarController extends BaseController
             echo $this->renderPartial('_findResult', array('findResult' => $result));
             Yii::app()->end();
         }
+        if (!empty($_GET['target']) && !empty($_GET['repeatRemove'])) {
+            if ($event = Request::model()->findByPk($_GET['target'])) {
+                foreach(Request::model()->findAllByAttributes(array('repeat_event_id' => $event->id)) as $eventItem){
+                    $eventItem->delete();
+                }
+            }
+        }
 		$this->render('index', array('user' => $user, 'date' => $date,'find'=>$find));
 	}
 
@@ -65,7 +72,7 @@ class CalendarController extends BaseController
             $model->start_time = Help::formatDate($_POST['event']['date'])." ".$_POST['event']['start_time'];
             $model->end_time = Help::formatDate($_POST['event']['date'])." ".$_POST['event']['end_time'];
             $model->is_block = isset($_POST['event']['is_block']) ? $_POST['event']['is_block'] : 0;
-
+            $repeatErrors = array();
             $isValidate = !($model->is_block==1 && $oldBlockStatus==0);
             //валидируем только тогда, когда мы не пытаемся заблокировать запись
             if(!$model->validate() && $isValidate){
@@ -77,7 +84,12 @@ class CalendarController extends BaseController
                     RequestQuestion::createByPost($_POST['answer'],$model->id);
                     RequestField::createByPost($_POST['field'],$model->id);
                     BaikalEvent::updateEvent($model->id);
+                    if (isset($_POST['repeat']) && !empty($_POST['repeat_booking'])) {
+                        $repeatErrors = $model->createRepeatEvents($_POST['repeat']);
+                    }
                 }
+                $result['repeatErrors'] = $repeatErrors;
+                $result['removeRedirect'] = $this->createUrl('/calendar/index',array('repeatRemove' => 1, 'id' => $user_id, 'date' => Help::formatDate($_POST['event']['date']), 'target' => $model->id));
                 $result['redirect'] = $this->createUrl('/calendar/index',array('id' => $user_id, 'date' => Help::formatDate($_POST['event']['date']), 'target' => $model->id));
             }
             echo json_encode($result);

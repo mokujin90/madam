@@ -217,6 +217,9 @@ event={
                 window.location = url;
             }
         });
+        $('#repeat_booking').change(function(){
+            $('#repeat-event-box').toggle($(this).attr('checked') ? true : false);
+        });
         $("#create-event").submit(function() {
             var user_id = $('#user_id').val(),
                 request_id = $('#request_id').val(),
@@ -232,7 +235,22 @@ event={
                     if( typeof data.error != "undefined" ){
                         $.jGrowl(data.error);
                     }
-                    if( typeof data.redirect != "undefined" ){
+                    if( typeof data['repeatErrors'] != "undefined" && typeof data['repeatErrors'].total != "undefined"){
+
+                        var html = '<div class="col-xs-12 wrapper"><div class="row">' + data['repeatErrors'].total.error + '</div>';
+                        $.each(data['repeatErrors'], function(key){
+                            if(key != 'total'){
+                               html += '<div class="row"><span>' + this.start +  ' - ' + this.end + '</span><div class="text-contrast">' + this.error +  '</div></div><hr>';
+                            }
+                        });
+                        html += '<div class="row">' +
+                            '<a class="btn btn-success col-xs-5 pull-left" href="' + data.redirect + '">OK</a>' +
+                            (data['repeatErrors'].total.type == 1 ? '<a class="btn btn-danger col-xs-5 pull-right" href="' + data.removeRedirect + '">Удалить серию</a>' : '') +
+                            '</div>' +
+                            '</div>';
+                        $('#repeat-event-error').html(html);
+                        $.fancybox({content:$('#repeat-event-error .wrapper'), type: 'html', closeBtn: false, keys : {close  : null}, helpers: {overlay : { closeClick : false }}});
+                    } else if( typeof data.redirect != "undefined" ){
                         window.location = data.redirect;
                     }
                 }
