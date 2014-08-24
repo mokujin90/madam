@@ -261,6 +261,16 @@ event={
 
     }
 },
+distance={
+    init:function(){
+        $('input.hide-radio').change(function(){
+            var $this = $(this),
+                $box = $this.closest('.form-group').next('.radio-box');
+            console.log( $this.val());
+            $this.val()==0 ? $box.hide():$box.show();
+        });
+    }
+},
 employee = {
     init:function(){
         $( "input.user-type-answer" ).change(function() {
