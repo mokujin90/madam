@@ -54,7 +54,7 @@ class SiteController extends BaseController
 		}
 	}
 
-    public function actionCompany($id){//todo:fake
+    public function actionCompany($id){
         $this->layout='simple';
         $company = Company::model()->with('country')->findByPk($id);
         if(is_null($company))

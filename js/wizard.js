@@ -156,11 +156,29 @@
 
     $(function () {
         $('body').on('mousedown.wizard.data-api', '.wizard', function () {
+
             var $this = $(this);
+            //в том случае, когда мы нажимаем на кнопку "next"
+
             if ($this.data('wizard')) return;
             var wizard = $this.wizard($this.data());
+            //в том случае, когда мы нажимаем на кнопку "finish"
             wizard.on('finished', function (e, data) {
                $('#save').click();
+            });
+            wizard.on('changed', function (e, data) {
+                //если шаг == 2
+                if($this.wizard('selectedItem').step==2){
+                    $.ajax( {
+                        type: "POST",
+                        url: "/wizard/time?get=1",
+                        data: $('form').serialize(),
+                        success: function( response ) {
+                            $('#jsonResult').val(response);
+                        }
+                    });
+                }
+
             });
         });
 

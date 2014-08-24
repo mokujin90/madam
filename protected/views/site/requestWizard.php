@@ -57,7 +57,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <?php
-                            $this->widget('WizardWidget',array('question'=>$question,'field'=>$field));
+                            $this->widget('WizardWidget',array('question'=>$question,'field'=>$field,'companyId'=>$company->id));
                         ?>
                     </div>
                 </div>

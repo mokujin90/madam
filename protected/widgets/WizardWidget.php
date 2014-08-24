@@ -17,9 +17,10 @@ class WizardWidget extends CWidget{
      */
     public $request=null;
     public $skin="wizard";
+    public $companyId=null;
     public function run(){
         $this->request = $this->request ? $this->request : new Request(); //wizard fix
-        $this->render($this->skin,array('question'=>$this->question,'field'=>$this->field,'request'=>$this->request));
+        $this->render($this->skin,array('question'=>$this->question,'field'=>$this->field,'request'=>$this->request,'companyId'=>$this->companyId));
     }
 
     /**

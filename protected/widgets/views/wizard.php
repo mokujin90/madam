@@ -29,7 +29,8 @@
                 <hr class="hr-normal">
                 <form class="form" style="margin-bottom: 0;" method="post">
                     <input name="authenticity_token" type="hidden">
-
+                    <?php echo CHtml::hiddenField('companyId',$companyId)?>
+                    <?php echo CHtml::hiddenField('jsonResult','',array('id'=>'jsonResult'))?>
                     <div class="step-pane active" id="step1" data-type="question">
                         <div class="form-group">
                             <?$numItems = count($question);

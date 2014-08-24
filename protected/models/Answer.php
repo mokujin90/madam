@@ -117,4 +117,16 @@ class Answer extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    /**
+     * Вернет сумму по переданному курсору Answer
+     * @param $cursor Answer[]
+     */
+    public static function getTime(array $cursor){
+        $time = 0;
+        foreach($cursor as $answer){
+            $time += $answer['min'];
+        }
+        return $time;
+    }
 }

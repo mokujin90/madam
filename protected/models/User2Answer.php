@@ -89,7 +89,29 @@ class User2Answer extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+    /**
+     *Найдем всех пользователей, которые подходят под нужные вопросы
+     * @param $answers массив из idэишников ответов
+     */
+    static public function getNeedUser(array $answers,$companyId){
+        $simple = array(); //результирующий массив пользователей
+        //сначало попробуем найти именно тех пользователей, которые подходят под все ответы
+        //выберем всех пользователей, у которых есть такие ответы в User2Answer, по индексу User_id
+        $usersAnswers = User2Answer::model()->findAllByAttributes(array('answer_id'=>$answers));
+        foreach ($usersAnswers as $model){
+            $simple[$model->user_id][]=$model->answer_id;
+        }
+        //теперь просто пройдемся по курсору и сопоставим по размеру
+        foreach($simple as $userId => $answersId){
+           if(count($answers)!=count($answersId)){
+               unset($simple[$userId]);
+           }
+        }
 
+        //далее найдем всех пользовтелей из этой компании, которые решают ВСЕ вопросы (кроме лидера)
+        $allAnswerId = User::model()->getAllAnswerUser($companyId);
+        return array_merge(array_keys($simple),array_keys($allAnswerId));
+    }
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

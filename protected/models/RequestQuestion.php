@@ -106,6 +106,8 @@ class RequestQuestion extends CActiveRecord
 		return parent::model($className);
 	}
 
+
+
     /**
      * Метод по переданному ключу 'answer' массива $_POST создаст нужные записи в БД по ответам пользователя
      * @param $post $_POST['Answer']

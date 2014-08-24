@@ -140,6 +140,9 @@ class User extends CActiveRecord
 		));
 	}
 
+    public static function getAllAnswerUser($companyId){
+        return User::model()->findAllByAttributes(array('company_id'=>$companyId,'all_answers'=>1,'is_owner'=>0),array('index'=>'id'));
+    }
     public function afterConstruct()
     {
         parent::afterConstruct();
