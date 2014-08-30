@@ -17,7 +17,7 @@ class WizardWidget extends CWidget{
      */
     public $request=null;
     public $skin="wizard";
-    public $companyId=null;
+    public $companyId = null;
     /**
      * Параметр от которого зависит как будут выводиться вопросы - по одному (true) или все сразу (false)
      * @var bool

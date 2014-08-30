@@ -46,22 +46,41 @@ class WizardController extends BaseController
      * Экшн, который выдаст часть верстки на основе первых трех шагов визарда
      */
     public function actionTotal(){
+        $_POST = array(
+            'companyId'=>1,
+            'answer' => array(
+                2 => array( 13 => '13',24 => '24'),
+                9 => '7',
+                10 => array(10 => '10',11 => '11')
+            ),
+            'field' => array(
+                8 => 'fsf',
+                24 => '',
+                9 => '',
+                21 => '',
+                31 => 'fff',
+                36 => '',
+                37 => '',
+            )
+        );
         $request = $_POST;
-        if(Yii::app()->request->isAjaxRequest && isset($request['companyId'])){
-            Help::decorate($request['answer']);
+        //if(Yii::app()->request->isAjaxRequest && isset($request['companyId'])){
+            Help::recommend($request['answer']);
+            /*время*/
+            $date = 'Monday, September 1, 2014, 09:30 clock';
             /*все о компании*/
             $company = Company::model()->with('country')->findByPk($request['companyId']);
             /*вопросы и ответы*/
             $questions = Question::model()->findAllByAttributes(array('id'=>array_keys($request['answer'])));
-            $answers = RequestQuestion::getAnswerByPost($request['companyId']);
+            $answers = RequestQuestion::getAnswerByPost($request['answer']);
             /*поля*/
-            Help::decorate($request['field']);
+            Help::recommend($request['field']);
             $fieldText = array_filter($request['field']); //пустые уберем
-            $fields = CompanyField::model()->findAllByAttributes(array('id'=>array_keys($fieldText)));
+            $fields = CompanyField::model()->findAllByAttributes(array('id'=>array_keys($fieldText)),array('index'=>'id'));
             /*юридическая информация*/
             $info = Distance::getDistance($request['companyId']);
-            $this->renderPartial('total',array('company'=>$company,'questions'=>$questions,'answers'=>$answers,'fieldText'=>$fieldText,'fields'=>$fields,'info'=>$info))
-        }
+            $this->renderPartial('total',array('date'=>$date,'company'=>$company,'questions'=>$questions,'answers'=>$answers,'fieldText'=>$fieldText,'fields'=>$fields,'info'=>$info));
+        //}
     }
     /**
      * Метод, который расчитает время на входе у него полузаполненная форма, где в ключе "answer" лежат заполненные ответы
