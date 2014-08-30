@@ -2,6 +2,7 @@
 
 class SiteController extends BaseController
 {
+
     public function filters()
     {
         return array();
@@ -54,22 +55,7 @@ class SiteController extends BaseController
 		}
 	}
 
-    public function actionCompany($id){
-        $this->layout='simple';
-        $company = Company::model()->with('country')->findByPk($id);
-        if(is_null($company))
-            throw new CHttpException(404, Yii::t('main', 'Страница не найдена'));
-        $question = Question::getQuestion($id);
-        $fields = CompanyField::getActiveField($id);
-        if(isset($_POST['save'])){
-            if( !is_null($request=Request::create(array('user_id'=>2,'start_time'=>Help::currentDate(),'end_time'=>Help::currentDate() ))) ){
-                RequestQuestion::createByPost($_POST['answer'],$request->id);
-                RequestField::createByPost($_POST['field'],$request->id);
-                $this->redirect(Yii::app()->createUrl('site/panel',array('status'=>'1')));
-            }
-        }
-        $this->render('requestWizard',array('company'=>$company,'question'=>$question,'field'=>$fields));
-    }
+
 
 	/**
 	 * Displays the contact page

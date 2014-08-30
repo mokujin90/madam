@@ -1,3 +1,7 @@
+<?
+    Yii::app()->clientScript->registerScriptFile('/js/main.js', CClientScript::POS_END);
+    Yii::app()->clientScript->registerScript('init', 'wizard.init()', CClientScript::POS_READY);
+?>
 <div id="main-nav-bg"></div>
 <nav id="main-nav">
     <div class="col-xs-12">
@@ -57,7 +61,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <?php
-                            $this->widget('WizardWidget',array('question'=>$question,'field'=>$field,'companyId'=>$company->id));
+                            $this->widget('WizardWidget',array('question'=>$question,'field'=>$field,'companyId'=>$company->id,'wizardStep'=>$this->wizardStep));
                         ?>
                     </div>
                 </div>

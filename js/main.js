@@ -266,8 +266,18 @@ distance={
         $('input.hide-radio').change(function(){
             var $this = $(this),
                 $box = $this.closest('.form-group').next('.radio-box');
-            console.log( $this.val());
             $this.val()==0 ? $box.hide():$box.show();
+            if($this.hasClass('toggle-input')){
+                if($this.val()==1){
+
+                    $('.url-box').show();
+                    $('.textarea-box').hide();
+                }
+                else if($this.val()==2){
+                    $('.textarea-box').show();
+                    $('.url-box').hide();
+                }
+            }
         });
     }
 },
@@ -351,6 +361,34 @@ employee = {
             return false;
         }
         return true;
+    }
+},
+wizard={
+    init:function(){
+        $(document).on('click.wizard','button.agree',function(){
+            var $this = $(this),
+                $container = $this.closest('.question'),
+                param={
+                    questionId: $container.data('question'),
+                    answerId:$container.find('.form-group input:checked').map(function(){return $(this).val();}).get(),
+                    not:$container.siblings('.question').map(function(){return $(this).data('question');}).get()
+                }
+
+            $.post( "", param, function( data ) {
+                $container.after(data);
+            } );
+            $this.slideUp();
+        });
+        /**
+         * Событие смена состояния чекбокса или радиокнопки в визарде. Удаляем все прежние вопросы и показываем кнопку
+         */
+        $(document).on('change.wizard','.question input:radio,.question input:checkbox',function(){
+            var $this = $(this),
+                $question = $this.closest('.question');
+            $question.find('.btn.agree').slideDown(function(){
+                $question.nextAll('.question').remove();
+            });
+        });
     }
 },
 calendar = {

@@ -41,9 +41,8 @@ class Distance extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('request_reference_add', 'required'),
 			array('show_privacy, request_privacy, show_condition, show_term, request_term, show_reference, show_reference_add, request_reference_add, param_imprint', 'numerical', 'integerOnly'=>true),
-			array('url_term', 'length', 'max'=>255),
+			array('url_term,url_imprint', 'length', 'max'=>255),
 			array('text_privacy, note_condition, text_condition, text_term, text_reference, text_reference_add, address_imprint, text_imprint_add', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

@@ -36,7 +36,7 @@ class Answer extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('question_id', 'required'),
-			array('min', 'numerical', 'integerOnly'=>true),
+            array('min, next_question', 'numerical', 'integerOnly'=>true),
 			array('question_id', 'length', 'max'=>10),
 			array('text, icon', 'length', 'max'=>255),
 			array('abbr', 'length', 'max'=>50),
@@ -73,6 +73,7 @@ class Answer extends CActiveRecord
 			'abbr' => 'Abbr',
 			'icon' => 'Icon',
 			'min' => 'Min',
+            'next_question' => 'Next Question',
 		);
 	}
 

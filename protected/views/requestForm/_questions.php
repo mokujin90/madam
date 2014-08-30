@@ -59,6 +59,20 @@
                                     </label>
                                 </div>
                             </div>
+                            <?if(count($questions)>1):?>
+                                <?
+                                    $simple = $param['simple'];
+
+                                    unset($simple[$id]);
+                                ?>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-4 col-sm-8">
+                                        <label class="col-xs-12 control-label text-label-important">
+                                            <?= CHtml::dropDownList("question[".$count."][next_question]",$question->next_question,$simple,array('class'=>'form-control change-next'))?>
+                                        </label>
+                                    </div>
+                                </div>
+                            <?endif;?>
                             <div class="answers">
                                 <?if(count($question['answers'])):?>
                                 <? $countAnswer=0;?>
@@ -87,10 +101,10 @@
                                                     <label>MIN</label>
                                                     <?=CHtml::numberField("question[".$count."][answer][".$countAnswer."][min]",$answer->min,array('class'=>'form-control'))?>
                                                 </div>
-                                                <div class="col-xs-12 col-sm-6">
-                                                    <label>ABBR</label>
-                                                    <?=CHtml::textField("question[".$count."][answer][".$countAnswer."][abbr]",$answer->abbr,array('class'=>'form-control'))?>
-                                                </div>
+                                                    <div class="col-xs-12 col-sm-6">
+                                                        <label>ABBR</label>
+                                                        <?=CHtml::textField("question[".$count."][answer][".$countAnswer."][abbr]",$answer->abbr,array('class'=>'form-control'))?>
+                                                    </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-xs-12">
@@ -110,12 +124,22 @@
                                                         </button>
                                                         <ul class="dropdown-menu answer-icon">
                                                             <?foreach(Answer::$icon as $icon):?>
-                                                            <li><a href="#"><i class="<?=$icon?>"></i></a></li>
+                                                                <li><a href="#"><i class="<?=$icon?>"></i></a></li>
                                                             <?endforeach;?>
                                                         </ul>
                                                         <?=CHtml::hiddenField("question[".$count."][answer][".$countAnswer."][icon]",$answer->icon,array('class'=>'model-icon'))?>
                                                     </div>
                                                 </div>
+                                                <?if(count($questions)>1):?>
+                                                    <?
+                                                        $simple = $param['simple'];
+                                                        unset($simple[$id]);
+                                                    ?>
+                                                    <div class="col-xs-5">
+                                                        <label>Next Qestion</label>
+                                                        <?= CHtml::dropDownList("question[".$count."][answer][".$countAnswer."][next_question]",$answer->next_question,$simple,array('class'=>'form-control change-next'))?>
+                                                    </div>
+                                                <?endif;?>
                                             </div>
                                         </div>
                                     </div>

@@ -18,6 +18,11 @@ class WizardWidget extends CWidget{
     public $request=null;
     public $skin="wizard";
     public $companyId=null;
+    /**
+     * Параметр от которого зависит как будут выводиться вопросы - по одному (true) или все сразу (false)
+     * @var bool
+     */
+    public $wizardStep=true;
     public function run(){
         $this->request = $this->request ? $this->request : new Request(); //wizard fix
         $this->render($this->skin,array('question'=>$this->question,'field'=>$this->field,'request'=>$this->request,'companyId'=>$this->companyId));
