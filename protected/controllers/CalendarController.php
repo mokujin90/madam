@@ -210,4 +210,127 @@ class CalendarController extends BaseController
             echo $this->renderPartial('_ajaxCalendar', array('user' => $user, 'date' => $date, 'active_tab' => $active_tab));
         }
     }
+
+    public function actionGetUserList($id){
+        $user = User::model()->findAllByAttributes(array('id' => json_decode($id)));
+        if (!count($user)) {
+            echo Yii::t('main', 'Пользователь не существует');
+        } else {
+            echo $this->renderPartial('_userList', array('user' => $user));
+        }
+    }
+
+    public function actionGetAvailableTime($date, $id, $duration = 30){
+        $user = User::model()->findAllByAttributes(array('id' => json_decode($id)));
+        if (!count($user)) {
+            echo Yii::t('main', 'Пользователь не существует');
+        } else {
+            $date = new DateTime($date);
+            $availableInterval = array();
+            foreach($user as $item){
+                $schedule = $item->getScheduleByDay(false);
+                $availableInterval[$item->id] = $this->getAvailableIntervals($date, $item, $schedule, $duration);
+                //$availableInterval = $this->getAvailableIntervals($date, $item, $schedule, $duration);
+            }
+            for ($i = 0; $i < 24; $i++) { //обнуляем 24 часа
+                $enableHour[$i] = array();
+            }
+            foreach($availableInterval as $item){
+                foreach($item as $hour=>$intervals){
+                    foreach($intervals as $intervalItem){
+                        $enableHour[$hour][$intervalItem['start']->format(Help::DATETIME)][] = $intervalItem;
+                    }
+                }
+            }
+            echo $this->renderPartial('_availableTime', array('user' => $user, 'eventInterval' => $enableHour));
+        }
+    }
+
+    public $enableGroupEvent = true;
+    private function getAvailableIntervals($date, $user, $userSchedule, $duration)
+    {
+        $duration = $duration ? $duration : 1; //продолжительность не может быть нулевой. Error Protect.
+        $dayOfWeek = $date->format('N') - 1;
+
+        $calendarDelimit = $user->calendar_front_delimit < 0 ? 10 : $user->calendar_front_delimit; //интервал на который делится календарь
+        $requests = Request::getRequestWithDate($user->id); //события за текущий день
+        $enableHour = array();
+        for ($i = 0; $i < 24; $i++) { //обнуляем 24 часа
+            $enableHour[$i] = array();
+        }
+
+        $dateDefault = clone $date;
+        $dateDefault->setTime(0, 0, 0);
+
+        $schedule = isset($userSchedule[$dayOfWeek]) ? $userSchedule[$dayOfWeek] : array();
+        foreach ($schedule as $interval) { //заполение поинтервально (интервалы указываются в рабочем времени сотрудиника)
+            $eventEnd = false;
+            $dateStart = clone $dateDefault; //начинаем с начала интервала
+            $dateStart->setTime((int)$interval['startHour'], (int)$interval['startMin']);
+            $dateEnd = clone $dateStart;
+            $dateEnd->modify("+ $duration minutes");
+
+            $dateEndInterval = clone $dateDefault;
+            $dateEndInterval->setTime((int)$interval['endHour'], (int)$interval['endMin']);
+
+            while ($dateEnd <= $dateEndInterval) { //пока текущий интервал-событие в пределах рабочего времени сотрудника
+                $this->generateInterval($requests, $dateStart, $dateEnd, $enableHour, $eventEnd, $calendarDelimit, $duration, $user->group_size,  $user->id);
+            }
+
+
+            /*if ($dateEnd != $dateEndInterval && $dateStart < $dateEndInterval) { //есть неполный интервал, наример 45 минут при часовом разделении (3:00-3:45)
+                $dateEnd = $dateEndInterval;
+                $this->generateInterval($requests, $dateStart, $dateEnd, $enableHour, $eventEnd, $calendarDelimit, $duration);
+            }*/
+        }
+
+        return $enableHour;
+    }
+
+    /**
+     * Создает совбодный интервал или событие из базы.
+     */
+    private function generateInterval($requests, &$dateStart, &$dateEnd, &$enableHour, &$eventEnd, $calendarDelimit, $duration, $group_size, $id)
+    {
+        foreach ($requests as $item) { //ищем брни, которые начинаются в текущем интервале-событии
+            if ($item[0]->start_time >= $dateStart && $item[0]->start_time < $dateEnd) {
+                $length = $item[0]->end_time->format('U') -  $item[0]->start_time->format('U');
+                if(
+                    $length == $duration * 60 &&
+                    $this->enableGroupEvent &&
+                    $group_size > count($item)
+                ) {
+                    $enableHour[(int)$dateStart->format('H')][$item[0]->start_time->format(Help::DATETIME)] = array('start' => clone $item[0]->start_time, 'end' => clone $item[0]->end_time, 'event' => true);
+                }
+                $eventEnd = $item[0]->end_time;
+                break;
+            }
+        }
+        /*if ($eventEnd != false && $eventEnd < $dateEnd) { //бронь не перекрывет интервал-событие полностью
+            $dateStart = clone $eventEnd;
+            $eventEnd = false;
+            return;
+        }*/
+
+        if ($eventEnd == false) { //в этом интервале-событии нет брони
+            $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $dateEnd, 'id' => $id);
+        }
+
+        $dateStart->modify("+ $calendarDelimit minutes");
+
+        $dateEnd = clone $dateStart;
+        $dateEnd->modify("+ $duration minutes");
+
+        if (isset($eventEnd) && $dateStart >= $eventEnd) { //бронь закончилась в этом интервале
+            $eventEnd = false;
+        }
+    }
+
+    public function getUserIdJson($events){
+        $result = array();
+        foreach($events as $event){
+            $result[] = $event['id'];
+        }
+        return json_encode($result);
+    }
 }

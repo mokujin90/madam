@@ -3,7 +3,11 @@
  * @var $this WizardWidget
  * @var $field CompanyField[]
  */
+Yii::app()->clientScript->registerScriptFile('/js/dp/bootstrap-datepicker.js', CClientScript::POS_HEAD);
+Yii::app()->clientScript->registerScriptFile('/js/dp/locales/bootstrap-datepicker.ru.js', CClientScript::POS_HEAD);
+Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
 ?>
+
 <div class="dialog">
     <div class="box-content box-padding">
         <div class="fuelux">
@@ -14,6 +18,9 @@
                     </li>
                     <li data-target="#step2">
                         <span class="step">2</span>
+                    </li>
+                    <li data-target="#step3">
+                        <span class="step">3</span>
                     </li>
                 </ul>
                 <div class="actions">
@@ -58,6 +65,19 @@
                     </div>
 
                     <div class="step-pane" id="step2" data-type="fields">
+                        <div class="col-xs-4">
+                            <div id="schedule-date">
+                            </div>
+                            <div id="user-list" class="box">
+
+                            </div>
+                        </div>
+                        <div id="available-time" class="col-xs-8">
+
+                        </div>
+                    </div>
+
+                    <div class="step-pane" id="step3" data-type="fields">
                         <div class="form-group">
                             <div class="controls">
                                 <?$numItems = count($field);
@@ -79,3 +99,66 @@
         </div>
     </div>
 </div>
+    <script>
+        <?$interval = $this->getEventDateInterval()?>
+        var globalStartDate = "<?$interval['start']?>";
+        var globalEndDate = "<?$interval['end']?>";
+        function addZero(num){
+            return parseInt(num) < 10 ? ('0' + num) : num;
+        }
+        $(function(){
+            $('#schedule-date').datepicker({
+                format: "yyyy-mm-dd",
+                weekStart: 1,
+                startDate: globalStartDate,
+                endDate: globalEndDate,
+                language: "ru",
+                maxViewMode: 1
+            }).bind('changeDate', function(){
+                        $('#user-list').empty();
+                        var userData = JSON.parse($('#jsonResult').val());
+
+                        var dateVal = $('#schedule-date').datepicker('getDate');
+                        var day = dateVal.getDate();
+                        var month = dateVal.getMonth() + 1;
+                        var year = dateVal.getFullYear();
+                        dateVal = year + "-" + addZero(month) + "-" + addZero(day);
+
+                        $.ajax({
+                            type: 'GET',
+                            url: '/calendar/getAvailableTime',
+                            async: true,
+                            dataType: 'html',
+                            data: {
+                                duration: userData.time,
+                                id: userData.user_id,
+                                date: dateVal
+                            },
+                            error: function () {
+                                $.jGrowl("Ошибка сервера");
+                            },
+                            success: function (data) {
+                                $('#available-time').html(data);
+                            }
+                        });
+                    });
+
+            $(document).on('click', '.time-selection', function(){
+                $.ajax({
+                    type: 'GET',
+                    url: '/calendar/getUserList',
+                    async: true,
+                    dataType: 'html',
+                    data: {
+                        id: $(this).closest('.event').attr('data-user-id')
+                    },
+                    error: function () {
+                        $.jGrowl("Ошибка сервера");
+                    },
+                    success: function (data) {
+                        $('#user-list').html(data);
+                    }
+                });
+            });
+        })
+    </script>

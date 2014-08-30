@@ -167,16 +167,25 @@
                $('#save').click();
             });
             wizard.on('changed', function (e, data) {
+                wizard.trigger('gotostep' + $this.wizard('selectedItem').step);
                 //если шаг == 2
                 if($this.wizard('selectedItem').step==2){
                     $.ajax( {
                         type: "POST",
                         url: "/wizard/time?get=1",
+                        async: false,
                         data: $('form').serialize(),
                         success: function( response ) {
                             $('#jsonResult').val(response);
                         }
                     });
+                    if (!$('.time-selection:checked').length) {
+                        //$('.btn-next').addClass('disabled');
+                    } else {
+                        //$('.btn-next').removeClass('disabled');
+                    }
+                } else {
+                    //$('.btn-next').removeClass('disabled');
                 }
 
             });

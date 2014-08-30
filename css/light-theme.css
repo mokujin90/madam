@@ -2634,7 +2634,7 @@ body {
   .box-statistic small {
     text-transform: uppercase; }
   .box-statistic [class*="icon-"] {
-    font-size: 30px;
+    font-size: 20px;
     top: 13px; }
     .box-statistic [class*="icon-"].align-left {
       position: absolute;
@@ -2717,12 +2717,12 @@ body {
   .box-statistic.brown-background small {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
     opacity: 0.7; }
-  .box-statistic:hover [class*="icon-"].align-right {
+  /*.box-statistic:hover [class*="icon-"].align-right {
     right: 15px;
     -webkit-transition: right 0.1s linear;
     -moz-transition: right 0.1s linear;
     -o-transition: right 0.1s linear;
-    transition: right 0.1s linear; }
+    transition: right 0.1s linear; }*/
   .box-statistic:hover [class*="icon-"].align-left {
     left: 15px;
     -webkit-transition: left 0.1s linear;
@@ -5189,6 +5189,9 @@ pre {
     text-align: center;
 }
 hr.margin-0{
+    margin: 0;
+}
+.margin-0{
     margin: 0;
 }
 .hidden{
