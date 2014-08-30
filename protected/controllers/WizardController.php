@@ -32,6 +32,7 @@ class WizardController extends BaseController
             //test
             $startTime = '2014-08-25 10:20:00';
             $endTime = '2014-08-25 11:20:00';
+            Help::dump($_POST);
             if( !is_null($request=Request::create(array('user_id'=>17,'start_time'=>$startTime,'end_time'=>$endTime))) ){
                 RequestQuestion::createByPost($_POST['answer'],$request->id);
                 RequestField::createByPost($_POST['field'],$request->id);
@@ -39,6 +40,28 @@ class WizardController extends BaseController
             }
         }
         $this->render('index',array('company'=>$company,'question'=>$question,'field'=>$fields));
+    }
+
+    /**
+     * Экшн, который выдаст часть верстки на основе первых трех шагов визарда
+     */
+    public function actionTotal(){
+        $request = $_POST;
+        if(Yii::app()->request->isAjaxRequest && isset($request['companyId'])){
+            Help::decorate($request['answer']);
+            /*все о компании*/
+            $company = Company::model()->with('country')->findByPk($request['companyId']);
+            /*вопросы и ответы*/
+            $questions = Question::model()->findAllByAttributes(array('id'=>array_keys($request['answer'])));
+            $answers = RequestQuestion::getAnswerByPost($request['companyId']);
+            /*поля*/
+            Help::decorate($request['field']);
+            $fieldText = array_filter($request['field']); //пустые уберем
+            $fields = CompanyField::model()->findAllByAttributes(array('id'=>array_keys($fieldText)));
+            /*юридическая информация*/
+            $info = Distance::getDistance($request['companyId']);
+            $this->renderPartial('total',array('company'=>$company,'questions'=>$questions,'answers'=>$answers,'fieldText'=>$fieldText,'fields'=>$fields,'info'=>$info))
+        }
     }
     /**
      * Метод, который расчитает время на входе у него полузаполненная форма, где в ключе "answer" лежат заполненные ответы
@@ -48,7 +71,7 @@ class WizardController extends BaseController
         if(Yii::app()->request->isAjaxRequest && isset($_GET['get'])){
             $companyId = $_POST['companyId'];
 
-            $answers = RequestField::model()->getAnswerByPost($_POST['answer']);
+            $answers = RequestQuestion::model()->getAnswerByPost($_POST['answer']);
             $time = Answer::model()->getTime($answers);
             $result=array('time'=>$time,'user_id'=>json_encode(User2Answer::model()->getNeedUser(Help::decorate($answers,'id'),$companyId)));
             echo json_encode($result);

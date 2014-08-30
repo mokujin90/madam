@@ -16,6 +16,9 @@
                     <li data-target="#step2">
                         <span class="step">2</span>
                     </li>
+                    <li data-target="#step4">
+                        <span class="step">4</span>
+                    </li>
                 </ul>
                 <div class="actions">
                     <button class="btn btn-xs btn-prev"><i class="icon-arrow-left"></i>Prev
@@ -62,6 +65,10 @@
                                 <?endforeach?>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="step-pane" id="step4" data-type="total">
+
                     </div>
 
                 <button name="save" value="1" id="save" hidden style="display: none" type="submit">finish</button>

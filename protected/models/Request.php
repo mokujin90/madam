@@ -174,6 +174,8 @@ class Request extends CActiveRecord
         return $new;
     }
 
+
+
     static public function getRequestWithDate($user_id){//TODO: collapse duplicate requests (start/end)
         $result = array();
         $model = Request::model()->findAllByAttributes(array('user_id' => $user_id), array('order' => 'start_time'));
