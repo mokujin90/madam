@@ -294,7 +294,7 @@ class CalendarWidget extends CWidget{
     }
     private function getDayCalendarEventRow($event){
         $row = CHtml::openTag('td');//cb
-        $row .= CHtml::checkBox('', false, array('value' => $event['model']->id, 'class' => 'event-cb'));
+        $row .= CHtml::checkBox('', false, array('value' => $event['model']->id, 'class' => 'event-cb interval-cb', 'date-start' => $event['start']->format(Help::DATETIME), 'date-end' => $event['end']->format(Help::DATETIME)));
         $row .= CHtml::closeTag('td');
 
         $row .= CHtml::openTag('td');//status
@@ -365,7 +365,10 @@ class CalendarWidget extends CWidget{
             ));
     }
     private function getDayCalendarFreeRow($event){
-        $row = CHtml::tag('td'); //cb
+        $row = CHtml::openTag('td'); //cb
+        $row .= CHtml::checkBox('', false, array('class' => 'interval-cb', 'date-start' => $event['start']->format(Help::DATETIME), 'date-end' => $event['end']->format(Help::DATETIME)));
+        $row .= CHtml::closeTag('td');
+
         $row .= CHtml::tag('td'); //status
         $row .= CHtml::openTag('td');//time
 

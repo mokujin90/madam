@@ -384,6 +384,29 @@ calendar = {
             }
         });
 
+        $(document).on('click', '.block-interval-all-action', function(){
+            var $wrap = $(this).closest('.box');
+            var block = $(this).data('block');
+            var intervals = calendar.getIntervalByCb($wrap);
+            if(eventsID.length){
+                $.ajax({
+                    type: 'GET',
+                    url: '/calendar/groupBlockEvent',
+                    async: false,
+                    data: {
+                        block: block,
+                        id: eventsID
+                    },
+                    error: function () {
+                        $.jGrowl("Ошибка сервера");
+                    },
+                    success: function (data) {
+                        calendar.refresh($('.current-date', $wrap).data('date'));
+                    }
+                });
+            }
+        });
+
         $(document).on('click', '.print-all-action', function(){
             var $wrap = $(this).closest('.box');
             var eventsID = calendar.getEventByCb($wrap);
@@ -458,6 +481,16 @@ calendar = {
         if($cb.length){
             $.each($cb, function(){
                 idArr.push($(this).val());
+            });
+        }
+        return idArr;
+    },
+    getIntervalByCb:function($wrap){
+        $cb = $('.interval-cb:checked', $wrap);
+        var idArr = [];
+        if($cb.length){
+            $.each($cb, function(){
+                idArr.push({start: $(this).data('start'), end: $(this).data('end')});
             });
         }
         return idArr;
