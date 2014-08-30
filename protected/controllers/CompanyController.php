@@ -37,8 +37,11 @@ class CompanyController extends BaseController
     public function actionDistance(){
         $model = Distance::model()->getDistance(Yii::app()->user->companyId);
         if (isset($_POST['Distance'])) {
+
             $model->attributes = $_POST['Distance'];
+            $model->company_id = Yii::app()->user->companyId;
             $model->save();
+
         }
         $this->render('/company/distance/index',array('model'=>$model));
     }

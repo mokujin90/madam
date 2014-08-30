@@ -80,7 +80,9 @@ class RequestFormController extends BaseController
             $fields = CompanyField::model()->getFieldByCompany($id, true);
         }
 
-        $this->render('index',array('questions'=>$questions,'fields'=>$fields));
+        $param['simple'] = array(0=>'::Standard::')+Help::decorate($questions,'text')+array('-1'=>'::Finish::'); //чтобы много раз не расчитывать передадим эти данные здесь
+
+        $this->render('index',array('questions'=>$questions,'fields'=>$fields,'param'=>$param));
     }
 
     /**

@@ -36,7 +36,7 @@ class Question extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('company_id', 'required'),
-			array('position', 'numerical', 'integerOnly'=>true),
+            array('position, next_question', 'numerical', 'integerOnly'=>true),
 			array('company_id', 'length', 'max'=>11),
             array('text', 'length', 'max'=>255),
             array('type', 'length', 'max'=>5),
@@ -73,6 +73,7 @@ class Question extends CActiveRecord
 			'hint' => 'Hint',
 			'type' => 'One Answer',
 			'position' => 'Position',
+            'next_question' => 'Next Question',
 		);
 	}
 
@@ -117,6 +118,77 @@ class Question extends CActiveRecord
 		return parent::model($className);
 	}
 
+    /**
+     * Метод по отвеченному id вопросу и id ответа на него определит, какой вопрос отдать следующим
+     * Если $answerId равен null, значит нам необходимо найти первый вопрос (а это тот на который либо не ссылается не один другой вопрос)
+     * @param $questionId id вопроса на который ответили (средний приоритет)
+     * @param $answerId массив с ответами (даже если один, все равно в массиве) (высокий приоритет)
+     * @param $companyId
+     * @param $not array id вопросов, которые не должны повторятьс
+     * @return Question | null (когда вопросов больше не будет)
+     */
+    public function getNextQuestion($companyId,$questionId = null,array $answerId = array(),$not=null){
+        $criteria = new CDbCriteria();
+        $not = Help::setArray($not);
+
+        $resultId=null;
+        //для того чтобы определить какой вопрос первый - вернем первый по id
+        if(is_null($questionId)){
+            $criteria->addCondition('company_id = :company_id');
+            $criteria->params += array(':company_id' => $companyId);
+            $criteria->order='id ASC';
+            // сначала попробуем найти элемент на который не ссылается хотя бы один из вопросов
+            $allQuestions = $this->find($criteria);
+            $resultId = $allQuestions->id;
+        }
+        else{
+            //запросим текущий вопрос со всеми ответами, чтобы понять какой вопрос выводить следующий
+            $criteria->addCondition('t.id = :id');
+            $criteria->params += array(':id' => $questionId);
+            $criteria->addNotInCondition('t.id',$not);
+            $thisQuestion = $this->with('answers')->find($criteria);
+            //ПЕРВАЯ попытка. сначало попробуем понять следующий вопрос по ответам
+            $answerNext = Help::decorate($thisQuestion['answers'],'next_question');
+            foreach($answerNext as $id => $next){
+                if(!in_array($id,$answerId))
+                    continue;//если в поступивших ответах нет, пропускаем
+                if($next==-1)//если среди полученных ответов есть финишный - пользуемся этим
+                    return null;
+                elseif($next>0 && !in_array($next,$not)){ //если есть выбранные ответы и не встречается в отмененных
+                    $resultId = $next;
+                    break;
+                }
+            }
+            if(is_null($resultId)){
+                //ВТОРАЯ попытка. Следующий вопрос уже будем смотреть по текущему вопросу, а не по ответам на него
+                if($thisQuestion->next_question==-1)
+                    return null;//в случае когда вопрос последний
+                elseif($thisQuestion->next_question>0 && !in_array($thisQuestion->next_question,$not)){
+                    $resultId= $thisQuestion->next_question; //точно известен следующий вопрос
+                }
+                else{//выходит что следующий вопрос любой
+                    $criteria->addCondition('company_id = :company_id');
+                    $criteria->params += array(':company_id' => $companyId);
+                    $criteria->addNotInCondition('t.id',array_merge($not,array($questionId)));
+                    $criteria->order='id ASC';
+                    // сначала попробуем найти элемент на который не ссылается хотя бы один из вопросов
+                    $allQuestions = $this->find($criteria);
+                    $resultId = $allQuestions->id;
+                }
+            }
+
+
+
+        }
+        return $this->with('answers')->findByPk($resultId);
+    }
+
+    /**
+     * Метод, который по объекту определит, а есть ли необходимый следующий вопрос
+     */
+    public function issetNext(){
+        return $this->next_question != -1;
+    }
     public static function getQuestion($companyId){
         return Question::model()->with('answers')->findAllByAttributes(array('company_id'=>$companyId),array('index'=>'id','order'=>"position"));
     }

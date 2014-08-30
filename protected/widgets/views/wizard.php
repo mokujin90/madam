@@ -2,6 +2,7 @@
 /**
  * @var $this WizardWidget
  * @var $field CompanyField[]
+ * @var $question Question[]
  */
 Yii::app()->clientScript->registerScriptFile('/js/dp/bootstrap-datepicker.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerScriptFile('/js/dp/locales/bootstrap-datepicker.ru.js', CClientScript::POS_HEAD);
@@ -21,6 +22,9 @@ Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
                     </li>
                     <li data-target="#step3">
                         <span class="step">3</span>
+                    </li>
+                    <li data-target="#step4">
+                        <span class="step">4</span>
                     </li>
                 </ul>
                 <div class="actions">
@@ -43,19 +47,10 @@ Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
                             <?$numItems = count($question);
                             $i = 0;?>
                             <?foreach($question as $item):?>
-                                <div class="question">
-                                    <div class="col-xs-12">
-                                        <label class="control-label"><?=$item->text?></label>
-                                    </div>
-                                    <div class="col-xs-11 col-xs-offset-1">
-                                        <?=$item->hint?>
-                                    </div>
-                                    <div class="col-xs-11 col-xs-offset-1">
-                                        <div class="form-group">
-                                            <?=$this->drawAnswer($item)?>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?
+                                    $this->render('oneQuestion',array('question'=>$item));
+                                ?>
+
                                 <?if(++$i !== $numItems):?>
                                     <hr class="hr-normal">
                                 <?endif;?>
@@ -81,7 +76,7 @@ Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
                         <div class="form-group">
                             <div class="controls">
                                 <?$numItems = count($field);
-                                $i = 0;?>
+                                    $i = 0;?>
                                 <?foreach($field as $item):?>
                                     <?=$this->drawField($item)?>
                                 <?if(++$i !== $numItems):?>
@@ -90,6 +85,10 @@ Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
                                 <?endforeach?>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="step-pane" id="step4" data-type="total">
+
                     </div>
 
                 <button name="save" value="1" id="save" hidden style="display: none" type="submit">finish</button>

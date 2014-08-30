@@ -106,7 +106,24 @@ class RequestQuestion extends CActiveRecord
 		return parent::model($className);
 	}
 
-
+    /**
+     * Метод, который по массиву из POST'у поймет какие ответы выбрал пользователь
+     * @param $post (вида array(id_вопроса=>id_ответа,id_вопроса1=>id_ответа1,id_вопроса2=>array(0=>id_ответа3)))
+     */
+    public static function getAnswerByPost($post){
+        $answersId=array();
+        foreach($post as $question){
+            if(is_array($question)){
+                foreach($question as $item){
+                    $answersId[] = $item;
+                }
+            }
+            else{
+                $answersId[] = $question;
+            }
+        }
+        return Answer::model()->findAllByAttributes(array('id'=>$answersId),array('index'=>'id'));
+    }
 
     /**
      * Метод по переданному ключу 'answer' массива $_POST создаст нужные записи в БД по ответам пользователя

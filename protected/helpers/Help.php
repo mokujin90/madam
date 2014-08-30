@@ -41,6 +41,10 @@ class Help{
         $array = is_array($array) ? $array : array();
     }
 
+    public static function setArray($array){
+        return is_array($array) ? $array : array($array);
+    }
+
     /**
      * Из массива AR-объектов получить массив вида [id]=>нужное поле
      * @param $cursor CActiveRecord[]

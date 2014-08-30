@@ -23,6 +23,7 @@
         <div class="tab-pane" id="questions">
             <?php $this->renderPartial('_questions',array(
                 'questions'=>$questions,
+                'param'=>$param
             )); ?>
         </div>
     </div>
