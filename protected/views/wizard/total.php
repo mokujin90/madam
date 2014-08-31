@@ -32,14 +32,16 @@
         <div class="col-xs-10 col-sm-6"><?=$date?> (<?=$delay?> min)</div>
     </div>
 </div>
-
-<div class="col-xs-12 col-lg-9">
-    <div class="form-group">
-        <label class="col-xs-12 col-sm-4 control-label">Employee:</label>
-        <div class="col-xs-10 col-sm-6"><?=$user->getName()?></div>
+<?if(!is_null($user)):?>
+    <div class="col-xs-12 col-lg-9">
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-4 control-label">Employee:</label>
+            <div class="col-xs-10 col-sm-6">
+                <?=$user->getName()?>
+            </div>
+        </div>
     </div>
-</div>
-
+<?endif;?>
 <div class="col-xs-12 col-lg-9">
     <div class="form-group">
         <label class="col-xs-12 col-sm-4 control-label">With:</label>

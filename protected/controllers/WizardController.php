@@ -82,7 +82,7 @@ class WizardController extends BaseController
             $this->renderPartial('total',array('date'=>$date,'company'=>$company,'questions'=>$questions,'answers'=>$answers,'fieldText'=>$fieldText,'fields'=>$fields,'info'=>$info,'user'=>$user,'delay'=>$delay));
 
     }
-    public function actionTest(){
+    public function actionIframe(){
         $this->render('test');
     }
     public function actionEdit($id,$hash,$delete=0){
@@ -102,7 +102,8 @@ class WizardController extends BaseController
             //т.к. у нас на входе только id реквеста и его хеш определим компанию по полю user_id
             $companyId = $request['user']->company_id;
             $company = Company::model()->with('country','users')->findByPk($companyId);
-            $question = Question::getQuestion($companyId);
+            $questionId = Help::decorate($request['requestQuestions'],'question_id','question_id');
+            $question = Question::model()->with('answers')->findAllByAttributes(array('id'=>$questionId),array('index'=>'id','order'=>"position"));
 
             $fields = CompanyField::getActiveField($companyId);
             $info = Distance::getDistance($companyId);
