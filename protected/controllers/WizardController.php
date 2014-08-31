@@ -82,6 +82,9 @@ class WizardController extends BaseController
             $this->renderPartial('total',array('date'=>$date,'company'=>$company,'questions'=>$questions,'answers'=>$answers,'fieldText'=>$fieldText,'fields'=>$fields,'info'=>$info,'user'=>$user,'delay'=>$delay));
 
     }
+    public function actionTest(){
+        $this->render('test');
+    }
     public function actionEdit($id,$hash,$delete=0){
         $request = Request::model()->with('requestFields','requestQuestions','user')->findByPk($id);
         if(is_null($request)){

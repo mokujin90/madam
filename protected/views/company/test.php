@@ -1,5 +1,8 @@
 <?php
-$this->layout = false;?>
+Yii::app()->clientScript->registerCssFile('/css/jquery.fancybox.css');
+
+Yii::app()->clientScript->registerScriptFile('/js/jquery.fancybox.pack.js', CClientScript::POS_END);
+?>
 
 <!DOCTYPE html>
 <html>
