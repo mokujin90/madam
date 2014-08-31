@@ -112,8 +112,8 @@ Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
 </div>
     <script>
         <?$interval = $this->getEventDateInterval()?>
-        var globalStartDate = "<?$interval['start']?>";
-        var globalEndDate = "<?$interval['end']?>";
+        var globalStartDate = "<?=$interval['start']?>";
+        var globalEndDate = "<?=$interval['end']?>";
         function addZero(num){
             return parseInt(num) < 10 ? ('0' + num) : num;
         }
@@ -126,6 +126,7 @@ Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
                 language: "ru",
                 maxViewMode: 1
             }).bind('changeDate', function(){
+                        $('.btn-next').addClass('disabled');
                         $('#user-list').empty();
                         var userData = JSON.parse($('#jsonResult').val());
 
@@ -168,8 +169,13 @@ Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
                     },
                     success: function (data) {
                         $('#user-list').html(data);
+                        $('.btn-next').removeClass('disabled');
                     }
                 });
             });
+            $('.wizard').bind('nextstep2', function(){
+                $('#user-list, #available-time').empty();
+                $('#schedule-date .day.active').removeClass('active');
+            })
         })
     </script>

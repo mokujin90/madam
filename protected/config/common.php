@@ -37,10 +37,10 @@ return array(
             'driver' => 'ImageMagick',
             // ImageMagick setup path
             // 'params'=>array('directory'=>'/opt/local/bin'),
-        ),
+        ),*/
         'mailer' => array(
             'class' => 'application.extensions.mailer.EMailer',
-        ),*/
+        ),
 
         'urlManager' => array(
             'showScriptName' => false,
@@ -65,6 +65,6 @@ return array(
 
         'adminEmail' => $adminEmail,
         'fromEmail' => 'robot@example.com',
-        'fromName' => 'PROJECT_NAME',
+        'fromName' => 'Termin',
     ),
 );

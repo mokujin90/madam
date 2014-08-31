@@ -38,7 +38,7 @@ class WizardController extends BaseController
             $startTime = $_POST['start_time'];
             $requestData = json_decode($_POST['jsonResult'],true);
             $endTime = new DateTime($_POST['start_time']);
-            $endTime->add(new DateInterval('PT' . $requestData['time'] . 'M'));
+            $endTime->add(new DateInterval('PT' . ($requestData['time'] == 0 ? 1 : $requestData['time']) . 'M'));
 
             if( !is_null($request=Request::create(array('user_id'=>$emplyeeId,'start_time'=>$startTime,'end_time'=>$endTime->format(Help::DATETIME)))) ){
                 RequestQuestion::createByPost($_POST['answer'],$request->id);
@@ -114,6 +114,11 @@ class WizardController extends BaseController
             echo json_encode($result);
             Yii::app()->end();
         }
+    }
+
+    public function actionTest(){
+        $req = Request::model()->findByPk(281);
+        $this->render('/mailer/notification', array('request' => $req));
     }
 
 }
