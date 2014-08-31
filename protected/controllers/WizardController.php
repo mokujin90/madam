@@ -82,7 +82,7 @@ class WizardController extends BaseController
             $this->renderPartial('total',array('date'=>$date,'company'=>$company,'questions'=>$questions,'answers'=>$answers,'fieldText'=>$fieldText,'fields'=>$fields,'info'=>$info,'user'=>$user,'delay'=>$delay));
 
     }
-    public function actionEdit($id,$hash){
+    public function actionEdit($id,$hash,$delete=0){
         $request = Request::model()->with('requestFields','requestQuestions','user')->findByPk($id);
         if(is_null($request)){
             throw new CHttpException(404, Yii::t('main', 'Событие не найдено'));
@@ -90,16 +90,24 @@ class WizardController extends BaseController
         else if($request->getHash()!=$hash){
             throw new CHttpException(403, Yii::t('main', 'Неверный хеш'));
         }
-        //т.к. у нас на входе только id реквеста и его хеш определим компанию по полю user_id
-        $companyId = $request['user']->company_id;
-        $company = Company::model()->with('country','users')->findByPk($companyId);
-        $question = Question::getQuestion($companyId);
+        if($delete==1){
+            $request->delete();
+            $this->render('delete');
 
-        $fields = CompanyField::getActiveField($companyId);
-        $info = Distance::getDistance($companyId);
+        }
+        else{
+            //т.к. у нас на входе только id реквеста и его хеш определим компанию по полю user_id
+            $companyId = $request['user']->company_id;
+            $company = Company::model()->with('country','users')->findByPk($companyId);
+            $question = Question::getQuestion($companyId);
 
-        $this->wizardStep=false; //для редактирования нет пошагового изменения
-        $this->render('index',array('company'=>$company,'question'=>$question,'field'=>$fields,'info'=>$info,'request'=>$request));
+            $fields = CompanyField::getActiveField($companyId);
+            $info = Distance::getDistance($companyId);
+
+            $this->wizardStep=false; //для редактирования нет пошагового изменения
+            $this->render('index',array('company'=>$company,'question'=>$question,'field'=>$fields,'info'=>$info,'request'=>$request));
+        }
+
     }
     /**
      * Метод, который расчитает время на входе у него полузаполненная форма, где в ключе "answer" лежат заполненные ответы

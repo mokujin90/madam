@@ -366,6 +366,7 @@ employee = {
 wizard={
     init:function(){
         wizard.one();
+        wizard.three();
         $(document).on('click.wizard','button.agree',function(){
             var $this = $(this),
                 $container = $this.closest('.question'),
@@ -399,8 +400,15 @@ wizard={
         $(".fancy").fancybox({});
     },
     one:function(){
-        console.log($('#step1 .agree:visible'));
         $('#step1 .agree:visible').length>0 ? $('.btn-next').addClass('disabled') : $('.btn-next').removeClass('disabled');
+    },
+    three:function(){
+
+        $('#step3 input[required]').change(function(){
+            $('.btn-next').removeClass('disabled');
+            $('#step3 input').removeClass('has-error');
+        });
+
     }
 },
 
