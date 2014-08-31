@@ -379,9 +379,8 @@ wizard={
             }
             $.post( "", param, function( data ) {
                 $container.after(data).each(function() { //each - подобие callback функции
-                    $this.hide(function(){
-                        wizard.one();
-                    });
+                    $this.hide();
+                    wizard.one();
                 });
             })
         });
@@ -391,9 +390,9 @@ wizard={
         $(document).on('change.wizard','.question input:radio,.question input:checkbox',function(){
             var $this = $(this),
                 $question = $this.closest('.question');
-            $question.find('.btn.agree').slideDown(function(){
+                $question.find('.btn.agree').show();
                 $question.nextAll('.question').remove();
-            });
+                wizard.one();
         });
         //позже это перекроется
         $(".fancy").fancybox({});

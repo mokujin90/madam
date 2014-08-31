@@ -142,6 +142,7 @@ class Question extends CActiveRecord
             $resultId = $allQuestions->id;
         }
         else{
+            $criteria = new CDbCriteria();
             //запросим текущий вопрос со всеми ответами, чтобы понять какой вопрос выводить следующий
             $criteria->addCondition('t.id = :id');
             $criteria->params += array(':id' => $questionId);
@@ -167,13 +168,20 @@ class Question extends CActiveRecord
                     $resultId= $thisQuestion->next_question; //точно известен следующий вопрос
                 }
                 else{//выходит что следующий вопрос любой
+                    $criteria = new CDbCriteria();
                     $criteria->addCondition('company_id = :company_id');
                     $criteria->params += array(':company_id' => $companyId);
                     $criteria->addNotInCondition('t.id',array_merge($not,array($questionId)));
                     $criteria->order='id ASC';
+                    $criteria->addCondition('t.id > :last_id');
+                    $criteria->params += array(':last_id' => $questionId);
                     // сначала попробуем найти элемент на который не ссылается хотя бы один из вопросов
-                    $allQuestions = $this->find($criteria);
-                    $resultId = $allQuestions->id;
+                    if($allQuestions = $this->find($criteria)){
+                        $resultId = $allQuestions->id;
+                    } else {
+                        return null;
+                    }
+
                 }
             }
 
