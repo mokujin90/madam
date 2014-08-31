@@ -186,7 +186,12 @@
             });
             wizard.on('changed', function (e, data) {
                 $('.btn-next').removeClass('disabled');
-                wizard.trigger('gotostep' + $this.wizard('selectedItem').step);
+
+                if(globalWidgetPrevStep < $this.wizard('selectedItem').step){
+                    wizard.trigger('nextstep' + $this.wizard('selectedItem').step);
+                }
+                globalWidgetPrevStep = $this.wizard('selectedItem').step;
+
                 //если шаг == 2
                 if($this.wizard('selectedItem').step==2){
                     $.ajax( {
@@ -199,9 +204,9 @@
                         }
                     });
                     if (!$('.time-selection:checked').length) {
-                        //$('.btn-next').addClass('disabled');
+                        $('.btn-next').addClass('disabled');
                     } else {
-                        //$('.btn-next').removeClass('disabled');
+                        $('.btn-next').removeClass('disabled');
                     }
 
                 }
@@ -227,16 +232,12 @@
                             }
                         }
                     });
-
-
-
-
-                    //$('.btn-next').removeClass('disabled');
                 }
-
             });
         });
 
     });
 
 })(jQuery);
+
+var globalWidgetPrevStep = 0;

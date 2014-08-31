@@ -170,8 +170,10 @@ class Request extends CActiveRecord
     static public function create($params){
         $new = new Request();
         $new->attributes = $params;
-        $new->save();
-        return $new;
+        if ($new->save()) {
+            return $new;
+        }
+        return null;
     }
 
     static public function getRequestWithDate($user_id){
@@ -292,5 +294,23 @@ class Request extends CActiveRecord
         $data['start'] = empty($data['start']) ? new DateTime() : new DateTime($data['start']);
         $data['end'] = empty($data['end']) ? new DateTime() : new DateTime($data['end']);
         return $data;
+    }
+
+    public function sendNotification(){
+        $mailer =& Yii::app()->mailer;
+        $mailer->CharSet = 'windows-1251';
+        $mailer->From = Yii::app()->params['fromEmail'];
+        $mailer->FromName = Yii::app()->params['fromName'];
+
+        $mailer->ClearAddresses();
+        $mailer->AddAddress($this->getEmailField());
+        $mailer->Subject = iconv("UTF-8", "windows-1251", Yii::t('mailer', 'Уведомление о создании termin'));
+        $mailer->Body = iconv("UTF-8", "windows-1251", Yii::app()->controller->renderPartial('/mailer/notification', array('request' => $this)));
+        $mailer->IsHTML(true);
+        $mailer->Send();
+    }
+
+    public function getEmailField(){
+        return 'mokujin@inbox.ru';
     }
 }
