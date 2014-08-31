@@ -2,6 +2,7 @@
 
 class WizardController extends BaseController
 {
+    public $layout='simple';
     public $wizardStep;
 
     /**
@@ -10,11 +11,9 @@ class WizardController extends BaseController
      * @throws CHttpException
      */
     public function actionIndex($id){
-        $this->layout='simple';
-        $this->wizardStep = true;
-        Question::model()->getNextQuestion($id,2,array(13),array(10));
+
         if( Yii::app()->request->isAjaxRequest  && isset($_POST['questionId'])){
-            $next = Question::model()->getNextQuestion($id,$_POST['questionId'],Help::setArray($_POST['answerId']),$_POST['not']);
+            $next = Question::model()->getNextQuestion($id,$_POST['questionId'],Help::setArray($_POST['answerId']),isset($_POST['not']) ? $_POST['not'] : array());
             if(!is_null($next)){
                 $this->widget('WizardWidget',array('question'=>$next,'companyId'=>$id,'wizardStep'=>true,'skin'=>'oneQuestion'));
             }
@@ -25,49 +24,49 @@ class WizardController extends BaseController
         $company = Company::model()->with('country')->findByPk($id);
         if(is_null($company))
             throw new CHttpException(404, Yii::t('main', 'Страница не найдена'));
+        $license = Company2License::getCurrentLicense();
+        $this->wizardStep = $license['license']->control_dialog == 1 ? true :false;
         $question = $this->wizardStep ? Help::setArray(Question::model()->getNextQuestion($id)) : Question::getQuestion($id); //todo: изменить
 
         $fields = CompanyField::getActiveField($id);
         if(isset($_POST['save'])){
-            //test
-            $startTime = '2014-08-25 10:20:00';
-            $endTime = '2014-08-25 11:20:00';
-            Help::dump($_POST);
-            if( !is_null($request=Request::create(array('user_id'=>17,'start_time'=>$startTime,'end_time'=>$endTime))) ){
+            if(isset($_POST['requestId'])){
+                $oldRequest = Request::model()->findByPk($_POST['requestId']);
+                $oldRequest->delete();
+            }
+            $emplyeeId = $_POST['employee_id'];
+            $startTime = $_POST['start_time'];
+            $requestData = json_decode($_POST['jsonResult'],true);
+            $endTime = new DateTime($_POST['start_time']);
+            $endTime->add(new DateInterval('PT' . $requestData['time'] . 'M'));
+
+            if( !is_null($request=Request::create(array('user_id'=>$emplyeeId,'start_time'=>$startTime,'end_time'=>$endTime->format(Help::DATETIME)))) ){
                 RequestQuestion::createByPost($_POST['answer'],$request->id);
                 RequestField::createByPost($_POST['field'],$request->id);
                 $this->redirect(Yii::app()->createUrl('site/panel',array('status'=>'1')));
             }
         }
-        $this->render('index',array('company'=>$company,'question'=>$question,'field'=>$fields));
+        $info = Distance::getDistance($id);
+        $this->render('index',array('company'=>$company,'question'=>$question,'field'=>$fields,'info'=>$info));
     }
 
     /**
      * Экшн, который выдаст часть верстки на основе первых трех шагов визарда
      */
     public function actionTotal(){
-        $_POST = array(
-            'companyId'=>1,
-            'answer' => array(
-                2 => array( 13 => '13',24 => '24'),
-                9 => '7',
-                10 => array(10 => '10',11 => '11')
-            ),
-            'field' => array(
-                8 => 'fsf',
-                24 => '',
-                9 => '',
-                21 => '',
-                31 => 'fff',
-                36 => '',
-                37 => '',
-            )
-        );
+
         $request = $_POST;
+
         //if(Yii::app()->request->isAjaxRequest && isset($request['companyId'])){
             Help::recommend($request['answer']);
             /*время*/
-            $date = 'Monday, September 1, 2014, 09:30 clock';
+            $date = $_POST['start_time'];
+
+            $user = User::model()->findByPk($_POST['employee_id']);
+            $requestData = json_decode($_POST['jsonResult'],true);
+        //$delay =$requestData[''];
+            $delay = $requestData['time'];
+            Help::recommend($request['answer']);
             /*все о компании*/
             $company = Company::model()->with('country')->findByPk($request['companyId']);
             /*вопросы и ответы*/
@@ -79,8 +78,28 @@ class WizardController extends BaseController
             $fields = CompanyField::model()->findAllByAttributes(array('id'=>array_keys($fieldText)),array('index'=>'id'));
             /*юридическая информация*/
             $info = Distance::getDistance($request['companyId']);
-            $this->renderPartial('total',array('date'=>$date,'company'=>$company,'questions'=>$questions,'answers'=>$answers,'fieldText'=>$fieldText,'fields'=>$fields,'info'=>$info));
-        //}
+
+            $this->renderPartial('total',array('date'=>$date,'company'=>$company,'questions'=>$questions,'answers'=>$answers,'fieldText'=>$fieldText,'fields'=>$fields,'info'=>$info,'user'=>$user,'delay'=>$delay));
+
+    }
+    public function actionEdit($id,$hash){
+        $request = Request::model()->with('requestFields','requestQuestions','user')->findByPk($id);
+        if(is_null($request)){
+            throw new CHttpException(404, Yii::t('main', 'Событие не найдено'));
+        }
+        else if($request->getHash()!=$hash){
+            throw new CHttpException(403, Yii::t('main', 'Неверный хеш'));
+        }
+        //т.к. у нас на входе только id реквеста и его хеш определим компанию по полю user_id
+        $companyId = $request['user']->company_id;
+        $company = Company::model()->with('country','users')->findByPk($companyId);
+        $question = Question::getQuestion($companyId);
+
+        $fields = CompanyField::getActiveField($companyId);
+        $info = Distance::getDistance($companyId);
+
+        $this->wizardStep=false; //для редактирования нет пошагового изменения
+        $this->render('index',array('company'=>$company,'question'=>$question,'field'=>$fields,'info'=>$info,'request'=>$request));
     }
     /**
      * Метод, который расчитает время на входе у него полузаполненная форма, где в ключе "answer" лежат заполненные ответы
@@ -89,7 +108,6 @@ class WizardController extends BaseController
     public function actionTime($get){
         if(Yii::app()->request->isAjaxRequest && isset($_GET['get'])){
             $companyId = $_POST['companyId'];
-
             $answers = RequestQuestion::model()->getAnswerByPost($_POST['answer']);
             $time = Answer::model()->getTime($answers);
             $result=array('time'=>$time,'user_id'=>json_encode(User2Answer::model()->getNeedUser(Help::decorate($answers,'id'),$companyId)));

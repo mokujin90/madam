@@ -1,6 +1,12 @@
 <?
+    Yii::app()->clientScript->registerCssFile('/css/jquery.fancybox.css');
+
+    Yii::app()->clientScript->registerScriptFile('/js/jquery.fancybox.pack.js', CClientScript::POS_END);
     Yii::app()->clientScript->registerScriptFile('/js/main.js', CClientScript::POS_END);
     Yii::app()->clientScript->registerScript('init', 'wizard.init()', CClientScript::POS_READY);
+/**
+ * @var $info Distance
+ */
 ?>
 <div id="main-nav-bg"></div>
 <nav id="main-nav">
@@ -22,6 +28,16 @@
         <div class="company-email col-xs-12">
             <div>E-mail: <?=$company->email?></div>
         </div>
+        <?if($info->show_term==1):?>
+            <div class="col-xs-12">
+                <div><?=$info->getTermLink('Term and Conditions')?></div>
+            </div>
+        <?endif;?>
+        <?if($info->param_imprint!=0):?>
+            <div class="col-xs-12">
+                <div><?=$info->getImprintLink('Imprint')?></div>
+            </div>
+        <?endif;?>
     </div>
 </nav>
 <section id="content">
@@ -61,7 +77,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <?php
-                            $this->widget('WizardWidget',array('question'=>$question,'field'=>$field,'companyId'=>$company->id,'wizardStep'=>$this->wizardStep));
+                            $this->widget('WizardWidget',array('question'=>$question,'field'=>$field,'companyId'=>$company->id,'wizardStep'=>$this->wizardStep,'request'=>$request));
                         ?>
                     </div>
                 </div>
@@ -79,3 +95,19 @@
         </footer>
     </div>
 </section>
+
+<div class="hidden">
+    <div id="privacy-block">
+        <?=$info->text_privacy?>
+    </div>
+    <div id="condition-block">
+        <?=$info->text_condition?>
+    </div>
+    <div id="term-block">
+        <?=$info->text_term?>
+    </div>
+    <div id="imprint-block">
+        <div><?=$info->address_imprint?></div>
+        <div><?=$info->text_imprint_add?></div>
+    </div>
+</div>

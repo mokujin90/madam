@@ -9,6 +9,7 @@ Yii::app()->clientScript->registerScriptFile('/js/dp/locales/bootstrap-datepicke
 Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
 ?>
 
+<?Help::dump($request);?>
 <div class="dialog">
     <div class="box-content box-padding">
         <div class="fuelux">
@@ -38,18 +39,9 @@ Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
             </div>
             <div class="step-content">
                 <hr class="hr-normal">
-                <?php $form=$this->beginWidget('CActiveForm', array(
-                    'action'=>Yii::app()->createUrl('wizard/index',array('id'=>$companyId)),
-                    'htmlOptions' => array(
-                        'class' => 'form',
-                        'style'=>'margin-bottom: 0;'
-                    )
-                )); ?>
+                <form class="form" style="margin-bottom: 0;" method="post">
                     <input name="authenticity_token" type="hidden">
                     <?php echo CHtml::hiddenField('companyId',$companyId)?>
-                    <?if(!$request->isNewRecord):?>
-                        <?php echo CHtml::hiddenField('requestId',$request->id)?>
-                    <?endif;?>
                     <?php echo CHtml::hiddenField('jsonResult','',array('id'=>'jsonResult'))?>
                     <div class="step-pane active" id="step1" data-type="question">
                         <div class="form-group">
@@ -57,7 +49,7 @@ Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
                             $i = 0;?>
                             <?foreach($question as $item):?>
                                 <?
-                                    $this->render('oneQuestion',array('question'=>$item,'request'=>$request));
+                                    $this->render('oneQuestion',array('question'=>$item));
                                 ?>
 
                                 <?if(++$i !== $numItems):?>
@@ -87,10 +79,7 @@ Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
                                 <?$numItems = count($field);
                                     $i = 0;?>
                                 <?foreach($field as $item):?>
-                                    <?
-                                        $value=  $request->isNewRecord ?  null :$request['requestFields'][$item->id]->value;
-                                    ?>
-                                    <?=$this->drawField($item,$value)?>
+                                    <?=$this->drawField($item)?>
                                 <?if(++$i !== $numItems):?>
                                     <hr class="hr-normal">
                                 <?endif;?>
@@ -104,7 +93,7 @@ Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
                     </div>
 
                 <button name="save" value="1" id="save" hidden style="display: none" type="submit">finish</button>
-                <? $this->endWidget(); ?>
+                </form>
 
             </div>
         </div>

@@ -170,13 +170,11 @@ class Request extends CActiveRecord
     static public function create($params){
         $new = new Request();
         $new->attributes = $params;
-       $new->save();
+        $new->save();
         return $new;
     }
 
-
-
-    static public function getRequestWithDate($user_id){//TODO: collapse duplicate requests (start/end)
+    static public function getRequestWithDate($user_id){
         $result = array();
         $model = Request::model()->findAllByAttributes(array('user_id' => $user_id), array('order' => 'start_time'));
         foreach($model as $item){
@@ -202,6 +200,12 @@ class Request extends CActiveRecord
         );
     }
 
+    /**
+     * Сгенерирует хеш реквеста по его дате
+     */
+    public function getHash(){
+        return md5($this->create_date);
+    }
     public function clearQuestionAndField(){
         RequestField::model()->deleteAllByAttributes(array('request_id'=>$this->id));
         RequestQuestion::model()->deleteAllByAttributes(array('request_id'=>$this->id));

@@ -153,6 +153,9 @@ class User extends CActiveRecord
         }
     }
 
+    public function getName(){
+        return $this->name." ".$this->lastname;
+    }
     protected function beforeValidate()
     {
         if ($this->isNewRecord && $this->is_owner!=1) {

@@ -32,18 +32,20 @@ class WizardWidget extends CWidget{
      * В зависимости от типа вопроса выдаст определенный вывод
      * @param $question Question
      * @param $answerArray array Массив из relation'a модели Request['requestQuestions']
+     * @param
      */
     public function drawAnswer($question,$answerArray=array()){
+
         $result='';
         $count=0;
         foreach($question['answers'] as $answer){
             if($question->type=="radio"){
                 $result.='<div class="radio"><label>';
-                $result.=Chtml::radioButton('answer['.$question->id.']',$this->getAnswerRadio($answer->id,$answerArray,$this->request->id,$count),array('value'=>$answer->id));
+                $result.=CHtml::radioButton('answer['.$question->id.']',$this->getAnswerRadio($answer->id,$answerArray,$this->request->id,$count),array('value'=>$answer->id));
             }
             elseif($question->type=="check"){
                 $result.='<div class="checkbox"><label>';
-                $result.=Chtml::checkBox('answer['.$question->id.']['.$answer->id.']',$this->getAnswerCheck($answer->id,$answerArray,$this->request->id,$count),array('value'=>$answer->id));
+                $result.=CHtml::checkBox('answer['.$question->id.']['.$answer->id.']',$this->getAnswerCheck($answer->id,$answerArray,$this->request->id,$count),array('value'=>$answer->id));
             }
             $result.=$answer->text;
             $result.=$answer->abbr!=''?' ('.$answer->abbr.')' : '';
@@ -91,5 +93,13 @@ class WizardWidget extends CWidget{
         return $result;
     }
 
-
+    public function getEventDateInterval()
+    {
+        $company = Company::model()->findByPk($this->companyId);
+        $start = new DateTime();
+        $start->modify("+ {$company->booking_deadline} hours");
+        $end = clone $start;
+        $end->modify("+ {$company->booking_interval} months");
+        return array('start' => $start->format('Y-m-d'), 'end' => $end->format('Y-m-d'));
+    }
 }

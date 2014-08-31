@@ -141,6 +141,33 @@ class Distance extends CActiveRecord
 		return parent::model($className);
 	}
 
+    public function getTermLink($name){
+        if($this->url_term==''){
+            $link = CHtml::link($name,'#term-block',array('class'=>'fancy'));
+        }
+        else{
+            $link = CHtml::link($name,$this->url_term,array('target'=>'_blank'));
+        }
+        //Help::dump($link);
+        return $link;
+    }
+
+    public function getImprintLink($name){
+        if($this->param_imprint==1){
+            $link = CHtml::link($name,$this->url_imprint,array('target'=>'_blank'));
+        }
+        else{
+            $link = CHtml::link($name,'#imprint-block',array('class'=>'fancy'));
+        }
+        return $link;
+    }
+
+    /**
+     * метод подскажет, есть ли хотя бы один чекбокс, который должен подтвердить пользователь
+     */
+    public function isRequired(){
+        return $this->request_privacy || $this->request_reference_add || $this->request_term;
+    }
     /**
      * Либо вернет новый объект Distance либо уже существующий
      * @param $companyId

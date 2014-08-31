@@ -156,7 +156,6 @@
 
     $(function () {
         $('body').on('mousedown.wizard.data-api', '.wizard', function () {
-
             var $this = $(this);
             //в том случае, когда мы нажимаем на кнопку "next"
 
@@ -164,19 +163,55 @@
             var wizard = $this.wizard($this.data());
             //в том случае, когда мы нажимаем на кнопку "finish"
             wizard.on('finished', function (e, data) {
+                console.log('finish');
                $('#save').click();
             });
             wizard.on('changed', function (e, data) {
+                $('.btn-next').removeClass('disabled');
+                wizard.trigger('gotostep' + $this.wizard('selectedItem').step);
+
                 //если шаг == 2
                 if($this.wizard('selectedItem').step==2){
                     $.ajax( {
                         type: "POST",
                         url: "/wizard/time?get=1",
+                        async: false,
                         data: $('form').serialize(),
                         success: function( response ) {
                             $('#jsonResult').val(response);
                         }
                     });
+                    if (!$('.time-selection:checked').length) {
+                        //$('.btn-next').addClass('disabled');
+                    } else {
+                        //$('.btn-next').removeClass('disabled');
+                    }
+                } else if($this.wizard('selectedItem').step==4) {
+                    $.ajax( {
+                        type: "POST",
+                        url: "/wizard/total",
+                        data: $('form').serialize(),
+                        success: function( response ) {
+                            $('#step4').html(response);
+                            var $step4 = $('#step4'),
+                                $required = $step4.find('input.required');
+                            if($required.length>0){
+                                $required.change(function(){
+                                    if($('#step4 input.required:not(:checked)').length==0){
+                                        $('.btn-next').removeClass('disabled');
+                                    }
+                                    else{
+                                        $('.btn-next').addClass('disabled');
+                                    }
+                                }).change();
+                            }
+                        }
+                    });
+
+
+
+
+                    //$('.btn-next').removeClass('disabled');
                 }
 
             });

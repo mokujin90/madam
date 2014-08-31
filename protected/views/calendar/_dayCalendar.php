@@ -15,6 +15,9 @@
                         <li>
                             <a href="#" class="unblock-all-action" data-block="0"><i class="icon-unlock"></i> <?=Yii::t('main','Разблокировать')?></a>
                         </li>
+                        <li>
+                            <a href="#" class="block-interval-all-action"><i class="icon-remove"></i> <?=Yii::t('main','Блокировать интервал')?></a>
+                        </li>
                         <li class="divider"></li>
                         <li>
                             <a href="#" class="print-all-action"><i class="icon-print"></i> <?=Yii::t('main','Печать')?></a>

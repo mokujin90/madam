@@ -14,7 +14,7 @@
     <?Yii::app()->clientScript->registerScriptFile('/js/bootstrap.js', CClientScript::POS_END);?>
     <?Yii::app()->clientScript->registerScriptFile('/js/theme.js', CClientScript::POS_END);?>
     <?Yii::app()->clientScript->registerScriptFile('/js/wizard.js', CClientScript::POS_END);?>
-
+    <link href="/css/jquery.jgrowl.min.css" media="all" rel="stylesheet" type="text/css">
     <!-- / bootstrap [required] -->
     <link href="/css/bootstrap.css" media="all" rel="stylesheet" type="text/css">
     <!-- / theme file [required] -->
@@ -25,6 +25,7 @@
     <link href="/css/theme-colors.css" media="all" rel="stylesheet" type="text/css">
     <!-- / demo file [not required!] -->
     <link href="/css/demo.css" media="all" rel="stylesheet" type="text/css">
+    <?Yii::app()->clientScript->registerScriptFile('/js/jquery.jgrowl.min.js', CClientScript::POS_END);?>
 
 </head>
 <body class="contrast-red ">

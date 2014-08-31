@@ -365,6 +365,7 @@ employee = {
 },
 wizard={
     init:function(){
+        wizard.one();
         $(document).on('click.wizard','button.agree',function(){
             var $this = $(this),
                 $container = $this.closest('.question'),
@@ -373,11 +374,16 @@ wizard={
                     answerId:$container.find('.form-group input:checked').map(function(){return $(this).val();}).get(),
                     not:$container.siblings('.question').map(function(){return $(this).data('question');}).get()
                 }
-
+            if(param.answerId.length==0){
+                return false;
+            }
             $.post( "", param, function( data ) {
-                $container.after(data);
-            } );
-            $this.slideUp();
+                $container.after(data).each(function() { //each - подобие callback функции
+                    $this.hide(function(){
+                        wizard.one();
+                    });
+                });
+            })
         });
         /**
          * Событие смена состояния чекбокса или радиокнопки в визарде. Удаляем все прежние вопросы и показываем кнопку
@@ -389,8 +395,15 @@ wizard={
                 $question.nextAll('.question').remove();
             });
         });
+        //позже это перекроется
+        $(".fancy").fancybox({});
+    },
+    one:function(){
+        console.log($('#step1 .agree:visible'));
+        $('#step1 .agree:visible').length>0 ? $('.btn-next').addClass('disabled') : $('.btn-next').removeClass('disabled');
     }
 },
+
 calendar = {
     init:function(){
         $("#calendar-datepicker").on('change.dp', function(e) {
@@ -403,6 +416,29 @@ calendar = {
             var $wrap = $(this).closest('.box');
             var block = $(this).data('block');
             var eventsID = calendar.getEventByCb($wrap);
+            if(eventsID.length){
+                $.ajax({
+                    type: 'GET',
+                    url: '/calendar/groupBlockEvent',
+                    async: false,
+                    data: {
+                        block: block,
+                        id: eventsID
+                    },
+                    error: function () {
+                        $.jGrowl("Ошибка сервера");
+                    },
+                    success: function (data) {
+                        calendar.refresh($('.current-date', $wrap).data('date'));
+                    }
+                });
+            }
+        });
+
+        $(document).on('click', '.block-interval-all-action', function(){
+            var $wrap = $(this).closest('.box');
+            var block = $(this).data('block');
+            var intervals = calendar.getIntervalByCb($wrap);
             if(eventsID.length){
                 $.ajax({
                     type: 'GET',
@@ -496,6 +532,16 @@ calendar = {
         if($cb.length){
             $.each($cb, function(){
                 idArr.push($(this).val());
+            });
+        }
+        return idArr;
+    },
+    getIntervalByCb:function($wrap){
+        $cb = $('.interval-cb:checked', $wrap);
+        var idArr = [];
+        if($cb.length){
+            $.each($cb, function(){
+                idArr.push({start: $(this).data('start'), end: $(this).data('end')});
             });
         }
         return idArr;
