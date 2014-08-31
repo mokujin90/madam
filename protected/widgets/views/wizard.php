@@ -4,9 +4,13 @@
  * @var $field CompanyField[]
  * @var $question Question[]
  */
+Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
+
 Yii::app()->clientScript->registerScriptFile('/js/dp/bootstrap-datepicker.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerScriptFile('/js/dp/locales/bootstrap-datepicker.ru.js', CClientScript::POS_HEAD);
-Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
+
+Yii::app()->clientScript->registerScriptFile('/js/validate/jquery.validate.min.js', CClientScript::POS_HEAD);
+
 ?>
 
 <div class="dialog">
@@ -42,6 +46,7 @@ Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
                     'action'=>Yii::app()->createUrl('wizard/index',array('id'=>$companyId)),
                     'htmlOptions' => array(
                         'class' => 'form',
+                        'id'=>'wizard-form',
                         'style'=>'margin-bottom: 0;'
                     )
                 )); ?>

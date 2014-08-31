@@ -163,15 +163,35 @@
             var wizard = $this.wizard($this.data());
             //в том случае, когда мы нажимаем на кнопку "finish"
             wizard.on('finished', function (e, data) {
-                console.log('finish');
-               $('#save').click();
+
+                    var $step3 = $('#step3'),
+                        noError=true,
+                        $required = $step3.find('input').filter('[required]');
+
+                        $.each($required, function(){
+                            var $this = $(this);
+                            if($this.val()==''){
+                                $this.addClass('has-error');
+                                noError=false;
+                            }
+                        });
+                if(noError==false){
+                    $('.steps li[data-target="#step3"]').click();
+                }
+                else{
+                    $('#save').click();
+                }
+
+
             });
             wizard.on('changed', function (e, data) {
                 $('.btn-next').removeClass('disabled');
+
                 if(globalWidgetPrevStep < $this.wizard('selectedItem').step){
                     wizard.trigger('nextstep' + $this.wizard('selectedItem').step);
                 }
                 globalWidgetPrevStep = $this.wizard('selectedItem').step;
+
                 //если шаг == 2
                 if($this.wizard('selectedItem').step==2){
                     $.ajax( {
@@ -188,7 +208,10 @@
                     } else {
                         $('.btn-next').removeClass('disabled');
                     }
-                } else if($this.wizard('selectedItem').step==4) {
+
+                }
+
+                    else if($this.wizard('selectedItem').step==4) {
                     $.ajax( {
                         type: "POST",
                         url: "/wizard/total",
