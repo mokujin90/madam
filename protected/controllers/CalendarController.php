@@ -300,7 +300,7 @@ class CalendarController extends BaseController
                     $this->enableGroupEvent &&
                     $group_size > count($item)
                 ) {
-                    $enableHour[(int)$dateStart->format('H')][$item[0]->start_time->format(Help::DATETIME)] = array('start' => clone $item[0]->start_time, 'end' => clone $item[0]->end_time, 'event' => true);
+                    $enableHour[(int)$dateStart->format('H')][$item[0]->start_time->format(Help::DATETIME)] = array('start' => clone $item[0]->start_time, 'end' => clone $item[0]->end_time, 'event' => true, 'id' => $id);
                 }
                 $eventEnd = $item[0]->end_time;
                 break;

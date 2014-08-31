@@ -297,20 +297,28 @@ class Request extends CActiveRecord
     }
 
     public function sendNotification(){
+        $mail = $this->getEmailField();
+        if(empty($mail)){
+            return;
+        }
         $mailer =& Yii::app()->mailer;
         $mailer->CharSet = 'windows-1251';
         $mailer->From = Yii::app()->params['fromEmail'];
         $mailer->FromName = Yii::app()->params['fromName'];
 
         $mailer->ClearAddresses();
-        $mailer->AddAddress($this->getEmailField());
+        $mailer->AddAddress($mail);
         $mailer->Subject = iconv("UTF-8", "windows-1251", Yii::t('mailer', 'Уведомление о создании termin'));
-        $mailer->Body = iconv("UTF-8", "windows-1251", Yii::app()->controller->renderPartial('/mailer/notification', array('request' => $this)));
+        $mailer->Body = iconv("UTF-8", "windows-1251", Yii::app()->controller->renderPartial('/mailer/notification', array('request' => $this), true));
+        //$mailer->Body = iconv("UTF-8", "windows-1251", 'Уведомление о создании termin');
         $mailer->IsHTML(true);
         $mailer->Send();
     }
 
     public function getEmailField(){
-        return 'mokujin@inbox.ru';
+        if($field = RequestField::model()->with('field')->find(array('condition' => "request_id = $this->id AND field.validator ='mail'"))){
+            return $field->value;
+        }
+        return null;
     }
 }
