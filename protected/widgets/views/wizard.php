@@ -10,6 +10,10 @@ Yii::app()->clientScript->registerScriptFile('/js/dp/bootstrap-datepicker.js', C
 Yii::app()->clientScript->registerScriptFile('/js/dp/locales/bootstrap-datepicker.ru.js', CClientScript::POS_HEAD);
 
 Yii::app()->clientScript->registerScriptFile('/js/validate/jquery.validate.min.js', CClientScript::POS_HEAD);
+if($this->wizardStep){
+    Yii::app()->clientScript->registerScript('step', 'wizard.wizardStep()', CClientScript::POS_READY);
+}
+
 
 ?>
 
@@ -62,7 +66,7 @@ Yii::app()->clientScript->registerScriptFile('/js/validate/jquery.validate.min.j
                             $i = 0;?>
                             <?foreach($question as $item):?>
                                 <?
-                                    $this->render('oneQuestion',array('question'=>$item,'request'=>$request));
+                                    $this->render('oneQuestion',array('question'=>$item,'request'=>$request,'showAgree'=>$showAgree));
                                 ?>
 
                                 <?if(++$i !== $numItems):?>

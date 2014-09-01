@@ -77,7 +77,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <?php
-                            $this->widget('WizardWidget',array('question'=>$question,'field'=>$field,'companyId'=>$company->id,'wizardStep'=>$this->wizardStep,'request'=>isset($request) ? $request : null));
+                            $this->widget('WizardWidget',array('question'=>$question,'field'=>$field,'companyId'=>$company->id,'wizardStep'=>$this->wizardStep,'request'=>isset($request) ? $request : null,'showAgree'=>$showAgree));
                         ?>
                     </div>
                 </div>
