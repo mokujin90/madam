@@ -385,6 +385,7 @@ wizard={
                 $container.after(data).each(function() { //each - подобие callback функции
                     $this.hide();
                     wizard.one();
+                    wizard.blockEmptyCheckbox();
                 });
             });
             return false;
@@ -420,6 +421,7 @@ wizard={
         });
     },
     blockEmptyCheckbox:function(){
+        console.log('isBlock?');
         var $checkboxBox = $('#step1 [data-type="check"]'),
             isBlock = false;
         $.each($checkboxBox, function(){
@@ -428,8 +430,6 @@ wizard={
             }
         });
         isBlock ? $('.btn-next').addClass('disabled') : $('.btn-next').removeClass('disabled');
-
-
     }
 },
 
