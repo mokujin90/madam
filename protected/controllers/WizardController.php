@@ -43,8 +43,9 @@ class WizardController extends BaseController
             if( !is_null($request=Request::create(array('user_id'=>$emplyeeId,'start_time'=>$startTime,'end_time'=>$endTime->format(Help::DATETIME)))) ){
                 RequestQuestion::createByPost($_POST['answer'],$request->id);
                 RequestField::createByPost($_POST['field'],$request->id);
+                $request->sendNotification();
                 $this->redirect(Yii::app()->createUrl('site/panel',array('status'=>'1')));
-            }
+            } //TODO: echo error
         }
         $info = Distance::getDistance($id);
         $this->render('index',array('company'=>$company,'question'=>$question,'field'=>$fields,'info'=>$info,'showAgree'=>$this->wizardStep));
@@ -130,7 +131,7 @@ class WizardController extends BaseController
     }
 
     public function actionTest(){
-        $req = Request::model()->findByPk(281);
+        $req = Request::model()->findByPk(292);
         $this->render('/mailer/notification', array('request' => $req));
     }
 

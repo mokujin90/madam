@@ -78,14 +78,14 @@ if($this->wizardStep){
                     </div>
 
                     <div class="step-pane" id="step2" data-type="fields">
-                        <div class="col-xs-4">
+                        <div class="col-xs-12 col-sm-4">
                             <div id="schedule-date">
                             </div>
                             <div id="user-list" class="box">
 
                             </div>
                         </div>
-                        <div id="available-time" class="col-xs-8">
+                        <div id="available-time" class="col-xs-12 col-sm-8">
 
                         </div>
                     </div>
@@ -97,7 +97,7 @@ if($this->wizardStep){
                                     $i = 0;?>
                                 <?foreach($field as $item):?>
                                     <?
-                                        $value=  $request->isNewRecord ?  null :$request['requestFields'][$item->id]->value;
+                                        $value=  $request->isNewRecord ?  null :(isset($request['requestFields'][$item->id]) ? $request['requestFields'][$item->id]->value : null);
                                     ?>
                                     <?=$this->drawField($item,$value)?>
                                 <?if(++$i !== $numItems):?>

@@ -238,8 +238,9 @@ class CalendarController extends BaseController
             foreach($availableInterval as $item){
                 foreach($item as $hour=>$intervals){
                     foreach($intervals as $intervalItem){
-                        $enableHour[$hour][$intervalItem['start']->format(Help::DATETIME)][] = $intervalItem;
+                        $enableHour[$hour][$intervalItem['start']->format('U')][] = $intervalItem;
                     }
+                    ksort($enableHour[$hour]);
                 }
             }
             echo $this->renderPartial('_availableTime', array('user' => $user, 'eventInterval' => $enableHour));
@@ -262,11 +263,26 @@ class CalendarController extends BaseController
         $dateDefault = clone $date;
         $dateDefault->setTime(0, 0, 0);
 
+        $deadlineDefault = clone $date;
+
+        $now = new DateTime();
+        if($now->format('Y-m-d') == $dateDefault->format('Y-m-d')){
+            $frontDelimit = $user->calendar_front_delimit ? $user->calendar_front_delimit : 1;
+            $min = ceil($now->format('i') / $frontDelimit) * $frontDelimit;
+            $deadlineDefault->modify("+ " . $now->format('H') . " hours");
+            $deadlineDefault->modify("+ $min minutes");
+            $deadlineDefault->modify("+ {$user->company->booking_deadline} hours");
+        }
+
         $schedule = isset($userSchedule[$dayOfWeek]) ? $userSchedule[$dayOfWeek] : array();
         foreach ($schedule as $interval) { //заполение поинтервально (интервалы указываются в рабочем времени сотрудиника)
             $eventEnd = false;
             $dateStart = clone $dateDefault; //начинаем с начала интервала
             $dateStart->setTime((int)$interval['startHour'], (int)$interval['startMin']);
+
+            if($dateStart < $deadlineDefault){
+                $dateStart = clone $deadlineDefault;
+            }
             $dateEnd = clone $dateStart;
             $dateEnd->modify("+ $duration minutes");
 
@@ -300,7 +316,7 @@ class CalendarController extends BaseController
                     $this->enableGroupEvent &&
                     $group_size > count($item)
                 ) {
-                    $enableHour[(int)$dateStart->format('H')][$item[0]->start_time->format(Help::DATETIME)] = array('start' => clone $item[0]->start_time, 'end' => clone $item[0]->end_time, 'event' => true);
+                    $enableHour[(int)$dateStart->format('H')][$item[0]->start_time->format('U')] = array('start' => clone $item[0]->start_time, 'end' => clone $item[0]->end_time, 'event' => true, 'id' => $id);
                 }
                 $eventEnd = $item[0]->end_time;
                 break;
@@ -313,7 +329,7 @@ class CalendarController extends BaseController
         }*/
 
         if ($eventEnd == false) { //в этом интервале-событии нет брони
-            $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $dateEnd, 'id' => $id);
+            $enableHour[(int)$dateStart->format('H')][$dateStart->format('U')] = array('start' => clone $dateStart, 'end' => clone $dateEnd, 'id' => $id);
         }
 
         $dateStart->modify("+ $calendarDelimit minutes");

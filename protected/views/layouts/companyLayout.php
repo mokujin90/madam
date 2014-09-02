@@ -85,6 +85,13 @@
                 </li>
 
                 <li class="">
+                    <a href="/company/distance"  class="<?=$this->mainMenuActiveId=='distance'?'in':'';?>">
+                        <i class="icon-cog"></i>
+                        <span>Distance</span>
+                    </a>
+                </li>
+
+                <li class="">
                     <a href="/requestForm" class="<?=$this->mainMenuActiveId=='question'?'in':'';?>">
                         <i class="icon-question"></i>
                         <span>Date fields and date questions</span>
@@ -118,6 +125,12 @@
                     <a href="<?= $this->createUrl('wizard/index',array('id'=>Yii::app()->user->companyId))?>" target="_blank">
                         <i class="icon-table"></i>
                         <span>Test online booking</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="<?= $this->createUrl('/wizard/iframe')?>" target="_blank">
+                        <i class="icon-table"></i>
+                        <span>Test IFRAME</span>
                     </a>
                 </li>
                 <li>

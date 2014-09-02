@@ -24,7 +24,7 @@
                         'data-end' => $events[0]['end']->format(Help::DATETIME),
                         'data-user-id' => $this->getUserIdJson($events)
                     ),
-                    CHtml::radioButton('start_time', false, array('class' => 'time-selection', 'id' => false, 'value' => $events[0]['start']->format(Help::DATETIME))) . ' ' . ($events[0]['start']->format('H:i') . ' - ' . $events[0]['end']->format('H:i') . (count($events) > 1 ? ('<i class="icon-remove"></i>' . count($events)) : ''))
+                    CHtml::radioButton('start_time', false, array('class' => 'time-selection', 'id' => false, 'value' => $events[0]['start']->format(Help::DATETIME))) . ' ' . ($events[0]['start']->format('H:i') /*. ' - ' . $events[0]['end']->format('H:i') . (count($events) > 1 ? ('<i class="icon-remove"></i>' . count($events)) : '')*/)
             )?>
             <?endforeach?>
         </td>

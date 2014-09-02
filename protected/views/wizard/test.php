@@ -10,4 +10,9 @@
     <script>
         $(".fancy").fancybox({});
     </script>
-<?php echo CHtml::link('wizard','/wizard/index/id/1',array('data-fancybox-type'=>"iframe",'class'=>'fancy'))?>
+        <style>
+            .fancy{
+
+            }
+        </style>
+<?php echo CHtml::link('Click Me','/wizard/index/id/1',array('data-fancybox-type'=>"iframe",'class'=>'fancy col-xs-12 text-center btn btn-primary btn-lg'))?>

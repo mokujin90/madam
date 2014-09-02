@@ -10,14 +10,14 @@
         <div class="form-group">
             <?= $form->labelEx($model,'note_condition', array('class' => "col-xs-12 col-sm-4 control-label")); ?>
             <div class="col-xs-12 col-sm-8">
-                <?php echo $form->textarea($model,'note_condition') ?>
+                <?php echo $form->textarea($model,'note_condition', array('class'=>'form-control')) ?>
             </div>
         </div>
 
         <div class="form-group">
             <?= $form->labelEx($model,'text_condition', array('class' => "col-xs-12 col-sm-4 control-label")); ?>
             <div class="col-xs-12 col-sm-8">
-                <?php echo $form->textarea($model,'text_condition') ?>
+                <?php echo $form->textarea($model,'text_condition', array('class'=>'form-control')) ?>
             </div>
         </div>
     </div>
