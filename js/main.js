@@ -421,14 +421,18 @@ wizard={
         });
     },
     blockEmptyCheckbox:function(){
-        console.log('isBlock?');
         var $checkboxBox = $('#step1 [data-type="check"]'),
             isBlock = false;
-        $.each($checkboxBox, function(){
-            if($(this).find('input:checkbox:checked').length==0){
-                isBlock=true;
-            }
-        });
+        if($('#step1 .agree:visible').length>0){
+            isBlock=true;
+        }
+        else{
+            $.each($checkboxBox, function(){
+                if($(this).find('input:checkbox:checked').length==0){
+                    isBlock=true;
+                }
+            });
+        }
         isBlock ? $('.btn-next').addClass('disabled') : $('.btn-next').removeClass('disabled');
     }
 },
