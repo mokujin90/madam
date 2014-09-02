@@ -12,6 +12,7 @@ $( document ).ready(function() {
 });
 
 var calendarOnChange = false;
+var ajaxQuestionProcess = false;
 
 var question = {
     init:function(){
@@ -370,6 +371,9 @@ wizard={
         wizard.three();
         wizard.blockEmptyCheckbox();
         $(document).on('click.wizard','button.agree',function(){
+            if (ajaxQuestionProcess) {
+                return;
+            }
             var $this = $(this),
                 $container = $this.closest('.question'),
                 companyId = $('#companyId').val(),
@@ -381,12 +385,24 @@ wizard={
             if(param.answerId.length==0){
                 return false;
             }
-            $.post( wizard.url+'id/'+companyId, param, function( data ) {
-                $container.after(data).each(function() { //each - подобие callback функции
-                    $this.hide();
-                    wizard.one();
-                    wizard.blockEmptyCheckbox();
-                });
+            ajaxQuestionProcess = true;
+            $.ajax({
+                type: "POST",
+                url: wizard.url+'id/'+companyId,
+                data: param,
+                success: function( data ) {
+                    $container.after(data).each(function() { //each - подобие callback функции
+                        $this.hide();
+                        wizard.one();
+                        wizard.blockEmptyCheckbox();
+                    });
+                    ajaxQuestionProcess = false;
+                },
+                error: function () {
+                    $.jGrowl("Ошибка сервера, повторите попытку");
+                    ajaxQuestionProcess = false;
+                },
+                dataType: 'html'
             });
             return false;
         });

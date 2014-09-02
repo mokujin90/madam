@@ -97,7 +97,7 @@ if($this->wizardStep){
                                     $i = 0;?>
                                 <?foreach($field as $item):?>
                                     <?
-                                        $value=  $request->isNewRecord ?  null :$request['requestFields'][$item->id]->value;
+                                        $value=  $request->isNewRecord ?  null :(isset($request['requestFields'][$item->id]) ? $request['requestFields'][$item->id]->value : null);
                                     ?>
                                     <?=$this->drawField($item,$value)?>
                                 <?if(++$i !== $numItems):?>

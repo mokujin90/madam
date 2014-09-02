@@ -131,7 +131,7 @@ class WizardController extends BaseController
     }
 
     public function actionTest(){
-        $req = Request::model()->findByPk(289);
+        $req = Request::model()->findByPk(292);
         $this->render('/mailer/notification', array('request' => $req));
     }
 
