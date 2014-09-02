@@ -35,7 +35,8 @@
     <div class="tab-pane" id="worktime">
         <?php $this->renderPartial('_worktime',array(
         'form'=>$form,
-        'model'=>$model,
+        'model'=>$model,        'question'=>$question,
+
     )); ?>
     </div>
     <div class="tab-pane" id="types">
