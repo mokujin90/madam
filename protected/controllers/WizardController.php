@@ -15,7 +15,7 @@ class WizardController extends BaseController
         if( Yii::app()->request->isAjaxRequest  && isset($_POST['questionId'])){
             $next = Question::model()->getNextQuestion($id,$_POST['questionId'],Help::setArray($_POST['answerId']),isset($_POST['not']) ? $_POST['not'] : array());
             if(!is_null($next)){
-                $this->widget('WizardWidget',array('question'=>$next,'companyId'=>$id,'wizardStep'=>true,'skin'=>'oneQuestion'));
+                $this->widget('WizardWidget',array('question'=>$next,'companyId'=>$id,'wizardStep'=>true,'skin'=>'oneQuestion','showAgree'=>true));
             }
             Yii::app()->end();
         }
@@ -48,7 +48,7 @@ class WizardController extends BaseController
             } //TODO: echo error
         }
         $info = Distance::getDistance($id);
-        $this->render('index',array('company'=>$company,'question'=>$question,'field'=>$fields,'info'=>$info));
+        $this->render('index',array('company'=>$company,'question'=>$question,'field'=>$fields,'info'=>$info,'showAgree'=>$this->wizardStep));
     }
 
     /**
@@ -92,7 +92,7 @@ class WizardController extends BaseController
             throw new CHttpException(404, Yii::t('main', 'Событие не найдено'));
         }
         else if($request->getHash()!=$hash){
-            throw new CHttpException(403, Yii::t('main', 'Неверный хеш'));
+            //throw new CHttpException(403, Yii::t('main', 'Неверный хеш'));
         }
         if($delete==1){
             $request->delete();
@@ -109,8 +109,9 @@ class WizardController extends BaseController
             $fields = CompanyField::getActiveField($companyId);
             $info = Distance::getDistance($companyId);
 
-            $this->wizardStep=false; //для редактирования нет пошагового изменения
-            $this->render('index',array('company'=>$company,'question'=>$question,'field'=>$fields,'info'=>$info,'request'=>$request));
+            $license = Company2License::getLicenseBycompany($company->id);
+            $this->wizardStep = $license['license']->control_dialog == 1 ? true :false;
+            $this->render('index',array('company'=>$company,'question'=>$question,'field'=>$fields,'info'=>$info,'request'=>$request,'showAgree'=>false));
         }
 
     }

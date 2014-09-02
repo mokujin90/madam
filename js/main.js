@@ -364,12 +364,15 @@ employee = {
     }
 },
 wizard={
+    url:'/wizard/index/',
     init:function(){
         wizard.one();
         wizard.three();
+        wizard.blockEmptyCheckbox();
         $(document).on('click.wizard','button.agree',function(){
             var $this = $(this),
                 $container = $this.closest('.question'),
+                companyId = $('#companyId').val(),
                 param={
                     questionId: $container.data('question'),
                     answerId:$container.find('.form-group input:checked').map(function(){return $(this).val();}).get(),
@@ -378,22 +381,18 @@ wizard={
             if(param.answerId.length==0){
                 return false;
             }
-            $.post( "", param, function( data ) {
+            $.post( wizard.url+'id/'+companyId, param, function( data ) {
                 $container.after(data).each(function() { //each - подобие callback функции
                     $this.hide();
                     wizard.one();
+                    wizard.blockEmptyCheckbox();
                 });
-            })
+            });
+            return false;
         });
-        /**
-         * Событие смена состояния чекбокса или радиокнопки в визарде. Удаляем все прежние вопросы и показываем кнопку
-         */
-        $(document).on('change.wizard','.question input:radio,.question input:checkbox',function(){
-            var $this = $(this),
-                $question = $this.closest('.question');
-                $question.find('.btn.agree').show();
-                $question.nextAll('.question').remove();
-                wizard.one();
+        //проверим может стоит заблокировать кнопку
+        $(document).on('change.wizard','.question input:checkbox',function(){
+            wizard.blockEmptyCheckbox();
         });
         //позже это перекроется
         $(".fancy").fancybox({});
@@ -408,6 +407,29 @@ wizard={
             $('#step3 input').removeClass('has-error');
         });
 
+    },
+    wizardStep:function(){
+        /**
+         * Событие смена состояния чекбокса или радиокнопки в визарде. Удаляем все прежние вопросы и показываем кнопку
+         */
+        $(document).on('change.wizard','.question input:radio,.question input:checkbox',function(){
+            var $this = $(this),
+                $question = $this.closest('.question');
+            $question.find('.btn.agree').show();
+            $question.nextAll('.question').remove();
+            wizard.one();
+        });
+    },
+    blockEmptyCheckbox:function(){
+        console.log('isBlock?');
+        var $checkboxBox = $('#step1 [data-type="check"]'),
+            isBlock = false;
+        $.each($checkboxBox, function(){
+            if($(this).find('input:checkbox:checked').length==0){
+                isBlock=true;
+            }
+        });
+        isBlock ? $('.btn-next').addClass('disabled') : $('.btn-next').removeClass('disabled');
     }
 },
 

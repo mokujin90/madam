@@ -1,6 +1,7 @@
 <?
 /**
  * @var $this WizardWidget
+ * @var $question Question
  */
 ?>
 <div class="question" data-question = "<?=$question->id?>">
@@ -11,7 +12,7 @@
         <?=$question->hint?>
     </div>
     <div class="col-xs-11 col-xs-offset-1">
-        <div class="form-group">
+        <div class="form-group" data-type="<?=$question->type?>">
             <?
                 if(!$request->isNewRecord){
                     $answer = Help::decorate($request['requestQuestions'],'answer_id','answer_id');
@@ -25,6 +26,6 @@
         </div>
     </div>
     <?if($this->wizardStep && $question->issetNext()):?>
-        <button class="agree btn">Следующий вопрос</button>
+        <button style="<?if(!$showAgree):?>display:none;<?endif?>" class="agree btn">Следующий вопрос</button>
     <?endif;?>
 </div>

@@ -23,9 +23,14 @@ class WizardWidget extends CWidget{
      * @var bool
      */
     public $wizardStep=true;
+
+    /**
+     * @var bool показывать ли кнопку далее
+     */
+    public $showAgree=false;
     public function run(){
         $this->request = $this->request ? $this->request : new Request(); //wizard fix
-        $this->render($this->skin,array('question'=>$this->question,'field'=>$this->field,'request'=>$this->request,'companyId'=>$this->companyId));
+        $this->render($this->skin,array('question'=>$this->question,'field'=>$this->field,'request'=>$this->request,'companyId'=>$this->companyId,'showAgree'=>$this->showAgree));
     }
 
     /**
