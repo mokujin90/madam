@@ -16,7 +16,7 @@
         <div class="form-group">
             <?= $form->labelEx($model,'request_privacy', array('class' => "col-xs-12 col-sm-4 control-label")); ?>
             <div class="col-xs-12 col-sm-8">
-                <?php echo $form->textarea($model,'text_privacy') ?>
+                <?php echo $form->textarea($model,'text_privacy', array('class'=>'form-control')) ?>
             </div>
         </div>
     </div>

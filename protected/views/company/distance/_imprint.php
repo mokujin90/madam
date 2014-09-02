@@ -10,7 +10,7 @@
             <div class="form-group">
                 <?= $form->labelEx($model,'url_imprint', array('class' => "col-xs-12 col-sm-4 control-label")); ?>
                 <div class="col-xs-12 col-sm-8">
-                    <?php echo $form->textField($model,'url_imprint') ?>
+                    <?php echo $form->textField($model,'url_imprint', array('class'=>'form-control')) ?>
                 </div>
             </div>
         </div>
@@ -19,14 +19,14 @@
             <div class="form-group">
                 <?= $form->labelEx($model,'address_imprint', array('class' => "col-xs-12 col-sm-4 control-label")); ?>
                 <div class="col-xs-12 col-sm-8">
-                    <?php echo $form->textarea($model,'address_imprint') ?>
+                    <?php echo $form->textarea($model,'address_imprint', array('class'=>'form-control')) ?>
                 </div>
             </div>
 
             <div class="form-group">
                 <?= $form->labelEx($model,'text_imprint_add', array('class' => "col-xs-12 col-sm-4 control-label")); ?>
                 <div class="col-xs-12 col-sm-8">
-                    <?php echo $form->textarea($model,'text_imprint_add') ?>
+                    <?php echo $form->textarea($model,'text_imprint_add', array('class'=>'form-control')) ?>
                 </div>
             </div>
         </div>

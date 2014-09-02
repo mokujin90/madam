@@ -35,6 +35,8 @@ class CompanyController extends BaseController
     }
 
     public function actionDistance(){
+        $this->pageCaption="Юр. информация";
+        $this->mainMenuActiveId="distance";
         $model = Distance::model()->getDistance(Yii::app()->user->companyId);
         if (isset($_POST['Distance'])) {
 

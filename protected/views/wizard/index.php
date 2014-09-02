@@ -9,7 +9,7 @@
  */
 ?>
 <div id="main-nav-bg"></div>
-<nav id="main-nav">
+<nav id="main-nav" class="company-info">
     <div class="col-xs-12">
         <nav class="navbar navbar-default">
             <div class="navbar-brand"><?=Yii::t('main','Адрес')?></div>

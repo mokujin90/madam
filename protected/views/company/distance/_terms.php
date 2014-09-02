@@ -17,7 +17,7 @@
         <div class="form-group">
             <?= $form->labelEx($model,'text_term', array('class' => "col-xs-12 col-sm-4 control-label")); ?>
             <div class="col-xs-12 col-sm-8">
-                <?php echo $form->textarea($model,'text_term') ?>
+                <?php echo $form->textarea($model,'text_term', array('class'=>'form-control')) ?>
             </div>
         </div>
     </div>

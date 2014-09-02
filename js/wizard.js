@@ -184,6 +184,44 @@
 
 
             });
+            wizard.bind('nextstep4', function () {
+                var hasErrors = false;
+                $.each($('#step3 input'), function () {
+                    if (typeof this.checkValidity == 'function') {
+                        if (!this.checkValidity()) {
+                            $(this).addClass('has-error');
+                            hasErrors = true;
+                        } else {
+                            $(this).removeClass('has-error');
+                        }
+                    }
+                });
+                if (hasErrors) {
+                    $('.steps li[data-target="#step3"]').click();
+                } else {
+                    $.ajax({
+                        type:"POST",
+                        url:"/wizard/total",
+                        async: false,
+                        data:$('form').serialize(),
+                        success:function (response) {
+                            $('#step4').html(response);
+                            var $step4 = $('#step4'),
+                                $required = $step4.find('input.required');
+                            if ($required.length > 0) {
+                                $required.change(function () {
+                                    if ($('#step4 input.required:not(:checked)').length == 0) {
+                                        $('.btn-next').removeClass('disabled');
+                                    }
+                                    else {
+                                        $('.btn-next').addClass('disabled');
+                                    }
+                                }).change();
+                            }
+                        }
+                    });
+                }
+            });
             wizard.on('changed', function (e, data) {
                 $('.btn-next').removeClass('disabled');
 
@@ -209,29 +247,6 @@
                         $('.btn-next').removeClass('disabled');
                     }
 
-                }
-
-                    else if($this.wizard('selectedItem').step==4) {
-                    $.ajax( {
-                        type: "POST",
-                        url: "/wizard/total",
-                        data: $('form').serialize(),
-                        success: function( response ) {
-                            $('#step4').html(response);
-                            var $step4 = $('#step4'),
-                                $required = $step4.find('input.required');
-                            if($required.length>0){
-                                $required.change(function(){
-                                    if($('#step4 input.required:not(:checked)').length==0){
-                                        $('.btn-next').removeClass('disabled');
-                                    }
-                                    else{
-                                        $('.btn-next').addClass('disabled');
-                                    }
-                                }).change();
-                            }
-                        }
-                    });
                 }
             });
         });

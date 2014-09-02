@@ -26,14 +26,14 @@
     </div>
 
 <?endif;?>
-<div class="col-xs-12 col-lg-9">
+<div class="row">
     <div class="form-group">
         <label class="col-xs-12 col-sm-4 control-label">Date:</label>
         <div class="col-xs-10 col-sm-6"><?=$date?> (<?=$delay?> min)</div>
     </div>
 </div>
 <?if(!is_null($user)):?>
-    <div class="col-xs-12 col-lg-9">
+    <div class="row">
         <div class="form-group">
             <label class="col-xs-12 col-sm-4 control-label">Employee:</label>
             <div class="col-xs-10 col-sm-6">
@@ -42,45 +42,46 @@
         </div>
     </div>
 <?endif;?>
-<div class="col-xs-12 col-lg-9">
+<div class="row">
     <div class="form-group">
         <label class="col-xs-12 col-sm-4 control-label">With:</label>
         <div class="col-xs-10 col-sm-6"><?=$company->name?></div>
     </div>
 </div>
-<div class="col-xs-12 col-lg-9">
+<div class="row">
     <div class="form-group">
         <label class="col-xs-12 col-sm-4 control-label"></label>
         <div class="col-xs-10 col-sm-6"><?=$company['country']->name?> <?=$company->address?>, <?=$company->city?></div>
     </div>
 </div>
-<div class="col-xs-12 col-lg-9">
+<div class="row">
     <div class="form-group">
         <label class="col-xs-12 col-sm-4 control-label"></label>
         <div class="col-xs-10 col-sm-6"><?php echo CHtml::mailto($company->email,$company->email)?></div>
     </div>
 </div>
 <?if($info->show_term==1):?>
-    <div class="col-xs-12 col-lg-9">
+    <div class="row">
         <div class="form-group">
             <label class="col-xs-12 col-sm-4 control-label"></label>
             <div class="col-xs-10 col-sm-6"><?=$info->getTermLink('Terms and conditions');?></div>
         </div>
     </div>
 <?endif;?>
-<div class="col-xs-10 col-sm-9">Детальная информаия</div>
+<hr>
+<h4 class="col-xs-12 row">Детальная информация</h4>
 <?foreach($fields as $item):?>
-    <div class="col-xs-12 col-lg-9">
+    <div class="row">
         <div class="form-group">
             <label class="col-xs-12 col-sm-4 control-label"><?=$item->name?></label>
             <div class="col-xs-10 col-sm-6"><?=$fieldText[$item->id]?></div>
         </div>
     </div>
 <?endforeach;?>
-
-<div class="col-xs-10 col-sm-9">Вопросы</div>
+<hr>
+<h4 class="col-xs-12 row">Вопросы</h4>
 <?foreach($questions as $item):?>
-    <div class="col-xs-12 col-lg-9">
+    <div class="row">
         <div class="form-group">
             <label class="col-xs-12 col-sm-4 control-label"><?=$item->text?>:</label>
             <div class="col-xs-10 col-sm-6">
@@ -93,8 +94,8 @@
         </div>
     </div>
 <?endforeach;?>
-
-<div class="col-xs-10 col-sm-9">
+<hr>
+<div class="col-xs-12 row">
     <?if($info->show_privacy==1):?>
         <?$link = CHtml::link('Privacy Policy','#privacy-block',array('class'=>'fancy'))?>
         <?if($info->request_privacy==0):?>
@@ -106,19 +107,19 @@
     <?endif;?>
 </div>
 
-<div class="col-xs-10 col-sm-9">
+<div class="col-xs-12 row">
     <?if($info->show_condition==1):?>
         <?=$info->note_condition." ".CHtml::link('to the details of the right of withdrawal','#condition-block',array('class'=>'fancy'))?>
     <?endif;?>
 </div>
 
-<div class="col-xs-10 col-sm-9">
+<div class="col-xs-12 row">
     <?if($info->show_reference==1):?>
         <?=$info->text_reference?>
     <?endif;?>
 </div>
 
-<div class="col-xs-10 col-sm-9">
+<div class="col-xs-12 row">
     <?if($info->show_reference_add==1):?>
         <?if($info->request_reference_add==1):?>
             <?php echo CHtml::checkBox('',false,array('class'=>"required",'id'=>'check_01'))?>
@@ -129,7 +130,7 @@
     <?endif;?>
 </div>
 
-<div class="col-xs-10 col-sm-9">
+<div class="col-xs-12 row">
     <?if($info->show_term==1):?>
         <?if($info->request_term==1):?>
             <?php echo CHtml::checkBox('',false,array('class'=>"required"))?>

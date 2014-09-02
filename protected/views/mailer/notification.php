@@ -74,7 +74,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" bgcolor="#00acec" valign="top">
-                                        <h3><a href="/wizard/edit/id/<?=$request->id?>/hash/<?=$request->getHash()?>/" style="color: #ffffff !important"><?=Yii::t('mailer','Изменить назначние')?></a></h3>
+                                        <h3><a href="<?=Yii::app()->params['host']?>/wizard/edit/id/<?=$request->id?>/hash/<?=$request->getHash()?>/" style="color: #ffffff !important"><?=Yii::t('mailer','Изменить назначние')?></a></h3>
                                     </td>
                                 </tr>
                                 <tr>
@@ -84,7 +84,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" bgcolor="#F00000" valign="top">
-                                        <h3><a href="/wizard/edit/id/<?=$request->id?>/hash/<?=$request->getHash()?>/" style="color: #ffffff !important"><?=Yii::t('mailer','Отменить назначние')?></a></h3>
+                                        <h3><a href="<?=Yii::app()->params['host']?>/wizard/edit/id/<?=$request->id?>/hash/<?=$request->getHash()?>/" style="color: #ffffff !important"><?=Yii::t('mailer','Отменить назначние')?></a></h3>
                                     </td>
                                 </tr>
                                 </tbody></table>
