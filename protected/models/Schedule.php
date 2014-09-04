@@ -18,6 +18,7 @@
  */
 class Schedule extends CActiveRecord
 {
+    public $all_answers = 0;
     static public $dayNames = array("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье");
 	/**
 	 * Returns the static model of the specified AR class.
@@ -45,7 +46,7 @@ class Schedule extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, day, start_hour, start_min, end_hour, end_min, enable', 'required'),
+			array('user_id, day, start_hour, start_min, end_hour, end_min, enable,all_answers', 'required'),
 			array('day, start_hour, start_min, end_hour, end_min, enable', 'numerical', 'integerOnly'=>true),
 			array('user_id', 'length', 'max'=>10),
 			// The following rule is used by search().

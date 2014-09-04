@@ -12,6 +12,8 @@ class WizardController extends BaseController
      */
     public function actionIndex($id){
 
+
+
         if( Yii::app()->request->isAjaxRequest  && isset($_POST['questionId'])){
             $next = Question::model()->getNextQuestion($id,$_POST['questionId'],Help::setArray($_POST['answerId']),isset($_POST['not']) ? $_POST['not'] : array());
             if(!is_null($next)){
@@ -39,8 +41,8 @@ class WizardController extends BaseController
             $requestData = json_decode($_POST['jsonResult'],true);
             $endTime = new DateTime($_POST['start_time']);
             $endTime->add(new DateInterval('PT' . ($requestData['time'] == 0 ? 1 : $requestData['time']) . 'M'));
-
-            if( !is_null($request=Request::create(array('user_id'=>$emplyeeId,'start_time'=>$startTime,'end_time'=>$endTime->format(Help::DATETIME)))) ){
+            $confirm = $license['license']->event_confirm == 1 ? 0 : 1;
+            if( !is_null($request=Request::create(array('user_id'=>$emplyeeId,'start_time'=>$startTime,'end_time'=>$endTime->format(Help::DATETIME),'is_confirm'=>$confirm))) ){
                 RequestQuestion::createByPost($_POST['answer'],$request->id);
                 RequestField::createByPost($_POST['field'],$request->id);
                 $request->sendNotification();
@@ -92,7 +94,7 @@ class WizardController extends BaseController
             throw new CHttpException(404, Yii::t('main', 'Событие не найдено'));
         }
         else if($request->getHash()!=$hash){
-            //throw new CHttpException(403, Yii::t('main', 'Неверный хеш'));
+            throw new CHttpException(403, Yii::t('main', 'Неверный хеш'));
         }
         if($delete==1){
             $request->delete();
@@ -123,8 +125,9 @@ class WizardController extends BaseController
         if(Yii::app()->request->isAjaxRequest && isset($_GET['get'])){
             $companyId = $_POST['companyId'];
             $answers = RequestQuestion::model()->getAnswerByPost($_POST['answer']);
+            $schedule2answer = Shedule2Answer::getScheduleByAnswer(Help::decorate($answers,'id'),$companyId);
             $time = Answer::model()->getTime($answers);
-            $result=array('time'=>$time,'user_id'=>json_encode(User2Answer::model()->getNeedUser(Help::decorate($answers,'id'),$companyId)));
+            $result=array('time'=>$time,'shedule_id'=>json_encode($schedule2answer),'user_id'=>json_encode(User2Answer::model()->getNeedUser(Help::decorate($answers,'id'),$companyId)));
             echo json_encode($result);
             Yii::app()->end();
         }

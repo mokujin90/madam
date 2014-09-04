@@ -287,7 +287,12 @@ employee = {
         $( "input.user-type-answer" ).change(function() {
             $('#option_all_answer').prop('checked') == true ? $('#user-answer').slideUp() : $('#user-answer').slideDown();
         });
+        $(document).on('change',"input.user-type-answer",function(){
 
+            var $this = $(this),
+                $group = $this.closest('.form-group').next('.user-answer');
+            $this.val() == 1 ? $group.slideUp() : $group.slideDown();
+        })
         $('.add-interval').click(function () {
             var day = $(this).data('day');
             var scheduleUniqId = parseInt($('#shedule-uniq-iq').val());

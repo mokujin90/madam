@@ -41,7 +41,7 @@ class Request extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, start_time, end_time', 'required'),
+			array('user_id, start_time, end_time,is_confirm', 'required'),
 			array('user_id', 'length', 'max'=>10),
 			array('create_date,is_block,comment,status', 'safe'),
 			// The following rule is used by search().
@@ -208,6 +208,11 @@ class Request extends CActiveRecord
     public function getHash(){
         return md5($this->create_date);
     }
+
+    public function getLightHash(){
+        return md5($this->id);
+    }
+
     public function clearQuestionAndField(){
         RequestField::model()->deleteAllByAttributes(array('request_id'=>$this->id));
         RequestQuestion::model()->deleteAllByAttributes(array('request_id'=>$this->id));

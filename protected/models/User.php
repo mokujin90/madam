@@ -167,7 +167,7 @@ class User extends CActiveRecord
     protected function afterSave()
     {
         parent::afterSave();
-
+        $idShedule = array('old'=>0,'new'=>0);//по той причине, что каждое сохранение - это пересоздание интервалов, будем хранить id старых и новых интервалов
         if ($this->isNewRecord && $this->is_owner != 1) { //create BaikalUser
             $transaction = Yii::app()->db_baikal->beginTransaction();
             try {
@@ -221,6 +221,8 @@ class User extends CActiveRecord
             }
         }
         if (isset($this->scheduleUpdate)) {
+
+            //запросим все интервалы, пока не удалили, чтобы
             Schedule::model()->deleteAllByAttributes(array('user_id' => $this->id));
             foreach ($this->scheduleUpdate as $day => $item) {
                 foreach ($item as $data) {
@@ -232,9 +234,19 @@ class User extends CActiveRecord
                     $newSchedule->end_hour = $data['endHour'];
                     $newSchedule->end_min = $data['endMin'];
                     $newSchedule->enable = isset($data['enable']) ? $data['enable'] : 0;
+                    $newSchedule->all_answers = $data['all_answers'];
                     $newSchedule->save();
+                    if(count($data['schedule2answer']) && !is_null($newSchedule->id)){
+                        foreach($data['schedule2answer'] as $answerId=>$value){
+                            $schedule2answer = new Shedule2Answer();
+                            $schedule2answer->answer_id =$answerId;
+                            $schedule2answer->shedule_id = $newSchedule->id;
+                            $schedule2answer->save();
+                        }
+                    }
                 }
             }
+
         }
         if (isset($this->answered)) {
 
@@ -252,6 +264,7 @@ class User extends CActiveRecord
                 User2Answer::model()->deleteAllByAttributes(array('user_id'=>$this->id,'answer_id'=>$deletedAnswer));
             }
         }
+        //Help::dump($this->scheduleUpdate);
     }
     protected function afterDelete(){
         parent::afterDelete();
@@ -281,11 +294,25 @@ class User extends CActiveRecord
             if ($item->enable == 0 && !$withDisable) {
                 continue;
             }
-            $result[$item->day][] = array('startHour' => $item->start_hour, 'startMin' => $item->start_min, 'endHour' => $item->end_hour, 'endMin' => $item->end_min, 'enable' => $item->enable);
+            $result[$item->day][] = array('startHour' => $item->start_hour, 'startMin' => $item->start_min, 'endHour' => $item->end_hour, 'endMin' => $item->end_min, 'enable' => $item->enable,'id'=>$item->id,'all_answers'=>$item->all_answers);
         }
         return $result;
     }
 
+    /**
+     * Из полученного массива из getScheduleByDay вычленим id событий (чтобы снова не запрашивать данные)
+     */
+    static public function  getSheduleId($array){
+        $sheduleId = array();
+        if(count($array)){
+            foreach($array as $item){
+                foreach($item as $shedule){
+                    $sheduleId[$shedule['id']] =$shedule['id'];
+                }
+            }
+        }
+        return $sheduleId;
+    }
     static public function getMenuList()
     {
         return User::model()->findAllByAttributes(array('company_id' => Yii::app()->user->companyId, 'is_owner' => '0'));
