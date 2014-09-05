@@ -76,6 +76,7 @@ class Request extends CActiveRecord
 			'start_time' => 'Start Time',
 			'end_time' => 'End Time',
             'is_block' => 'Is block',
+            'comment' => Yii::t('main','Комментарий')
 		);
 	}
 

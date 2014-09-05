@@ -104,6 +104,11 @@ if($this->wizardStep){
                                     <hr class="hr-normal">
                                 <?endif;?>
                                 <?endforeach?>
+                                <hr class="hr-normal">
+                                <?= $form->labelEx($request,'comment', array('class' => "control-label")); ?>
+                                <div class="controls">
+                                    <?= $form->textarea($request,'comment', array('class' => "form-control")); ?>
+                                </div>
                             </div>
                         </div>
                     </div>

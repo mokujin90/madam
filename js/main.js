@@ -658,9 +658,28 @@ more ={
             return false;
         });
     }
+},
+employeeForm={
+    init:function(){
+        employeeForm.manual(0);
+    },
+    manual:function(value){
+        $('select.may-individual').change(function(){
+            var $this = $(this);
+            if($this.find(":selected").val()==value){
+                var $textField = '<input style="margin-top: 5px;" class="form-control manual-value" value="0" type="text" name="'+$this.attr('name')+'">';
+                $this.after($textField);
+                console.log('333');
+            }
+            else{
+                $this.next('.manual-value').remove();
+            }
+        });
+    }
 }
 
 $.urlParam = function(name){
     var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
     return results[1] || 0;
 }
+

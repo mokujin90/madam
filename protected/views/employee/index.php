@@ -3,6 +3,7 @@
     Yii::app()->clientScript->registerScriptFile('/js/main.js');
     Yii::app()->clientScript->registerScriptFile('/js/datejs/core.js');
     Yii::app()->clientScript->registerScriptFile('/js/datejs/date.js');
+    Yii::app()->clientScript->registerScript('init', 'employeeForm.init()', CClientScript::POS_READY);
 ?>
 
 <?if(!$model->isNewRecord && empty($model->baikal_user_id)):?>

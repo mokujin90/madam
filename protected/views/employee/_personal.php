@@ -49,7 +49,14 @@
     <div class="form-group">
         <?= $form->labelEx($model,'calendar_delimit', array('class' => "col-xs-12 col-sm-4 control-label")); ?>
         <div class="col-xs-10 col-sm-7">
-            <?= $form->dropDownList($model, 'calendar_delimit', User::$calendarDelimit, array('class' => "form-control")); ?>
+            <?
+                $data =User::$calendarDelimit;
+                $select = !isset($data[$model->calendar_delimit]) ? 0 :  $model->calendar_delimit;
+            ?>
+            <?= CHtml::dropDownList('User[calendar_delimit]',$select,$data, array('class' => "form-control may-individual"))?>
+            <?if(!isset(User::$calendarDelimit[$model->calendar_delimit])):?>
+                <?=$form->textField($model,'calendar_delimit', array('class' => "form-control manual-value", 'style'=>'margin-top: 5px;')); ?>
+            <?endif;?>
             <?= $form->error($model,'calendar_delimit'); ?>
         </div>
         <div class="col-xs-2 col-sm-1">
@@ -57,10 +64,17 @@
         </div>
     </div>
     <div class="form-group">
-        <?$data = User::$calendarDelimit + array('-1' => 'Автоматически');?>
+        <?
+            $data = User::$calendarDelimit + array('-1' => 'Автоматически');
+            $select = !isset($data[$model->calendar_front_delimit]) ? 0 :  $model->calendar_front_delimit;
+        ?>
         <?= $form->labelEx($model,'calendar_front_delimit', array('class' => "col-xs-12 col-sm-4 control-label")); ?>
         <div class="col-xs-10 col-sm-7">
-            <?= $form->dropDownList($model, 'calendar_front_delimit', $data, array('class' => "form-control")); ?>
+
+            <?= CHtml::dropDownList('User[calendar_front_delimit]',$select,$data, array('class' => "form-control may-individual"))?>
+            <?if(!isset(User::$calendarDelimit[$model->calendar_front_delimit])):?>
+                <?=$form->textField($model,'calendar_front_delimit', array('class' => "form-control manual-value", 'style'=>'margin-top: 5px;')); ?>
+            <?endif;?>
             <?= $form->error($model,'calendar_front_delimit'); ?>
         </div>
         <div class="col-xs-2 col-sm-1">

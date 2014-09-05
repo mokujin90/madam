@@ -2,6 +2,8 @@
 
 class WizardController extends BaseController
 {
+    const STATUS_WIZARD_OK=1;
+    const STATUS_WIZARD_ERROR=2;
     public $layout='simple';
     public $wizardStep;
 
@@ -32,6 +34,7 @@ class WizardController extends BaseController
 
         $fields = CompanyField::getActiveField($id);
         if(isset($_POST['save'])){
+
             if(isset($_POST['requestId'])){
                 $oldRequest = Request::model()->findByPk($_POST['requestId']);
                 $oldRequest->delete();
@@ -42,12 +45,17 @@ class WizardController extends BaseController
             $endTime = new DateTime($_POST['start_time']);
             $endTime->add(new DateInterval('PT' . ($requestData['time'] == 0 ? 1 : $requestData['time']) . 'M'));
             $confirm = $license['license']->event_confirm == 1 ? 0 : 1;
-            if( !is_null($request=Request::create(array('user_id'=>$emplyeeId,'start_time'=>$startTime,'end_time'=>$endTime->format(Help::DATETIME),'is_confirm'=>$confirm))) ){
+            if( !is_null($request=Request::create(array('user_id'=>$emplyeeId,'start_time'=>$startTime,'end_time'=>$endTime->format(Help::DATETIME),'is_confirm'=>$confirm,'comment'=>$_POST['Request']['comment']))) ){
                 RequestQuestion::createByPost($_POST['answer'],$request->id);
                 RequestField::createByPost($_POST['field'],$request->id);
                 $request->sendNotification();
-                $this->redirect(Yii::app()->createUrl('site/panel',array('status'=>'1')));
-            } //TODO: echo error
+                $status = self::STATUS_WIZARD_OK;//
+            }
+            else{
+                $status = self::STATUS_WIZARD_ERROR;//
+            }
+
+            $this->redirect(Yii::app()->createUrl('site/panel',array('status'=>$status)));
         }
         $info = Distance::getDistance($id);
         $this->render('index',array('company'=>$company,'question'=>$question,'field'=>$fields,'info'=>$info,'showAgree'=>$this->wizardStep));
@@ -55,10 +63,11 @@ class WizardController extends BaseController
 
     /**
      * Экшн, который выдаст часть верстки на основе первых трех шагов визарда
+     * @param $fakePost экшн может выполняться как экшн, работющий с постом, или же с массивом переданным в него
      */
-    public function actionTotal(){
+    public function actionTotal($fakePost=null){
 
-        $request = $_POST;
+        $request = !is_null($fakePost) ? $fakePost : $_POST;
 
         //if(Yii::app()->request->isAjaxRequest && isset($request['companyId'])){
             Help::recommend($request['answer']);
@@ -67,7 +76,6 @@ class WizardController extends BaseController
 
             $user = User::model()->findByPk($_POST['employee_id']);
             $requestData = json_decode($_POST['jsonResult'],true);
-        //$delay =$requestData[''];
             $delay = $requestData['time'];
             Help::recommend($request['answer']);
             /*все о компании*/
