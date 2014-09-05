@@ -21,7 +21,7 @@
                     <button type="button" class="col-xs-12 btn btn-primary up-field">&uarr;</button>
                 </div>
                 <div class="col-xs-12 col-sm-1">
-                    <div type="button" class="col-xs-12 btn btn-primary down-field">&darr;</div>
+                    <button type="button" class="col-xs-12 btn btn-primary down-field">&darr;</button>
                 </div>
                 <div class="col-xs-12 col-sm-1">
                     <?if($field->is_userfield==1):?><button type="button" class="col-xs-12 btn btn-danger remove-field">-</button><?endif;?>

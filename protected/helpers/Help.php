@@ -184,4 +184,35 @@ class Help{
         }
         return $result;
     }
+
+    public static function sendMail($to, $theme, $view, $model){
+        if(empty($to)){
+            return;
+        }
+        $mailer =& Yii::app()->mailer;
+        $mailer->CharSet = 'UTF-8';
+        $mailer->From = Yii::app()->params['fromEmail'];
+        $mailer->From = "termin@wconsults.ru";
+        $mailer->FromName = Yii::app()->params['fromName'];
+        $mailer->IsSMTP();                                      // set mailer to use SMTP
+
+        $mailer->Host = "smtp.yandex.ru";  // specify main and backup server
+        $mailer->SMTPAuth = true;     // turn on SMTP authentication
+        $mailer->Username = "termin@wconsults.ru";  // SMTP username
+        $mailer->Password = "123456"; // SMTP passwordtest@termin.wconsults.ru
+        $mailer->Port = 465;
+        $mailer->SMTPSecure = 'ssl';
+
+        $mailer->ClearAddresses();
+        $mailer->AddAddress($to);
+        $mailer->AddBCC($to);
+        $mailer->Subject = Yii::t('mailer', $theme);
+        $mailer->Body = Yii::app()->controller->renderPartial("/mailer/$view", array('request' => $model), true);
+        $mailer->IsHTML(true);
+        if (!$mailer->Send()) {
+            echo "Message could not be sent. <p>";
+            echo "Mailer Error: " . $mailer->ErrorInfo;
+            exit;
+        }
+    }
 }

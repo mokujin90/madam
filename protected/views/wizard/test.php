@@ -15,4 +15,4 @@
 
             }
         </style>
-<?php echo CHtml::link('Click Me','/wizard/index/id/1',array('data-fancybox-type'=>"iframe",'class'=>'fancy col-xs-12 text-center btn btn-primary btn-lg'))?>
+<?php echo CHtml::link('Click Me','/wizard/index/id/' . Yii::app()->user->companyId,array('data-fancybox-type'=>"iframe",'class'=>'fancy col-xs-12 text-center btn btn-primary btn-lg'))?>

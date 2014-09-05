@@ -60,6 +60,20 @@ Yii::app()->clientScript->registerScript('modal', 'modal.init()', CClientScript:
             </div>
         </div>
     <?endif?>
+    <?if(!$model->is_confirm):?>
+    <div class="box col-xs-12">
+        <div class="box-header orange-background">
+            <div class="title"><i class="icon-warning-sign"></i> <?=Yii::t('main','Ожидает подтверждение')?></div>
+        </div>
+        <div class="row box-content">
+            <p>Внимание! Термин не подтвержден. Подтвердите или удалите его, чтобы заказчик смог получить уведомление.</p>
+            <a href="<?=$this->createUrl('wizard/confirm',array('id'=>$model->id,'hash'=>$model->getLightHash(),'external'=>0))?>" class="btn btn-warning"><i class="icon-warning-sign"></i> <?=Yii::t('main','Подтвердить')?></a>
+            <a href="<?=$this->createUrl('wizard/confirm',array('id'=>$model->id,'hash'=>$model->getLightHash(),'delete'=>1,'external'=>0))?>" class="btn btn-warning"><i class="icon-warning-sign"></i> <?=Yii::t('main','Удалить')?></a>
+        </div>
+    </div>
+    <?endif?>
+
+
     <?=CHtml::hiddenField('user_id',$model->user_id,array('id'=>'user_id'))?>
     <?=CHtml::hiddenField('request_id',$model->id,array('id'=>'request_id'))?>
     <button href="<?=$this->createUrl('calendar/event',array('user_id'=>$model->user_id,'id'=>$model->id,'edit'=>1))?>" name="save" value="1" class="edit event btn btn-success" type="button"><i class="icon-cogs"></i> <?=Yii::t('main','Изменить даты')?></button>

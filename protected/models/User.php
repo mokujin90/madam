@@ -236,7 +236,7 @@ class User extends CActiveRecord
                     $newSchedule->enable = isset($data['enable']) ? $data['enable'] : 0;
                     $newSchedule->all_answers = $data['all_answers'];
                     $newSchedule->save();
-                    if(count($data['schedule2answer']) && !is_null($newSchedule->id)){
+                    if(isset($data['schedule2answer']) && count($data['schedule2answer']) && !is_null($newSchedule->id)){
                         foreach($data['schedule2answer'] as $answerId=>$value){
                             $schedule2answer = new Shedule2Answer();
                             $schedule2answer->answer_id =$answerId;
@@ -284,7 +284,7 @@ class User extends CActiveRecord
      * Существующая модель: Приводит модель к массиву вида: array[день][] = array(params)
      * Новая модель: возвращает scheduleUpdate
      */
-    public function getScheduleByDay($withDisable = true)
+    public function getScheduleByDay($withDisable = true, $answerFilter = false, $confirmedSchedule = array())
     {
         if ($this->isNewRecord) {
             return $this->scheduleUpdate;
@@ -292,6 +292,9 @@ class User extends CActiveRecord
         $result = array();
         foreach ($this->schedulesOrder as $item) {
             if ($item->enable == 0 && !$withDisable) {
+                continue;
+            }
+            if($answerFilter && !$item->all_answers && !in_array($item->id, $confirmedSchedule)){
                 continue;
             }
             $result[$item->day][] = array('startHour' => $item->start_hour, 'startMin' => $item->start_min, 'endHour' => $item->end_hour, 'endMin' => $item->end_min, 'enable' => $item->enable,'id'=>$item->id,'all_answers'=>$item->all_answers);
@@ -302,12 +305,12 @@ class User extends CActiveRecord
     /**
      * Из полученного массива из getScheduleByDay вычленим id событий (чтобы снова не запрашивать данные)
      */
-    static public function  getSheduleId($array){
+    static public function getSheduleId($array){
         $sheduleId = array();
         if(count($array)){
             foreach($array as $item){
                 foreach($item as $shedule){
-                    $sheduleId[$shedule['id']] =$shedule['id'];
+                    $sheduleId[$shedule['id']] = $shedule['id'];
                 }
             }
         }
