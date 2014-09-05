@@ -220,7 +220,7 @@ class CalendarController extends BaseController
         }
     }
 
-    public function actionGetAvailableTime($date, $id, $duration = 30){
+    public function actionGetAvailableTime($date, $id, $schedule_id, $duration = 30){
         $user = User::model()->findAllByAttributes(array('id' => json_decode($id)));
         if (!count($user)) {
             echo Yii::t('main', 'Пользователь не существует');
@@ -228,7 +228,7 @@ class CalendarController extends BaseController
             $date = new DateTime($date);
             $availableInterval = array();
             foreach($user as $item){
-                $schedule = $item->getScheduleByDay(false);
+                $schedule = $item->getScheduleByDay(false, true, json_decode($schedule_id));
                 $availableInterval[$item->id] = $this->getAvailableIntervals($date, $item, $schedule, $duration);
                 //$availableInterval = $this->getAvailableIntervals($date, $item, $schedule, $duration);
             }

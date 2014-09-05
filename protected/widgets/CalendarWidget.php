@@ -220,6 +220,8 @@ class CalendarWidget extends CWidget{
             $class .= " has-popover";
             if (isset($_GET['target']) && $_GET['target'] == $event['event']) {
                 $class .= " label-important";
+            } elseif(!$event['model']->is_confirm){
+                $class .= " label-warning";
             } else {
                 $class .= " label-info";
             }
@@ -253,6 +255,10 @@ class CalendarWidget extends CWidget{
 
     public function isBlockIcon($model){
         return $model->is_block ? '<i class="icon-lock"></i> ' : '';
+    }
+
+    public function unconfirmIcon($model){
+        return !$model->is_confirm ? '<i class="icon-warning-sign"></i> ' : '';
     }
 
     public function isRepeatIcon($model){
@@ -303,7 +309,7 @@ class CalendarWidget extends CWidget{
 
         $row .= CHtml::openTag('td');//time
         $row .= CHtml::link(
-            ($this->isBlockIcon($event['model']) . $this->isRepeatIcon($event['model']) . $event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
+            ($this->unconfirmIcon($event['model']) . $this->isBlockIcon($event['model']) . $this->isRepeatIcon($event['model']) . $event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
             array('calendar/event',
                 'start' => $event['start']->format(Help::DATETIME),
                 'end' => $event['end']->format(Help::DATETIME),

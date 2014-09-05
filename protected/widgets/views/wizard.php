@@ -153,6 +153,7 @@ if($this->wizardStep){
                             data: {
                                 duration: userData.time,
                                 id: userData.user_id,
+                                schedule_id: userData.schedule_id,
                                 date: dateVal
                             },
                             error: function () {

@@ -9,7 +9,7 @@
                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tbody><tr>
                                     <td align="center" valign="top">
-                                        <h2 style="color: #00acec !important"><?=Yii::t('mailer','Вы создали termin')?></h2>
+                                        <h2 style="color: #00acec !important"><?=Yii::t('mailer','Запрос на подтверждение termin')?></h2>
                                     </td>
                                 </tr>
                                 <tr>
@@ -74,7 +74,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" bgcolor="#00acec" valign="middle">
-                                        <h3 style="display: inline-block; margin: 10px 0;"><a href="http://www.<?=Yii::app()->params['host']?>/wizard/edit/id/<?=$request->id?>/hash/<?=$request->getHash()?>/" style="color: #ffffff !important"><?=Yii::t('mailer','Изменить назначние')?></a></h3>
+                                        <h3 style="display: inline-block; margin: 10px 0;"><a href="http://www.<?=Yii::app()->params['host']?>/wizard/confirm/id/<?=$request->id?>/hash/<?=$request->getLightHash()?>/" style="color: #ffffff !important"><?=Yii::t('mailer','Подтвердить назначние')?></a></h3>
                                     </td>
                                 </tr>
                                 <tr>
@@ -84,7 +84,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" bgcolor="#F00000" valign="middle">
-                                        <h3 style="display: inline-block; margin: 10px 0;"><a href="http://www.<?=Yii::app()->params['host']?>/wizard/edit/id/<?=$request->id?>/hash/<?=$request->getHash()?>/delete/1" style="color: #ffffff !important"><?=Yii::t('mailer','Отменить назначние')?></a></h3>
+                                        <h3 style="display: inline-block; margin: 10px 0;"><a href="http://www.<?=Yii::app()->params['host']?>/wizard/confirm/id/<?=$request->id?>/hash/<?=$request->getLightHash()?>/delete/1" style="color: #ffffff !important"><?=Yii::t('mailer','Отменить назначние')?></a></h3>
                                     </td>
                                 </tr>
                                 </tbody></table>

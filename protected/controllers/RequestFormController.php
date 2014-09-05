@@ -85,18 +85,6 @@ class RequestFormController extends BaseController
         $this->render('index',array('questions'=>$questions,'fields'=>$fields,'param'=>$param));
     }
 
-    public function actionDisableConfirm($id,$hash){
-        $request = Request::model()->findByPk($id);
-        if(is_null($request)){
-            throw new CHttpException(404, Yii::t('main', 'Событие не найдено'));
-        }
-        else if($request->getLightHash()!=$hash){
-            //throw new CHttpException(403, Yii::t('main', 'Неверный хеш'));
-        }
-        $request->is_confirm = 1;
-        $request->save();
-        $this->redirect(Yii::app()->createUrl('site/panel',array('status'=>'1')));
-    }
     /**
      * Проверяет доступен ли новый вопрос для данной лицензии
      * @param $count - новое кол-во вопрсов

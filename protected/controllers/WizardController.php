@@ -45,7 +45,7 @@ class WizardController extends BaseController
             if( !is_null($request=Request::create(array('user_id'=>$emplyeeId,'start_time'=>$startTime,'end_time'=>$endTime->format(Help::DATETIME),'is_confirm'=>$confirm))) ){
                 RequestQuestion::createByPost($_POST['answer'],$request->id);
                 RequestField::createByPost($_POST['field'],$request->id);
-                $request->sendNotification();
+                $request->sendNotification($license['license']->event_confirm == 1);
                 $this->redirect(Yii::app()->createUrl('site/panel',array('status'=>'1')));
             } //TODO: echo error
         }
@@ -99,7 +99,6 @@ class WizardController extends BaseController
         if($delete==1){
             $request->delete();
             $this->render('delete');
-
         }
         else{
             //т.к. у нас на входе только id реквеста и его хеш определим компанию по полю user_id
@@ -127,7 +126,7 @@ class WizardController extends BaseController
             $answers = RequestQuestion::model()->getAnswerByPost($_POST['answer']);
             $schedule2answer = Shedule2Answer::getScheduleByAnswer(Help::decorate($answers,'id'),$companyId);
             $time = Answer::model()->getTime($answers);
-            $result=array('time'=>$time,'shedule_id'=>json_encode($schedule2answer),'user_id'=>json_encode(User2Answer::model()->getNeedUser(Help::decorate($answers,'id'),$companyId)));
+            $result=array('time'=>$time,'schedule_id'=>json_encode($schedule2answer),'user_id'=>json_encode(User2Answer::model()->getNeedUser(Help::decorate($answers,'id'),$companyId)));
             echo json_encode($result);
             Yii::app()->end();
         }
@@ -136,6 +135,34 @@ class WizardController extends BaseController
     public function actionTest(){
         $req = Request::model()->findByPk(292);
         $this->render('/mailer/notification', array('request' => $req));
+    }
+
+    public function actionConfirm($id, $hash, $delete = 0, $external = 1){
+        $request = Request::model()->findByPk($id);
+        if(is_null($request)){
+            throw new CHttpException(404, Yii::t('main', 'Событие не найдено'));
+        }
+        else if($request->getLightHash()!=$hash){
+            throw new CHttpException(403, Yii::t('main', 'Неверный хеш'));
+        }
+        if($request->is_confirm == 1){
+            throw new CHttpException(403, Yii::t('main', 'Событие уже подтверждено'));
+        }
+        $mail = $request->getEmailField();
+        if ($delete) {
+            $request->delete();
+            Help::sendMail($mail, 'Уведомление о удалении termin', 'unconfirmed', $request);
+        } else {
+            $request->is_confirm = 1;
+            $request->save(false);
+            Help::sendMail($mail, 'Уведомление о создании termin', 'notification', $request);
+        }
+        if($external){
+            $this->redirect(Yii::app()->createUrl('site/panel',array('status'=>'2')));
+        } else {
+            $this->redirect('/calendar/index/id/'.$request->user_id);
+        }
+
     }
 
 }

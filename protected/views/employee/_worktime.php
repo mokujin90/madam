@@ -3,9 +3,11 @@
  * @var $model User
  */
     $scheduleArray = $model->getScheduleByDay();
-    $sheduleId = User::model()->getSheduleId($scheduleArray);
-    $shedule2answer = Shedule2Answer::getByShedule($sheduleId);
-    $tree = Shedule2Answer::getTreeView($shedule2answer);
+    if(!$model->isNewRecord){
+        $sheduleId = User::model()->getSheduleId($scheduleArray);
+        $shedule2answer = Shedule2Answer::getByShedule($sheduleId);
+        $tree = Shedule2Answer::getTreeView($shedule2answer);
+    }
 ?>
 <div class="col-xs-12 col-lg-8">
     <?
@@ -99,16 +101,16 @@
                                                 <label class="col-xs-4 control-label">Ответы, одобрены для графика</label>
                                                 <div class="col-xs-8">
                                                     <div class="radio">
-                                                        <?php echo CHtml::radioButton("schedule[$i][$scheduleUniqId][all_answers]",$scheduleRow['all_answers']==1?true:false,array('value'=>1,'class'=>'option_all_answer user-type-answer'))?>
+                                                        <?php echo CHtml::radioButton("schedule[$i][$scheduleUniqId][all_answers]",$model->isNewRecord || $scheduleRow['all_answers']==1?true:false,array('value'=>1,'class'=>'option_all_answer user-type-answer'))?>
                                                         <?php echo CHtml::label(Yii::t('main','Все ответы'),'option_all_answer');?>
                                                     </div>
                                                     <div class="radio">
-                                                        <?php echo CHtml::radioButton("schedule[$i][$scheduleUniqId][all_answers]",$scheduleRow['all_answers']!=1?true:false,array('value'=>0,'class'=>'option_all_answer user-type-answer'))?>
+                                                        <?php echo CHtml::radioButton("schedule[$i][$scheduleUniqId][all_answers]",isset($scheduleRow['all_answers']) && $scheduleRow['all_answers']!=1?true:false,array('value'=>0,'class'=>'option_all_answer user-type-answer'))?>
                                                         <?php echo CHtml::label(Yii::t('main','Определенные ответы'),'optionsRadios2');?>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="user-answer" style="<?if($scheduleRow['all_answers']==1):?>display: none;<?endif?>">
+                                            <div class="user-answer" style="<?if($model->isNewRecord || $scheduleRow['all_answers']==1):?>display: none;<?endif?>">
                                                 <?foreach($question as $item):?>
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label"><?=$item->text?></label>
@@ -116,7 +118,7 @@
                                                         <?foreach($item['answers'] as $answer):?>
                                                         <div class="checkbox">
                                                             <label>
-                                                                <?=CHtml::checkBox("schedule[$i][$scheduleUniqId][schedule2answer][$answer->id]",isset($tree[$answer->id][$scheduleRow['id']])?true:false)?><?=$answer->text?>
+                                                                <?=CHtml::checkBox("schedule[$i][$scheduleUniqId][schedule2answer][$answer->id]",$model->isNewRecord || isset($tree[$answer->id][$scheduleRow['id']])?true:false)?><?=$answer->text?>
                                                             </label>
                                                         </div>
                                                         <?endforeach?>

@@ -210,7 +210,7 @@ class Request extends CActiveRecord
     }
 
     public function getLightHash(){
-        return md5($this->id);
+        return md5('termin_' . $this->id);
     }
 
     public function clearQuestionAndField(){
@@ -301,41 +301,18 @@ class Request extends CActiveRecord
         return $data;
     }
 
-    public function sendNotification(){
-        $mail = $this->getEmailField();
-        if(empty($mail)){
-            return;
+    public function sendNotification($confirm){
+        $companyMail = $this->user->company->mail_notice_address;
+        if($confirm){
+            Help::sendMail($this->getEmailField(), 'termin подтверждается', 'processed', $this);
+            Help::sendMail($companyMail, 'Уведомление о создании termin с подтверждением', 'companyConfirmation', $this);
+        } else {
+            Help::sendMail($this->getEmailField(), 'Уведомление о создании termin', 'notification', $this);
+            Help::sendMail($companyMail, 'Уведомление о создании termin', 'companyNotification', $this);
         }
-        $mailer =& Yii::app()->mailer;
-        $mailer->CharSet = 'windows-1251';
-        $mailer->From = Yii::app()->params['fromEmail'];
-        $mailer->From = "test@termin.wconsults.ru";
-        $mailer->FromName = Yii::app()->params['fromName'];
-        $mailer->IsSMTP();                                      // set mailer to use SMTP
-
-        $mailer->Host = "termin.wconsults.ru";  // specify main and backup server
-        $mailer->SMTPAuth = true;     // turn on SMTP authentication
-        $mailer->Username = "test@termin.wconsults.ru";  // SMTP username
-        $mailer->Password = "test"; // SMTP passwordtest@termin.wconsults.ru
-
-        $mailer->ClearAddresses();
-        $mailer->AddAddress($mail);
-        $mailer->AddBCC($mail);
-        $mailer->Subject = iconv("UTF-8", "windows-1251", Yii::t('mailer', 'Уведомление о создании termin'));
-        //$mailer->Body = iconv("UTF-8", "windows-1251", Yii::app()->controller->renderPartial('/mailer/notification', array('request' => $this), true));
-        $mailer->Body = iconv("UTF-8", "windows-1251", 'termin');
-        $mailer->IsHTML(true);
-        if(!$mailer->Send())  {
-            echo "Message could not be sent. <p>";
-            echo "Mailer Error: " . $mailer->ErrorInfo;
-            exit;
-        }
-        //echo "Message has been sent";
-        //die;
     }
 
     public function getEmailField(){
-        return "mokujin@inbox.ru";
         if($field = RequestField::model()->with('field')->find(array('condition' => "request_id = $this->id AND field.validator ='mail'"))){
             return $field->value;
         }

@@ -99,7 +99,7 @@
                                     <?if(isset($event['event'])):?>
                                         <div class="event-wrap">
                                         <?=CHtml::link(
-                                            ($this->isRepeatIcon($event['model']) . $event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
+                                            ($this->unconfirmIcon($event['model']) . $this->isRepeatIcon($event['model']) . $event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
                                             array('calendar/event',
                                                 'start' => $event['start']->format(Help::DATETIME),
                                                 'end' => $event['end']->format(Help::DATETIME),

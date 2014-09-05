@@ -10,6 +10,7 @@ $this->layout = 'companyLayout';
 
 <ul class="nav nav-tabs" role="tablist">
     <li class="active"><a href="/#settings" role="tab" data-toggle="tab">Настройки</a></li>
+    <li><a href="/#iframe" role="tab" data-toggle="tab">Integration</a></li>
 </ul>
 <div class="tab-content">
     <div class="tab-pane active" id="settings">
@@ -122,6 +123,22 @@ $this->layout = 'companyLayout';
                 время диапазоны разблокирован для онлайн-бронирования назначения в Интернете, делают для
                 индивидуальному графику одного ( Настройка&gt; вкладка Параметры расписания: Включить для онлайн-бронирования назначения ).
             </span>
+        </div>
+    </div>
+    <div class="tab-pane" id="iframe">
+        <div class="col-xs-12 col-lg-6">
+            <div class="form-group">
+                <?php echo CHtml::label('iframe','',array('class'=>"col-xs-12 col-sm-4 control-label")); ?>
+                <div class="col-xs-10 col-sm-8">
+                    <textarea class='form-control'><iframe src="http://www.<?=Yii::app()->params['host']?>/wizard/index/id/<?=$model->id?>" width="100%" height="650" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0"><p>Your browser does not support iframes. The online appointment booking navigation use over the following link:<a href="http://www.<?=Yii::app()->params['host']?>/wizard/index/id/<?=$model->id?>">termin booking</a></p></iframe></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <?php echo CHtml::label('link','',array('class'=>"col-xs-12 col-sm-4 control-label")); ?>
+                <div class="col-xs-10 col-sm-8">
+                    <input class='form-control' value='<a href="http://www.<?=Yii::app()->params['host']?>/wizard/index/id/<?=$model->id?>">termin booking</a>'>
+                </div>
+            </div>
         </div>
     </div>
 </div>
