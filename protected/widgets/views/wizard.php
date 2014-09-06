@@ -1,8 +1,9 @@
-<?
+    <?
 /**
  * @var $this WizardWidget
  * @var $field CompanyField[]
  * @var $question Question[]
+ * @var $request Request
  */
 Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
 
@@ -195,3 +196,4 @@ if($this->wizardStep){
             })
         })
     </script>
+   

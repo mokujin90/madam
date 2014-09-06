@@ -99,6 +99,16 @@ class CalendarController extends BaseController
         $this->render($view,array('model'=>$model,'question'=>$question,'field'=>$field,'date'=>$model->getDiscreteDate()));
     }
 
+    public function actionNotice($id,$user_id){
+        $this->blockJquery();
+        $user = User::model()->findByPk($user_id);
+        $model = Request::model()->findByPk($id);
+        if(isset($_POST['save'])){
+            //обработка
+        }
+        $this->render('notice',array('model'=>$model,'user'=>$user));
+
+    }
     public function actionGroupBlockEvent($block)
     {
         $events = Request::model()->findAllByPk($_REQUEST['id']);
