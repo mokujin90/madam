@@ -5,6 +5,10 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'filter'=>$model,
     'afterAjaxUpdate' => 'reinstallDatePicker', // #1()
     'dataProvider'=>$model->search(),
+    'enablePagination'=>true,
+    'summaryText'=>'Displaying {start}-{end} of {count} results.',
+    'template' => "{summary}{items}{pager}",
+    'pager' => array('class' => 'CLinkPager', 'header' => ''),
     'columns'=>array(
         array(
             'name' => 'date',

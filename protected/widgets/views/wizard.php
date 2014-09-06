@@ -61,6 +61,7 @@ if($this->wizardStep){
                     <?endif;?>
                     <?php echo CHtml::hiddenField('jsonResult','',array('id'=>'jsonResult'))?>
                     <div class="step-pane active" id="step1" data-type="question">
+                        <div class="col-xs-12"><?=$company->hello_text?></div> <br/>
                         <div class="form-group">
                             <?$numItems = count($question);
                             $i = 0;?>

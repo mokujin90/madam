@@ -30,14 +30,14 @@ return array(
         'bootstrap'=>array(
             'class'=>'bootstrap.components.Bootstrap',
         ),
-        /*
+
         'image' => array(
             'class' => 'application.extensions.image.CImageComponent',
             // GD or ImageMagick
             'driver' => 'ImageMagick',
             // ImageMagick setup path
             // 'params'=>array('directory'=>'/opt/local/bin'),
-        ),*/
+        ),
         'mailer' => array(
             'class' => 'application.extensions.mailer.EMailer',
         ),

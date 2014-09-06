@@ -10,6 +10,7 @@ class WizardWidget extends CWidget{
      * @var $field CompanyField[]
      */
     public $field;
+    public $company;
 
     /**
      * Ответы на вопросы и поля
@@ -30,7 +31,7 @@ class WizardWidget extends CWidget{
     public $showAgree=false;
     public function run(){
         $this->request = $this->request ? $this->request : new Request(); //wizard fix
-        $this->render($this->skin,array('question'=>$this->question,'field'=>$this->field,'request'=>$this->request,'companyId'=>$this->companyId,'showAgree'=>$this->showAgree));
+        $this->render($this->skin,array('question'=>$this->question,'field'=>$this->field,'request'=>$this->request,'companyId'=>$this->companyId,'showAgree'=>$this->showAgree,'company'=>$this->company));
     }
 
     /**

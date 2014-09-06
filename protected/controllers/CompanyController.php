@@ -29,6 +29,7 @@ class CompanyController extends BaseController
         if (isset($_POST['Company'])) {
             $model->attributes = $_POST['Company'];
             $model->save();
+
         }
 
         $this->render('settings', array('model' => $model));

@@ -1,8 +1,14 @@
 <?php
+/**
+ * @var $model Company
+ */
 $this->layout = 'companyLayout';
+Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript::POS_READY);
 ?>
 <?php $form=$this->beginWidget('CActiveForm', array(
+
     'htmlOptions'=>array(
+        'enctype'=>'multipart/form-data',
         'class'=>'form-horizontal',
         'role'=>"form"
     ),
@@ -98,6 +104,18 @@ $this->layout = 'companyLayout';
                     <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="left" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
                 </div>
             </div>
+            <div class="form-group">
+                <?php echo $form->label($model,'logo',array('class'=>"col-xs-12 col-sm-6 control-label")); ?>
+                <div class="col-xs-10 col-sm-4">
+                    <?php echo $form->fileField($model,'logo') ?>
+                    <?php echo $form->error($model,'logo'); ?>
+                </div>
+                <div class="col-xs-2">
+                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="left" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
+                </div>
+            </div>
+            <?$model->drawLogo()?>
+            <?=CHtml::hiddenField('Company[no_logo]',$model->issetLogo() ? 0 :1,array('id'=>'no-logo'))?>
             <div class="form-group">
                 <?php echo $form->label($model,'select_timetable',array('class'=>"col-xs-12 col-sm-6 control-label")); ?>
                 <div class="col-xs-10 col-sm-4">
