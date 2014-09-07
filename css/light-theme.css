@@ -5373,3 +5373,6 @@ input.has-error {
 .fancybox-form textarea{
     margin-bottom: 10px;
 }
+.wizard-notice-label{
+    line-height: 32px;
+}

@@ -45,7 +45,7 @@ class WizardController extends BaseController
             $endTime = new DateTime($_POST['start_time']);
             $endTime->add(new DateInterval('PT' . ($requestData['time'] == 0 ? 1 : $requestData['time']) . 'M'));
             $confirm = $license['license']->event_confirm == 1 ? 0 : 1;
-            $alarmMin = $_POST['Request']['is_alarm']==1 ? $_POST['Request']['alarm_time'] : -1;
+            $alarmMin = $_POST['Request']['alarm_time'];
             if( !is_null($request=Request::create(array('user_id'=>$emplyeeId,'start_time'=>$startTime,'end_time'=>$endTime->format(Help::DATETIME),'is_confirm'=>$confirm,'comment'=>$_POST['Request']['comment'],'alarm_time'=>$alarmMin))) ){
                 RequestQuestion::createByPost($_POST['answer'],$request->id);
                 RequestField::createByPost($_POST['field'],$request->id);

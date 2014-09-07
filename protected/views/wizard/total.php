@@ -141,21 +141,12 @@
         <?endif;?>
     <?endif;?>
 </div>
-
+<hr>
 <div class="row">
     <div class="form-group">
-        <label class="col-xs-12 col-sm-4 control-label">получить напоминание за X часов</label>
-        <div class="col-xs-10 col-sm-6">
-            <?php echo CHtml::checkBox('Request[is_alarm]',$request>-1 ? true:false,array())?>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="form-group">
-        <label class="col-xs-12 col-sm-4 control-label"></label>
-        <div class="col-xs-10 col-sm-6">
-            <?php echo CHtml::dropDownList('Request[alarm_time]',$request->alarm_time,array('-1'=>'',0=>"По наступлению события",20=>"20 минут",40=>'40 минут'),array('class'=>'form-control'))?>
+        <label class="col-xs-12 col-sm-4 control-label wizard-notice-label">Email напоминание</label>
+        <div class="col-xs-10 col-sm-3">
+            <?php echo CHtml::dropDownList('Request[alarm_time]',$request->alarm_time,array('-1'=>'не получать',1=>"за 1 час",2=>'за 2 часа', 3=>'за 3 часа', 4=>'за 4 часа'),array('class'=>'form-control'))?>
         </div>
     </div>
 </div>
