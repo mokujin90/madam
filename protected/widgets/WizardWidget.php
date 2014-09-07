@@ -30,7 +30,7 @@ class WizardWidget extends CWidget{
      */
     public $showAgree=false;
     public function run(){
-        if(is_null($this->question[0])){
+        if(isset($this->question[0]) && is_null($this->question[0])){
             echo "Извините, но в базе данных вопросы отсуствуют";
             return false;
         }

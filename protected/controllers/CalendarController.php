@@ -60,8 +60,13 @@ class CalendarController extends BaseController
                 $model = $modelCopy;
             }
         }
-        $model->user_id = $user_id;
         $companyId = Yii::app()->user->companyId;
+        if(!$model->checkAccess(array('company_id'=>$companyId,'user_id'=>$user_id)))
+            Yii::app()->end('Доступ запрещен');
+        $model->user_id = $user_id;
+
+
+
         $question = Question::getQuestion($companyId);
         $field = CompanyField::getFieldByCompany($companyId);
         $oldBlockStatus = $model->is_block;
