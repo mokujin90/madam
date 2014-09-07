@@ -188,4 +188,7 @@ class License extends CActiveRecord
         return $this->is_system==1 ? $this->request_text : "Индивидуальная лицензия";
     }
 
+    public function getPrice(){
+        return $this->price.'.00';
+    }
 }

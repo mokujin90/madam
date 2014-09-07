@@ -186,6 +186,7 @@ modal={
         $('button.cancel').click(function(){
             $.fancybox.close();
         });
+
     }
 },
 event={

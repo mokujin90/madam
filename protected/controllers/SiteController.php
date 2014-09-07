@@ -99,5 +99,80 @@ class SiteController extends BaseController
 
         return parent::getBreadcrumbs();
     }
+    public function actionRequestPayment()
+    {
+        $e=new ExpressCheckout;
 
+        $products=array(
+
+            '0'=>array(
+                'NAME'=>'p1',
+                'AMOUNT'=>'250.00',
+                'QTY'=>'2'
+            ),
+            '1'=>array(
+                'NAME'=>'p2',
+                'AMOUNT'=>'300.00',
+                'QTY'=>'2'
+            ),
+            '2'=>array(
+                'NAME'=>'p3',
+                'AMOUNT'=>'350.00',
+                'QTY'=>'2'
+            ),
+
+        );
+        /*Optional */
+        $shipping_address=array(
+
+            'FIRST_NAME'=>'Sirin',
+            'LAST_NAME'=>'K',
+            'EMAIL'=>'sirinibin2006@gmail.com',
+            'MOB'=>'0918606770278',
+            'ADDRESS'=>'mannarkkad',
+            'SHIPTOSTREET'=>'mannarkkad',
+            'SHIPTOCITY'=>'palakkad',
+            'SHIPTOSTATE'=>'kerala',
+            'SHIPTOCOUNTRYCODE'=>'IN',
+            'SHIPTOZIP'=>'678761'
+        );
+
+        $e->setShippingInfo($shipping_address); // set Shipping info Optional
+
+        $e->setCurrencyCode("EUR");//set Currency (USD,HKD,GBP,EUR,JPY,CAD,AUD)
+
+        $e->setProducts($products); /* Set array of products*/
+
+        $e->setShippingCost(5.5);/* Set Shipping cost(Optional) */
+
+
+        $e->returnURL=Yii::app()->createAbsoluteUrl("site/PaypalReturn");
+
+        $e->cancelURL=Yii::app()->createAbsoluteUrl("site/PaypalCancel");
+
+        $result=$e->requestPayment();
+
+        /*
+          The response format from paypal for a payment request
+        Array
+    (
+        [TOKEN] => EC-9G810112EL503081W
+        [TIMESTAMP] => 2013-12-12T10:29:35Z
+        [CORRELATIONID] => 67da94aea08c3
+        [ACK] => Success
+        [VERSION] => 65.1
+        [BUILD] => 8725992
+    )
+            */
+
+
+        if(strtoupper($result["ACK"])=="SUCCESS")
+        {
+            /*redirect to the paypal gateway with the given token */
+            header("location:".$e->PAYPAL_URL.$result["TOKEN"]);
+        }
+
+
+
+    }
 }
