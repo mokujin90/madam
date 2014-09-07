@@ -210,9 +210,45 @@ class Help{
         $mailer->Body = Yii::app()->controller->renderPartial("/mailer/$view", array('request' => $model), true);
         $mailer->IsHTML(true);
         if (!$mailer->Send()) {
-            echo "Message could not be sent. <p>";
+            /*echo "Message could not be sent. <p>";
             echo "Mailer Error: " . $mailer->ErrorInfo;
-            exit;
+            exit;*/
         }
+    }
+    public static function sendSms($to, $message, $model){
+        $url = "http://gateway.smstrade.de"; // URL of gateway
+        $request = ""; // initialize variable request
+        $param["key"] = "snJBDy2dcddb231eJUaMEKu"; // gateway key
+        $param["to"] = $to; // recipient of SMS
+        $param["message"] = $message; // content of message
+        $param["route"] = "gold";// using gold route
+        $param["from"] = "TERMIN";// sender of SMS
+        $param["debug"] = "1";// SMS will not be sent - test modus
+
+        foreach($param as $key=>$val) // run all parameters
+        {
+            $request.= $key."=".urlencode($val); // values need to be url-encoded
+            $request.= "&"; // separate parameters with &
+        }
+
+
+        // SMS can be sent now
+        $response = @file($url."?".$request); // submit request
+
+        $response_code = intval($response[0]); // read response code
+
+        $response_code_arr[0] = "no connection with gateway";
+        $response_code_arr[10] = "wrong recipient";
+        $response_code_arr[20] = "sender ID too long";
+        $response_code_arr[30] = "text message too long";
+        $response_code_arr[31] = "incorrect text message format";
+        $response_code_arr[40] = "wrong SMS type";
+        $response_code_arr[50] = "login error";
+        $response_code_arr[60] = "insufficent balance";
+        $response_code_arr[70] = "network not supported by this route";
+        $response_code_arr[71] = "feature not available through this route";
+        $response_code_arr[80] = "SMS could not be sent";
+        $response_code_arr[90] = "sending SMS not possible";
+        $response_code_arr[100] = "SMS sent successfully.";
     }
 }

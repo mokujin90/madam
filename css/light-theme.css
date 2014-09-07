@@ -5372,4 +5372,14 @@ input.has-error {
 }
 #paypal.buy-button{
     background:url('/images/paypal-button.png') no-repeat;
+    margin: 0 auto 20px;
+}
+.fancybox-form{
+    margin: 16px 0;
+    padding: 0;
+    max-width: 785px;
+    width: 400px;
+}
+.fancybox-form textarea{
+    margin-bottom: 10px;
 }

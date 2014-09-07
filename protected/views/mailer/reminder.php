@@ -68,7 +68,7 @@
                                 <tr>
                                     <td align="center" valign="top">
                                         <p style="margin: 1em 0;">
-                                            Не забывайте про назначенный termin!
+                                            Не забывайте про назначенный termin! Через <?=$request->alarm_time?> <?=Help::getNumEnding($request->alarm_time, array('час', 'часа', 'часов'))?>.
                                         </p>
                                     </td>
                                 </tr>
