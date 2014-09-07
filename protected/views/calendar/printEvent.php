@@ -78,7 +78,7 @@ Yii::app()->clientScript->registerScript('modal', 'modal.init()', CClientScript:
     <?=CHtml::hiddenField('request_id',$model->id,array('id'=>'request_id'))?>
     <button href="<?=$this->createUrl('calendar/event',array('user_id'=>$model->user_id,'id'=>$model->id,'edit'=>1))?>" name="save" value="1" class="edit event btn btn-success" type="button"><i class="icon-cogs"></i> <?=Yii::t('main','Изменить даты')?></button>
     <button name="print" value="1" class="print btn btn-success" type="button"><i class=" icon-print"></i> <?php echo Yii::t('main','Распечатать')?></button>
-    <button href="<?=$this->createUrl('calendar/notice',array('user_id'=>$model->user_id,'id'=>$model->id))?>" name="mail" value="1" class="btn btn-success event" type="button"><i class=" icon-phone-sign"></i> <?php echo Yii::t('main','Отправить сообщение')?></button>
+    <button href="<?=$this->createUrl('calendar/notice',array('user_id'=>$model->user_id,'id'=>$model->id))?>" name="mail" value="1" class="btn btn-success event" type="button"><i class="icon-envelope"></i> <?php echo Yii::t('main','Отправить сообщение')?></button>
     <button class="cancel btn btn-primary" type="button"><?=Yii::t('main','Отменить')?></button>
     <?php $this->endWidget(); ?>
 </div>

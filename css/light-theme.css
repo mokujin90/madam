@@ -5364,3 +5364,12 @@ input.has-error {
     display: block;
     margin: 0 auto 20px;
 }
+.fancybox-form{
+    margin: 16px 0;
+    padding: 0;
+    max-width: 785px;
+    width: 400px;
+}
+.fancybox-form textarea{
+    margin-bottom: 10px;
+}
