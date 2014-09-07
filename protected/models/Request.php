@@ -319,4 +319,11 @@ class Request extends CActiveRecord
         }
         return null;
     }
+
+    public function getPhoneField(){
+        if($field = RequestField::model()->with('field')->find(array('condition' => "request_id = $this->id AND field.validator ='phone'"))){
+            return $field->value;
+        }
+        return null;
+    }
 }

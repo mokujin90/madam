@@ -30,3 +30,17 @@
     </div>
 </div>
 <? endif; ?>
+<? if ($status == 3): ?>
+<div class="splash card">
+    <div role="spinner">
+        <div class="spinner-icon"></div>
+    </div>
+
+    <p class="lead" style="text-align:center"><?=Yii::t('main','Ошибка при создании')?></p>
+
+    <div class="progress">
+        <div class="mybar" role="bar">
+        </div>
+    </div>
+</div>
+<? endif; ?>

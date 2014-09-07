@@ -3,7 +3,7 @@
 class WizardController extends BaseController
 {
     const STATUS_WIZARD_OK=1;
-    const STATUS_WIZARD_ERROR=2;
+    const STATUS_WIZARD_ERROR=3;
     public $layout='simple';
     public $wizardStep;
 
