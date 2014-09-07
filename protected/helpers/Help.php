@@ -187,7 +187,7 @@ class Help{
 
     public static function sendMail($to, $theme, $view, $model){
         if(empty($to)){
-            return;
+            return false;
         }
         $mailer =& Yii::app()->mailer;
         $mailer->CharSet = 'UTF-8';
@@ -210,12 +210,17 @@ class Help{
         $mailer->Body = Yii::app()->controller->renderPartial("/mailer/$view", array('request' => $model), true);
         $mailer->IsHTML(true);
         if (!$mailer->Send()) {
+            return false;
             /*echo "Message could not be sent. <p>";
             echo "Mailer Error: " . $mailer->ErrorInfo;
             exit;*/
         }
+        return true;
     }
     public static function sendSms($to, $message, $model){
+        if(empty($to)){
+            return false;
+        }
         $url = "http://gateway.smstrade.de"; // URL of gateway
         $request = ""; // initialize variable request
         $param["key"] = "snJBDy2dcddb231eJUaMEKu"; // gateway key
@@ -236,7 +241,8 @@ class Help{
         $response = @file($url."?".$request); // submit request
 
         $response_code = intval($response[0]); // read response code
-
+        return $response_code == 100;
+        /*
         $response_code_arr[0] = "no connection with gateway";
         $response_code_arr[10] = "wrong recipient";
         $response_code_arr[20] = "sender ID too long";
@@ -249,6 +255,6 @@ class Help{
         $response_code_arr[71] = "feature not available through this route";
         $response_code_arr[80] = "SMS could not be sent";
         $response_code_arr[90] = "sending SMS not possible";
-        $response_code_arr[100] = "SMS sent successfully.";
+        $response_code_arr[100] = "SMS sent successfully.";*/
     }
 }

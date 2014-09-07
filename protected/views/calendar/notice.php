@@ -17,17 +17,17 @@
 </ul>
 <div class="tab-content">
     <div class="tab-pane active" id="mail">
-        <?php echo CHtml::textArea('Notice[mail][text]','', array('rows' => 10, 'class' => 'col-xs-12 form-control'))?>
+        <?php echo CHtml::textArea('mail_text','', array('rows' => 10, 'class' => 'col-xs-12 form-control'))?>
         <div>
-            <button name="save" value="1" class="save btn btn-success" type="submit"><i class="icon-envelope"></i> <?php echo Yii::t('main','Отправить')?></button>
+            <button name="save" value="mail" class="save btn btn-success" type="submit"><i class="icon-envelope"></i> <?php echo Yii::t('main','Отправить')?></button>
             <button href="<?=$this->createUrl('calendar/event',array('user_id'=>$model->user_id,'id'=>$model->id))?>"  class="btn btn-primary event" type="button"><?php echo Yii::t('main','Отменить')?></button>
         </div>
 
     </div>
     <div class="tab-pane" id="sms">
-        <?php echo CHtml::textArea('Notice[sms][text]','', array('rows' => 10, 'class' => 'col-xs-12 form-control'))?>
+        <?php echo CHtml::textArea('sms_text','', array('rows' => 10, 'class' => 'col-xs-12 form-control'))?>
         <div>
-            <button name="save" value="1" class="save btn btn-success" type="submit"><i class="icon-envelope"></i> <?php echo Yii::t('main','Отправить')?></button>
+            <button name="save" value="sms" class="save btn btn-success" type="submit"><i class="icon-envelope"></i> <?php echo Yii::t('main','Отправить')?></button>
             <button href="<?=$this->createUrl('calendar/event',array('user_id'=>$model->user_id,'id'=>$model->id))?>"  class="btn btn-primary event" type="button"><?php echo Yii::t('main','Отменить')?></button>
         </div>
     </div>
