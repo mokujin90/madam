@@ -103,8 +103,20 @@ class CalendarController extends BaseController
         $this->blockJquery();
         $user = User::model()->findByPk($user_id);
         $model = Request::model()->findByPk($id);
-        if(isset($_POST['save'])){
-            //обработка
+        if (isset($_POST['save'])) {
+
+            $return = array('message' => 'Ошибка отправки');
+            if ($_POST['save'] == "mail" && !empty($_POST['mail_text'])) {
+                if (Help::sendMail($model->getEmailField(), 'Termin Mail', $_POST['mail_text'], $model)) {
+                    $return = array('message' => 'Письмо отправлено');
+                }
+            } elseif ($_POST['save'] == "sms" && !empty($_POST['sms_text'])) {
+                if (Help::sendSms($model->getPhoneField(), $_POST['sms_text'], $model)) {
+                    $return = array('message' => 'SMS отправлено');
+                }
+            }
+            echo json_encode($return);
+            return;
         }
         $this->render('notice',array('model'=>$model,'user'=>$user));
 

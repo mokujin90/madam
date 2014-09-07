@@ -186,19 +186,7 @@ modal={
         $('button.cancel').click(function(){
             $.fancybox.close();
         });
-        $(document).on('click.calendar','.send-notice',function(){
-            var $form = $('#notice-form'),
-                user_id = $form.find('input[name="user_id"]').val(),
-                id =  $form.find('input[name="request_id"]').val();
-            $.post( "/site/notice/user_id/"+user_id+"/id/"+id, $form.serialize(), function( data ) {
-                $.fancybox.close();
-                var data = JSON.parse(data);
-                if( typeof data.message != "undefined" ){
-                    $.jGrowl(data.message);
-                }
-            });
-            return false;
-        });
+
     }
 },
 event={
