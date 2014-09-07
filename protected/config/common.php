@@ -68,9 +68,9 @@ return array(
         'fromEmail' => 'robot@example.com',
         'fromName' => 'Termin',
 
-        'PAYPAL_API_USERNAME'=>'username here',
-        'PAYPAL_API_PASSWORD'=>'API password here',
-        'PAYPAL_API_SIGNATURE'=>'API signature here',
+        'PAYPAL_API_USERNAME'=>'multik_api1.nxt.ru',
+        'PAYPAL_API_PASSWORD'=>'QS8V2APJLXQ5KT2R',
+        'PAYPAL_API_SIGNATURE'=>'A78A4fsFXicJRsDsyZvdKFFiCjcJA5kyvDfy9YtcklE0L.sW7qsg20sG',
         'PAYPAL_MODE'=>'sandbox'   // sandbox/live  default=sandbox
 
 

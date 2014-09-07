@@ -105,6 +105,26 @@ class CompanyField extends CActiveRecord
 		));
 	}
 
+    /**
+     * Конструктор основных полей, которые будут создаваться после регистрации новой компании
+     * @param $companyId
+     */
+    public static function firstField($companyId){
+        $fields = array(
+            array('name'=>'Email','type'=>'required','validator'=>'mail'),
+            array('name'=>'Phone','type'=>'required','validator'=>'phone'),
+            array('name'=>'Company','type'=>'enabled','validator'=>'firm','is_userfield'=>1),
+            array('name'=>'Name','type'=>'enabled','validator'=>'name','is_userfield'=>1),
+            array('name'=>'Last Name','type'=>'enabled','validator'=>'lastname','is_userfield'=>1),
+        );
+        foreach($fields as $item){
+            $field = new CompanyField();
+            $field->attributes = $item;
+            $field->company_id = $companyId;
+            $field->is_userfield = isset($item['is_userfield']) ? $item['is_userfield'] : 0;
+            $field->save();
+        }
+    }
     public function scopes()
     {
         return array(
@@ -124,6 +144,9 @@ class CompanyField extends CActiveRecord
 		return parent::model($className);
 	}
 
+    public function getHTML5Type(){
+
+    }
     public static function getFieldByCompany($id, $withDisabled = false){
         return CompanyField::model()->findAllByAttributes(array('company_id'=>$id),array('order'=>'position,is_userfield','index'=>'id','condition'=> ($withDisabled ? '' : 'type!="disabled"')));
     }
