@@ -50,34 +50,14 @@
                     <div class="col-sm-12">
                         <div class="page-header">
                             <?if($company->issetLogo()):?>
-                                <div class="wizard-logo">
+                                <div class="pull-right wizard-logo">
                                     <?=CHtml::image('/'.$company->getLogoPath())?>
                                 </div>
                             <?endif;?>
-                            <h1 class="pull-left">
+                            <h1 class="pull-left<?= $company->issetLogo() ? ' with-logo' : ''?>">
                                 <i class="icon-magic"></i>
                                 <span><?=$company->name?></span>
                             </h1>
-
-                            <div class="pull-right">
-                                <!--ul class="breadcrumb">
-                                    <li>
-                                        <a href="index.html">
-                                            <i class="icon-bar-chart"></i>
-                                        </a>
-                                    </li>
-                                    <li class="separator">
-                                        <i class="icon-angle-right"></i>
-                                    </li>
-                                    <li>
-                                        Forms
-                                    </li>
-                                    <li class="separator">
-                                        <i class="icon-angle-right"></i>
-                                    </li>
-                                    <li class="active">Wizard</li>
-                                </ul-->
-                            </div>
                         </div>
                     </div>
                 </div>

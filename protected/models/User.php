@@ -149,7 +149,7 @@ class User extends CActiveRecord
         //Заполняет стандартные значения в расписание нового сотрудника (пн-пт с 8 - 17)
         $this->scheduleUpdate = array();
         for ($day = 0; $day < 5; $day++) {
-            $this->scheduleUpdate[$day][] = array('startHour' => 8, 'startMin' => 0, 'endHour' => 17, 'endMin' => 0, 'enable' => true);
+            $this->scheduleUpdate[$day][] = array('startHour' => 8, 'startMin' => 0, 'endHour' => 17, 'endMin' => 0, 'enable' => true, 'all_answers' => 1);
         }
     }
 
