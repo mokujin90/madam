@@ -38,7 +38,7 @@
     <div class="form-group">
         <?= $form->labelEx($model,'group_size', array('class' => "col-xs-12 col-sm-4 control-label")); ?>
         <div class="col-xs-10 col-sm-7">
-            <?= $form->numberField($model, 'group_size', array('class' => "form-control", 'min' => 1)); ?>
+            <?= $form->numberField($model, 'group_size', array('class' => "form-control", 'min' => 1,'max'=>20)); ?>
             <?= $form->error($model,'group_size'); ?>
         </div>
         <div class="col-xs-2 col-sm-1">
