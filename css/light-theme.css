@@ -5362,5 +5362,14 @@ input.has-error {
 .wizard-logo img{
     width: 130px;
     display: block;
-    margin: 0 auto 20px;
+    max-height: 200px;
+}
+
+.buy-button{
+    width: 145px;
+    height: 35px;
+    border: 0;
+}
+#paypal.buy-button{
+    background:url('/images/paypal-button.png') no-repeat;
 }

@@ -196,4 +196,3 @@ if($this->wizardStep){
             })
         })
     </script>
-   

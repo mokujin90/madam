@@ -104,7 +104,7 @@ class WizardController extends BaseController
             throw new CHttpException(404, Yii::t('main', 'Событие не найдено'));
         }
         else if($request->getHash()!=$hash){
-            //throw new CHttpException(403, Yii::t('main', 'Неверный хеш'));
+            throw new CHttpException(403, Yii::t('main', 'Неверный хеш'));
         }
         if($delete==1){
             $request->delete();

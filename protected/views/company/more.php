@@ -67,9 +67,9 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
                 <?if($license->id==$oldLicense->license_id && $oldLicense['license']->getLicenseType()!=0):?>
                     <a class="buy-action btn disabled" href="#"><i class="icon-ok"></i> Действует</a>
                 <?elseif($license->id<$oldLicense->license_id && $oldLicense['license']->getLicenseType()!=0):?>
-                    <a class="buy-action btn btn-inverse disabled" href="#"><i class="icon-lock"></i> Купить</a>
+                    <a class="buy-action btn btn-inverse disabled" href="#"><i class="icon-lock"></i> Выбрать</a>
                 <?else:?>
-                    <a class="buy-action btn btn-inverse" href="<?=$this->createUrl('company/more',array('type'=>$count))?>"><i class="icon-money"></i> Купить</a>
+                    <a class="buy-action btn btn-inverse" href="<?=$this->createUrl('company/more',array('type'=>$count))?>"><i class="icon-money"></i> Выбрать</a>
                 <?endif;?>
             </div>
         </div>
@@ -100,7 +100,7 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
             <?if($oldLicense['license']->getLicenseType()==0):?>
                 <a class="buy-action btn disabled" href="#"><i class="icon-ok"></i> Действует</a>
             <?else:?>
-                <a id="manual-edit" class="buy-action btn btn-inverse" href="#"><i class="icon-money"></i> Купить</a>
+                <a id="manual-edit" class="buy-action btn btn-inverse" href="#"><i class="icon-money"></i> Выбрать</a>
             <?endif;?>
 
         </div>
@@ -123,7 +123,7 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
                     </li>
                 </ul>
                 <?if($enableEmployee):?>
-                    <a id="manual-edit" class="buy-action btn btn-inverse" href="<?=$this->createUrl('company/more',array('type'=>'employee'))?>"><i class="icon-money"></i> Купить</a>
+                    <a id="manual-edit" class="buy-action btn btn-inverse" href="<?=$this->createUrl('company/more',array('type'=>'employee'))?>"><i class="icon-money"></i> Выбрать</a>
                 <?else:?>
                     <a class="buy-action btn btn-inverse disabled" href="#"><i class="icon-lock"></i> Не доступно</a>
                 <?endif;?>
@@ -147,7 +147,7 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
                     </li>
                 </ul>
                 <?if($enableSms):?>
-                    <a id="manual-edit" class="buy-action btn btn-inverse" href="<?=$this->createUrl('company/more',array('type'=>'sms'))?>"><i class="icon-money"></i> Купить</a>
+                    <a id="manual-edit" class="buy-action btn btn-inverse" href="<?=$this->createUrl('company/more',array('type'=>'sms'))?>"><i class="icon-money"></i> Выбрать</a>
                 <?else:?>
                     <a class="buy-action btn btn-inverse disabled" href="#"><i class="icon-lock"></i> Не доступно</a>
                 <?endif;?>
@@ -171,3 +171,30 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
     <button type="submit" value="1" name="save" class="btn btn-success">Save</button>
 </div>
 <?php $this->endWidget(); ?>
+
+<?if($oldLicense->is_agree==0)://если не подтверждено?>
+    <h1>
+        <i class="icon-cog"></i>
+        <span><?php echo Yii::t('main','Оплата')?></span>
+    </h1>
+    <?php $form=$this->beginWidget('CActiveForm', array(
+        'action'=>Acquiring::$paypal['url'],
+        'htmlOptions'=>array(
+            'class'=>'form form-horizontal',
+        )
+    )); ?>
+        <?php echo CHtml::hiddenField('cmd','_xclick')?>
+        <?php echo CHtml::hiddenField('hosted_button_id',$oldLicense['license']->id)?>
+        <?php echo CHtml::hiddenField('business',Acquiring::$paypal['mail'])?>
+        <?php echo CHtml::hiddenField('currency_code',Acquiring::$paypal['currency'])?>
+        <?php echo CHtml::hiddenField('item_name',$oldLicense['license']->getName())?>
+        <?php echo CHtml::hiddenField('item_number','1')?>
+        <?php echo CHtml::hiddenField('amount',$oldLicense['license']->getPrice())?>
+        <?php echo CHtml::hiddenField('no_shipping','1')?>
+        <?php echo CHtml::hiddenField('return',Acquiring::$paypal['return'])?>
+
+        <?php echo CHtml::submitButton('',array('id'=>'paypal','class'=>"buy-button"))?>
+    <?php $this->endWidget(); ?>
+
+
+<?endif;?>

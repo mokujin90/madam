@@ -11,11 +11,7 @@
 ?>
 <div id="main-nav-bg"></div>
 <nav id="main-nav" class="company-info">
-    <?if($company->issetLogo()):?>
-        <div class="wizard-logo">
-            <?=CHtml::image('/'.$company->getLogoPath())?>
-        </div>
-    <?endif;?>
+
     <div class="col-xs-12">
         <nav class="navbar navbar-default">
             <div class="navbar-brand"><?=Yii::t('main','Адрес')?></div>
@@ -53,6 +49,11 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="page-header">
+                            <?if($company->issetLogo()):?>
+                                <div class="wizard-logo">
+                                    <?=CHtml::image('/'.$company->getLogoPath())?>
+                                </div>
+                            <?endif;?>
                             <h1 class="pull-left">
                                 <i class="icon-magic"></i>
                                 <span><?=$company->name?></span>

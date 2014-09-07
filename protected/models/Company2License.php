@@ -210,4 +210,6 @@ class Company2License extends CActiveRecord
         $different = Help::dateDiff(Help::currentDate(),$this->date);
         return $day - $different['days_total'];
     }
+
+
 }

@@ -21,6 +21,7 @@ return array(
         'application.widgets.*',
         'zii.widgets.jui.*',
         'zii.widgets.grid.*',
+        'application.extensions.easyPaypal.*'
     ),
 
     // application components
@@ -66,5 +67,12 @@ return array(
         'adminEmail' => $adminEmail,
         'fromEmail' => 'robot@example.com',
         'fromName' => 'Termin',
+
+        'PAYPAL_API_USERNAME'=>'username here',
+        'PAYPAL_API_PASSWORD'=>'API password here',
+        'PAYPAL_API_SIGNATURE'=>'API signature here',
+        'PAYPAL_MODE'=>'sandbox'   // sandbox/live  default=sandbox
+
+
     ),
 );
