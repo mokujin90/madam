@@ -155,7 +155,7 @@
     <div class="form-group">
         <label class="col-xs-12 col-sm-4 control-label"></label>
         <div class="col-xs-10 col-sm-6">
-            <?php echo CHtml::dropDownList('Request[alarm_min]',$request->alarm_min,array('-1'=>'',0=>"По наступлению события",20=>"20 минут",40=>'40 минут'),array('class'=>'form-control'))?>
+            <?php echo CHtml::dropDownList('Request[alarm_time]',$request->alarm_time,array('-1'=>'',0=>"По наступлению события",20=>"20 минут",40=>'40 минут'),array('class'=>'form-control'))?>
         </div>
     </div>
 </div>

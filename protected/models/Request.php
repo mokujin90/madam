@@ -43,7 +43,7 @@ class Request extends CActiveRecord
 		return array(
 			array('user_id, start_time, end_time,is_confirm', 'required'),
 			array('user_id', 'length', 'max'=>10),
-			array('create_date,is_block,comment,status,alarm_min', 'safe'),
+			array('create_date,is_block,comment,status,alarm_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, user_id, create_date, start_time, end_time', 'safe', 'on'=>'search'),
