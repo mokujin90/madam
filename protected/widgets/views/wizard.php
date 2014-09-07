@@ -196,7 +196,3 @@ if($this->wizardStep){
             })
         })
     </script>
-<<<<<<< HEAD
-=======
-   
->>>>>>> 6958c9d9254b039b5374fd24a07e027c48d2012f

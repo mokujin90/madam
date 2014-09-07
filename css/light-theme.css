@@ -5360,9 +5360,11 @@ input.has-error {
     cursor: pointer;
 }
 .wizard-logo img{
-    width: 130px;
     display: block;
-    max-height: 200px;
+    max-height: 68px;
+}
+.wizard-logo.pull-right{
+    margin-top: 8px;
 }
 
 .buy-button{
