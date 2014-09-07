@@ -45,7 +45,8 @@ class WizardController extends BaseController
             $endTime = new DateTime($_POST['start_time']);
             $endTime->add(new DateInterval('PT' . ($requestData['time'] == 0 ? 1 : $requestData['time']) . 'M'));
             $confirm = $license['license']->event_confirm == 1 ? 0 : 1;
-            if( !is_null($request=Request::create(array('user_id'=>$emplyeeId,'start_time'=>$startTime,'end_time'=>$endTime->format(Help::DATETIME),'is_confirm'=>$confirm,'comment'=>$_POST['Request']['comment']))) ){
+            $alarmMin = $_POST['Request']['is_alarm']==1 ? $_POST['Request']['alarm_min'] : -1;
+            if( !is_null($request=Request::create(array('user_id'=>$emplyeeId,'start_time'=>$startTime,'end_time'=>$endTime->format(Help::DATETIME),'is_confirm'=>$confirm,'comment'=>$_POST['Request']['comment'],'alarm_min'=>$alarmMin))) ){
                 RequestQuestion::createByPost($_POST['answer'],$request->id);
                 RequestField::createByPost($_POST['field'],$request->id);
                 $request->sendNotification($license['license']->event_confirm == 1);
@@ -70,11 +71,11 @@ class WizardController extends BaseController
 
         $request = !is_null($fakePost) ? $fakePost : $_POST;
 
+        $model = isset($request['requestId']) ? Request::model()->findByPk($request['requestId']) : new Request();
         //if(Yii::app()->request->isAjaxRequest && isset($request['companyId'])){
             Help::recommend($request['answer']);
             /*время*/
             $date = $_POST['start_time'];
-
             $user = User::model()->findByPk($_POST['employee_id']);
             $requestData = json_decode($_POST['jsonResult'],true);
             $delay = $requestData['time'];
@@ -91,7 +92,7 @@ class WizardController extends BaseController
             /*юридическая информация*/
             $info = Distance::getDistance($request['companyId']);
 
-            $this->renderPartial('total',array('date'=>$date,'company'=>$company,'questions'=>$questions,'answers'=>$answers,'fieldText'=>$fieldText,'fields'=>$fields,'info'=>$info,'user'=>$user,'delay'=>$delay));
+            $this->renderPartial('total',array('request'=>$model,'date'=>$date,'company'=>$company,'questions'=>$questions,'answers'=>$answers,'fieldText'=>$fieldText,'fields'=>$fields,'info'=>$info,'user'=>$user,'delay'=>$delay));
 
     }
     public function actionIframe(){
@@ -103,7 +104,7 @@ class WizardController extends BaseController
             throw new CHttpException(404, Yii::t('main', 'Событие не найдено'));
         }
         else if($request->getHash()!=$hash){
-            throw new CHttpException(403, Yii::t('main', 'Неверный хеш'));
+            //throw new CHttpException(403, Yii::t('main', 'Неверный хеш'));
         }
         if($delete==1){
             $request->delete();

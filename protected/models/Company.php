@@ -34,7 +34,9 @@
  */
 class Company extends CActiveRecord
 {
-
+    public $logo=0;
+    public $no_logo=0;
+    static $PATH_LOGO='data/logo/';
     static $bookingDeadline = array(
         '1' => '1 час',
         '2' => '2 часa',
@@ -76,8 +78,9 @@ class Company extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
+            array('logo', 'file','allowEmpty'=>true, 'types' => 'png,jpg,gif'),
             array('country_id', 'required'),
-            array('country_id, booking_deadline, booking_interval, enable_mail_notice, enable_sms_notice, select_timetable', 'numerical', 'integerOnly' => true),
+            array('country_id, booking_deadline, booking_interval, enable_mail_notice, enable_sms_notice, select_timetable,no_logo', 'numerical', 'integerOnly' => true),
             array('name, address, city, site, url, mail_notice_address', 'length', 'max' => 255),
             array('phone, mobile_phone, fax, sms_notice_phone', 'length', 'max' => 20),
             array('email', 'length', 'max' => 100),
@@ -174,6 +177,8 @@ class Company extends CActiveRecord
             'criteria' => $criteria,
         ));
     }
+
+
     protected function afterSave()
     {
         parent::afterSave();
@@ -198,11 +203,39 @@ class Company extends CActiveRecord
             $field->validator = 'numerical';
             $field->save();
         }
+        if($this->no_logo==1){
+            if(file_exists($this->getLogoPath())){
+                unlink($this->getLogoPath());
+            }
+        }
 
+        $this->logo=CUploadedFile::getInstance($this,'logo');
+        if(!is_null($this->logo)){
+            if(!file_exists(self::$PATH_LOGO)){
+                mkdir(self::$PATH_LOGO);
+            }
+            $this->logo->saveAs($this->getLogoPath());
+            /*$imageMagic = Yii::app()->image->load( $this->logo->tempName);
+            $imageMagic->save(self::$PATH_LOGO.$this->id.".png");*/
+        }//попробуем удалить лого
 
 
     }
+    public function getLogoPath(){
+        return self::$PATH_LOGO.$this->id.'.png';
+    }
+    public function drawLogo(){
+        $result = '';
+        if(file_exists($this->getLogoPath())){
+            $result = '<div class="form-group logo-upload">'.CHtml::image('/'.$this->getLogoPath()).
+           "<div id='erase-image'>X</div></div>";
+        }
+        echo $result;
+    }
 
+    public function issetLogo(){
+       return file_exists($this->getLogoPath());
+    }
     public static function isBlock()
     {
         $company = Company::model()->findByPk(Yii::app()->user->companyId);

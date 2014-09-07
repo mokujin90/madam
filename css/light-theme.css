@@ -5345,3 +5345,22 @@ input.has-error {
 #step2 table{
     font-size: 14px;
 }
+
+.form-group.logo-upload img{
+    width: 300px;
+    display: block;
+    margin: 0 auto;
+
+}
+.form-group.logo-upload{position: relative;}
+.form-group.logo-upload #erase-image{
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+}
+.wizard-logo img{
+    width: 130px;
+    display: block;
+    margin: 0 auto 20px;
+}

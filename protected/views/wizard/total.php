@@ -7,6 +7,7 @@
  * @var $fieldText array
  * @var $fields CompanyField[]
  * @var $info Distance
+ * @var $request Request
  *
  */
 ?>
@@ -141,4 +142,20 @@
     <?endif;?>
 </div>
 
+<div class="row">
+    <div class="form-group">
+        <label class="col-xs-12 col-sm-4 control-label">получить напоминание за X часов</label>
+        <div class="col-xs-10 col-sm-6">
+            <?php echo CHtml::checkBox('Request[is_alarm]',$request>-1 ? true:false,array())?>
+        </div>
+    </div>
+</div>
 
+<div class="row">
+    <div class="form-group">
+        <label class="col-xs-12 col-sm-4 control-label"></label>
+        <div class="col-xs-10 col-sm-6">
+            <?php echo CHtml::dropDownList('Request[alarm_min]',$request->alarm_min,array('-1'=>'',0=>"По наступлению события",20=>"20 минут",40=>'40 минут'),array('class'=>'form-control'))?>
+        </div>
+    </div>
+</div>

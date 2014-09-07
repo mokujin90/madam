@@ -6,10 +6,16 @@
     Yii::app()->clientScript->registerScript('init', 'wizard.init()', CClientScript::POS_READY);
 /**
  * @var $info Distance
+ * @var $company Company
  */
 ?>
 <div id="main-nav-bg"></div>
 <nav id="main-nav" class="company-info">
+    <?if($company->issetLogo()):?>
+        <div class="wizard-logo">
+            <?=CHtml::image('/'.$company->getLogoPath())?>
+        </div>
+    <?endif;?>
     <div class="col-xs-12">
         <nav class="navbar navbar-default">
             <div class="navbar-brand"><?=Yii::t('main','Адрес')?></div>
@@ -77,7 +83,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <?php
-                            $this->widget('WizardWidget',array('question'=>$question,'field'=>$field,'companyId'=>$company->id,'wizardStep'=>$this->wizardStep,'request'=>isset($request) ? $request : null,'showAgree'=>$showAgree));
+                            $this->widget('WizardWidget',array('company'=>$company,'question'=>$question,'field'=>$field,'companyId'=>$company->id,'wizardStep'=>$this->wizardStep,'request'=>isset($request) ? $request : null,'showAgree'=>$showAgree));
                         ?>
                     </div>
                 </div>
