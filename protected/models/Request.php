@@ -324,6 +324,33 @@ class Request extends CActiveRecord
         return null;
     }
 
+    /**
+     * В зависимости от ключей массива будет производить нужные проверки
+     * @param $param
+     */
+    public function checkAccess($param){
+
+        $access=false; //изначально доступа нет
+        //ЭТАП 1. Доступ к реквесту имеет только пользоваль на которого оно заведено и директор компании
+        if(isset($param['user_id']) && isset($param['company_id'])){
+            if($param['user_id']==$this->user_id){
+                $access=true;
+            }
+            else{
+                $user = User::model()->findByPk($param['user_id']);
+                if(is_null($user))
+                    return $access;
+                //найдем именно директора выбранного юзера
+                $director = User::model()->findByAttributes(array('is_owner'=>1,'company_id'=>$user->company_id));
+
+                if($director->company_id == $param['company_id']){
+                    $access=true;
+                }
+            }
+        }
+
+        return $access;
+    }
     public function getPhoneField(){
         if($field = RequestField::model()->with('field')->find(array('condition' => "request_id = $this->id AND field.validator ='phone'"))){
             return $field->value;

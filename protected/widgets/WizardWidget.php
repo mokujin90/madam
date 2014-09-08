@@ -30,6 +30,10 @@ class WizardWidget extends CWidget{
      */
     public $showAgree=false;
     public function run(){
+        if(isset($this->question[0]) && is_null($this->question[0])){
+            echo "Извините, но в базе данных вопросы отсуствуют";
+            return false;
+        }
         $this->request = $this->request ? $this->request : new Request(); //wizard fix
         $this->render($this->skin,array('question'=>$this->question,'field'=>$this->field,'request'=>$this->request,'companyId'=>$this->companyId,'showAgree'=>$this->showAgree,'company'=>$this->company));
     }
@@ -41,7 +45,9 @@ class WizardWidget extends CWidget{
      * @param
      */
     public function drawAnswer($question,$answerArray=array()){
-
+        if(is_null($question)){
+            return "Извините, вопросов в базе данных нет";
+        }
         $result='';
         $count=0;
         foreach($question['answers'] as $answer){
@@ -90,7 +96,7 @@ class WizardWidget extends CWidget{
      * @return string
      */
     public function drawField($field,$value=null){
-        $type = array('char'=>'textField','mail'=>'emailField','numerical'=>'numberField');
+        $type = array('char'=>'textField','mail'=>'emailField','numerical'=>'numberField','name'=>'textField','lastname'=>'textField','firm'=>'textField','phone'=>'numberField');
         $result='';
         $result.=CHtml::label(Yii::t('main',$field->name),'field_'.$field->id.'_label',array('class'=>$field->type!='required' ? 'init control-label':'control-label')).
             CHtml::openTag('div',array('class'=>'controls')).

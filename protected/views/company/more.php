@@ -177,24 +177,6 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
         <i class="icon-cog"></i>
         <span><?php echo Yii::t('main','Оплата')?></span>
     </h1>
-    <?php $form=$this->beginWidget('CActiveForm', array(
-        'action'=>Acquiring::$paypal['url'],
-        'htmlOptions'=>array(
-            'class'=>'form form-horizontal',
-        )
-    )); ?>
-        <?php echo CHtml::hiddenField('cmd','_xclick')?>
-        <?php echo CHtml::hiddenField('hosted_button_id',$oldLicense['license']->id)?>
-        <?php echo CHtml::hiddenField('business',Acquiring::$paypal['mail'])?>
-        <?php echo CHtml::hiddenField('currency_code',Acquiring::$paypal['currency'])?>
-        <?php echo CHtml::hiddenField('item_name',$oldLicense['license']->getName())?>
-        <?php echo CHtml::hiddenField('item_number','1')?>
-        <?php echo CHtml::hiddenField('amount',$oldLicense['license']->getPrice())?>
-        <?php echo CHtml::hiddenField('no_shipping','1')?>
-        <?php echo CHtml::hiddenField('return',Acquiring::$paypal['return'])?>
-
-        <?php echo CHtml::submitButton('',array('id'=>'paypal','class'=>"buy-button"))?>
-    <?php $this->endWidget(); ?>
-
+    <?=CHtml::link('',array('acquiring/paypal','companyId'=>$companyId,'licenseId'=>$oldLicense->id),array('class'=>"buy-button",'id'=>'paypal'))?>
 
 <?endif;?>

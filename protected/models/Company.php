@@ -187,21 +187,7 @@ class Company extends CActiveRecord
             $license->attributes = array('license_id'=>License::DEFAULT_LICENSE_ID,'company_id'=>$this->id,'is_agree'=>1,'date'=>Help::currentDate());
             $license->save();
 
-            $field = new CompanyField();
-            $field->company_id = $this->id;
-            $field->is_userfield = 0;
-            $field->name = 'Email';
-            $field->type = 'required';
-            $field->validator = 'mail';
-            $field->save();
-
-            $field = new CompanyField();
-            $field->company_id = $this->id;
-            $field->is_userfield = 0;
-            $field->name = 'Phone';
-            $field->type = 'required';
-            $field->validator = 'numerical';
-            $field->save();
+            CompanyField::firstField($this->id);
         }
         if($this->no_logo==1){
             if(file_exists($this->getLogoPath())){
