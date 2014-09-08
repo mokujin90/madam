@@ -177,9 +177,13 @@ class Request extends CActiveRecord
         return null;
     }
 
-    static public function getRequestWithDate($user_id){
+    static public function getRequestWithDate($user_id, $without_blocked = false){
         $result = array();
-        $model = Request::model()->findAllByAttributes(array('user_id' => $user_id), array('order' => 'start_time'));
+        $addCriteria = array();
+        if($without_blocked){
+            $addCriteria = array('is_block' => 0);
+        }
+        $model = Request::model()->findAllByAttributes(array('user_id' => $user_id) + $addCriteria, array('order' => 'start_time'));
         foreach($model as $item){
             $item->start_time = new DateTime($item->start_time);
             $item->end_time = new DateTime($item->end_time);

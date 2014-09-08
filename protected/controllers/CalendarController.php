@@ -121,6 +121,16 @@ class CalendarController extends BaseController
         $this->render('notice',array('model'=>$model,'user'=>$user));
 
     }
+    public function actionFreeInterval($id,$user_id){
+        $this->blockJquery();
+        $user = User::model()->findByPk($user_id);
+        $model = Request::model()->findByPk($id);
+        if (isset($_POST['remove'])) {
+            $model->delete();
+            return;
+        }
+        $this->render('freeInterval',array('model'=>$model,'user'=>$user));
+    }
     public function actionGroupBlockEvent($block)
     {
         $events = Request::model()->findAllByPk($_REQUEST['id']);
@@ -213,6 +223,21 @@ class CalendarController extends BaseController
         echo $content; //тут достаточно вывести получившийся файл
     }
 
+    public function actionGroupBlockInterval()
+    {
+        $dateNow = new DateTime();
+        $dateNow = $dateNow->format(Help::DATETIME);
+        foreach($_REQUEST['interval'] as $item){
+            $blockInterval = new Request();
+            $blockInterval->block_interval = 1;
+            $blockInterval->create_date = $dateNow;
+            $blockInterval->start_time = $item['start'];
+            $blockInterval->end_time = $item['end'];
+            $blockInterval->user_id = $item['user_id'];
+            $blockInterval->save(false);
+        }
+    }
+
     public function actionDelete($id)
     {
         $model = Request::model()->findByPk($id);
@@ -276,7 +301,7 @@ class CalendarController extends BaseController
         $dayOfWeek = $date->format('N') - 1;
 
         $calendarDelimit = $user->calendar_front_delimit < 0 ? 10 : $user->calendar_front_delimit; //интервал на который делится календарь
-        $requests = Request::getRequestWithDate($user->id); //события за текущий день
+        $requests = Request::getRequestWithDate($user->id, true); //активные события за текущий день
         $enableHour = array();
         for ($i = 0; $i < 24; $i++) { //обнуляем 24 часа
             $enableHour[$i] = array();
@@ -334,6 +359,7 @@ class CalendarController extends BaseController
             if ($item[0]->start_time >= $dateStart && $item[0]->start_time < $dateEnd) {
                 $length = $item[0]->end_time->format('U') -  $item[0]->start_time->format('U');
                 if(
+                    $this->intervalIsFree($item) &&
                     $length == $duration * 60 &&
                     $this->enableGroupEvent &&
                     $group_size > count($item)
@@ -362,6 +388,16 @@ class CalendarController extends BaseController
         if (isset($eventEnd) && $dateStart >= $eventEnd) { //бронь закончилась в этом интервале
             $eventEnd = false;
         }
+    }
+
+    private function intervalIsFree($req)
+    {
+        foreach ($req as $item) {
+            if ($item->block_interval) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public function getUserIdJson($events){

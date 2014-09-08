@@ -123,7 +123,7 @@ class CalendarWidget extends CWidget{
                 foreach ($item as $eventItem) { //выводим всех людей записанных на это время
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $eventItem->end_time, 'event' => $eventItem->id, 'model' => $eventItem);
                 }
-                if (($this->enableGroupEvent && $this->user->group_size > $this->activeCount($item)) || !$this->activeCount($item)) { //выводим бронь для нового члена группы, если остались места
+                if ((($this->enableGroupEvent && $this->user->group_size > $this->activeCount($item)) || !$this->activeCount($item)) && $this->intervalIsFree($item)) { //выводим бронь для нового члена группы, если остались места И Интервал не заблокирован
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $item[0]->end_time);
                 }
                 $eventEnd = $item[0]->end_time;
@@ -134,7 +134,7 @@ class CalendarWidget extends CWidget{
                 foreach ($item as $eventItem) { //выводим всех людей записанных на это время
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $eventItem->start_time, 'end' => clone $eventItem->end_time, 'event' => $eventItem->id, 'model' => $eventItem);
                 }
-                if (($this->enableGroupEvent && $this->user->group_size > $this->activeCount($item)) || !$this->activeCount($item)) { //выводим бронь для нового члена группы, если остались места
+                if ((($this->enableGroupEvent && $this->user->group_size > $this->activeCount($item)) || !$this->activeCount($item)) && $this->intervalIsFree($item)) { //выводим бронь для нового члена группы, если остались места И Интервал не заблокирован
                     $enableHour[(int)$dateStart->format('H')][] = array('start' => clone $dateStart, 'end' => clone $item[0]->end_time);
                 }
                 $eventEnd = $item[0]->end_time;
@@ -218,7 +218,9 @@ class CalendarWidget extends CWidget{
         $class = "event label";
         if (isset($event['event'])) {
             $class .= " has-popover";
-            if (isset($_GET['target']) && $_GET['target'] == $event['event']) {
+            if ($event['model']->block_interval){
+                $class .= " label-inverse";
+            } elseif (isset($_GET['target']) && $_GET['target'] == $event['event']) {
                 $class .= " label-important";
             } elseif(!$event['model']->is_confirm){
                 $class .= " label-warning";
@@ -271,7 +273,11 @@ class CalendarWidget extends CWidget{
         $rowCount = 0;
         foreach ($hourEventInterval as $event) {
             if (isset($event['event'])) {
-                $rowArr[]= $this->getDayCalendarEventRow($event);
+                if($event['model']->block_interval){
+                    $rowArr[]= $this->getDayCalendarBlockRow($event);
+                } else {
+                    $rowArr[]= $this->getDayCalendarEventRow($event);
+                }
             } else {
                 $rowArr[]= $this->getDayCalendarFreeRow($event);
             }
@@ -300,7 +306,7 @@ class CalendarWidget extends CWidget{
     }
     private function getDayCalendarEventRow($event){
         $row = CHtml::openTag('td');//cb
-        $row .= CHtml::checkBox('', false, array('value' => $event['model']->id, 'class' => 'event-cb interval-cb', 'date-start' => $event['start']->format(Help::DATETIME), 'date-end' => $event['end']->format(Help::DATETIME)));
+        $row .= CHtml::checkBox('', false, array('value' => $event['model']->id, 'class' => 'event-cb interval-cb', 'data-user-id' => $this->user->id, 'data-start' => $event['start']->format(Help::DATETIME), 'data-end' => $event['end']->format(Help::DATETIME)));
         $row .= CHtml::closeTag('td');
 
         $row .= CHtml::openTag('td');//status
@@ -354,6 +360,54 @@ class CalendarWidget extends CWidget{
 
         return $row;
     }
+    private function getDayCalendarBlockRow($event){
+        $row = CHtml::openTag('td');//cb
+        //$row .= CHtml::checkBox('', false, array('value' => $event['model']->id, 'class' => 'event-cb interval-cb', 'data-user-id' => $this->user->id, 'data-start' => $event['start']->format(Help::DATETIME), 'data-end' => $event['end']->format(Help::DATETIME)));
+        $row .= CHtml::closeTag('td');
+
+        $row .= CHtml::openTag('td');//status
+        //$row .= $this->getEventStatus($event['model']);
+        $row .= CHtml::closeTag('td');
+
+        $row .= CHtml::openTag('td');//time
+        $row .= CHtml::link(
+            ('<i class="icon-lock"></i> ' . $event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
+            array('calendar/freeInterval',
+                'user_id' => $this->user->id,
+                'id' => $event['event']
+            ),
+            array(
+                'class' => $this->getEventClass($event),
+            ));
+        $row .= CHtml::closeTag('td');
+
+        $row .= CHtml::openTag('td');//copy
+        $row .= CHtml::closeTag('td');
+
+        $row .= CHtml::openTag('td', array('class' => 'text-left')); //ABBR
+        $row .= CHtml::closeTag('td');
+
+        $row .= CHtml::openTag('td', array('class' => 'text-left')); //hint
+        $row .= CHtml::closeTag('td');
+
+        $row .= CHtml::openTag('td', array('class' => 'text-left')); //comment
+        $row .= 'Интервал заблокирован';
+        $row .= CHtml::closeTag('td');
+
+        $row .= CHtml::openTag('td'); //edit
+        $row .= CHtml::link(
+            '<i class="icon-unlock"></i>',
+            array('calendar/freeInterval',
+                'user_id' => $this->user->id,
+                'id' => $event['event']
+            ),
+            array(
+                'class' => "event label label-inverse",
+            ));
+        $row .= CHtml::closeTag('td');
+
+        return $row;
+    }
     public function getCopyLink($event){
         return CHtml::link(
             '<i class="icon-copy"></i>',
@@ -372,7 +426,7 @@ class CalendarWidget extends CWidget{
     }
     private function getDayCalendarFreeRow($event){
         $row = CHtml::openTag('td'); //cb
-        $row .= CHtml::checkBox('', false, array('class' => 'interval-cb', 'date-start' => $event['start']->format(Help::DATETIME), 'date-end' => $event['end']->format(Help::DATETIME)));
+        $row .= CHtml::checkBox('', false, array('class' => 'interval-cb', 'data-user-id' => $this->user->id, 'data-start' => $event['start']->format(Help::DATETIME), 'data-end' => $event['end']->format(Help::DATETIME)));
         $row .= CHtml::closeTag('td');
 
         $row .= CHtml::tag('td'); //status
@@ -418,5 +472,15 @@ class CalendarWidget extends CWidget{
         $dateVal = clone $this->mondayOfWeek;
         $dateVal->modify("+ $day day");
         return $dateVal->format('d.m.Y');
+    }
+
+    private function intervalIsFree($req)
+    {
+        foreach ($req as $item) {
+            if ($item->block_interval) {
+                return false;
+            }
+        }
+        return true;
     }
 }

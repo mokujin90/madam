@@ -503,14 +503,13 @@ calendar = {
             var $wrap = $(this).closest('.box');
             var block = $(this).data('block');
             var intervals = calendar.getIntervalByCb($wrap);
-            if(eventsID.length){
+            if(intervals.length){
                 $.ajax({
                     type: 'GET',
-                    url: '/calendar/groupBlockEvent',
+                    url: '/calendar/groupBlockInterval',
                     async: false,
                     data: {
-                        block: block,
-                        id: eventsID
+                        interval: intervals
                     },
                     error: function () {
                         $.jGrowl("Ошибка сервера");
@@ -605,7 +604,7 @@ calendar = {
         var idArr = [];
         if($cb.length){
             $.each($cb, function(){
-                idArr.push({start: $(this).data('start'), end: $(this).data('end')});
+                idArr.push({user_id: $(this).data('user-id'), start: $(this).data('start'), end: $(this).data('end')});
             });
         }
         return idArr;
