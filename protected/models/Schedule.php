@@ -152,7 +152,11 @@ class Schedule extends CActiveRecord
             }
             $anyRequest = Request::model()->findAll($criteria);
             if(count($anyRequest)){ //есть пересечение с другим событием
-                $request->addError('start_date', 'Новое событие накладывается на уже существующее');
+                if(!Schedule::intervalIsFree($anyRequest)){
+                    $request->addError('start_date', 'Событие накладывается на заблокированный интервал');
+                } else {
+                    $request->addError('start_date', 'Событие накладывается на уже существующее');
+                }
                 return false; //если есть еще какие-то события "налазящие" на текущее не дадим сохранять
             } else { //проверка на пареллельное событие
                 $user = User::model()->findByPk($request->user_id);
@@ -170,6 +174,11 @@ class Schedule extends CActiveRecord
                     $criteria->params += array(':id'=>$request->id);
                 }
                 $groupRequestCount = Request::model()->count($criteria);
+                $criteria->addCondition('block_interval = 1');
+                $blockIntervalCount = Request::model()->count($criteria);
+                if ($blockIntervalCount != 0) { //в заблокированном интервале
+                    $request->addError('start_date', 'Событие накладывается на заблокированный интервал');
+                }
                 if ($groupRequestCount != 0) { //есть параллельное событие
                     if (!Company2License::enableGroupEvent()) {
                         $request->addError('start_date', 'Групповые события не доступны для вашей лицензии.');
@@ -190,5 +199,14 @@ class Schedule extends CActiveRecord
             return false;
         }
 
+    }
+    public static function intervalIsFree($req)
+    {
+        foreach ($req as $item) {
+            if ($item->block_interval) {
+                return false;
+            }
+        }
+        return true;
     }
 }

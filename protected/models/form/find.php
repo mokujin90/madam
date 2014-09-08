@@ -41,6 +41,7 @@ class Find extends CFormModel{
         }
         $criteria->addCondition('t.user_id = :user_id');
         $criteria->params += array(':user_id'=>$this->userId);
+        $criteria->addCondition('t.block_interval = 0');
         return Request::model()->findAll($criteria);
     }
 
