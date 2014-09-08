@@ -174,5 +174,26 @@ class WizardController extends BaseController
         }
 
     }
-
+    public function actionPrint($id,$hash){
+        $model = Request::model()->with('requestFields','requestQuestions','user')->findByPk($id);
+        if(is_null($model)){
+            throw new CHttpException(404, Yii::t('main', 'Событие не найдено'));
+        }
+        else if($model->getHash()!=$hash){
+            //throw new CHttpException(403, Yii::t('main', 'Неверный хеш'));
+        }
+        $user = User::model()->findByPk($model->user_id);
+        $company = Company::model()->findByPk($user->company_id);
+        /*вопросы и ответы*/
+        $questions = Question::model()->findAllByAttributes(array('id'=>Help::decorate($model['requestQuestions'],'question_id')));
+        $answers = Answer::model()->findAllByAttributes(array('id'=>Help::decorate($model['requestQuestions'],'answer_id')));
+        /*поля*/
+        $field = CompanyField::model()->findAllByAttributes(array('id'=>Help::decorate($model['requestFields'],'field_id')));
+        $fieldText = Help::decorate($model['requestFields'],'value','field_id');
+        /*разница*/
+        $start = date_create($model->start_time);
+        $end = date_create($model->end_time);
+        $interval = date_diff($end, $start);
+        $this->render('print',array('request'=>$model,'date'=>$model->start_time,'company'=>$company,'questions'=>$questions,'answers'=>$answers,'fieldText'=>$fieldText,'fields'=>$field,'user'=>$user,'delay'=>$interval->format('%I')));
+    }
 }

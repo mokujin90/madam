@@ -107,7 +107,11 @@ class Company2License extends CActiveRecord
         $criteria->compare( 'company.id', $this->companyId, true );
         $criteria->mergeWith(Company2License::getNotApproved());
 		return new CActiveDataProvider($this, array(
+            'pagination'=>array(
+                'pageSize'=>50,
+            ),
 			'criteria'=>$criteria,
+
 		));
 	}
 

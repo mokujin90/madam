@@ -81,6 +81,7 @@ class UserController extends BaseController
         $this->render('register', array('user' => $user,'company'=>$company,'country'=>Country::model()->getArray($country)));
     }
 
+
     public function getBreadcrumbs()
     {
         static $count = 0;

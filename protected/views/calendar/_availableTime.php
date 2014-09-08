@@ -5,7 +5,7 @@
     <thead>
     <tr>
         <th class="col-xs-1 text-center time-col">
-            Time
+            <?= Yii::t('main','Время')?>
         </th>
         <th></th>
     </tr>

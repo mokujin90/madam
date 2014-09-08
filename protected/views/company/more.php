@@ -65,11 +65,11 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
                     <?endforeach;?>
                 </ul>
                 <?if($license->id==$oldLicense->license_id && $oldLicense['license']->getLicenseType()!=0):?>
-                    <a class="buy-action btn disabled" href="#"><i class="icon-ok"></i> Действует</a>
+                    <a class="buy-action btn disabled" href="#"><i class="icon-ok"></i> <?= Yii::t('main','Действует')?></a>
                 <?elseif($license->id<$oldLicense->license_id && $oldLicense['license']->getLicenseType()!=0):?>
-                    <a class="buy-action btn btn-inverse disabled" href="#"><i class="icon-lock"></i> Выбрать</a>
+                    <a class="buy-action btn btn-inverse disabled" href="#"><i class="icon-lock"></i> <?= Yii::t('main','Выбрать')?></a>
                 <?else:?>
-                    <a class="buy-action btn btn-inverse" href="<?=$this->createUrl('company/more',array('type'=>$count))?>"><i class="icon-money"></i> Выбрать</a>
+                    <a class="buy-action btn btn-inverse" href="<?=$this->createUrl('company/more',array('type'=>$count))?>"><i class="icon-money"></i> <?= Yii::t('main','Выбрать')?></a>
                 <?endif;?>
             </div>
         </div>
@@ -87,7 +87,7 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
                 <i class="icon-star"></i>
                 <i class="icon-star"></i>
             </div>
-            <h3>Индивидуальная</h3>
+            <h3><?= Yii::t('main','Индивидуальная')?></h3>
         </div>
         <div class="package-content">
             <div class="package-price">FREE</span>
@@ -98,9 +98,9 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
                 </li>
             </ul>
             <?if($oldLicense['license']->getLicenseType()==0):?>
-                <a class="buy-action btn disabled" href="#"><i class="icon-ok"></i> Действует</a>
+                <a class="buy-action btn disabled" href="#"><i class="icon-ok"></i> <?= Yii::t('main','Действует')?></a>
             <?else:?>
-                <a id="manual-edit" class="buy-action btn btn-inverse" href="#"><i class="icon-money"></i> Выбрать</a>
+                <a id="manual-edit" class="buy-action btn btn-inverse" href="#"><i class="icon-money"></i> <?= Yii::t('main','Выбрать')?></a>
             <?endif;?>
 
         </div>
@@ -119,13 +119,13 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
                 </div>
                 <ul class="package-top-features">
                     <li>
-                        + 1 работник(график)
+                        + 1 <?= Yii::t('main','работник(график)')?>
                     </li>
                 </ul>
                 <?if($enableEmployee):?>
-                    <a id="manual-edit" class="buy-action btn btn-inverse" href="<?=$this->createUrl('company/more',array('type'=>'employee'))?>"><i class="icon-money"></i> Выбрать</a>
+                    <a id="manual-edit" class="buy-action btn btn-inverse" href="<?=$this->createUrl('company/more',array('type'=>'employee'))?>"><i class="icon-money"></i> <?= Yii::t('main','Выбрать')?></a>
                 <?else:?>
-                    <a class="buy-action btn btn-inverse disabled" href="#"><i class="icon-lock"></i> Не доступно</a>
+                    <a class="buy-action btn btn-inverse disabled" href="#"><i class="icon-lock"></i> <?= Yii::t('main','Не доступно')?></a>
                 <?endif;?>
 
             </div>
@@ -147,9 +147,9 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
                     </li>
                 </ul>
                 <?if($enableSms):?>
-                    <a id="manual-edit" class="buy-action btn btn-inverse" href="<?=$this->createUrl('company/more',array('type'=>'sms'))?>"><i class="icon-money"></i> Выбрать</a>
+                    <a id="manual-edit" class="buy-action btn btn-inverse" href="<?=$this->createUrl('company/more',array('type'=>'sms'))?>"><i class="icon-money"></i> <?= Yii::t('main','Выбрать')?></a>
                 <?else:?>
-                    <a class="buy-action btn btn-inverse disabled" href="#"><i class="icon-lock"></i> Не доступно</a>
+                    <a class="buy-action btn btn-inverse disabled" href="#"><i class="icon-lock"></i> <?= Yii::t('main','Не доступно')?></a>
                 <?endif;?>
 
             </div>
@@ -168,11 +168,11 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
 )); ?>
 <?php $this->renderPartial('../../admin/views/admin/_license', array('model'=>$manual,'form'=>$form, 'style' => '')); ?>
 <div class="col-lg-6">
-    <button type="submit" value="1" name="save" class="btn btn-success">Save</button>
+    <button type="submit" value="1" name="save" class="btn btn-success"><?= Yii::t('main','Сохранить')?></button>
 </div>
 <?php $this->endWidget(); ?>
 
-<?if($oldLicense->is_agree==0)://если не подтверждено?>
+<?if($oldLicense->is_agree==0 && $oldLicense['license']->price>0)://если не подтверждено?>
     <h1>
         <i class="icon-cog"></i>
         <span><?php echo Yii::t('main','Оплата')?></span>
