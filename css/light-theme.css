@@ -5368,13 +5368,20 @@ input.has-error {
 }
 
 .buy-button{
-    width: 145px;
-    height: 35px;
+    width: 76px;
+    height: 50px;
     border: 0;
     display: inline-block;
 }
 #paypal.buy-button{
-    background:url('/images/paypal-button.png') no-repeat;
+    background:url('https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg') no-repeat;
+    margin: 0 auto 20px;
+    background-size: 69px;
+}
+#sofort.buy-button{
+    width: 100px;
+    height: 50px;
+    background:url('http://images.sofort.com/de/su/banner_100x43.png') no-repeat;
     margin: 0 auto 20px;
 }
 .fancybox-form{
