@@ -174,15 +174,22 @@ class Company extends CActiveRecord
 
         $criteria->compare( 'company2Licenses.id', $this->license, true );
         return new CActiveDataProvider($this, array(
+            'pagination'=>array(
+                'pageSize'=>50,
+            ),
             'criteria' => $criteria,
         ));
     }
 
-
+    public function getHash(){
+        return md5($this->create_date);
+    }
     protected function afterSave()
     {
+
         parent::afterSave();
         if($this->isNewRecord){
+            $this->create_date = Help::currentDate();
             $license = new Company2License;
             $license->attributes = array('license_id'=>License::DEFAULT_LICENSE_ID,'company_id'=>$this->id,'is_agree'=>1,'date'=>Help::currentDate());
             $license->save();

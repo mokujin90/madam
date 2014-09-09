@@ -23,24 +23,24 @@ Yii::app()->clientScript->registerScript('modal', 'modal.init()', CClientScript:
         <div class="row box-content">
             <div class="date box">
                 <div class="controls">
-                    <?=CHtml::label(Yii::t('main','Дата события:'),"datepicker")?>
+                    <?=CHtml::label(Yii::t('main','Дата события').':',"datepicker")?>
                     <?=$date['date_formatted']?>
                 </div>
             </div>
             <div class="time box">
                 <div class="controls">
-                    <?=CHtml::label(Yii::t('main','Статус:'),"")?>
+                    <?=CHtml::label(Yii::t('main','Статус').':',"")?>
                     <?=Request::$status[$model->status]?>
                 </div>
                 <div class="controls">
-                    <?=CHtml::label(Yii::t('main','Время начала:'),"")?>
+                    <?=CHtml::label(Yii::t('main','Время начала').':',"")?>
                     <?=$date['start']?>
                 </div>
                 <div class="controls">
-                    <?=CHtml::label(Yii::t('main','Время конца:'),"")?>
+                    <?=CHtml::label(Yii::t('main','Время конца').':',"")?>
                     <?=$date['end']?>
                 </div>
-                <?=CHtml::label(Yii::t('main','Комментарий:'),"")?>
+                <?=CHtml::label(Yii::t('main','Комментарий').':',"")?>
                 <?=$model->comment?>
             </div>
         </div>
@@ -55,7 +55,7 @@ Yii::app()->clientScript->registerScript('modal', 'modal.init()', CClientScript:
                 <div class="date">
                     <b>Начало:</b> <?=$repeatData['start']->format('d/m/Y')?><br>
                     <b>Конец:</b> <?=$repeatData['end']->format('d/m/Y')?><br>
-                    <b>Общее кол-во событий:</b> <?=$repeatData['count']?>
+                    <b><?= Yii::t('main','Общее кол-во событий')?>:</b> <?=$repeatData['count']?>
                 </div>
             </div>
         </div>

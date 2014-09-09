@@ -14,7 +14,7 @@
 <script>
     $(".fancy").fancybox({});
 </script>
-<?if($info->isRequired()):?>
+<?if(!is_null($info) && $info->isRequired()):?>
     <div class="alert alert-info alert-dismissable">
         <a class="close" data-dismiss="alert" href="#">×
         </a>

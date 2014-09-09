@@ -59,12 +59,13 @@
                                     </label>
                                 </div>
                             </div>
-                            <?if(count($questions)>1):?>
+                            <?if(count($questions)>1 && $license['license']->control_dialog==1):?>
                                 <?
                                     $simple = $param['simple'];
 
                                     unset($simple[$id]);
                                 ?>
+
                                 <div class="form-group">
                                     <div class="col-sm-offset-4 col-sm-8">
                                         <label class="col-xs-12 control-label text-label-important">
@@ -130,7 +131,7 @@
                                                         <?=CHtml::hiddenField("question[".$count."][answer][".$countAnswer."][icon]",$answer->icon,array('class'=>'model-icon'))?>
                                                     </div>
                                                 </div>
-                                                <?if(count($questions)>1):?>
+                                                <?if(count($questions)>1 && $license['license']->control_dialog==1):?>
                                                     <?
                                                         $simple = $param['simple'];
                                                         unset($simple[$id]);

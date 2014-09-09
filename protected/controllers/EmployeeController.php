@@ -28,6 +28,7 @@ class EmployeeController extends BaseController{
         } else {
             $this->pageCaption = $model->login;
         }
+
         $companyId = Yii::app()->user->companyId;
         $question = Question::getQuestion($companyId);
         if (isset($_POST['User'])) {

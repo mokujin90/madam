@@ -15,8 +15,8 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
 )); ?>
 
 <ul class="nav nav-tabs" role="tablist">
-    <li class="active"><a href="/#settings" role="tab" data-toggle="tab">Настройки</a></li>
-    <li><a href="/#iframe" role="tab" data-toggle="tab">Integration</a></li>
+    <li class="active"><a href="/#settings" role="tab" data-toggle="tab"><?= Yii::t('main','Настройки')?></a></li>
+    <li><a href="/#iframe" role="tab" data-toggle="tab"><?= Yii::t('main','Интеграция')?></a></li>
 </ul>
 <div class="tab-content">
     <div class="tab-pane active" id="settings">
@@ -130,16 +130,17 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
             <div class="form-group">
                 <hr>
                 <div class="col-xs-offset-7 col-xs-5">
-                    <button type="submit" class="btn btn-success">Сохранить</button>
+                    <button type="submit" class="btn btn-success"><?= Yii::t('main','Сохранить')?></button>
                 </div>
             </div>
         </div>
         <div class="col-xs-12 col-lg-6">
             <span>
-                <h4>Онлайн-бронирование назначение</h4>
-                Регистр онлайн-бронирования назначение ., принять общие настройки для вашего онлайн-бронирования назначения на какое
+                <h4><?= Yii::t('main','Онлайн-бронирование назначение')?></h4>
+                <?= Yii::t('main','Регистр онлайн-бронирования назначение ., принять общие настройки для вашего онлайн-бронирования назначения на какое
                 время диапазоны разблокирован для онлайн-бронирования назначения в Интернете, делают для
-                индивидуальному графику одного ( Настройка&gt; вкладка Параметры расписания: Включить для онлайн-бронирования назначения ).
+                индивидуальному графику одного ( Настройка&gt; вкладка Параметры расписания: Включить для онлайн-бронирования назначения ).')?>
+
             </span>
         </div>
     </div>
