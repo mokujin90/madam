@@ -27,6 +27,7 @@ class AdminLicenseController extends AdminBaseController{
         if(isset($_POST['License']))
         {
             $model->attributes=$_POST['License'];
+            $model->price = $_POST['License']['price'];
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
@@ -42,6 +43,7 @@ class AdminLicenseController extends AdminBaseController{
         if(isset($_POST['License']))
         {
             $model->attributes=$_POST['License'];
+            $model->price = $_POST['License']['price'];
             if($model->save())
                 $this->redirect(isset($_POST['url_referrer'])? $_POST['url_referrer'] : Yii::app()->request->urlReferrer);
         }
@@ -59,5 +61,15 @@ class AdminLicenseController extends AdminBaseController{
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 
+    public function actionSetPrice($id){
+        $model=$this->loadModel('License',null,$id);
+        if(isset($_POST['License']))
+        {
+            $model->price = $_POST['License']['price'];
+            if($model->save())
+                $this->redirect($this->createUrl('adminCompany/approveList'));
+        }
+        $this->render('/admin/price',array('model'=>$model));
+    }
 
 }

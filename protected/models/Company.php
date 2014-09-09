@@ -226,6 +226,16 @@ class Company extends CActiveRecord
         echo $result;
     }
 
+    /**
+     * метод вернет статус у компании, о том тестовый у нее период или нет
+     * @return bool
+     */
+    public function isTestPeriod(){
+        $date = new DateTime($this->create_date);
+        $date->add(new DateInterval('P30D'));
+        $now = new DateTime("now");
+        return $now<$date;
+    }
     public function issetLogo(){
        return file_exists($this->getLogoPath());
     }

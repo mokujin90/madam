@@ -26,7 +26,7 @@ class AdminCompanyController extends AdminBaseController{
      */
     public function actionEditLicense($id){
         $company2license = Company2License::getLicenseById($id);
-        $model = $company2license['license']->getLicenseType()==0 ? $company2license['license'] : new License(); //чистая форма, по умолчанию
+        $model = $company2license['license']->getLicenseType()==0 ? $company2license['license'] : License::createNewClone($company2license->license_id); //чистая форма, по умолчанию
         if(is_null($company2license) || !count($company2license['license'])){
             throw new CHttpException(404, 'The requested page does not exist.');
         }
@@ -37,8 +37,10 @@ class AdminCompanyController extends AdminBaseController{
             //если мы сохраняем индивидуальную лицензию
             if(isset($_POST['License']) && $_POST['license_type']==0)
             {
+
                 $newLicense = new License();
                 $newLicense->attributes = $_POST['License'];
+                $newLicense->request_text = Yii::t('main','Индивидуальная лицензия');
                 if($newLicense->save()){
                     $newCompany2License->license_id = $newLicense->id;
                     $newCompany2License->save();

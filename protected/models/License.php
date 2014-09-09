@@ -169,6 +169,18 @@ class License extends CActiveRecord
         );
     }
 
+    /**
+     * Склонирует базовую лицензию и отдаст на вывод
+     * @param $id один базовой лицензии
+     */
+    public static function createNewClone($id){
+        $default = self::$base;
+        unset($default[0]);
+        if(!in_array($id,array_keys($default))){
+            return null;
+        }
+        return License::model()->findByPk($id);
+    }
     public function getLicenseType(){
         return $this->is_system==0 ? 0 : $this->base_lvl;
     }

@@ -60,7 +60,6 @@ class WizardWidget extends CWidget{
                 $result.=CHtml::checkBox('answer['.$question->id.']['.$answer->id.']',$this->getAnswerCheck($answer->id,$answerArray,$this->request->id,$count),array('value'=>$answer->id));
             }
             $result.=$answer->text;
-            $result.=$answer->abbr!=''?' ('.$answer->abbr.')' : '';
             $result.=' </label></div>';
             $count++;
         }

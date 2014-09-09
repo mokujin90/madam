@@ -14,7 +14,7 @@
 
     <div class="box col-xs-12 col-sm-6">
         <div class="box-header green-background">
-            <div class="title"><i class="icon-comments-alt"></i> <?= Yii::t('main','Дата')?></div>
+            <div class="title"><i class="icon-calendar"></i> <?= Yii::t('main','Дата')?></div>
         </div>
         <div class="box-content">
             <div class="form-group">
@@ -24,8 +24,8 @@
     </div>
 
     <div style="clear:both;" class="box col-xs-12 col-sm-6">
-        <div class="box-header green-background">
-            <div class="title"><i class="icon-comments-alt"></i> <?= Yii::t('main','Работник')?></div>
+        <div class="box-header blue-background">
+            <div class="title"><i class="icon-user"></i> <?= Yii::t('main','Работник')?></div>
         </div>
         <div class="box-content">
             <div class="form-group">
@@ -34,51 +34,59 @@
         </div>
     </div>
 
-
-<div class="row">
-    <div class="form-group">
-        <label class="col-xs-12 col-sm-4 control-label">With:</label>
-        <div class="col-xs-10 col-sm-6"><?=$company->name?></div>
-    </div>
-</div>
-<div class="row">
-    <div class="form-group">
-        <label class="col-xs-12 col-sm-4 control-label"></label>
-        <div class="col-xs-10 col-sm-6"><?=$company['country']->name?> <?=$company->address?>, <?=$company->city?></div>
-    </div>
-</div>
-<div class="row">
-    <div class="form-group">
-        <label class="col-xs-12 col-sm-4 control-label"></label>
-        <div class="col-xs-10 col-sm-6"><?php echo CHtml::mailto($company->email,$company->email)?></div>
-    </div>
-</div>
-
-<hr>
-<h4 class="col-xs-12 row"><?= Yii::t('main','Детальная информация')?></h4>
-<?foreach($fields as $item):?>
-    <div class="row">
-        <div class="form-group">
-            <label class="col-xs-12 col-sm-4 control-label"><?=$item->name?></label>
-            <div class="col-xs-10 col-sm-6"><?=$fieldText[$item->id]?></div>
+    <div style="clear:both;" class="box col-xs-12 col-sm-6">
+        <div class="box-header green-background">
+            <div class="title"><i class="icon-building"></i> <?= Yii::t('main','Компания')?></div>
         </div>
-    </div>
-<?endforeach;?>
-<hr>
-<h4 class="col-xs-12 row"><?= Yii::t('main','Вопросы')?></h4>
-<?foreach($questions as $item):?>
-    <div class="row">
-        <div class="form-group">
-            <label class="col-xs-12 col-sm-4 control-label"><?=$item->text?>:</label>
-            <div class="col-xs-10 col-sm-6">
-                <?foreach($answers as $inner):?>
-                    <?if($inner->question_id==$item->id):?>
-                        <?=$inner->text?>,
-                    <?endif;?>
-                <?endforeach;?>
+        <div class="box-content">
+            <div class="form-group">
+                <?=$company->name?>
+            </div>
+            <div class="form-group">
+                <?=$company['country']->name?> <?=$company->address?>, <?=$company->city?>
+            </div>
+            <div class="form-group">
+                <?php echo CHtml::mailto($company->email,$company->email)?>
             </div>
         </div>
     </div>
-<?endforeach;?>
-<hr>
+
+    <div style="clear:both;" class="box col-xs-12 col-sm-6">
+        <div class="box-header blue-background">
+            <div class="title"><i class="icon-gears"></i> <?= Yii::t('main','Детальная информация')?></div>
+        </div>
+        <div class="box-content">
+            <?foreach($fields as $item):?>
+                <div class="row">
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-4 control-label"><?=$item->name?></label>
+                        <div class="col-xs-10 col-sm-6"><?=$fieldText[$item->id]?></div>
+                    </div>
+                </div>
+            <?endforeach;?>
+
+        </div>
+    </div>
+<div style="clear:both;" class="box col-xs-12 col-sm-6">
+    <div class="box-header green-background">
+        <div class="title"><i class="icon-question-sign"></i> <?= Yii::t('main','Вопросы')?></div>
+    </div>
+    <div class="box-content">
+        <?foreach($questions as $item):?>
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 control-label"><?=$item->text?>:</label>
+                    <div class="col-xs-10 col-sm-6">
+                        <?foreach($answers as $inner):?>
+                            <?if($inner->question_id==$item->id):?>
+                                <?=$inner->text?>,
+                            <?endif;?>
+                        <?endforeach;?>
+                    </div>
+                </div>
+            </div>
+        <?endforeach;?>
+
+    </div>
+</div>
 
