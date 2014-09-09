@@ -178,5 +178,6 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
         <span><?php echo Yii::t('main','Оплата')?></span>
     </h1>
     <?=CHtml::link('',array('acquiring/paypal','companyId'=>$companyId,'licenseId'=>$oldLicense->id),array('class'=>"buy-button",'id'=>'paypal'))?>
+    <?=CHtml::link('',array('acquiring/sofort','companyId'=>$companyId,'licenseId'=>$oldLicense->id),array('class'=>"buy-button",'id'=>'sofort'))?>
 
 <?endif;?>
