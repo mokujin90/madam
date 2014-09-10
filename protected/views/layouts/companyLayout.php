@@ -36,8 +36,8 @@
         <ul class="nav">
             <li class="dropdown dark user-menu">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <img height="30" alt="Mila Kunis" src="https://cdn1.iconfinder.com/data/icons/LABORATORY-Icon-Set-by-Raindropmemory/128/LL_Another_Box.png">
-                    <span class="user-name">Mila Kunis</span>
+                    <img height="30" alt="<?=Yii::app()->user->fullName?>" src="https://cdn1.iconfinder.com/data/icons/LABORATORY-Icon-Set-by-Raindropmemory/128/LL_Another_Box.png">
+                    <span class="user-name"><?=Yii::app()->user->fullName?></span>
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">

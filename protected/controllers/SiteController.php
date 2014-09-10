@@ -100,19 +100,22 @@ class SiteController extends BaseController
         return parent::getBreadcrumbs();
     }
 
-    public function actionTest(){
+    public function actionAutoLogin($id,$hash){
+        $user = User::model()->findByPk($id);
+        if(is_null($user))
+            throw new CHttpException(404, Yii::t('main', 'Пользователь не найден'));
+        elseif($hash!=$user->getHash())
+            throw new CHttpException(403, Yii::t('main', 'Хеш устарел'));
+        $identity = UserIdentity::createAuthenticatedIdentity($user);
 
-        $criteria = new CDbCriteria();
-        $criteria->addCondition('payment_date <= :currentDate');
-        $criteria->params=array(':currentDate'=>Help::currentDate());
-        $companies = Company::model()->findAll($criteria);
-        foreach($companies as $model){
-            $currentLicense = Company2License::getLicenseBycompany($model->id);
-            $currentLicense->is_agree=0;
-            $currentLicense->save();
-            $model->is_block = 1;
-            $model->save();
+        $identity->authenticate(true);
+
+        if ($identity->errorCode === UserIdentity::ERROR_NONE) {
+            $duration = 3600 * 24 * 30; // 30 days
+            Yii::app()->user->login($identity, $duration);
+            Yii::app()->user->setState('__id',$id);
         }
+        $this->redirect($this->createUrl('calendar/index',array('id'=>$id)));
     }
 
 }

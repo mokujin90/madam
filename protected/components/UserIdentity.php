@@ -8,14 +8,15 @@
 class UserIdentity extends CUserIdentity
 {
     private $_id;
+    private $_user;
 
-    public function authenticate()
+    public function authenticate($auto=false)
     {
         $username = mb_strtolower($this->username);
         $user = User::model()->find('LOWER(login)=?', array($username));
         if ($user === null)
             $this->errorCode = self::ERROR_USERNAME_INVALID;
-        else if ($this->password !== $user->password)
+        else if ($this->password !== $user->password && !$auto)
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
         else {
             $this->_id = $user->id;
@@ -28,4 +29,15 @@ class UserIdentity extends CUserIdentity
     {
         return $this->_id;
     }
+
+
+
+
+    public static function createAuthenticatedIdentity($model) {
+        $identity=new self($model->login,'');
+        $identity->_id=$model->id;
+        $identity->errorCode=self::ERROR_NONE;
+        return $identity;
+    }
+
 }

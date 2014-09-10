@@ -30,8 +30,8 @@
         <ul class="nav">
             <li class="dropdown dark user-menu">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <img height="30" alt="Mila Kunis" src="https://cdn1.iconfinder.com/data/icons/LABORATORY-Icon-Set-by-Raindropmemory/128/LL_Another_Box.png">
-                    <span class="user-name">Mila Kunis</span>
+                    <img height="30" alt="admin" src="https://cdn1.iconfinder.com/data/icons/LABORATORY-Icon-Set-by-Raindropmemory/128/LL_Another_Box.png">
+                    <span class="user-name">admin</span>
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
@@ -72,6 +72,9 @@
                 </li>
                 <li class="">
                     <?php echo CHtml::link('<i class="icon-cog"></i><span>Approve</span>',array('adminCompany/approveList'),array('class'=>$this->mainMenuActiveId=='approve'?'in':''))?>
+                </li>
+                <li class="">
+                    <?php echo CHtml::link('<i class="icon-cog"></i><span>Users</span>',array('adminUser/index'),array('class'=>$this->mainMenuActiveId=='user'?'in':''))?>
                 </li>
             </ul>
         </div>
