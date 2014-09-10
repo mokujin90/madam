@@ -80,6 +80,12 @@ class AdminCompanyController extends AdminBaseController{
         $this->redirect(Yii::app()->request->urlReferrer);
 
     }
+    public function actionPayment($id){
+        $model = $this->loadModel('Company2License',null,$id);
+        $model->doPayment();
+        $model->save();
+        $this->redirect(Yii::app()->request->urlReferrer);
+    }
     public function actionChangeBlockStatus($id, $status){
         if($company = Company::model()->findByPk($id)){
             $company->is_block = $status ? 0 : 1;

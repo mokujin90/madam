@@ -44,7 +44,7 @@ class AcquiringController extends BaseController {
 
             $ack=$e->doPayment($paymentDetails);  //2.Do payment
             $license = Company2License::getLicenseById($id);
-            $license->is_agree=1;
+            $license->doPayment();
             $license->save();
         }
         $this->redirect($this->createUrl('employee/create'));

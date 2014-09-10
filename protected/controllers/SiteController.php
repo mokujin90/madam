@@ -100,4 +100,19 @@ class SiteController extends BaseController
         return parent::getBreadcrumbs();
     }
 
+    public function actionTest(){
+
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('payment_date <= :currentDate');
+        $criteria->params=array(':currentDate'=>Help::currentDate());
+        $companies = Company::model()->findAll($criteria);
+        foreach($companies as $model){
+            $currentLicense = Company2License::getLicenseBycompany($model->id);
+            $currentLicense->is_agree=0;
+            $currentLicense->save();
+            $model->is_block = 1;
+            $model->save();
+        }
+    }
+
 }

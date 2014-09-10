@@ -50,12 +50,13 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         array(
             'type' => 'raw',
             'value' => '$data["license"]->price==0 ? CHtml::link("<button type=\"button\"  class=\"btn btn-info\">Установить цену</button>",
-                         array("adminLicense/setPrice","id" => $data["license"]->id)) : ""',
+                         array("adminLicense/setPrice","id" => $data["license"]->id))
+                         : CHtml::link("<button type=\"button\" class=\"btn btn-primary\">Оплатить</button>",array("adminCompany/payment","id" => $data->id))',
         ),
         array(
             'type' => 'raw',
-            'value' => 'CHtml::link("<button type=\"button\" value=\"1\" name=\"save\" class=\"btn btn-success\">Оплатить</button>",
-                         array("adminCompany/approve","id" => $data->id))',
+            'value' => '$data["license"]->price > 0 ?
+                CHtml::link("<button type=\"button\" value=\"1\" name=\"save\" class=\"btn btn-success\">Подтвердить</button>",array("adminCompany/approve","id" => $data->id)) : ""',
         ),
     ),
 ));

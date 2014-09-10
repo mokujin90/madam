@@ -1,26 +1,25 @@
 <?php
-class ReminderCommand extends CConsoleCommand
+/**
+ * Комманда, которая с периодичностью в один день будет следить за тем, существуют ли компании у которых тестовый период
+ * закончится через неделю (это те компании, которые зарегестрировались 23 дня назад)
+ * По каждой такой компании отправим письмо администратору портала с просьбой связатья с компанией
+ * Class ReminderCommand
+ */
+class EndTestCommand extends CConsoleCommand
 {
     public function run($args)
     {
-        /*$confirmTime = new DateTime('now');
+        //сегодня-23 дня == дата создания
+        $confirmTime = new DateTime('now');
+        $confirmTime->modify('-23 days');
         $criteria = new CDbCriteria();
-        $criteria->addCondition('payment_date=NULL && date(create_date) = :confirm_date)');
-        $criteria->params=array();
-        $model = Request::model()->findAll($criteria);
-        $dateStart = clone $dateNow;
-        $dateStart->modify('-5 minutes');
-        $dateEnd = clone $dateNow;
-        $dateEnd->modify('+5 minutes');
-        foreach ($model as $item) {
-            $dateVal = new DateTime($item->start_time);
-            $dateVal->modify("- {$item->alarm_time} hours");
-            if ($dateStart < $dateVal && $dateVal < $dateEnd) {
-                Help::sendMail($item->getEmailField(), 'Напоминание о termin', 'reminder', $item);
-                $item->alarm_time = -1;
-                $item->save(false);
-            }
-        }*/
+        $criteria->addCondition('date(create_date) = :confirm_date');
+        $criteria->params=array(':confirm_date'=>$confirmTime->format("Y-m-d")." 00:00:00");
+        $companies = Company::model()->with('country')->findAll($criteria);
+        foreach($companies as $model){
+            $model['license'] = Company2License::getLicenseBycompany($model->id);
+            Help::sendMail(Yii::app()->params['adminEmail'], "У компании $model->name истекает срок", 'endTest', $model);
+        }
     }
 }
 
