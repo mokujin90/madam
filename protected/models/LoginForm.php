@@ -51,7 +51,11 @@ class LoginForm extends CFormModel
         if (!$this->hasErrors()) {
             $this->_identity = new UserIdentity($this->username, $this->password);
             if (!$this->_identity->authenticate())
-                $this->addError('password', 'Неверные логин или пароль.');
+             if($this->_identity->errorCode == UserIdentity::ERROR_NEED_CONFIRM){
+                 $this->addError('password', 'Компания не подтверждена. Проверьте свой e-mail.');
+             } else {
+                 $this->addError('password', 'Неверные логин или пароль.');
+             }
         }
     }
 

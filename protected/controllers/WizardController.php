@@ -174,6 +174,7 @@ class WizardController extends BaseController
         }
 
     }
+
     public function actionPrint($id,$hash){
         $model = Request::model()->with('requestFields','requestQuestions','user')->findByPk($id);
         if(is_null($model)){
@@ -195,5 +196,28 @@ class WizardController extends BaseController
         $end = date_create($model->end_time);
         $interval = date_diff($end, $start);
         $this->render('print',array('request'=>$model,'date'=>$model->start_time,'company'=>$company,'questions'=>$questions,'answers'=>$answers,'fieldText'=>$fieldText,'fields'=>$field,'user'=>$user,'delay'=>$interval->format('%I')));
+    }
+
+    public function actionExport($id, $hash)
+    {
+        $event = Request::model()->findByPk($id);
+        if(!$event)
+            throw new CHttpException(404, Yii::t('main', 'Компания не найдена'));
+        elseif($hash!=$event->getHash())
+            throw new CHttpException(403, Yii::t('main', 'Хеш устарел'));
+        $content = '';
+        $createDate = new DateTime($event->create_date);
+        $startDate = new DateTime($event->start_time);
+        $endDate = new DateTime($event->end_time);
+        $content .= BaikalEvent::geniCal($event, $createDate, $startDate, $endDate, true) . "\n";
+        $content = "BEGIN:VCALENDAR\nVERSION:2.0\nMETHOD:PUBLISH\n" . $content . "END:VCALENDAR";
+        $date = new DateTime();
+
+        header("Cache-Control: public");
+        header("Content-Type: application/octet-stream; ");
+        header("Content-Description: File Transfer");
+        header('Content-Disposition: attachment;filename="'.'TerminExport' . $date->format('YmdHis') . '.ics'.'"');
+        header('Cache-Control: max-age=0');
+        echo $content;
     }
 }

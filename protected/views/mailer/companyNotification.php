@@ -20,7 +20,7 @@
                                             $start = new DateTime($request->start_time);
                                             $end = new DateTime($request->end_time);
                                             ?>
-                                            <?=$start->format('Y-m-d H:i')?> - <?=$end->format('H:i')?>
+                                            <?=$start->format('d/m/Y H:i')?> - <?=$end->format('H:i')?>
                                         </p>
                                         <p style="margin: 1em 0;">
                                             <strong>Employee:</strong>

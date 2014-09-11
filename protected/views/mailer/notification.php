@@ -20,7 +20,7 @@
                                             $start = new DateTime($request->start_time);
                                             $end = new DateTime($request->end_time);
                                             ?>
-                                            <?=$start->format('Y-m-d H:i')?> - <?=$end->format('H:i')?>
+                                            <?=$start->format('d/m/Y H:i')?> - <?=$end->format('H:i')?>
                                         </p>
                                         <p style="margin: 1em 0;">
                                             <strong>Employee:</strong>
@@ -75,6 +75,26 @@
                                 <tr>
                                     <td align="center" bgcolor="#00acec" valign="middle">
                                         <h3 style="display: inline-block; margin: 10px 0;"><a href="http://www.<?=Yii::app()->params['host']?>/wizard/edit/id/<?=$request->id?>/hash/<?=$request->getHash()?>/" style="color: #ffffff !important"><?=Yii::t('mailer','Изменить назначние')?></a></h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="top">
+                                        <br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" bgcolor="#00acec" valign="middle">
+                                        <h3 style="display: inline-block; margin: 10px 0;"><a href="http://www.<?=Yii::app()->params['host']?>/wizard/print/id/<?=$request->id?>/hash/<?=$request->getHash()?>/" style="color: #ffffff !important"><?=Yii::t('mailer','Печать назначния')?></a></h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="top">
+                                        <br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" bgcolor="#00acec" valign="middle">
+                                        <h3 style="display: inline-block; margin: 10px 0;"><a href="http://www.<?=Yii::app()->params['host']?>/wizard/export/id/<?=$request->id?>/hash/<?=$request->getHash()?>/" style="color: #ffffff !important"><?=Yii::t('mailer','Экспорт назначния')?></a></h3>
                                     </td>
                                 </tr>
                                 <tr>

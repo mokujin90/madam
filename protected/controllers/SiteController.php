@@ -100,4 +100,16 @@ class SiteController extends BaseController
         return parent::getBreadcrumbs();
     }
 
+    public function actionCompanyConfirm($id,$hash){
+        $company = Company::model()->findByPk($id);
+        if(is_null($company))
+            throw new CHttpException(404, Yii::t('main', 'Компания не найдена'));
+        elseif($hash!=$company->getHash())
+            throw new CHttpException(403, Yii::t('main', 'Хеш устарел'));
+        $company->is_confirmed = 1;
+        $company->create_date = Help::currentDate();//переписываем дату, ведь отсчитываться время пользование лицензии будет от сюда
+        $company->save();
+        $this->redirectByRole();
+    }
+
 }
