@@ -18,6 +18,7 @@
  */
 class Company2License extends CActiveRecord
 {
+    const addedDay=30;
     public $name;
     public $type;
     public $companyId;
@@ -141,7 +142,24 @@ class Company2License extends CActiveRecord
         $companyId = Yii::app()->user->companyId;
         return Company2License::model()->with('license')->findByAttributes(array('company_id'=>$companyId),array('order'=>'date DESC'));
     }
+    /**
+     * Метод, добавляющий еще некоторое количество дней к дате следующего платежа. Т.е. метод продляет на $day дней
+     * возможности пользователя на сайте. Ну а если $company->payment_date is null, то увеличиваем сегодняшнюю дату
+     * Плюс, разблокирует компанию и выставит данной лицензии is_agree равное 1
+     * @param $companyId
+     */
+    public function doPayment($day=self::addedDay){
+        $company = Company::model()->findByAttributes(array('id'=>$this->company_id));
+        $newPaymentDate = new DateTime($company->isExpiredPayed() ? 'now' : $company->payment_date);
+        $newPaymentDate->add(new DateInterval("P{$day}D"));
 
+        $company->payment_date = $newPaymentDate->format(Help::DATETIME);
+        $company->is_block = 0;
+        $company->save();
+
+        $this->is_agree=1;
+        return $this;//необходимо, чтобы в коде данные применились
+    }
     /**
      * @param $companyId
      * @return Company2License

@@ -122,7 +122,7 @@ class User extends CActiveRecord
 		// should not be searched.
 
 		$criteria=new CDbCriteria;
-
+        $criteria->with = array( 'company' );
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('company_id',$this->company_id,true);
 		$criteria->compare('login',$this->login,true);
@@ -153,6 +153,9 @@ class User extends CActiveRecord
         }
     }
 
+    public function getHash(){
+        return md5($this->password);
+    }
     public function getName(){
         return $this->name." ".$this->lastname;
     }

@@ -190,6 +190,9 @@ class Company extends CActiveRecord
         parent::afterSave();
         if($this->isNewRecord){
             $this->create_date = Help::currentDate();
+            $paymentDate = new DateTime();
+            $paymentDate->add(new DateInterval("P{Company2License::addedDay}D"));
+            $this->payment_date = $paymentDate->format(Help::DATETIME);
             $license = new Company2License;
             $license->attributes = array('license_id'=>License::DEFAULT_LICENSE_ID,'company_id'=>$this->id,'is_agree'=>1,'date'=>Help::currentDate());
             $license->save();
@@ -226,6 +229,23 @@ class Company extends CActiveRecord
         echo $result;
     }
 
+    /**
+     * метод вернет статус у компании, о том тестовый у нее период или нет
+     * @return bool
+     */
+    public function isTestPeriod(){
+        $date = new DateTime($this->create_date);
+        $date->add(new DateInterval('P30D'));
+        $now = new DateTime("now");
+        return $now<$date;
+    }
+
+    /**
+     * Вернет данные о том просрочен последний платеж или нет
+     */
+    public function isExpiredPayed(){
+        return $this->payment_date < Help::currentDate();
+    }
     public function issetLogo(){
        return file_exists($this->getLogoPath());
     }
@@ -234,4 +254,6 @@ class Company extends CActiveRecord
         $company = Company::model()->findByPk(Yii::app()->user->companyId);
         return $company->is_block;
     }
+
+
 }

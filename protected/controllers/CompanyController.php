@@ -82,6 +82,7 @@ class CompanyController extends BaseController
         $standardLicense = License::getStandardLicense();
 
         if(isset($_POST) && $type!=''){
+            $company = Company::model()->findByPk($companyId);
             $default = array('sms','employee','manual',1,2,3);
             if(!in_array($type,$default))
                 return false;
@@ -110,7 +111,7 @@ class CompanyController extends BaseController
             }
             #если в результате каких либо обновлений мы создали или присвоили license_id, то сохраняем новый элемент
             if($newCompany2License->license_id!=''){
-                $newCompany2License->is_agree = 0;
+                $newCompany2License->is_agree = $company->isTestPeriod() ? 1 : 0;
                 $newCompany2License->save();
             }
             $this->redirect($this->createUrl('employee/create'));

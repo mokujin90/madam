@@ -181,7 +181,7 @@ class WizardController extends BaseController
             throw new CHttpException(404, Yii::t('main', 'Событие не найдено'));
         }
         else if($model->getHash()!=$hash){
-            //throw new CHttpException(403, Yii::t('main', 'Неверный хеш'));
+            throw new CHttpException(403, Yii::t('main', 'Неверный хеш'));
         }
         $user = User::model()->findByPk($model->user_id);
         $company = Company::model()->findByPk($user->company_id);

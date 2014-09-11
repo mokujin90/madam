@@ -22,4 +22,14 @@ class WebUser extends CWebUser
             return $user->company_id;
         }
     }
+
+    public function getFullName(){
+        if($user = $this->getModel()){
+            if($user->name!='' || $user->lastname!=''){
+                return implode(' ',array($user->name,$user->lastname));
+            }
+            else return $user->login;
+        }
+    }
+
 }
