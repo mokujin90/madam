@@ -16,9 +16,11 @@ class UserIdentity extends CUserIdentity
     {
         $username = mb_strtolower($this->username);
         $user = User::model()->with('company')->find('LOWER(login)=?', array($username));
-        if ($user === null)
+        if ($user === null){
             $this->errorCode = self::ERROR_USERNAME_INVALID;
-        else if ($this->password !== $user->password && !$auto)
+            return !$this->errorCode;
+        }
+        else if ($user->getHash($this->password) !== $user->password && !$auto)
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
         else if (!$user->company->is_confirmed) {
             $this->errorCode = self::ERROR_NEED_CONFIRM;

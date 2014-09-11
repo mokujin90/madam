@@ -130,4 +130,5 @@ class SiteController extends BaseController
         $this->redirect($this->createUrl('calendar/index',array('id'=>$id)));
     }
 
+
 }

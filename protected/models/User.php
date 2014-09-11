@@ -153,8 +153,14 @@ class User extends CActiveRecord
         }
     }
 
-    public function getHash(){
-        return md5($this->password);
+    /**
+     * Метод, который высчитывает хеш для юзера или для любого слова переданного в метод
+     * @param null $value
+     * @return string
+     */
+    public function getHash($value=null){
+        $salt = "m00kuj1n^";
+        return md5((is_null($value) ? $this->password : $value).$salt);
     }
     public function getName(){
         return $this->name." ".$this->lastname;

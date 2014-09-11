@@ -38,6 +38,9 @@ class UserController extends BaseController
         $this->render('login', array('model' => $model));
     }
 
+    public function actionNotice(){
+        $this->render('emailNotice');
+    }
     public function actionLogout()
     {
         Yii::app()->user->logout(false);
@@ -63,8 +66,13 @@ class UserController extends BaseController
             $user->attributes = $_POST['User'];
             $company->attributes = $_POST['Company'];
             if($company->save()){
+
                 $user->is_owner = 1;
                 $user->company_id = $company->id;
+                if($user->password!=''){
+                    $user->password = $user->getHash($user->password);
+                    $user->password_repeat = $user->getHash($user->password_repeat);
+                }
                 if($user->save()){
                     Help::sendMail($user->login, Yii::t('mailer', 'Подтверждение регистрации'), 'registerConfirm', $company);
                     $identity=new UserIdentity($user->login,$user->password);
@@ -72,7 +80,7 @@ class UserController extends BaseController
                     Yii::app()->user->login($identity,0);
                     echo CJSON::encode(array(
                         'status'=>'success',
-                        'url'=>$this->createUrl('site/index')
+                        'url'=>$this->createUrl('user/notice')
                     ));
                     Yii::app()->end();
                 }

@@ -17,6 +17,8 @@ class EndTestCommand extends CConsoleCommand
         $criteria->params=array(':confirm_date'=>$confirmTime->format("Y-m-d")." 00:00:00");
         $companies = Company::model()->with('country')->findAll($criteria);
         foreach($companies as $model){
+            if(!$model->isTestPeriod())
+                continue; //уберем тех пользователей, которые оплатили лицензию в тот же день, что и зарегистрировались
             $model['license'] = Company2License::getLicenseBycompany($model->id);
             Help::sendMail(Yii::app()->params['adminEmail'], "У компании $model->name истекает срок", 'endTest', $model);
         }
