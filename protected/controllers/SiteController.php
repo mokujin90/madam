@@ -111,7 +111,7 @@ class SiteController extends BaseController
         $company->save();
         $this->redirectByRole();
     }
-    
+
     public function actionAutoLogin($id,$hash){
         $user = User::model()->findByPk($id);
         if(is_null($user))

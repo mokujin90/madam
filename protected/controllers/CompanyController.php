@@ -76,7 +76,8 @@ class CompanyController extends BaseController
         $this->mainMenuActiveId="more";
 
         $companyId = Yii::app()->user->companyId; //текущий id компании
-        $oldLicense = Company2License::getLicenseBycompany($companyId); //текущая лицензия пользователя
+        $lastLicense = Company2License::getLicenseBycompany($companyId); //последняя запрошенная лицензия пользователя
+        $oldLicense = Company2License::getCurrentLicense(); //текущая лицензия пользователя
         $manual = $oldLicense['license']->getLicenseType()!=0 ? new License() : $oldLicense['license']; //новая лицензия на случай индивидуальной
         $newCompany2License = new Company2License;
         $newCompany2License->company_id = $companyId;
@@ -117,10 +118,10 @@ class CompanyController extends BaseController
             }
             $this->redirect($this->createUrl('employee/create'));
         }
-        $lastPhrase = $oldLicense->license_id==License::$base[1] ? '' : "Осталось ".$oldLicense->getLastDay()." ".Help::getNumEnding($oldLicense->getLastDay(),array('день','дня','дней'));
+        $lastPhrase = !$oldLicense->getLastDay() ? 'Оплатите для продления.' : "Осталось ".$oldLicense->getLastDay()." ".Help::getNumEnding($oldLicense->getLastDay(),array('день','дня','дней'));
         $this->pageCaption="Лицензия";
         $licenseAlert = "Действует &laquo;".$oldLicense['license']->getName()."&raquo;. ".$lastPhrase;
-        $this->render('more',array('oldLicense'=>$oldLicense,'manual'=>$manual,'companyId'=>$companyId,'standard'=>$standardLicense, 'licenseAlert' => $licenseAlert));
+        $this->render('more',array('lastLicense'=>$lastLicense,'oldLicense'=>$oldLicense,'manual'=>$manual,'companyId'=>$companyId,'standard'=>$standardLicense, 'licenseAlert' => $licenseAlert));
     }
 
     function actionTest(){

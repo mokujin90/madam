@@ -13,7 +13,7 @@ class BlockCommand extends CConsoleCommand
         $companies = Company::model()->findAll($criteria);
         foreach($companies as $model){
             $currentLicense = Company2License::getLicenseBycompany($model->id);
-            $currentLicense->is_agree=0;
+            $currentLicense->is_agree=0; //чтобы появился запрос в админе
             $currentLicense->save();
             $model->is_block = 1;
             $model->save();

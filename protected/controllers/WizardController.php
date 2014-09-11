@@ -120,7 +120,7 @@ class WizardController extends BaseController
             $fields = CompanyField::getActiveField($companyId);
             $info = Distance::getDistance($companyId);
 
-            $license = Company2License::getLicenseBycompany($company->id);
+            $license = Company2License::getCurrentLicense($company->id);
             $this->wizardStep = $license['license']->control_dialog == 1 ? true :false;
             $this->render('index',array('company'=>$company,'question'=>$question,'field'=>$fields,'info'=>$info,'request'=>$request,'showAgree'=>false));
         }
