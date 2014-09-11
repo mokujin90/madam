@@ -13,6 +13,9 @@ class CalendarController extends BaseController
         if (!$user) {
             throw new CHttpException(404, Yii::t('main', 'Page not found.'));
         }
+        else if($user->company_id != Yii::app()->user->companyId){
+            throw new CHttpException(403, Yii::t('main', 'Доступ запрещен.'));
+        }
         if(isset($date)){
             $date = new DateTime($date);
         }
