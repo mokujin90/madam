@@ -192,7 +192,6 @@ class Help{
         $mailer =& Yii::app()->mailer;
         $mailer->CharSet = 'UTF-8';
         $mailer->From = Yii::app()->params['fromEmail'];
-        $mailer->From = "termin@wconsults.ru";
         $mailer->FromName = Yii::app()->params['fromName'];
         $mailer->IsSMTP();                                      // set mailer to use SMTP
 

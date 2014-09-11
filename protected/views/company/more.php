@@ -17,6 +17,13 @@ $data = array(
 $check=array('control_dialog','group_event','email_confirm','sms_confirm','email_reminder','sms_reminder','multilanguage','event_confirm','email_event','sms_event','caldav','email_help','phone_help');
 ?>
 <?Yii::app()->clientScript->registerCssFile('/css/pricetab.css');?>
+<?if(Yii::app()->user->hasFlash('alert')):?>
+<div class="col-xs-12">
+    <div class="alert alert-warning alert-dismissable">
+        <i class="icon-warning-sign"></i> <?=Yii::app()->user->getFlash('alert')?>
+    </div>
+</div>
+<?endif?>
 <div class="col-xs-12">
     <div class="alert alert-info alert-dismissable">
         <i class="icon-info-sign"></i> <?=$licenseAlert?>
@@ -87,14 +94,14 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
                 <i class="icon-star"></i>
                 <i class="icon-star"></i>
             </div>
-            <h3><?= Yii::t('main','Индивидуальная')?></h3>
+            <h3><?=Yii::t('main','Индивидуальная')?></h3>
         </div>
         <div class="package-content">
             <div class="package-price">FREE</span>
             </div>
             <ul class="package-top-features">
                 <li>
-                    Ручная настройка
+                    <?=Yii::t('main','Ручная настройка')?>
                 </li>
             </ul>
             <?if($oldLicense['license']->getLicenseType()==0):?>
@@ -179,5 +186,6 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
     </h1>
     <?=CHtml::link('',array('acquiring/paypal','companyId'=>$companyId,'licenseId'=>$oldLicense->id),array('class'=>"buy-button",'id'=>'paypal'))?>
     <?=CHtml::link('',array('acquiring/sofort','companyId'=>$companyId,'licenseId'=>$oldLicense->id),array('class'=>"buy-button",'id'=>'sofort'))?>
+    <?=CHtml::link('<i class="icon-envelope"></i> ' . Yii::t('main','отправить счет на email'),array('acquiring/salesking','companyId'=>$companyId,'licenseId'=>$oldLicense->id),array('class'=>"buy-button",'id'=>'salesking'))?>
 
 <?endif;?>

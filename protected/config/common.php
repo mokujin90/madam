@@ -65,7 +65,7 @@ return array(
         'cookieDomain' => '.' . preg_replace('/:\d+$/', '', preg_replace('/^www\./', '', $_SERVER["HTTP_HOST"])),
 
         'adminEmail' => $adminEmail,
-        'fromEmail' => 'robot@example.com',
+        'fromEmail' => "termin@wconsults.ru",
         'fromName' => 'Termin',
 
         'PAYPAL_API_USERNAME'=>'multik_api1.nxt.ru',

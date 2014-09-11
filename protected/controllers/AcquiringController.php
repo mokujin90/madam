@@ -168,4 +168,89 @@ class AcquiringController extends BaseController {
                 echo implode('<br />', $output);
             }
     }
+
+    public function actionSalesking($companyId,$licenseId) {
+        $company = Company::model()->findByPk($companyId);
+        $license = Company2License::getLicenseById($licenseId);
+
+        $clientID = "ceRadqn0ur5lZluLqadCK_";
+        $pdfTemplateID = "booBrsn0ur5lX-uLqadCK_";
+        $emailTemplateID = "boqgAYn0ur5lX-uLqadCK_";
+        $domain = 'wconsults';
+
+        $send = array(
+            "invoice" => array(
+                "contact_id" => $clientID,
+                "title" => "Your invoice No. [number]",
+                "status" => "open",
+                "line_items" => array(
+                    array(
+                        "line_item" => array(
+                            "name" => $license['license']->getName(),
+                            //"description" => "",
+                            "price_single" => $license['license']->getPrice(),
+                        )
+                    )
+                )
+            )
+        );
+        $invoiceRespond = $this->sendJson($send, "https://$domain.salesking.eu/api/invoices/");
+        if(!$invoiceRespond){
+            Yii::app()->user->setFlash('alert', Yii::t('main', 'Ошибка при создании счета. Повторите попытку позже.'));
+            $this->redirect('/company/more');
+            return;
+        }
+
+        $send = array("template_id" => $pdfTemplateID);
+
+        if(empty($company->email)){
+            Yii::app()->user->setFlash('alert', Yii::t('main', 'Поле Email компании не заполнено'));
+            $this->redirect('/company/more');
+            return;
+        }
+        if(!$answer = $this->sendJson($send, "https://$domain.salesking.eu/api/invoices/{$invoiceRespond->invoice->id}/print")){
+            Yii::app()->user->setFlash('alert', Yii::t('main', 'Ошибка при создании счета(PDF). Повторите попытку позже'));
+            $this->redirect('/company/more');
+            return;
+        }
+        $send = array(
+            "email" => array("to_addr" => $company->email, "from_addr" => Yii::app()->params['fromEmail']),
+            "template_id" => $emailTemplateID,
+            "send" => "1",
+            "archived_pdf" => "1"
+        );
+        if(!$this->sendJson($send, "https://$domain.salesking.eu/api/invoices/{$invoiceRespond->invoice->id}/emails")){
+            Yii::app()->user->setFlash('alert', Yii::t('main', 'Ошибка при отправке письма на адрес комании') . ' ' . $company->email);
+            $this->redirect('/company/more');
+            return;
+        }
+
+        Yii::app()->user->setFlash('alert', Yii::t('main', 'Счет выслан на почту комании') . ' ' . $company->email);
+        $this->redirect('/company/more');
+    }
+
+    private function sendJson($json, $url){
+        $username = 'grebenzow@gmail.com';
+        $password = 'nezer8865';
+
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($curl, CURLOPT_USERPWD, "$username:$password"); //Your credentials goes here
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($json));
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); //IMP if the url has https and you don't want to verify source certificate
+
+        $curl_response = curl_exec($curl);
+        $response = json_decode($curl_response);
+
+        $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        if ( $status != 201 && $status != 200) {
+            return false;
+        }
+        curl_close($curl);
+        return $response;
+    }
+
 }

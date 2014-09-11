@@ -7,18 +7,22 @@
  */
 class UserIdentity extends CUserIdentity
 {
+    const ERROR_NEED_CONFIRM=3;
+
     private $_id;
     private $_user;
 
     public function authenticate($auto=false)
     {
         $username = mb_strtolower($this->username);
-        $user = User::model()->find('LOWER(login)=?', array($username));
+        $user = User::model()->with('company')->find('LOWER(login)=?', array($username));
         if ($user === null)
             $this->errorCode = self::ERROR_USERNAME_INVALID;
         else if ($this->password !== $user->password && !$auto)
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
-        else {
+        else if (!$user->company->is_confirmed) {
+            $this->errorCode = self::ERROR_NEED_CONFIRM;
+        }else {
             $this->_id = $user->id;
             $this->errorCode = self::ERROR_NONE;
         }
