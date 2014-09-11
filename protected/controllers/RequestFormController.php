@@ -81,7 +81,7 @@ class RequestFormController extends BaseController
         }
 
         $param['simple'] = array(0=>'::Standard::')+Help::decorate($questions,'text')+array('-1'=>'::Finish::'); //чтобы много раз не расчитывать передадим эти данные здесь
-        $license = Company2License::getLicenseBycompany($id); //текущая лицензия пользователя
+        $license = Company2License::getCurrentLicense(); //текущая лицензия пользователя
         $this->render('index',array('questions'=>$questions,'fields'=>$fields,'param'=>$param,'license'=>$license));
     }
 

@@ -111,7 +111,7 @@ class SiteController extends BaseController
         $company->save();
         $this->redirectByRole();
     }
-    
+
     public function actionAutoLogin($id,$hash){
         $user = User::model()->findByPk($id);
         if(is_null($user))
@@ -127,7 +127,7 @@ class SiteController extends BaseController
             Yii::app()->user->login($identity, $duration);
             Yii::app()->user->setState('__id',$id);
         }
-        $this->redirect($this->createUrl('calendar/index',array('id'=>$id)));
+        $this->redirect('/');
     }
 
 }

@@ -20,14 +20,16 @@ class UserIdentity extends CUserIdentity
             $this->errorCode = self::ERROR_USERNAME_INVALID;
             return !$this->errorCode;
         }
+
         else if ($user->getHash($this->password) !== $user->password && !$auto)
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
-        else if (!$user->company->is_confirmed) {
+        else if (!$user->company->is_confirmed && !$auto) {
             $this->errorCode = self::ERROR_NEED_CONFIRM;
-        }else {
+        } else {
             $this->_id = $user->id;
             $this->errorCode = self::ERROR_NONE;
         }
+
         return !$this->errorCode;
     }
 

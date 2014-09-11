@@ -179,13 +179,26 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
 </div>
 <?php $this->endWidget(); ?>
 
-<?if($oldLicense->is_agree==0 && $oldLicense['license']->price>0)://если не подтверждено?>
+<?if($lastLicense['license']->price>0)://если не подтверждено?>
     <h1>
         <i class="icon-cog"></i>
         <span><?php echo Yii::t('main','Оплата')?></span>
     </h1>
-    <?=CHtml::link('',array('acquiring/paypal','companyId'=>$companyId,'licenseId'=>$oldLicense->id),array('class'=>"buy-button",'id'=>'paypal'))?>
-    <?=CHtml::link('',array('acquiring/sofort','companyId'=>$companyId,'licenseId'=>$oldLicense->id),array('class'=>"buy-button",'id'=>'sofort'))?>
-    <?=CHtml::link('<i class="icon-envelope"></i> ' . Yii::t('main','отправить счет на email'),array('acquiring/salesking','companyId'=>$companyId,'licenseId'=>$oldLicense->id),array('class'=>"buy-button",'id'=>'salesking'))?>
+    <?if($oldLicense['license']->id != $lastLicense['license']->id)://отличие?>
+    <div class="col-xs-12">
+        <div class="alert alert-warning alert-dismissable">
+            <i class="icon-warning-sign"></i> <?=Yii::t('main', 'Вы запросили смену лицензии. Для смены произведите оплату.')?>
+        </div>
+    </div>
+    <?endif;?>
+    <?=CHtml::link('',array('acquiring/paypal','companyId'=>$companyId,'licenseId'=>$lastLicense->id),array('class'=>"buy-button",'id'=>'paypal'))?>
+    <?=CHtml::link('',array('acquiring/sofort','companyId'=>$companyId,'licenseId'=>$lastLicense->id),array('class'=>"buy-button",'id'=>'sofort'))?>
+    <?=CHtml::link('<i class="icon-envelope"></i> ' . Yii::t('main','отправить счет на email'),array('acquiring/salesking','companyId'=>$companyId,'licenseId'=>$lastLicense->id),array('class'=>"buy-button",'id'=>'salesking'))?>
 
+<?else:?>
+<div class="col-xs-12">
+    <div class="alert alert-warning alert-dismissable">
+        <i class="icon-warning-sign"></i> <?=Yii::t('main', 'Оплата будет доступна, после установки цены Администратором.')?>
+    </div>
+</div>
 <?endif;?>

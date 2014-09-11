@@ -19,7 +19,7 @@ class EndTestCommand extends CConsoleCommand
         foreach($companies as $model){
             if(!$model->isTestPeriod())
                 continue; //уберем тех пользователей, которые оплатили лицензию в тот же день, что и зарегистрировались
-            $model['license'] = Company2License::getLicenseBycompany($model->id);
+            $model['license'] = Company2License::getCurrentLicense($model->id);
             Help::sendMail(Yii::app()->params['adminEmail'], "У компании $model->name истекает срок", 'endTest', $model);
         }
     }

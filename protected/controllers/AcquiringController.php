@@ -59,7 +59,7 @@ class AcquiringController extends BaseController {
 
         // enter your configuration key – you only can create a new configuration key by creating
         // a new Gateway project in your account at sofort.com
-        $configkey = '97766:201258:e39859925b61204a9b5bfe743bffd6b0';
+        $configkey = '97906:201751:cf345fee0ec56059b7489220b3176739';
 
         $Sofortueberweisung = new Sofortueberweisung($configkey);
         $Sofortueberweisung->setAmount($license['license']->getPrice());
@@ -92,7 +92,7 @@ class AcquiringController extends BaseController {
     public function actionSofortReturn($id, $trx){
 // enter your configuration key – you only can create a new configuration key by creating
 // a new Gateway project in your account at sofort.com
-            $configkey = '97766:201258:e39859925b61204a9b5bfe743bffd6b0';
+            $configkey = '97906:201751:cf345fee0ec56059b7489220b3176739';
 
 // read the notification from php://input  (http://php.net/manual/en/wrappers.php.php)
 // this class should be used as a callback function
@@ -119,6 +119,12 @@ class AcquiringController extends BaseController {
             $SofortLibTransactionData->sendRequest();
 
 
+        $license = Company2License::getLicenseById($id);
+        $license->doPayment();
+        $license->save();
+        $this->redirect($this->createUrl('company/more'));
+
+        return;
             $output = array();
             $methods = array(
                 'getAmount' => '',

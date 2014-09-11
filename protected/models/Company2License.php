@@ -138,9 +138,9 @@ class Company2License extends CActiveRecord
         return Company2License::model()->with('license')->findByAttributes(array('id'=>$id),array('order'=>'date DESC'));
     }
 
-    static public function getCurrentLicense(){
-        $companyId = Yii::app()->user->companyId;
-        return Company2License::model()->with('license')->findByAttributes(array('company_id'=>$companyId),array('order'=>'date DESC'));
+    static public function getCurrentLicense($id = null){
+        $companyId = $id ? $id : Yii::app()->user->companyId;
+        return Company2License::model()->with('license')->findByAttributes(array('company_id'=>$companyId, 'is_agree' => 1),array('order'=>'date DESC'));
     }
     /**
      * Метод, добавляющий еще некоторое количество дней к дате следующего платежа. Т.е. метод продляет на $day дней
@@ -225,12 +225,13 @@ class Company2License extends CActiveRecord
      * Попробует посчитать сколько осталось дней с начала активации лицензии, если это не базовая
      */
     public function getLastDay(){
-        $day = 30;
-        //ловить нечего
-        if($this->license_id==License::$base[1])
-            return '';
-        $different = Help::dateDiff(Help::currentDate(),$this->date);
-        return $day - $different['days_total'];
+        $valNow = new DateTime();
+        $valEnd = new DateTime($this->company->payment_date);
+        if($valEnd <= $valNow){
+            return false;
+        }
+        $different = Help::dateDiff(Help::currentDate(),$this->company->payment_date);
+        return $different['days_total'];
     }
 
 
