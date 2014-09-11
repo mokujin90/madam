@@ -4,18 +4,19 @@ class CompanyController extends BaseController
 {
     public function actionIndex()
     {
-        $this->pageCaption="Данные о компании";
+        $this->pageCaption=Yii::t('main',"Данные о компании");
         $this->pageIcon = 'terminal';
         $this->mainMenuActiveId="company";
-
         $id = Yii::app()->user->companyId;
         $model = Company::model()->findByPk($id);
+        $language = Language::model()->findAll(array('index'=>'id'));
         $country = Country::model()->findAll(array('index'=>'id'));
         if(isset($_POST['save']) && count($_POST['Company'])){
             $model->attributes = $_POST['Company'];
             $model->save();
+            $this->redirect($this->createUrl('company/index')); //редирект на самого себя нужен для того чтобы применились внешне все изменения
         }
-        $this->render('index',array('model'=>$model,'country'=>$country));
+        $this->render('index',array('model'=>$model,'country'=>$country,'language'=>$language));
     }
 
     public function actionSettings()

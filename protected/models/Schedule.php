@@ -116,7 +116,7 @@ class Schedule extends CActiveRecord
     static public function isRequest(&$request){
         if ($company = Company::model()->findByPk(Yii::app()->user->companyId)) {
             if ($company->is_block) {
-                $request->addError('start_date', 'Возможность создавать/редактировать события заблокирована.');
+                $request->addError('start_date', Yii::t('main','Возможность создавать/редактировать события заблокирована.'));
                 return false;
             }
         }

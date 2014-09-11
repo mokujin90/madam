@@ -8,6 +8,7 @@ class BaseController extends CController
 
     public $mailer;
     public $user;
+    public $company;
     public $mainMenuActiveId;
     public $pageCaption = '';
     public $pageIcon = 'cog';
@@ -23,12 +24,17 @@ class BaseController extends CController
 
         if (!Yii::app()->user->isGuest) {
             $this->user = User::model()->findByPk(Yii::app()->user->id);
+            $this->checkLanguage();
         }
 
         parent::init();
     }
 
-
+    public function checkLanguage(){
+        $this->company = Company::model()->with('lang')->findByPk($this->user->company_id);
+        $language = count($this->company['lang']) ? $this->company['lang']->prefix : Language::$DEFAULT;
+        Yii::app()->language = $language;
+    }
     public function filters()
     {
         return array(

@@ -80,7 +80,7 @@ class Company extends CActiveRecord
         return array(
             array('logo', 'file','allowEmpty'=>true, 'types' => 'png,jpg,gif'),
             array('country_id', 'required'),
-            array('country_id, booking_deadline, booking_interval, enable_mail_notice, enable_sms_notice, select_timetable,no_logo', 'numerical', 'integerOnly' => true),
+            array('country_id,language_id, booking_deadline, booking_interval, enable_mail_notice, enable_sms_notice, select_timetable,no_logo', 'numerical', 'integerOnly' => true),
             array('name, address, city, site, url, mail_notice_address', 'length', 'max' => 255),
             array('phone, mobile_phone, fax, sms_notice_phone', 'length', 'max' => 20),
             array('email', 'length', 'max' => 100),
@@ -102,6 +102,7 @@ class Company extends CActiveRecord
 		return array(
             'company2Licenses' => array(self::HAS_MANY, 'Company2License', 'company_id','order'=>'date DESC'),
             'country' => array(self::BELONGS_TO, 'Country', 'country_id'),
+            'lang' => array(self::BELONGS_TO, 'Language', 'language_id'),
 			'companyFields' => array(self::HAS_MANY, 'CompanyField', 'company_id'),
 			'questions' => array(self::HAS_MANY, 'Question', 'company_id'),
 			'users' => array(self::HAS_MANY, 'User', 'company_id'),
