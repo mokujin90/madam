@@ -185,15 +185,27 @@ class Company extends CActiveRecord
     public function getHash(){
         return md5($this->create_date);
     }
+    protected function beforeSave()
+    {
+        if(parent::beforeSave())
+        {
+            if($this->isNewRecord)
+            {
+                $this->create_date = Help::currentDate();
+                $paymentDate = new DateTime($this->create_date);
+                $paymentDate->add(new DateInterval("P".Company2License::addedDay."D"));
+                $this->payment_date = $paymentDate->format(Help::DATETIME);
+            }
+            return true;
+        }
+        else
+            return false;
+    }
     protected function afterSave()
     {
 
         parent::afterSave();
         if($this->isNewRecord){
-            $this->create_date = Help::currentDate();
-            $paymentDate = new DateTime($this->create_date);
-            $paymentDate->add(new DateInterval("P".Company2License::addedDay."D"));
-            $this->payment_date = $paymentDate->format(Help::DATETIME);
             $license = new Company2License;
             $license->attributes = array('license_id'=>License::DEFAULT_LICENSE_ID,'company_id'=>$this->id,'is_agree'=>1,'date'=>Help::currentDate());
             $license->save();

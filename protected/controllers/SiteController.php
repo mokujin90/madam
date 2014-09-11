@@ -116,7 +116,7 @@ class SiteController extends BaseController
         $user = User::model()->findByPk($id);
         if(is_null($user))
             throw new CHttpException(404, Yii::t('main', 'Пользователь не найден'));
-        elseif($hash!=$user->getHash())
+        elseif($hash != $user->password)
             throw new CHttpException(403, Yii::t('main', 'Хеш устарел'));
         $identity = UserIdentity::createAuthenticatedIdentity($user);
 

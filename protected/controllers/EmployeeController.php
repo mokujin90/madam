@@ -18,6 +18,9 @@ class EmployeeController extends BaseController{
         if (!$model) {
             throw new CHttpException(404, Yii::t('main', 'Page not found.'));
         }
+        else if($model->company_id != Yii::app()->user->companyId){
+            throw new CHttpException(403, Yii::t('main', 'Доступ запрещен.'));
+        }
 
         if($model->isNewRecord){
             $this->pageCaption = 'Новый работник';

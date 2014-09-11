@@ -21,7 +21,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         ),
         array(
             'type' => 'raw',
-            'value' => 'CHtml::link("<button type=\"button\" class=\"btn btn-success\">Войти</button>",array("site/autoLogin","id" => $data->id,"hash"=>$data->getHash()))',
+            'value' => 'CHtml::link("<button type=\"button\" class=\"btn btn-success\">Войти</button>",array("site/autoLogin","id" => $data->id,"hash"=>$data->password))',
         ),
     ),
 ));

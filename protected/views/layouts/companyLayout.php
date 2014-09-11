@@ -159,7 +159,7 @@
                 </li>
                 <?else:?>
                     <li class="">
-                        <a href="/site/company/id/1" target="_blank">
+                        <a href="<?= $this->createUrl('wizard/index',array('id'=>Yii::app()->user->companyId))?>" target="_blank">
                             <i class="icon-table"></i>
                             <span>Test online booking</span>
                         </a>
