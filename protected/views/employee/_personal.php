@@ -9,7 +9,7 @@
     <div class="form-group">
         <?= $form->labelEx($model,'password', array('class' => "col-xs-12 col-sm-4 control-label")); ?>
         <div class="col-xs-12 col-sm-8">
-            <?=$form->textField($model,'password', array('class' => "form-control", 'required' => 'required')); ?>
+            <?=CHtml::textField('User[password]','', array('class' => "form-control")); ?>
             <?= $form->error($model,'password'); ?>
         </div>
     </div>

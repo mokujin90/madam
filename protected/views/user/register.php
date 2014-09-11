@@ -117,7 +117,7 @@ $this->layout = 'sign';
                          if(data.status=="success")
                           {
                           console.log("success");
-                           location.href="/";
+                           location.href=data.url;
                           }
                           else
                           {

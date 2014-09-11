@@ -31,8 +31,16 @@ class EmployeeController extends BaseController{
 
         $companyId = Yii::app()->user->companyId;
         $question = Question::getQuestion($companyId);
+
         if (isset($_POST['User'])) {
+            $oldPwd = $model->password;
             $model->attributes = $_POST['User'];
+            if(!$model->isNewRecord){
+                $model->password = $model->password == '' ? $oldPwd : $model->getHash();
+            }
+            else if($model->password != ''){
+                $model->password = $model->getHash();
+            }
             $model->scheduleUpdate = isset($_POST['schedule']) ? $_POST['schedule'] : array();
             $model->answered = isset($_POST['question']) ? $_POST['question'] : array();
             $isNewRecord = $model->isNewRecord;
