@@ -96,31 +96,43 @@
                         <?if($enable[$day][$hour]):?>
                             <td>
                                 <?foreach($eventInterval[$day][$hour] as $event):?>
-                                    <?if(isset($event['event'])):?>
-                                        <div class="event-wrap">
-                                        <?=CHtml::link(
-                                            ($this->unconfirmIcon($event['model']) . $this->isRepeatIcon($event['model']) . $event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
-                                            array('calendar/event',
-                                                'start' => $event['start']->format(Help::DATETIME),
-                                                'end' => $event['end']->format(Help::DATETIME),
-                                                'user_id' => $this->user->id,
-                                                'id' =>(isset($event['event']) ? $event['event'] : 0)
-                                            ),
-                                            array(
-                                                'class' => "inline-200 " . $this->getEventClass($event),
-                                                'data-content' =>(isset($event['event']) ? ($this->getEventHint($event['model'])) : false),
-                                                'data-title' => (isset($event['event']) ? ($this->getEventAbbr($event['model'])) : false),
-                                                'data-placement' => 'top',
-                                            ))?>
-                                            <br>
-                                            <div class="event-info">
-                                                <?=CHtml::checkBox('', false, array('data-day' => $day, 'value' => $event['model']->id, 'class' => 'event-cb'))?>
-                                                <?=$this->getEventStatus($event['model'])?>
-                                                <?=$this->isBlockIcon($event['model'])?>
-                                                <?=CHtml::tag('span', array('class' => 'comment-text ' . ($event['model']->is_block ? 'block-margin' : '')), $event['model']->comment);?>
-                                                <?=$this->getCopyLink($event)?>
+                                        <?if(isset($event['event'])):?>
+                                            <?if($event['model']->block_interval):?>
+                                            <?=CHtml::link(
+                                                ('<i class="icon-lock"></i> ' . $event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
+                                                array('calendar/freeInterval',
+                                                    'user_id' => $this->user->id,
+                                                    'id' => $event['event']
+                                                ),
+                                                array(
+                                                    'class' => "inline-200 " . $this->getEventClass($event),
+                                                ))?>
+                                            <?else:?>
+                                            <div class="event-wrap">
+                                                <?=CHtml::link(
+                                                    ($this->unconfirmIcon($event['model']) . $this->isRepeatIcon($event['model']) . $event['start']->format('H:i') . ' - ' . $event['end']->format('H:i')),
+                                                    array('calendar/event',
+                                                        'start' => $event['start']->format(Help::DATETIME),
+                                                        'end' => $event['end']->format(Help::DATETIME),
+                                                        'user_id' => $this->user->id,
+                                                        'id' =>(isset($event['event']) ? $event['event'] : 0)
+                                                    ),
+                                                    array(
+                                                        'class' => "inline-200 " . $this->getEventClass($event),
+                                                        'data-content' =>(isset($event['event']) ? ($this->getEventHint($event['model'])) : false),
+                                                        'data-title' => (isset($event['event']) ? ($this->getEventAbbr($event['model'])) : false),
+                                                        'data-placement' => 'top',
+                                                    ))?>
+                                                <br>
+                                                <div class="event-info">
+                                                    <?=CHtml::checkBox('', false, array('data-day' => $day, 'value' => $event['model']->id, 'class' => 'event-cb'))?>
+                                                    <?=$this->getEventStatus($event['model'])?>
+                                                    <?=$this->isBlockIcon($event['model'])?>
+                                                    <?=CHtml::tag('span', array('class' => 'comment-text ' . ($event['model']->is_block ? 'block-margin' : '')), $event['model']->comment);?>
+                                                    <?=$this->getCopyLink($event)?>
+                                                </div>
                                             </div>
-                                        </div>
+                                            <?endif?>
                                     <br>
 
                                     <?else:?>
