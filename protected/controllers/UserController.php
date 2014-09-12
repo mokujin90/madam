@@ -74,10 +74,10 @@ class UserController extends BaseController
                     $user->password_repeat = $user->getHash($user->password_repeat);
                 }
                 if($user->save()){
-                    //Help::sendMail($user->login, Yii::t('mailer', 'Подтверждение регистрации'), 'registerConfirm', $company);
-                    $identity=new UserIdentity($user->login,$user->password);
+                    Help::sendMail($user->login, Yii::t('mailer', 'Подтверждение регистрации'), 'registerConfirm', $company);
+                    /*$identity=new UserIdentity($user->login,$user->password);
                     $identity->authenticate();
-                    Yii::app()->user->login($identity,0);
+                    Yii::app()->user->login($identity,0);*/
                     echo CJSON::encode(array(
                         'status'=>'success',
                         'url'=>$this->createUrl('user/notice')
