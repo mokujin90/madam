@@ -3,7 +3,7 @@ require(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'local.php');
 Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
-    'name' => 'PROJECT_NAME',
+    'name' => 'Termin',
     'theme'=>'bootstrap', // requires you to copy the theme under your themes directory
 
     // preloading 'log' component
@@ -21,6 +21,7 @@ return array(
         'application.widgets.*',
         'zii.widgets.jui.*',
         'zii.widgets.grid.*',
+        'application.extensions.JsTrans.*',
         'application.extensions.easyPaypal.*'
     ),
 

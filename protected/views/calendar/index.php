@@ -3,6 +3,7 @@ Yii::app()->clientScript->registerScriptFile('/js/jquery.fancybox.pack.js', CCli
 Yii::app()->clientScript->registerScriptFile('/js/main.js', CClientScript::POS_END);
 Yii::app()->clientScript->registerScript('modal', 'modal.init()', CClientScript::POS_READY);
 Yii::app()->clientScript->registerCssFile('/css/jquery.fancybox.css');
+
 Yii::app()->clientScript->registerScriptFile('/js/moment.min.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerScriptFile('/js/locales/bootstrap-datetimepicker.ru.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerScriptFile('/js/bootstrap-datetimepicker.js', CClientScript::POS_HEAD);

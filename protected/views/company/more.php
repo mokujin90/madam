@@ -42,7 +42,7 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
                         for ($x=0; $x<$countStar; $x++) echo '<i class="icon-star"></i>';
                     ?>
                 </div>
-                <h3></i><?=$license->request_text?></h3>
+                <h3></i><?= Yii::t('main',$license->request_text)?></h3>
             </div>
             <div class="package-content">
                 <div class="package-price"><?=$license->price==0 ? 'FREE' : "$".$license->price.'<span class="package-month">/mo</span>'?></span>

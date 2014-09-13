@@ -137,7 +137,7 @@
                                                         unset($simple[$id]);
                                                     ?>
                                                     <div class="col-xs-5">
-                                                        <label>Next Qestion</label>
+                                                        <label><?= Yii::t('main','Следущий вопрос')?></label>
                                                         <?= CHtml::dropDownList("question[".$count."][answer][".$countAnswer."][next_question]",$answer->next_question,$simple,array('class'=>'form-control change-next'))?>
                                                     </div>
                                                 <?endif;?>

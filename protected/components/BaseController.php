@@ -34,6 +34,7 @@ class BaseController extends CController
         $this->company = Company::model()->with('lang')->findByPk($this->user->company_id);
         $language = count($this->company['lang']) ? $this->company['lang']->prefix : Language::$DEFAULT;
         Yii::app()->language = $language;
+        new JsTrans('main',$language);
     }
     public function filters()
     {

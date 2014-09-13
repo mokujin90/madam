@@ -6,11 +6,11 @@
 
 
 <ul class="nav nav-tabs" role="tablist">
-    <li class="active"><a href="/#statement" role="tab" data-toggle="tab">Privacy Statement</a></li>
-    <li class=""><a href="/#condition" role="tab" data-toggle="tab">Conditions</a></li>
-    <li class=""><a href="/#reference" role="tab" data-toggle="tab">Reference</a></li>
-    <li class=""><a href="/#terms" role="tab" data-toggle="tab">Terms and condition</a></li>
-    <li><a href="/#imprint" role="tab" data-toggle="tab">Imprint</a></li>
+    <li class="active"><a href="/#statement" role="tab" data-toggle="tab"><?= Yii::t('main','Политика конфиденциальности')?></a></li>
+    <li class=""><a href="/#condition" role="tab" data-toggle="tab"><?= Yii::t('main','Условия')?></a></li>
+    <li class=""><a href="/#reference" role="tab" data-toggle="tab"><?= Yii::t('main','Требования')?></a></li>
+    <li class=""><a href="/#terms" role="tab" data-toggle="tab"><?= Yii::t('main','Сроки и условия')?></a></li>
+    <li><a href="/#imprint" role="tab" data-toggle="tab"><?= Yii::t('main','Итог')?></a></li>
 </ul>
 <?php $form=$this->beginWidget('CActiveForm', array(
     'id'=>'distance-form',
@@ -52,7 +52,7 @@
 <div class="">
     <hr>
     <div class="col-lg-offset-5 col-lg-5">
-        <button type="submit" class="btn btn-success">Сохранить</button>
+        <button type="submit" class="btn btn-success"><?= Yii::t('main','Сохранить')?></button>
     </div>
 </div>
 <? $this->endWidget(); ?>

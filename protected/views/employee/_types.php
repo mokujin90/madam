@@ -1,6 +1,6 @@
 <div class="col-xs-12 col-sm-8">
     <div class="form-group">
-        <label class="col-xs-4 control-label">Ответы, одобрены для графика</label>
+        <label class="col-xs-4 control-label"><?= Yii::t('main','Ответы, одобрены для графика')?></label>
         <div class="col-xs-8">
             <div class="radio">
                 <?php echo CHtml::radioButton('User[all_answers]',$model->all_answers==1?true:false,array('id'=>'option_all_answer','value'=>1,'class'=>'user-type-answer'))?>

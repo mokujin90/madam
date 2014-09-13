@@ -2,16 +2,16 @@
 ?>
 <html class=" js no-touch localstorage svg">
 <head>
-    <title>Sign in | Flatty - Flat Administration Template</title>
+    <title>Termin: регистрация</title>
     <!-- / bootstrap [required] -->
-    <link href="../css/bootstrap.css" media="all" rel="stylesheet" type="text/css">
+    <link href="/css/bootstrap.css" media="all" rel="stylesheet" type="text/css">
     <!-- / theme file [required] -->
-    <link href="../css/light-theme.css" media="all" id="color-settings-body-color" rel="stylesheet"
+    <link href="/css/light-theme.css" media="all" id="color-settings-body-color" rel="stylesheet"
           type="text/css">
     <!-- / coloring file [optional] (if you are going to use custom contrast color) -->
-    <link href="../css/theme-colors.css" media="all" rel="stylesheet" type="text/css">
+    <link href="/css/theme-colors.css" media="all" rel="stylesheet" type="text/css">
     <!-- / demo file [not required!] -->
-    <link href="../css/demo.css" media="all" rel="stylesheet" type="text/css">
+    <link href="/css/demo.css" media="all" rel="stylesheet" type="text/css">
     <style></style>
 </head>
 <body class="contrast-red login contrast-background">

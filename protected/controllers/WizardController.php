@@ -161,11 +161,11 @@ class WizardController extends BaseController
         $mail = $request->getEmailField();
         if ($delete) {
             $request->delete();
-            Help::sendMail($mail, 'Уведомление о удалении termin', 'unconfirmed', $request);
+            Help::sendMail($mail, Yii::t('main','Уведомление о удалении termin'), 'unconfirmed', $request);
         } else {
             $request->is_confirm = 1;
             $request->save(false);
-            Help::sendMail($mail, 'Уведомление о создании termin', 'notification', $request);
+            Help::sendMail($mail, Yii::t('main','Уведомление о создании termin'), 'notification', $request);
         }
         if($external){
             $this->redirect(Yii::app()->createUrl('site/panel',array('status'=>'2')));

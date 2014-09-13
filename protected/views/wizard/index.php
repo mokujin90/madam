@@ -50,10 +50,10 @@
         </div>
         <div class="col-xs-12">
         <?if($info->show_term==1):?>
-            <div><?=$info->getTermLink('Term and Conditions')?></div>
+            <div><?=$info->getTermLink(Yii::t('main','Сроки и условия'))?></div>
         <?endif;?>
         <?if($info->param_imprint!=0):?>
-            <div><?=$info->getImprintLink('Imprint')?></div>
+            <div><?=$info->getImprintLink(Yii::t('main','Итоговые данные'))?></div>
         <?endif;?>
         </div>
     </div>
@@ -90,7 +90,7 @@
             <div class="footer-wrapper">
                 <div class="row">
                     <div class="col-sm-6 text">
-                        Copyright © 2013 Your Project Name
+                        Copyright © 2013 <?=Yii::app()->name;?>
                     </div>
 
                 </div>

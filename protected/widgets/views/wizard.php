@@ -37,10 +37,10 @@ if($this->wizardStep){
                     </li>
                 </ul>
                 <div class="actions">
-                    <button class="btn btn-xs btn-prev"><i class="icon-arrow-left"></i>Prev
+                    <button class="btn btn-xs btn-prev"><i class="icon-arrow-left"></i><?= Yii::t('main','Назад')?>
                     </button>
                     <button class="btn btn-xs btn-success btn-next" data-last="Finish">
-                        Next
+                        <?= Yii::t('main','Далее')?>
                         <i class="icon-arrow-right"></i>
                     </button>
                 </div>
@@ -164,7 +164,7 @@ if($this->wizardStep){
                                 date: dateVal
                             },
                             error: function () {
-                                $.jGrowl("Ошибка сервера");
+                                $.jGrowl("<?=Yii::t('main','Ошибка сервера')?>");
                             },
                             success: function (data) {
                                 $('#available-time').html(data);
@@ -182,7 +182,7 @@ if($this->wizardStep){
                         id: $(this).closest('.event').attr('data-user-id')
                     },
                     error: function () {
-                        $.jGrowl("Ошибка сервера");
+                        $.jGrowl("<?=Yii::t('main','Ошибка сервера')?>");
                     },
                     success: function (data) {
                         $('#user-list').html(data);

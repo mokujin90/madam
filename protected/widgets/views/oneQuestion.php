@@ -26,6 +26,6 @@
         </div>
     </div>
     <?if($this->wizardStep && $question->issetNext()):?>
-        <button style="<?if(!$showAgree):?>display:none;<?endif?>" class="agree btn">Следующий вопрос</button>
+        <button style="<?if(!$showAgree):?>display:none;<?endif?>" class="agree btn"><?= Yii::t('main','Следующий вопрос')?></button>
     <?endif;?>
 </div>

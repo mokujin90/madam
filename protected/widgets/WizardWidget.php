@@ -30,14 +30,9 @@ class WizardWidget extends CWidget{
      */
     public $showAgree=false;
     public function run(){
-        /*if(empty($this->question[0])){
-            echo "Извините, но в базе данных вопросы отсуствуют";
-        }
-        else{*/
             $this->request = $this->request ? $this->request : new Request(); //wizard fix
             $this->render($this->skin,array('question'=>$this->question,'field'=>$this->field,'request'=>$this->request,'companyId'=>$this->companyId,'showAgree'=>$this->showAgree,'company'=>$this->company));
-        /*}*/
-  }
+    }
 
     /**
      * В зависимости от типа вопроса выдаст определенный вывод
@@ -47,7 +42,7 @@ class WizardWidget extends CWidget{
      */
     public function drawAnswer($question,$answerArray=array()){
         if(is_null($question)){
-            return "Извините, вопросов в базе данных нет";
+            return Yii::t('main',"Извините, вопросов в базе данных нет");
         }
         $result='';
         $count=0;

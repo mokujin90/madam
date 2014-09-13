@@ -38,9 +38,15 @@ class UserController extends BaseController
         $this->render('login', array('model' => $model));
     }
 
-    public function actionNotice(){
+    public function actionNotice($id){
+        $user = User::model()->findByPk($id);
+        if (!$user) {
+            throw new CHttpException(404, Yii::t('main', 'Пользователь не найден'));
+        }
+        Help::sendMail($user->login, Yii::t('mailer', 'Подтверждение регистрации'), 'registerConfirm', $user->company);
         $this->render('emailNotice');
     }
+
     public function actionLogout()
     {
         Yii::app()->user->logout(false);
@@ -74,13 +80,9 @@ class UserController extends BaseController
                     $user->password_repeat = $user->getHash($user->password_repeat);
                 }
                 if($user->save()){
-                    Help::sendMail($user->login, Yii::t('mailer', 'Подтверждение регистрации'), 'registerConfirm', $company);
-                    /*$identity=new UserIdentity($user->login,$user->password);
-                    $identity->authenticate();
-                    Yii::app()->user->login($identity,0);*/
                     echo CJSON::encode(array(
                         'status'=>'success',
-                        'url'=>$this->createUrl('user/notice')
+                        'url'=>$this->createUrl('user/notice',array('id'=>$user->id))
                     ));
                     Yii::app()->end();
                 }

@@ -85,6 +85,6 @@ Yii::app()->clientScript->registerScript('calendarInit', 'more.init()', CClientS
 )); ?>
     <?php $this->renderPartial('../../admin/views/admin/_license', array('model'=>$manual,'form'=>$form, 'style' => '')); ?>
     <div class="col-lg-6">
-        <button type="submit" value="1" name="save" class="btn btn-success">Save</button>
+        <button type="submit" value="1" name="save" class="btn btn-success"><?= Yii::t('main','Сохранить')?></button>
     </div>
 <?php $this->endWidget(); ?>

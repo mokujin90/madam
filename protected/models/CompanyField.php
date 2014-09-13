@@ -18,8 +18,11 @@
  */
 class CompanyField extends CActiveRecord
 {
-    static $params = array('disabled'=>'Отключить','enabled'=>'Не обзательно', 'required'=>'Обязательно');
-	/**
+
+    public static function params(){
+        return array('disabled'=>Yii::t('main','Отключить'),'enabled'=>Yii::t('main','Не обзательно'), 'required'=>Yii::t('main','Обязательно'));
+    }
+    /**
 	 * @return string the associated database table name
 	 */
 	public function tableName()

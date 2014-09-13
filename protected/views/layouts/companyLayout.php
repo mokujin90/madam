@@ -41,23 +41,25 @@
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li>
-                        <a href="#">
-                            <i class="icon-user"></i>
-                            Profile
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon-cog"></i>
-                            Settings
-                        </a>
-                    </li>
-                    <li class="divider"></li>
+                    <?if(Yii::app()->user->owner==1):?>
+                        <li>
+                            <a href="<?=$this->createUrl('company/index')?>">
+                                <i class="icon-user"></i>
+                                <?= Yii::t('main','Профиль')?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?=$this->createUrl('company/settings')?>">
+                                <i class="icon-cog"></i>
+                                <?= Yii::t('main','Настройки')?>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                    <?endif;?>
                     <li>
                         <a href="/user/logout">
                             <i class="icon-signout"></i>
-                            Sign out
+                            <?= Yii::t('main','Выйти')?>
                         </a>
                     </li>
                 </ul>
@@ -74,42 +76,42 @@
                 <li class="">
                     <a href="/company"  class="<?=$this->mainMenuActiveId=='company'?'in':'';?>">
                         <i class="icon-cog"></i>
-                        <span>Company data</span>
+                        <span><?= Yii::t('main','Компания')?></span>
                     </a>
                 </li>
 
                 <li class="">
                     <a href="/company/settings"  class="<?=$this->mainMenuActiveId=='settings'?'in':'';?>">
                         <i class="icon-cog"></i>
-                        <span>Settings</span>
+                        <span><?= Yii::t('main','Настройки')?></span>
                     </a>
                 </li>
 
                 <li class="">
                     <a href="/company/distance"  class="<?=$this->mainMenuActiveId=='distance'?'in':'';?>">
                         <i class="icon-cog"></i>
-                        <span>Distance</span>
+                        <span><?= Yii::t('main','Юридическая информация')?></span>
                     </a>
                 </li>
 
                 <li class="">
                     <a href="/requestForm" class="<?=$this->mainMenuActiveId=='question'?'in':'';?>">
                         <i class="icon-question"></i>
-                        <span>Date fields and date questions</span>
+                        <span>Данные и вопросы</span>
                     </a>
                 </li>
 
                 <li>
                     <a class="dropdown-collapse <?=$this->mainMenuActiveId=='employee'?'in':'';?>" href="#">
                         <i class="icon-group"></i>
-                        <span>Employees</span>
+                        <span><?= Yii::t('main','Работники')?></span>
                         <i class="icon-angle-down angle-down"></i>
                     </a>
                     <ul class="nav nav-stacked <?=$this->mainMenuActiveId=='employee'?'in':'';?>">
                         <li class="<?=empty($_GET['id']) && $this->mainMenuActiveId=='employee' ?'active':'';?>">
                             <a href="/employee/create">
                                 <i class="icon-plus"></i>
-                                <span>Добавить работника</span>
+                                <span><?= Yii::t('main','Добавить работника')?></span>
                             </a>
                         </li>
                         <?foreach(User::getMenuList() as $item){?>
@@ -125,19 +127,19 @@
                 <li class="">
                     <a href="<?= $this->createUrl('wizard/index',array('id'=>Yii::app()->user->companyId))?>" target="_blank">
                         <i class="icon-table"></i>
-                        <span>Test online booking</span>
+                        <span><?= Yii::t('main','Тест онлайн-мастера')?></span>
                     </a>
                 </li>
                 <li class="">
                     <a href="<?= $this->createUrl('/wizard/iframe')?>" target="_blank">
                         <i class="icon-table"></i>
-                        <span>Test IFRAME</span>
+                        <span><?= Yii::t('main','Тест виджета')?></span>
                     </a>
                 </li>
                 <li>
                     <a class="dropdown-collapse <?=$this->mainMenuActiveId=='calendar'?'in':'';?>" href="#">
                         <i class="icon-calendar"></i>
-                        <span>Calendar</span>
+                        <span><?= Yii::t('main','Календарь')?></span>
                         <i class="icon-angle-down angle-down"></i>
                     </a>
                     <ul class="nav nav-stacked <?=$this->mainMenuActiveId=='calendar'?'in':'';?>">
@@ -154,20 +156,20 @@
                 <li class="">
                     <a href="/company/more"  class="<?=$this->mainMenuActiveId=='more'?'in':'';?>">
                         <i class="icon-shopping-cart"></i>
-                        <span>License</span>
+                        <span><?= Yii::t('main','Лицензии')?></span>
                     </a>
                 </li>
                 <?else:?>
                     <li class="">
                         <a href="<?= $this->createUrl('wizard/index',array('id'=>Yii::app()->user->companyId))?>" target="_blank">
                             <i class="icon-table"></i>
-                            <span>Test online booking</span>
+                            <span><?= Yii::t('main','Тест онлайн-мастера')?></span>
                         </a>
                     </li>
                     <li class="">
                         <a href="/calendar/index/id/<?=Yii::app()->user->id;?>" class="<?=$this->mainMenuActiveId=='calendar'?'in':'';?>">
                             <i class="icon-calendar"></i>
-                            <span>Calendar</span>
+                            <span><?= Yii::t('main','Календарь')?></span>
                         </a>
                     </li>
                 <?endif?>
@@ -224,7 +226,7 @@
                 <div class="footer-wrapper">
                     <div class="row">
                         <div class="col-sm-6 text">
-                            Copyright © 2013 Your Project Name
+                            Copyright © 2014 <?= Yii::app()->name?>
                         </div>
                         <div class="col-sm-6 buttons">
 

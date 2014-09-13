@@ -153,7 +153,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
                 </div>
             </div>
             <div class="form-group">
-                <?php echo CHtml::label('link','',array('class'=>"col-xs-12 col-sm-4 control-label")); ?>
+                <?php echo CHtml::label(Yii::t('main','Ссылка'),'',array('class'=>"col-xs-12 col-sm-4 control-label")); ?>
                 <div class="col-xs-10 col-sm-8">
                     <input class='form-control' value='<a href="http://www.<?=Yii::app()->params['host']?>/wizard/index/id/<?=$model->id?>">termin booking</a>'>
                 </div>

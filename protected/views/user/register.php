@@ -4,13 +4,13 @@ $this->layout = 'sign';
  * @var $user User
  * @var $company Company
  */
+Yii::app()->clientScript->registerCssFile('/css/jquery.fancybox.css');
+Yii::app()->clientScript->registerScriptFile('/js/jquery.fancybox.pack.js', CClientScript::POS_END);
 ?>
 <div class="container">
     <div class="row">
         <div class="col-sm-4 col-sm-offset-4">
             <h1 class="text-center title">Register</h1>
-
-
             <?php $form=$this->beginWidget('CActiveForm', array(
                 'id'=>'user-form',
                 'enableClientValidation'=>true,
@@ -111,23 +111,22 @@ $this->layout = 'sign';
                     array(
                         'dataType'=>'json',
                         'type'=>'post',
+                        'beforeSend'=>'function(){$.fancybox.showLoading();}',
                         'success'=>'function(data)
                         {
-                        console.log(data);
                          if(data.status=="success")
                           {
-                          console.log("success");
                            location.href=data.url;
                           }
                           else
                           {
                             $.each(data, function(key, val)
                             {
-                            console.log($("#user-form #"+key+"_em_"));
                               $("#user-form #"+key+"_em_").text(val);
                               $("#user-form #"+key+"_em_").show();
                             });
                           }
+                          $.fancybox.hideLoading();
                         }'
                     ),array('class' => 'btn btn-block'));
 
