@@ -177,6 +177,9 @@ modal={
                         pickDate: false
                     });
                     $('.datepicker-input').datetimepicker({});*/
+                    $('button.cancel').click(function(){
+                        $.fancybox.close();
+                    });
                 }
             }
         });

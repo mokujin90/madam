@@ -174,6 +174,7 @@ class Request extends CActiveRecord
         if ($new->save()) {
             return $new;
         }
+        //Help::dump($new->getErrors());
         return null;
     }
 

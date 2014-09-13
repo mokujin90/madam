@@ -30,14 +30,9 @@ class WizardWidget extends CWidget{
      */
     public $showAgree=false;
     public function run(){
-       /* if(is_null($this->question[0])){
-            echo "Извините, но в базе данных вопросы отсуствуют";
-        }
-        else{*/
             $this->request = $this->request ? $this->request : new Request(); //wizard fix
             $this->render($this->skin,array('question'=>$this->question,'field'=>$this->field,'request'=>$this->request,'companyId'=>$this->companyId,'showAgree'=>$this->showAgree,'company'=>$this->company));
-       //}
-  }
+    }
 
     /**
      * В зависимости от типа вопроса выдаст определенный вывод
