@@ -308,8 +308,10 @@ class Request extends CActiveRecord
     }
 
     public function sendNotification($confirm){
-        $companyMail = $this->user->company->mail_notice_address;
-        if($confirm){
+        $companyMail = array();
+        $companyMail[] = $this->user->company->mail_notice_address;
+        $companyMail[] = $this->user->login;
+        if ($confirm) {
             Help::sendMail($this->getEmailField(), 'termin подтверждается', 'processed', $this);
             Help::sendMail($companyMail, 'Уведомление о создании termin с подтверждением', 'companyConfirmation', $this);
         } else {

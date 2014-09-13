@@ -203,8 +203,14 @@ class Help{
         $mailer->SMTPSecure = 'ssl';
 
         $mailer->ClearAddresses();
-        $mailer->AddAddress($to);
-        $mailer->AddBCC($to);
+        if (is_array($to)) {
+            foreach ($to as $item) {
+                $mailer->AddBCC($item);
+            }
+
+        } else {
+            $mailer->AddBCC($to);
+        }
         $mailer->Subject = Yii::t('mailer', $theme);
         $mailer->Body = Yii::app()->controller->renderPartial("/mailer/$view", array('request' => $model), true);
         $mailer->IsHTML(true);

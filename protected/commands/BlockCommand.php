@@ -17,6 +17,8 @@ class BlockCommand extends CConsoleCommand
             $currentLicense->save();
             $model->is_block = 1;
             $model->save();
+            $model['license'] = Company2License::getCurrentLicense($model->id);
+            Help::sendMail(Yii::app()->params['adminEmail'], Yii::t('main', "Компания заблокирована"), 'companyBlock', $model);
         }
     }
 }
