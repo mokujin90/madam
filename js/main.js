@@ -63,7 +63,7 @@ var question = {
                 count: $('#question-tab>.tab-pane').length+1
             },
             error: function () {
-                $.jGrowl("Ошибка сервера");
+                $.jGrowl(Yii.t("main","Ошибка сервера"));
                 calendarOnChange = false;
             },
             success: function (data) {
@@ -101,7 +101,7 @@ var question = {
     sortedIndex:function(){
         var index = 1;
         $.each($('#questions .nav-tabs li'), function () { //заменим имена
-            $(this).find('a').html('<span class="hidden-xs question-text">Вопрос</span> '+index++);
+            $(this).find('a').html('<span class="hidden-xs question-text">'+Yii.t('main','Вопрос')+'</span> '+index++);
         });
     },
     addAnswer:function(){
@@ -417,7 +417,7 @@ wizard={
                     ajaxQuestionProcess = false;
                 },
                 error: function () {
-                    $.jGrowl("Ошибка сервера, повторите попытку");
+                    $.jGrowl(Yii.t('main',"Ошибка сервера, повторите попытку"));
                     ajaxQuestionProcess = false;
                 },
                 dataType: 'html'
@@ -493,7 +493,7 @@ calendar = {
                         id: eventsID
                     },
                     error: function () {
-                        $.jGrowl("Ошибка сервера");
+                        $.jGrowl(Yii.t('main',"Ошибка сервера"));
                     },
                     success: function (data) {
                         calendar.refresh($('.current-date', $wrap).data('date'));
@@ -515,7 +515,7 @@ calendar = {
                         interval: intervals
                     },
                     error: function () {
-                        $.jGrowl("Ошибка сервера");
+                        $.jGrowl(Yii.t('main',"Ошибка сервера"));
                     },
                     success: function (data) {
                         calendar.refresh($('.current-date', $wrap).data('date'));
@@ -537,7 +537,7 @@ calendar = {
                         id: eventsID
                     },
                     error: function () {
-                        $.jGrowl("Ошибка сервера");
+                        $.jGrowl(Yii.t('main',"Ошибка сервера"));
                     },
                     success: function (data) {
                         $('#print-list').html(data).printElement();
@@ -574,7 +574,7 @@ calendar = {
                         id: eventsID
                     },
                     error: function () {
-                        $.jGrowl("Ошибка сервера");
+                        $.jGrowl(Yii.t('main',"Ошибка сервера"));
                     },
                     success: function (data) {
                         calendar.refresh($('.current-date', $wrap).data('date'));
@@ -628,14 +628,14 @@ calendar = {
                     active_tab: $('#calendar-tabs .active').data('tab')
                 },
                 error: function () {
-                    $.jGrowl("Ошибка сервера");
+                    $.jGrowl(Yii.t('main',"Ошибка сервера"));
                     calendarOnChange = false;
                 },
                 success: function (data) {
                     $('#day-calendar, #week-calendar').remove();
                     $('#calendar-tab-content').append(data);
                     calendarOnChange = false;
-                    $.jGrowl("Календарь обновлен");
+                    $.jGrowl(Yii.t('main',"Календарь обновлен"));
                 }
             });
         }
@@ -658,7 +658,7 @@ calendar = {
 },
 common = {
     deleteConfirm:function(){
-        return (confirm('Удалить?'));
+        return (confirm(Yii.t('main','Удалить?')));
     }
 },
 more ={
@@ -681,7 +681,6 @@ employeeForm={
             if($this.find(":selected").val()==value){
                 var $textField = '<input style="margin-top: 5px;" class="form-control manual-value" value="0" type="text" name="'+$this.attr('name')+'">';
                 $this.after($textField);
-                console.log('333');
             }
             else{
                 $this.next('.manual-value').remove();
