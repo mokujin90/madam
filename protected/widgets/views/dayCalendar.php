@@ -63,7 +63,7 @@
             <?endfor?>
             <?if($this->disabledDay($enable)):?>
                 <tr>
-                    <td class="text-center">Расписание отсутсвует.</td>
+                    <td class="text-center"><?= Yii::t('main','Расписание отсутсвует.')?></td>
                 </tr>
             <?endif?>
             </tbody>

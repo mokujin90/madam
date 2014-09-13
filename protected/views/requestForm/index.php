@@ -154,7 +154,7 @@
             <?= CHtml::textField('name','',array('class'=>"form-control"))?>
         </div>
         <div class="col-xs-12 col-sm-4">
-            <?= CHtml::dropDownList('type','enabled', CompanyField::$params,array('class'=>'form-control'));?>
+            <?= CHtml::dropDownList('type','enabled', CompanyField::params(),array('class'=>'form-control'));?>
         </div>
     </div>
 </div>

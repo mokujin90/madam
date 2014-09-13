@@ -21,22 +21,22 @@
 
         <h4>
             <i class="icon-info-sign"></i>
-            Info
+            <?= Yii::t('main','Информация')?>
         </h4>
-        Please check your details and then click 'Finish'.
+        <?= Yii::t('main','Пожалуйста ознакомьтесь с информацией и нажмите "Финиш"')?>
     </div>
 
 <?endif;?>
 <div class="row">
     <div class="form-group">
-        <label class="col-xs-12 col-sm-4 control-label">Date:</label>
+        <label class="col-xs-12 col-sm-4 control-label"><?= Yii::t('main','Дата')?>:</label>
         <div class="col-xs-10 col-sm-6"><?=$date?> (<?=$delay?> min)</div>
     </div>
 </div>
 <?if(!is_null($user)):?>
     <div class="row">
         <div class="form-group">
-            <label class="col-xs-12 col-sm-4 control-label">Employee:</label>
+            <label class="col-xs-12 col-sm-4 control-label"><?= Yii::t('main','Работник')?>:</label>
             <div class="col-xs-10 col-sm-6">
                 <?=$user->getName()?>
             </div>
@@ -45,7 +45,7 @@
 <?endif;?>
 <div class="row">
     <div class="form-group">
-        <label class="col-xs-12 col-sm-4 control-label">With:</label>
+        <label class="col-xs-12 col-sm-4 control-label"><?= Yii::t('main','Компания')?>:</label>
         <div class="col-xs-10 col-sm-6"><?=$company->name?></div>
     </div>
 </div>
@@ -70,7 +70,7 @@
     </div>
 <?endif;?>
 <hr>
-<h4 class="col-xs-12 row">Детальная информация</h4>
+<h4 class="col-xs-12 row"><?= Yii::t('main','Детальная информация')?></h4>
 <?foreach($fields as $item):?>
     <div class="row">
         <div class="form-group">
@@ -80,7 +80,7 @@
     </div>
 <?endforeach;?>
 <hr>
-<h4 class="col-xs-12 row">Вопросы</h4>
+<h4 class="col-xs-12 row"><?= Yii::t('main','Вопросы')?></h4>
 <?foreach($questions as $item):?>
     <div class="row">
         <div class="form-group">
@@ -98,19 +98,19 @@
 <hr>
 <div class="col-xs-12 row">
     <?if($info->show_privacy==1):?>
-        <?$link = CHtml::link('Privacy Policy','#privacy-block',array('class'=>'fancy'))?>
+        <?$link = CHtml::link(Yii::t('main','Политика конфиденциальности'),'#privacy-block',array('class'=>'fancy'))?>
         <?if($info->request_privacy==0):?>
-            Here you can find our <?=$link?>
+            <?= Yii::t('main','мной прочтена')?><?=$link?>
         <?else:?>
             <?php echo CHtml::checkBox('',false,array('class'=>"required"))?>
-            <?=$link?> read and accepted *
+            <?=$link?> <?= Yii::t('main','мной прочтена и принята')?>
         <?endif;?>
     <?endif;?>
 </div>
 
 <div class="col-xs-12 row">
     <?if($info->show_condition==1):?>
-        <?=$info->note_condition." ".CHtml::link('to the details of the right of withdrawal','#condition-block',array('class'=>'fancy'))?>
+        <?=$info->note_condition." ".CHtml::link(Yii::t('main','Подробная информация'),'#condition-block',array('class'=>'fancy'))?>
     <?endif;?>
 </div>
 
@@ -135,18 +135,18 @@
     <?if($info->show_term==1):?>
         <?if($info->request_term==1):?>
             <?php echo CHtml::checkBox('',false,array('class'=>"required"))?>
-            I have the present <?=$info->getTermLink('Term and Conditions')?>  read and accepted. *
+            <?= Yii::t('main','Я прочел и принял эти')?> <?=$info->getTermLink(Yii::t('main','условия'))?>
         <?else:?>
-            With the appointment booking I agree to the <?=$info->getTermLink('Term')?> disagree.
+            <?= Yii::t('main','Я прочел и принял эти')?> <?=$info->getTermLink(Yii::t('main','условия'))?>
         <?endif;?>
     <?endif;?>
 </div>
 <hr>
 <div class="row">
     <div class="form-group">
-        <label class="col-xs-12 col-sm-4 control-label wizard-notice-label">Email напоминание</label>
+        <label class="col-xs-12 col-sm-4 control-label wizard-notice-label"><?= Yii::t('main','Email напоминание')?></label>
         <div class="col-xs-10 col-sm-3">
-            <?php echo CHtml::dropDownList('Request[alarm_time]',$request->alarm_time,array('-1'=>'не получать',1=>"за 1 час",2=>'за 2 часа', 3=>'за 3 часа', 4=>'за 4 часа'),array('class'=>'form-control'))?>
+            <?php echo CHtml::dropDownList('Request[alarm_time]',$request->alarm_time,array('-1'=>Yii::t('main','не получать'),1=>Yii::t('main',"за {n} час",array('{n}'=>1)),2=>Yii::t('main',"за {n} часа",array('{n}'=>2)), 3=>Yii::t('main',"за {n} часа",array('{n}'=>3)), 4=>Yii::t('main',"за {n} часа",array('{n}'=>4))),array('class'=>'form-control'))?>
         </div>
     </div>
 </div>

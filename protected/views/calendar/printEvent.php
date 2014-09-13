@@ -66,7 +66,7 @@ Yii::app()->clientScript->registerScript('modal', 'modal.init()', CClientScript:
             <div class="title"><i class="icon-warning-sign"></i> <?=Yii::t('main','Ожидает подтверждение')?></div>
         </div>
         <div class="row box-content">
-            <p>Внимание! Термин не подтвержден. Подтвердите или удалите его, чтобы заказчик смог получить уведомление.</p>
+            <p><?= Yii::t('main','Внимание! Термин не подтвержден. Подтвердите или удалите его, чтобы заказчик смог получить уведомление.')?></p>
             <a href="<?=$this->createUrl('wizard/confirm',array('id'=>$model->id,'hash'=>$model->getLightHash(),'external'=>0))?>" class="btn btn-warning"><i class="icon-warning-sign"></i> <?=Yii::t('main','Подтвердить')?></a>
             <a href="<?=$this->createUrl('wizard/confirm',array('id'=>$model->id,'hash'=>$model->getLightHash(),'delete'=>1,'external'=>0))?>" class="btn btn-warning"><i class="icon-warning-sign"></i> <?=Yii::t('main','Удалить')?></a>
         </div>

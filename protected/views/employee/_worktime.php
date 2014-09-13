@@ -18,7 +18,7 @@
             <div class="col-xs-12">
                 <div class="box" style="margin-bottom:0">
                     <div class="box-header blue-background">
-                        <div class="title"><?=Schedule::$dayNames[$i];?></div>
+                        <div class="title"><?= Yii::t('main',Schedule::$dayNames[$i])?></div>
                         <div class="actions">
                             <div class="btn btn-link add-interval" data-day="<?=$i;?>"><i class="icon-plus"></i></div>
 
@@ -32,10 +32,10 @@
 
                                 </div>
                                 <div class="col-xs-5 text-center">
-                                    Время от
+                                    <?= Yii::t('main','Время от')?>
                                 </div>
                                 <div class="col-xs-5 text-center">
-                                    Время до
+                                    <?= Yii::t('main','Время до')?>
                                 </div>
                                 <div class="col-xs-1 text-center">
 
@@ -45,7 +45,7 @@
                             <? if(isset($scheduleArray[$i])) foreach($scheduleArray[$i] as $scheduleRow){?>
                             <div class="row interval-row">
                                 <div class="col-xs-12 col-sm-1">
-                                    <button type="button" class="col-xs-12 btn btn-danger remove-interval"><span class="hidden-xs">-</span><span class="hidden-sm hidden-md hidden-lg">Удалить</span></button>
+                                    <button type="button" class="col-xs-12 btn btn-danger remove-interval"><span class="hidden-xs">-</span><span class="hidden-sm hidden-md hidden-lg"><?= Yii::t('main','Удалить')?></span></button>
                                 </div>
                                 <div class="col-xs-6 col-sm-5">
                                     <div class="col-sm-12 col-md-5">
@@ -90,7 +90,7 @@
                             <div class="row">
                                 <div class="box box-nomargin box-collapsed" style="margin-bottom:0">
                                     <div class="box-header box-header-small muted-background">
-                                        <div class="title">Доп. настройки</div>
+                                        <div class="title"><?= Yii::t('main','Доп. настройки')?></div>
                                         <div class="actions">
                                             <a class="btn box-collapse btn-link btn-xs" href="#"><i></i></a>
                                         </div>
@@ -98,7 +98,7 @@
                                     <div class="box-content">
                                         <div class="col-xs-12 clearfix">
                                             <div class="form-group">
-                                                <label class="col-xs-4 control-label">Ответы, одобрены для графика</label>
+                                                <label class="col-xs-4 control-label"><?= Yii::t('main','Ответы, одобрены для графика')?></label>
                                                 <div class="col-xs-8">
                                                     <div class="radio">
                                                         <?php echo CHtml::radioButton("schedule[$i][$scheduleUniqId][all_answers]",$model->isNewRecord || $scheduleRow['all_answers']==1?true:false,array('value'=>1,'class'=>'option_all_answer user-type-answer'))?>
@@ -141,11 +141,11 @@
     <input type="hidden" id="shedule-uniq-iq" value="<?=$scheduleUniqId;?>"/>
 </div>
 <div class="col-xs-12 col-lg-4">
-    <h4>Рабочее время</h4>
+    <h4><?= Yii::t('main','Рабочее время')?></h4>
                         <span>
-                            Вставьте здесь свои рабочие часы в неделю, что. нажав на добавить работу в то время, день недели.
+                            <?= Yii::t('main','Вставьте здесь свои рабочие часы в неделю, что. нажав на добавить работу в то время, день недели.
                             Нажав на удалить соответствующие рабочие часы.
                             Если вы хотите поделиться работу для онлайн-бронирования назначения, нажмите в последнем столбце
-                            одноименной флажок.
+                            одноименной флажок.')?>
                         </span>
 </div>

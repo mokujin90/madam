@@ -16,14 +16,14 @@ class EmployeeController extends BaseController{
         $model = isset($id) ? User::model()->findByPk($id) : new User();
 
         if (!$model) {
-            throw new CHttpException(404, Yii::t('main', 'Page not found.'));
+            throw new CHttpException(404, Yii::t('main', 'Страница не найдена'));
         }
-        else if($model->company_id != Yii::app()->user->companyId){
+        else if($model->company_id != Yii::app()->user->companyId && !is_null($id)){
             throw new CHttpException(403, Yii::t('main', 'Доступ запрещен.'));
         }
 
         if($model->isNewRecord){
-            $this->pageCaption = 'Новый работник';
+            $this->pageCaption = Yii::t('main','Новый работник');
             if (!Company2License::enableNewEmployee()) {
                 $this->render('employeeLimit');
                 return;
@@ -61,7 +61,7 @@ class EmployeeController extends BaseController{
         $model = User::model()->findByPk($id);
 
         if (!$model) {
-            throw new CHttpException(404, Yii::t('main', 'Page not found.'));
+            throw new CHttpException(404, Yii::t('main', 'Страница не найдена'));
         }
 
         $model->delete();

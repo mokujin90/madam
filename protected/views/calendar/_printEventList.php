@@ -7,7 +7,7 @@
                 <div class="text-contrast"><b><?=$start->format('d.m.Y')?></b></div>
                 <div class="text-contrast"><?=$start->format('H:i') . ' - ' . $end->format('H:i')?></div>
                 <?if($event->is_block):?>
-                    <div class="text-contrast"><i class="icon-lock"></i> Событие заблокировано</div>
+                    <div class="text-contrast"><i class="icon-lock"></i> <?= Yii::t('main','Событие заблокировано')?></div>
                 <?endif?>
             </div>
             <div class="col-xs-4">

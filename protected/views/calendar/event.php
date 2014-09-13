@@ -73,9 +73,9 @@ Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript:
         <div class="row box-content">
             <? $repeatData = $model->getRepeatData();?>
             <div class="date">
-                <b>Начало:</b> <?=$repeatData['start']->format('d/m/Y')?><br>
-                <b>Конец:</b> <?=$repeatData['end']->format('d/m/Y')?><br>
-                <b>Общее кол-во событий:</b> <?=$repeatData['count']?>
+                <b><?= Yii::t('main','Начало')?>:</b> <?=$repeatData['start']->format('d/m/Y')?><br>
+                <b><?= Yii::t('main','Конец')?>:</b> <?=$repeatData['end']->format('d/m/Y')?><br>
+                <b><?= Yii::t('main','Общее кол-во событий')?>:</b> <?=$repeatData['count']?>
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@ class RequestFormController extends BaseController
 {
     protected function beforeAction($action){
         parent::beforeAction($action);
-        $this->pageCaption="Данные об анкете";
+        $this->pageCaption=Yii::t('main',"Данные об анкете");
         $this->pageIcon = 'book';
         $this->mainMenuActiveId="question";
         return true;

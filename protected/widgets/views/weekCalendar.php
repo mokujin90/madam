@@ -141,7 +141,7 @@
                                 <?endforeach?>
                             </td>
                         <?else:?>
-                            <td class="disable"><span class="inline-200"><i class="icon-remove-sign"></i> Недоступно</span></td>
+                            <td class="disable"><span class="inline-200"><i class="icon-remove-sign"></i> <?= Yii::t('main','Недоступно')?></span></td>
                         <?endif?>
                     <?endforeach?>
                 </tr>

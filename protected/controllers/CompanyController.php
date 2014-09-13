@@ -21,7 +21,7 @@ class CompanyController extends BaseController
 
     public function actionSettings()
     {
-        $this->pageCaption="Настройки";
+        $this->pageCaption=Yii::t('main',"Настройки");
         $this->mainMenuActiveId="settings";
 
         $id = Yii::app()->user->companyId;
@@ -38,7 +38,7 @@ class CompanyController extends BaseController
 
 
     public function actionDistance(){
-        $this->pageCaption="Юр. информация";
+        $this->pageCaption=Yii::t('main',"Юр. информация");
         $this->mainMenuActiveId="distance";
         $model = Distance::model()->getDistance(Yii::app()->user->companyId);
         if (isset($_POST['Distance'])) {
@@ -118,9 +118,9 @@ class CompanyController extends BaseController
             }
             $this->redirect($this->createUrl('employee/create'));
         }
-        $lastPhrase = !$oldLicense->getLastDay() ? 'Оплатите для продления.' : "Осталось ".$oldLicense->getLastDay()." ".Help::getNumEnding($oldLicense->getLastDay(),array('день','дня','дней'));
-        $this->pageCaption="Лицензия";
-        $licenseAlert = "Действует &laquo;".$oldLicense['license']->getName()."&raquo;. ".$lastPhrase;
+        $lastPhrase = !$oldLicense->getLastDay() ? Yii::t('main','Оплатите для продления.') : Yii::t('main','Осталось')." ".$oldLicense->getLastDay()." ".Help::getNumEnding($oldLicense->getLastDay(),array(Yii::t('main','день'),Yii::t('main','дня'),Yii::t('main','дней')));
+        $this->pageCaption=Yii::t('main',"Лицензия");
+        $licenseAlert = Yii::t('main',"Действует")." &laquo;".$oldLicense['license']->getName()."&raquo;. ".$lastPhrase;
         $this->render('more',array('lastLicense'=>$lastLicense,'oldLicense'=>$oldLicense,'manual'=>$manual,'companyId'=>$companyId,'standard'=>$standardLicense, 'licenseAlert' => $licenseAlert));
     }
 
