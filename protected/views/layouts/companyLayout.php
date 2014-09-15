@@ -97,7 +97,7 @@
                 <li class="">
                     <a href="/requestForm" class="<?=$this->mainMenuActiveId=='question'?'in':'';?>">
                         <i class="icon-question"></i>
-                        <span>Данные и вопросы</span>
+                        <span><?= Yii::t('main','Данные и вопросы')?></span>
                     </a>
                 </li>
 

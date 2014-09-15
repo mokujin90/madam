@@ -175,7 +175,7 @@ class Request extends CActiveRecord
             return $new;
         }
         //Help::dump($new->getErrors());
-        return null;
+        return $new;
     }
 
     static public function getRequestWithDate($user_id, $without_blocked = false){

@@ -101,12 +101,12 @@
                                                 <label class="col-xs-4 control-label"><?= Yii::t('main','Ответы, одобрены для графика')?></label>
                                                 <div class="col-xs-8">
                                                     <div class="radio">
-                                                        <?php echo CHtml::radioButton("schedule[$i][$scheduleUniqId][all_answers]",$model->isNewRecord || $scheduleRow['all_answers']==1?true:false,array('value'=>1,'class'=>'option_all_answer user-type-answer'))?>
-                                                        <?php echo CHtml::label(Yii::t('main','Все ответы'),'option_all_answer');?>
+                                                        <?php echo CHtml::radioButton("schedule[$i][$scheduleUniqId][all_answers]",$model->isNewRecord || $scheduleRow['all_answers']==1?true:false,array('value'=>1,'class'=>'option_all_answer user-type-answer','id'=>Help::id()))?>
+                                                        <?php echo CHtml::label(Yii::t('main','Все ответы'),Help::id());?>
                                                     </div>
                                                     <div class="radio">
-                                                        <?php echo CHtml::radioButton("schedule[$i][$scheduleUniqId][all_answers]",isset($scheduleRow['all_answers']) && $scheduleRow['all_answers']!=1?true:false,array('value'=>0,'class'=>'option_all_answer user-type-answer'))?>
-                                                        <?php echo CHtml::label(Yii::t('main','Определенные ответы'),'optionsRadios2');?>
+                                                        <?php echo CHtml::radioButton("schedule[$i][$scheduleUniqId][all_answers]",isset($scheduleRow['all_answers']) && $scheduleRow['all_answers']!=1?true:false,array('value'=>0,'class'=>'option_all_answer user-type-answer','id'=>Help::id()))?>
+                                                        <?php echo CHtml::label(Yii::t('main','Определенные ответы'),Help::id());?>
                                                     </div>
                                                 </div>
                                             </div>

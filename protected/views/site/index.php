@@ -42,5 +42,6 @@
         <div class="mybar" role="bar">
         </div>
     </div>
+    <div><?=$errorString?></div>
 </div>
 <? endif; ?>
