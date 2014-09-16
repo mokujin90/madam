@@ -185,10 +185,11 @@ class Help{
         return $result;
     }
 
-    public static function sendMail($to, $theme, $view, $model){
+    public static function sendMail($to, $theme, $view, $model, $command = false){
         if(empty($to)){
             return false;
         }
+
         $mailer =& Yii::app()->mailer;
         $mailer->CharSet = 'UTF-8';
         $mailer->From = Yii::app()->params['fromEmail'];
@@ -203,6 +204,7 @@ class Help{
         $mailer->SMTPSecure = 'ssl';
 
         $mailer->ClearAddresses();
+        $mailer->ClearBCCs();
         if (is_array($to)) {
             foreach ($to as $item) {
                 $mailer->AddBCC($item);
@@ -211,8 +213,12 @@ class Help{
         } else {
             $mailer->AddBCC($to);
         }
-        $mailer->Subject = Yii::t('mailer', $theme);
-        $mailer->Body = Yii::app()->controller->renderPartial("/mailer/$view", array('request' => $model), true);
+        $mailer->Subject = Yii::t('main', $theme);
+        if ($command === false) {
+            $mailer->Body = Yii::app()->controller->renderPartial("/mailer/$view", array('request' => $model), true);
+        } else {
+            $mailer->Body = $command->renderFile("views/mailer/$view.php", array('request' => $model), true);
+        }
         $mailer->IsHTML(true);
         if (!$mailer->Send()) {
             return false;
@@ -246,6 +252,17 @@ class Help{
         $response = @file($url."?".$request); // submit request
 
         $response_code = intval($response[0]); // read response code
+
+        $sms = new Sms();
+        $sms->company_id = $model->user->company_id;
+        $sms->user_id = $model->user_id;
+        $sms->request_id = $model->id;
+        $sms->phone = $to;
+        $sms->send_date = date(Help::DATETIME);
+        $sms->text = $message;
+        $sms->response_code = $response_code;
+        $sms->save();
+
         return $response_code == 100;
         /*
         $response_code_arr[0] = "no connection with gateway";

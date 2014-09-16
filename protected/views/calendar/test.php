@@ -48,9 +48,6 @@
                         sms_reminder
                     </li>
                     <li class="has-nofeature">
-                        multilanguage
-                    </li>
-                    <li class="has-nofeature">
                         event_confirm
                     </li>
                     <li class="has-nofeature">
@@ -123,9 +120,6 @@
                         sms_reminder
                     </li>
                     <li class="has-nofeature">
-                        multilanguage
-                    </li>
-                    <li class="has-nofeature">
                         event_confirm
                     </li>
                     <li class="has-nofeature">
@@ -196,9 +190,6 @@
                     </li>
                     <li class="has-nofeature">
                         sms_reminder
-                    </li>
-                    <li class="has-nofeature">
-                        multilanguage
                     </li>
                     <li class="has-nofeature">
                         event_confirm

@@ -16,9 +16,9 @@ class Find extends CFormModel{
     public function attributeLabels()
     {
         return array(
-            'field' => Yii::t('replic','Часть ответа'),
-            'startDate' => Yii::t('replic','Дата начала'),
-            'endDate' => Yii::t('replic','Дата окончания'),
+            'field' => Yii::t('main','Часть ответа'),
+            'startDate' => Yii::t('main','Дата начала'),
+            'endDate' => Yii::t('main','Дата окончания'),
         );
     }
 

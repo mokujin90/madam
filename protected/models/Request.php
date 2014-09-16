@@ -308,8 +308,16 @@ class Request extends CActiveRecord
     }
 
     public function sendNotification($confirm){
+        $license = Company2License::getCurrentLicense($this->user->company_id);
+        $company = Company::model()->findByPk($this->user->company_id);
+        if(!$license->license->email_event || !$company->enable_mail_notice){
+            return false;
+        }
+
         $companyMail = array();
-        $companyMail[] = $this->user->company->mail_notice_address;
+        if (!empty($this->user->company->mail_notice_address)) {
+            $companyMail[] = $this->user->company->mail_notice_address;
+        }
         $companyMail[] = $this->user->login;
         if ($confirm) {
             Help::sendMail($this->getEmailField(), 'termin подтверждается', 'processed', $this);

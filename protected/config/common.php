@@ -4,7 +4,7 @@ Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name' => 'Termin',
-    'theme'=>'bootstrap', // requires you to copy the theme under your themes directory
+     // requires you to copy the theme under your themes directory
 
     // preloading 'log' component
     'preload' => array('log'),
@@ -72,8 +72,15 @@ return array(
         'PAYPAL_API_USERNAME'=>'multik_api1.nxt.ru',
         'PAYPAL_API_PASSWORD'=>'QS8V2APJLXQ5KT2R',
         'PAYPAL_API_SIGNATURE'=>'A78A4fsFXicJRsDsyZvdKFFiCjcJA5kyvDfy9YtcklE0L.sW7qsg20sG',
-        'PAYPAL_MODE'=>'sandbox'   // sandbox/live  default=sandbox
+        'PAYPAL_MODE'=>'sandbox',   // sandbox/live  default=sandbox
 
+        'SOFORT_CONFIG_KEY' => '',
+        'SOFORT_CLIENT_ID' => '',
+        'SOFORT_PDF_TAMPLATE_ID' => '',
+        'SOFORT_EMAIL_TAMPLATE_ID' => '',
+        'SOFORT_DOMAIN' => '',
+        'SOFORT_USER' => '',
+        'SOFORT_PASS' => '',
 
     ),
 );

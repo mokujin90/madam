@@ -11,11 +11,12 @@
  * @property string $send_date
  * @property string $text
  * @property string $company_id
+ * @property integer $response_code
  *
  * The followings are the available model relations:
- * @property Company $company
  * @property User $user
  * @property Request $request
+ * @property Company $company
  */
 class Sms extends CActiveRecord
 {
@@ -35,12 +36,13 @@ class Sms extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('response_code', 'numerical', 'integerOnly'=>true),
 			array('user_id, request_id, company_id', 'length', 'max'=>11),
 			array('phone', 'length', 'max'=>255),
 			array('send_date, text', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, phone, request_id, send_date, text, company_id', 'safe', 'on'=>'search'),
+			array('id, user_id, phone, request_id, send_date, text, company_id, response_code', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,9 +54,9 @@ class Sms extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 			'request' => array(self::BELONGS_TO, 'Request', 'request_id'),
+			'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
 		);
 	}
 
@@ -71,6 +73,7 @@ class Sms extends CActiveRecord
 			'send_date' => 'Send Date',
 			'text' => 'Text',
 			'company_id' => 'Company',
+			'response_code' => 'Response Code',
 		);
 	}
 
@@ -99,6 +102,7 @@ class Sms extends CActiveRecord
 		$criteria->compare('send_date',$this->send_date,true);
 		$criteria->compare('text',$this->text,true);
 		$criteria->compare('company_id',$this->company_id,true);
+		$criteria->compare('response_code',$this->response_code);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -52,11 +52,11 @@ class License extends CActiveRecord
 		return array(
 			array('base_lvl', 'numerical', 'integerOnly'=>true),
 			array('question, employee, max_employee, event, sms', 'length', 'max'=>11),
-            array('control_dialog, group_event, email_confirm, sms_confirm, email_reminder, sms_reminder, multilanguage, event_confirm, email_event, sms_event, caldav, email_help, phone_help', 'boolean'),
+            array('control_dialog, group_event, email_confirm, sms_confirm, email_reminder, sms_reminder, event_confirm, email_event, sms_event, caldav, email_help, phone_help', 'boolean'),
 			array('request_text', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, question, control_dialog, group_event, email_confirm, sms_confirm, email_reminder, sms_reminder, multilanguage, event_confirm, email_event, sms_event, caldav, email_help, phone_help, employee, max_employee, event, sms, base_lvl, is_system, request_text', 'safe', 'on'=>'search'),
+			array('id, question, control_dialog, group_event, email_confirm, sms_confirm, email_reminder, sms_reminder, event_confirm, email_event, sms_event, caldav, email_help, phone_help, employee, max_employee, event, sms, base_lvl, is_system, request_text', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -82,14 +82,13 @@ class License extends CActiveRecord
 			'question' => Yii::t('main','Вопросы'),
 			'control_dialog' => Yii::t('main','Диалоговый режим'),
 			'group_event' => Yii::t('main','Групповые события'),
-			'email_confirm' => Yii::t('main','Email уведомление'),
-			'sms_confirm' => Yii::t('main','SMS уведомление'),
+			'email_confirm' => Yii::t('main','Email подтверждение'),
+			'sms_confirm' => Yii::t('main','SMS подтверждение'),
 			'email_reminder' => Yii::t('main','Email напоминание'),
-			'sms_reminder' => Yii::t('main','SMSнапоминание'),
-			'multilanguage' => Yii::t('main','Мультиязычность'),
+			'sms_reminder' => Yii::t('main','SMS напоминание'),
 			'event_confirm' => Yii::t('main','Подтверждение событий'),
-			'email_event' => Yii::t('main','Email события'),
-			'sms_event' => Yii::t('main','SMS события'),
+			'email_event' => Yii::t('main','Email уведомления'),
+			'sms_event' => Yii::t('main','SMS уведомления'),
 			'caldav' => 'Caldav',
 			'email_help' => Yii::t('main','Email помощь'),
 			'phone_help' => Yii::t('main','Телефонная помощь'),
@@ -130,7 +129,6 @@ class License extends CActiveRecord
 		$criteria->compare('sms_confirm',$this->sms_confirm);
 		$criteria->compare('email_reminder',$this->email_reminder);
 		$criteria->compare('sms_reminder',$this->sms_reminder);
-		$criteria->compare('multilanguage',$this->multilanguage);
 		$criteria->compare('event_confirm',$this->event_confirm);
 		$criteria->compare('email_event',$this->email_event);
 		$criteria->compare('sms_event',$this->sms_event);

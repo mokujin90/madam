@@ -10,7 +10,7 @@
                                 <tbody>
                                 <tr>
                                     <td align="center" valign="top">
-                                        <h2 style="color: #00acec !important"><?=Yii::t('mailer','У {n} истекает лицензия',array('{n}'=>$request->name))?></h2>
+                                        <h2 style="color: #00acec !important"><?=Yii::t('main','У {n} истекает лицензия',array('{n}'=>$request->name))?></h2>
                                     </td>
                                 </tr>
                                 <tr>

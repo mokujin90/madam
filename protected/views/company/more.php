@@ -14,7 +14,7 @@ $data = array(
     License::$base[2]=>array('count_star'=>2,'header_class'=>'purple-background'),
     License::$base[3]=>array('count_star'=>3,'header_class'=>'red-background'),
 );
-$check=array('control_dialog','group_event','email_confirm','sms_confirm','email_reminder','sms_reminder','multilanguage','event_confirm','email_event','sms_event','caldav','email_help','phone_help');
+$check=array('control_dialog','group_event','email_confirm','sms_confirm','email_reminder','sms_reminder','email_event','sms_event','caldav','email_help','phone_help');
 ?>
 <?Yii::app()->clientScript->registerCssFile('/css/pricetab.css');?>
 <?if(Yii::app()->user->hasFlash('alert')):?>
@@ -45,7 +45,7 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
                 <h3></i><?= Yii::t('main',$license->request_text)?></h3>
             </div>
             <div class="package-content">
-                <div class="package-price"><?=$license->price==0 ? 'FREE' : "$".$license->price.'<span class="package-month">/mo</span>'?></span>
+                <div class="package-price"><?=$license->price==0 ? 'FREE' : $license->price.'€ <span class="package-month">/ mo</span>'?></span>
                 </div>
                 <ul class="package-top-features">
                     <li>

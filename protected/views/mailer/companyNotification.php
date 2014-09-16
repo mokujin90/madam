@@ -9,7 +9,7 @@
                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tbody><tr>
                                     <td align="center" valign="top">
-                                        <h2 style="color: #00acec !important"><?=Yii::t('mailer','Создан новый termin')?></h2>
+                                        <h2 style="color: #00acec !important"><?=Yii::t('main','Создан новый termin')?></h2>
                                     </td>
                                 </tr>
                                 <tr>
@@ -68,7 +68,7 @@
                                 <tr>
                                     <td align="center" valign="top">
                                         <p style="margin: 1em 0;">
-                                            <?=Yii::t('mailer','Для изменения termin перейдите в календарь на сайте:')?>  <a href="http://www.<?=Yii::app()->params['host']?>"><?=Yii::app()->params['host']?></a>
+                                            <?=Yii::t('main','Для изменения termin перейдите в календарь на сайте:')?>  <a href="http://www.<?=Yii::app()->params['host']?>"><?=Yii::app()->params['host']?></a>
                                         </p>
                                     </td>
                                 </tr>
