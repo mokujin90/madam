@@ -120,12 +120,13 @@
                         <label class="col-xs-4 control-label"><?= Yii::t('main','Ответы, одобрены для графика')?></label>
                         <div class="col-xs-8">
                             <div class="radio">
-                                <?php echo CHtml::radioButton("all_answers",false,array('value'=>1,'class'=>'option_all_answer user-type-answer'))?>
-                                <?php echo CHtml::label(Yii::t('main','Все ответы'),'option_all_answer');?>
+                                <label for="">
+                                <?php echo CHtml::radioButton("all_answers",false,array('value'=>1,'class'=>'option_all_answer user-type-answer','id'=>Help::id()))?>
+                                <?php echo CHtml::label(Yii::t('main','Все ответы'),Help::id());?></label>
                             </div>
                             <div class="radio">
-                                <?php echo CHtml::radioButton("all_answers",true,array('value'=>0,'class'=>'option_all_answer user-type-answer'))?>
-                                <?php echo CHtml::label(Yii::t('main','Определенные ответы'),'optionsRadios2');?>
+                                <?php echo CHtml::radioButton("all_answers",true,array('value'=>0,'class'=>'option_all_answer user-type-answer','id'=>Help::id()))?>
+                                <?php echo CHtml::label(Yii::t('main','Определенные ответы'),Help::id());?>
                             </div>
                         </div>
                     </div>
@@ -137,7 +138,10 @@
                                     <?foreach($item['answers'] as $answer):?>
                                         <div class="checkbox">
                                             <label>
-                                                <?=CHtml::checkBox("schedule2answer][$answer->id",isset($tree[$answer->id])?true:false)?><?=$answer->text?>
+                                                <?=CHtml::checkBox("schedule2answer][$answer->id",
+                                                    $model->isNewRecord ? true :
+                                                    isset($tree[$answer->id])?true:false)
+                                                ?><?=$answer->text?>
                                             </label>
                                         </div>
                                     <?endforeach?>

@@ -69,7 +69,7 @@ class CalendarController extends BaseController
         $model->user_id = $user_id;
 
 
-
+        $license = Company2License::getCurrentLicense($companyId);
         $question = Question::getQuestion($companyId);
         $field = CompanyField::getFieldByCompany($companyId);
         $oldBlockStatus = $model->is_block;
@@ -104,18 +104,19 @@ class CalendarController extends BaseController
             Yii::app()->end();
         }
         $view = ($edit==1 || is_null($id) ) ? 'event' : 'printEvent'; //без параметра или новый выводим в виде для редактирования
-        $this->render($view,array('model'=>$model,'question'=>$question,'field'=>$field,'date'=>$model->getDiscreteDate()));
+        $this->render($view,array('model'=>$model,'question'=>$question,'field'=>$field,'date'=>$model->getDiscreteDate(),'license'=>$license));
     }
 
     public function actionNotice($id,$user_id){
         $this->blockJquery();
         $user = User::model()->findByPk($user_id);
         $model = Request::model()->findByPk($id);
+        $license = Company2License::getCurrentLicense();
         if (isset($_POST['save'])) {
 
             $return = array('message' => 'Ошибка отправки');
             if ($_POST['save'] == "mail" && !empty($_POST['mail_text'])) {
-                if (Help::sendMail($model->getEmailField(), 'Termin Mail', $_POST['mail_text'], $model)) {
+                if (Help::sendMail($model->getEmailField(), 'Termin Mail', $_POST['mail_text'], $model, false, true)) {
                     $return = array('message' => 'Письмо отправлено');
                 }
             } elseif ($_POST['save'] == "sms" && !empty($_POST['sms_text'])) {
@@ -126,8 +127,7 @@ class CalendarController extends BaseController
             echo json_encode($return);
             return;
         }
-        $this->render('notice',array('model'=>$model,'user'=>$user));
-
+        $this->render('notice',array('model'=>$model,'user'=>$user,'license'=>$license));
     }
     public function actionFreeInterval($id,$user_id){
         $this->blockJquery();

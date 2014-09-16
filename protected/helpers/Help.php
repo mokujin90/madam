@@ -185,7 +185,30 @@ class Help{
         return $result;
     }
 
-    public static function sendMail($to, $theme, $view, $model, $command = false){
+    /**
+     * @notice стилизация всех чекбоксов и радио сделана через связь label + input. В том случае если они не будут привязаны
+     * через id инпута, то он и реагировать не будет.
+     * Этот метод написан для генереации ничего не значащих id'ишников в тексте. Достаточно один раз вызывать в параметры for у лэйбла, и у параметра id инпута
+     * @return string
+     */
+    public static function id(){
+        static $id,$last;
+        if(is_null($id)){
+            $id=0;
+            $last=0;
+        }
+        else{
+            if($last==0){
+                $last = 1;
+            }
+            else{
+                $id++;
+                $last=0;
+            }
+        }
+        return 'element_id_'.$id;
+    }
+    public static function sendMail($to, $theme, $view, $model, $command = false, $withoutView = false){
         if(empty($to)){
             return false;
         }
@@ -214,10 +237,14 @@ class Help{
             $mailer->AddBCC($to);
         }
         $mailer->Subject = Yii::t('main', $theme);
-        if ($command === false) {
-            $mailer->Body = Yii::app()->controller->renderPartial("/mailer/$view", array('request' => $model), true);
+        if ($withoutView) {
+            $mailer->Body = $view;
         } else {
-            $mailer->Body = $command->renderFile("views/mailer/$view.php", array('request' => $model), true);
+            if ($command === false) {
+                $mailer->Body = Yii::app()->controller->renderPartial("/mailer/$view", array('request' => $model), true);
+            } else {
+                $mailer->Body = $command->renderFile("views/mailer/$view.php", array('request' => $model), true);
+            }
         }
         $mailer->IsHTML(true);
         if (!$mailer->Send()) {
@@ -228,6 +255,7 @@ class Help{
         }
         return true;
     }
+
     public static function sendSms($to, $message, $model){
         if(empty($to)){
             return false;

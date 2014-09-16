@@ -21,10 +21,10 @@ class SiteController extends BaseController
 			),
 		);
 	}
-    public function actionPanel($status=null){
+    public function actionPanel($status=null,$errors=''){
         $this->layout='simple';
 
-        $this->render('index',array('status'=>$status));
+        $this->render('index',array('status'=>$status,'errorString'=>$errors));
     }
 	/**
 	 * This is the default 'index' action that is invoked

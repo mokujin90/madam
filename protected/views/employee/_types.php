@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-    <div id="user-answer" style="<?if($model->all_answers==1):?>display: none;<?endif?>">
+    <div class="user-answer" style="<?if($model->all_answers==1):?>display: none;<?endif?>">
     <?foreach($question as $item):?>
         <div class="form-group">
             <label class="col-xs-4 control-label"><?=$item->text?></label>
@@ -20,7 +20,10 @@
                 <?foreach($item['answers'] as $answer):?>
                 <div class="checkbox">
                     <label>
-                        <?=CHtml::checkBox('question['.$answer->id.'][]',isset($user2answer[$answer->id])?true:false)?><?=$answer->text?>
+                        <?=CHtml::checkBox('question['.$answer->id.'][]',
+                            $model->isNewRecord ? true :
+                            isset($user2answer[$answer->id])?true:false)
+                        ?><?=$answer->text?>
                     </label>
                 </div>
                 <?endforeach?>

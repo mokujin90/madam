@@ -34,7 +34,7 @@ class WizardController extends BaseController
 
         $fields = CompanyField::getActiveField($id);
         if(isset($_POST['save'])){
-
+            $errorString = '';
             if(isset($_POST['requestId'])){
                 $oldRequest = Request::model()->findByPk($_POST['requestId']);
                 $oldRequest->delete();
@@ -46,17 +46,25 @@ class WizardController extends BaseController
             $endTime->add(new DateInterval('PT' . ($requestData['time'] == 0 ? 1 : $requestData['time']) . 'M'));
             $confirm = $license['license']->email_confirm == 1 ? 0 : 1;
             $alarmMin = $_POST['Request']['alarm_time'];
-            if( !is_null($request=Request::create(array('user_id'=>$emplyeeId,'start_time'=>$startTime,'end_time'=>$endTime->format(Help::DATETIME),'is_confirm'=>$confirm,'comment'=>$_POST['Request']['comment'],'alarm_time'=>$alarmMin))) ){
+            $request=Request::create(array('user_id'=>$emplyeeId,'start_time'=>$startTime,'end_time'=>$endTime->format(Help::DATETIME),'is_confirm'=>$confirm,'comment'=>$_POST['Request']['comment'],'alarm_time'=>$alarmMin));
+            if( !is_null($request->id)){
                 RequestQuestion::createByPost($_POST['answer'],$request->id);
                 RequestField::createByPost($_POST['field'],$request->id);
                 $request->sendNotification($license['license']->email_confirm == 1);
                 $status = self::STATUS_WIZARD_OK;//
             }
             else{
+                $errors = $request->getErrors();
+                foreach($errors as $field){
+                    foreach($field as $error){
+                        $errorString .=htmlspecialchars($error);
+                    }
+                }
+                $errorString = str_replace('/', ",", $errorString);
+
                 $status = self::STATUS_WIZARD_ERROR;//
             }
-
-            $this->redirect(Yii::app()->createUrl('site/panel',array('status'=>$status)));
+            $this->redirect(Yii::app()->createUrl('site/panel',array('status'=>$status,'errors'=>$errorString)));
 
         }
         $info = Distance::getDistance($id);
