@@ -13,6 +13,7 @@ db/
 cache/
 mediadb
 protected/admin/runtime
+protected/extensions/JsTrans/assets
 protected/config/local.php
 protected/data/*
 !protected/data/.placeholder

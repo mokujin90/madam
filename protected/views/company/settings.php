@@ -3,6 +3,9 @@
  * @var $model Company
  */
 $this->layout = 'companyLayout';
+Yii::app()->clientScript->registerCssFile('/css/jquery.fancybox.css');
+
+Yii::app()->clientScript->registerScriptFile('/js/jquery.fancybox.pack.js', CClientScript::POS_END);
 Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript::POS_READY);
 ?>
 <?php $form=$this->beginWidget('CActiveForm', array(
