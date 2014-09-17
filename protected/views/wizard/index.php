@@ -53,7 +53,7 @@
             <div><?=$info->getTermLink(Yii::t('main','Сроки и условия'))?></div>
         <?endif;?>
         <?if($info->param_imprint!=0):?>
-            <div><?=$info->getImprintLink(Yii::t('main','Итоговые данные'))?></div>
+            <div><?=$info->getImprintLink(Yii::t('main','Контакты'))?></div>
         <?endif;?>
         </div>
     </div>

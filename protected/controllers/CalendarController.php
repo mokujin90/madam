@@ -116,7 +116,7 @@ class CalendarController extends BaseController
 
             $return = array('message' => 'Ошибка отправки');
             if ($_POST['save'] == "mail" && !empty($_POST['mail_text'])) {
-                if (Help::sendMail($model->getEmailField(), 'Termin Mail', $_POST['mail_text'], $model)) {
+                if (Help::sendMail($model->getEmailField(), 'Termin Mail', $_POST['mail_text'], $model, false, true)) {
                     $return = array('message' => 'Письмо отправлено');
                 }
             } elseif ($_POST['save'] == "sms" && !empty($_POST['sms_text'])) {

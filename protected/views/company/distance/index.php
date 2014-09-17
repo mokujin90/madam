@@ -10,7 +10,7 @@
     <li class=""><a href="/#condition" role="tab" data-toggle="tab"><?= Yii::t('main','Условия')?></a></li>
     <li class=""><a href="/#reference" role="tab" data-toggle="tab"><?= Yii::t('main','Требования')?></a></li>
     <li class=""><a href="/#terms" role="tab" data-toggle="tab"><?= Yii::t('main','Сроки и условия')?></a></li>
-    <li><a href="/#imprint" role="tab" data-toggle="tab"><?= Yii::t('main','Итог')?></a></li>
+    <li><a href="/#imprint" role="tab" data-toggle="tab"><?= Yii::t('main','Контакты')?></a></li>
 </ul>
 <?php $form=$this->beginWidget('CActiveForm', array(
     'id'=>'distance-form',

@@ -68,21 +68,13 @@
                         </div></div>
                     </div>
 
-                    <div class="form-group">
-                        <?php echo $form->labelEx($model,'multilanguage',array('class'=>'col-md-2 control-label')); ?>
-                        <div class="col-md-10"><div class="checkbox">
-                                <?php echo $form->checkBox($model,'multilanguage',array('value' => '1', 'uncheckValue'=>'0')); ?>
-                                <?php echo $form->error($model,'multilanguage'); ?>
-                        </div></div>
-                    </div>
-
-                    <div class="form-group">
+                    <!--div class="form-group">
                         <?php echo $form->labelEx($model,'event_confirm',array('class'=>'col-md-2 control-label')); ?>
                         <div class="col-md-10"><div class="checkbox">
                                 <?php echo $form->checkBox($model,'event_confirm',array('value' => '1', 'uncheckValue'=>'0')); ?>
                                 <?php echo $form->error($model,'event_confirm'); ?>
                         </div></div>
-                    </div>
+                    </div-->
 
                     <div class="form-group">
                         <?php echo $form->labelEx($model,'email_event',array('class'=>'col-md-2 control-label')); ?>

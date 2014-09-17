@@ -9,7 +9,7 @@
                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tbody><tr>
                                     <td align="center" valign="top">
-                                        <h2 style="color: #00acec !important"><?=Yii::t('mailer','Напоминание termin')?></h2>
+                                        <h2 style="color: #00acec !important"><?=Yii::t('main','Напоминание termin')?></h2>
                                     </td>
                                 </tr>
                                 <tr>

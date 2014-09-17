@@ -106,6 +106,9 @@
         },
 
         next: function () {
+            if ($('.wizard .actions .btn-next').hasClass('disabled')) {
+                return;
+            }
             var canMoveNext = (this.currentStep + 1 <= this.numSteps);
             var lastStep = (this.currentStep === this.numSteps);
             if (canMoveNext) {

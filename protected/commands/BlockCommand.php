@@ -9,6 +9,8 @@ class BlockCommand extends CConsoleCommand
     {
         $criteria = new CDbCriteria();
         $criteria->addCondition('payment_date <= :currentDate AND no_expiration==0');
+        //$criteria->addCondition('is_block = 0');
+        $criteria->addCondition('payment_date <= :currentDate');
         $criteria->params=array(':currentDate'=>Help::currentDate());
         $companies = Company::model()->findAll($criteria);
         foreach($companies as $model){
@@ -17,6 +19,8 @@ class BlockCommand extends CConsoleCommand
             $currentLicense->save();
             $model->is_block = 1;
             $model->save();
+            $model['license'] = Company2License::getCurrentLicense($model->id);
+            Help::sendMail(Yii::app()->params['adminEmail'], Yii::t('main', "Компания заблокирована"), 'companyBlock', $model, $this);
         }
     }
 }

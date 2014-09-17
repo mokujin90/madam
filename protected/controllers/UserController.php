@@ -43,7 +43,7 @@ class UserController extends BaseController
         if (!$user) {
             throw new CHttpException(404, Yii::t('main', 'Пользователь не найден'));
         }
-        Help::sendMail($user->login, Yii::t('mailer', 'Подтверждение регистрации'), 'registerConfirm', $user->company);
+        Help::sendMail($user->login, Yii::t('main', 'Подтверждение регистрации'), 'registerConfirm', $user->company);
         $this->render('emailNotice');
     }
 

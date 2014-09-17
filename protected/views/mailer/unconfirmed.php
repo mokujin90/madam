@@ -9,7 +9,7 @@
                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tbody><tr>
                                     <td align="center" valign="top">
-                                        <h2 style="color: #00acec !important"><?=Yii::t('mailer','termin удален')?></h2>
+                                        <h2 style="color: #00acec !important"><?=Yii::t('main','termin удален')?></h2>
                                     </td>
                                 </tr>
                                 <tr>
@@ -45,7 +45,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" bgcolor="#00acec" valign="middle">
-                                        <h3 style="display: inline-block; margin: 10px 0;"><a href="http://www.<?=Yii::app()->params['host']?>/wizard/index/id/<?=$user->company_id?>/" style="color: #ffffff !important"><?=Yii::t('mailer','Создать новый termin')?></a></h3>
+                                        <h3 style="display: inline-block; margin: 10px 0;"><a href="http://www.<?=Yii::app()->params['host']?>/wizard/index/id/<?=$user->company_id?>/" style="color: #ffffff !important"><?=Yii::t('main','Создать новый termin')?></a></h3>
                                     </td>
                                 </tr>
                                 </tbody></table>

@@ -10,27 +10,17 @@
                                 <tbody>
                                 <tr>
                                     <td align="center" valign="top">
-                                        <h2 style="color: #00acec !important"><?=Yii::t('main','У {n} истекает лицензия',array('{n}'=>$request->name))?></h2>
+                                        <h2 style="color: #00acec !important"><?=Yii::t('main','Компания {n} заблокирована',array('{n}'=>$request->name))?></h2>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="border-top: 1px solid #dce1e5;border-bottom: 1px solid #dce1e5;" valign="top">
-                                        <p style="margin: 1em 0;">
-                                            <strong><?= Yii::t('main','Дата окончания лицензии')?>:</strong>
-                                            <?
-                                                $end = new DateTime($request->create_date);
-                                                $end->add(new DateInterval('P30D'));
-                                            ?>
-                                            <?=$end->format('Y-m-d H:i')?>
-                                        </p>
                                         <p style="margin: 1em 0;">
                                             <strong><?= Yii::t('main','Контакты')?>:</strong>
                                             <?=$request['country']->name?>,
                                             <?= isset($request->zip) ? "$request->zip, " : " "?>
                                             <?= isset($request->city) ? "$request->city, " : " "?>
                                             <?= isset($request->address) ? "$request->address, " : " "?>
-
-
                                         </p>
                                         <p style="margin: 1em 0;">
                                             <strong><?= Yii::t('main','Связь')?>:</strong><br/>
@@ -41,12 +31,10 @@
 
                                         </p>
                                         <p style="margin: 1em 0;">
-                                           <?= Yii::t('main','Пожалуйста, свяжитесь с представителем компании')?>
-
+                                            <?= Yii::t('main','Пожалуйста, свяжитесь с представителем компании')?>
                                         </p>
                                         <p style="margin: 1em 0;">
                                             <?= Yii::t('main','Текущая лицензия')?>:<?=$request['license']['license']->getName();?>
-
                                         </p>
                                     </td>
                                 </tr>

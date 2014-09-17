@@ -25,16 +25,6 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
     <div class="tab-pane active" id="settings">
         <div class="col-xs-12 col-lg-6">
             <div class="form-group">
-                <?php echo $form->label($model,'url',array('class'=>"col-xs-12 col-sm-6 control-label")); ?>
-                <div class="col-xs-10 col-sm-4">
-                    <?php echo $form->textField($model,'url',array('class'=>'form-control')) ?>
-                    <?php echo $form->error($model,'url'); ?>
-                </div>
-                <div class="col-xs-2">
-                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="left" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
-                </div>
-            </div>
-            <div class="form-group">
                 <?php echo $form->label($model,'booking_deadline',array('class'=>"col-xs-12 col-sm-6 control-label")); ?>
                 <div class="col-xs-10 col-sm-4">
                     <?=CHtml::dropDownList('Company[booking_deadline]',$model->booking_deadline,Company::$bookingDeadline,array('class'=>"form-control"))?>
@@ -53,6 +43,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
                 </div>
             </div>
             <hr>
+            <?if(Company2License::enableMailNotice()):?>
             <div class="form-group">
                 <?php echo $form->label($model,'enable_mail_notice',array('class'=>"col-xs-12 col-sm-6 control-label")); ?>
                 <div class="col-xs-10 col-sm-4">
@@ -75,6 +66,8 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
                 </div>
             </div>
             <hr>
+            <?endif?>
+            <?if(Company2License::enableSmsNotice()):?>
             <div class="form-group">
                 <?php echo $form->label($model,'enable_sms_notice',array('class'=>"col-xs-12 col-sm-6 control-label")); ?>
                 <div class="col-xs-10 col-sm-4">
@@ -97,6 +90,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
                 </div>
             </div>
             <hr>
+            <?endif?>
             <div class="form-group">
                 <?php echo $form->label($model,'hello_text',array('class'=>"col-xs-12 col-sm-6 control-label")); ?>
                 <div class="col-xs-10 col-sm-4">
@@ -119,17 +113,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
             </div>
             <?$model->drawLogo()?>
             <?=CHtml::hiddenField('Company[no_logo]',$model->issetLogo() ? 0 :1,array('id'=>'no-logo'))?>
-            <div class="form-group">
-                <?php echo $form->label($model,'select_timetable',array('class'=>"col-xs-12 col-sm-6 control-label")); ?>
-                <div class="col-xs-10 col-sm-4">
-                    <label class="checkbox-inline">
-                        <?php echo $form->checkBox($model,'select_timetable') ?>
-                    </label>
-                </div>
-                <div class="col-xs-2">
-                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="left" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
-                </div>
-            </div>
+
             <div class="form-group">
                 <hr>
                 <div class="col-xs-offset-7 col-xs-5">

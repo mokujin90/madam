@@ -194,6 +194,20 @@ class Company2License extends CActiveRecord
     }
 
     /**
+     * @return mixed - возможно ли исп емейл уведомлений
+     */
+    static public function enableMailNotice(){
+        return Company2License::getCurrentLicense()->license->email_event;
+    }
+
+    /**
+     * @return mixed - возможно ли исп емейл уведомлений
+     */
+    static public function enableSmsNotice(){
+        return Company2License::getCurrentLicense()->license->sms_event;
+    }
+
+    /**
      * @return bool - возможно ли добавить новое событие в течение месяца
      */
     static public function enableNewEvent($user_id)
