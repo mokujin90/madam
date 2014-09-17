@@ -228,9 +228,9 @@ If you are passing a path with a filename on the end, pass true as the second pa
         }
         // Crawl up the directory tree
         $next_pathname = substr($pathname, 0, strrpos($pathname, DIRECTORY_SEPARATOR));
-        if (self::make_path($next_pathname, $mode)) {
+        if (self::make_path($next_pathname, $is_filename)) {
             if (!file_exists($pathname)) {
-                return mkdir($pathname, $mode);
+                return mkdir($pathname, $is_filename);
             }
         }
         return false;
