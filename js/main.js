@@ -380,7 +380,7 @@ company={
     init:function(){
         $(document).on('click.company','#erase-image',function(){
             var $this = $(this), $block = $this.closest('.logo-upload');
-            $block.remove();
+            $block.contents().remove();
             $('#no-logo').val(1);
         })
         $('#Company_logo').change(function(e){

@@ -244,8 +244,8 @@ class Company extends CActiveRecord
     public function drawLogo(){
         $result = '';
         if(file_exists($this->getLogoPath())){
-            $result = '<div class="form-group logo-upload">'.CHtml::image('/'.$this->getLogoPath()."?img=".rand(1,99999)).
-           "<div id='erase-image'>X</div></div>";
+            $result = ''.CHtml::image('/'.$this->getLogoPath()."?img=".rand(1,99999)).
+           "<div id='erase-image'>X</div>";
         }
         echo $result;
     }
