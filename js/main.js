@@ -383,6 +383,35 @@ company={
             $block.remove();
             $('#no-logo').val(1);
         })
+        $('#Company_logo').change(function(e){
+            company.uploadPreview(e);
+        })
+    },
+    uploadPreview:function(event){
+        var file = $('form :file')[0].files[0],
+            formData = new FormData($('form')[0]);
+        $.ajax({
+            url: '/company/preview',
+            type: 'POST',
+            data: formData,
+            //Options to tell jQuery not to process data or worry about content-type.
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend:function(){
+                $.fancybox.showLoading();
+            },
+            xhr: function() {  // Custom XMLHttpRequest
+                var myXhr = $.ajaxSettings.xhr();
+                return myXhr;
+            },
+            success: function (data) {
+               $('.form-group.logo-upload').html(data);
+                $.fancybox.hideLoading();
+            }
+
+        });
+
     }
 },
 wizard={
@@ -690,6 +719,10 @@ employeeForm={
             }
         });
     }
+},
+ajax = {
+
+
 }
 
 $.urlParam = function(name){

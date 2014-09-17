@@ -8,7 +8,7 @@ class BlockCommand extends CConsoleCommand
     public function run($args)
     {
         $criteria = new CDbCriteria();
-        $criteria->addCondition('payment_date <= :currentDate');
+        $criteria->addCondition('payment_date <= :currentDate AND no_expiration==0');
         $criteria->params=array(':currentDate'=>Help::currentDate());
         $companies = Company::model()->findAll($criteria);
         foreach($companies as $model){

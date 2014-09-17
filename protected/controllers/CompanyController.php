@@ -82,9 +82,9 @@ class CompanyController extends BaseController
         $newCompany2License = new Company2License;
         $newCompany2License->company_id = $companyId;
         $standardLicense = License::getStandardLicense();
-
+        $company = Company::model()->findByPk($companyId);
         if(isset($_POST) && $type!=''){
-            $company = Company::model()->findByPk($companyId);
+
             $default = array('sms','employee','manual',1,2,3);
             if(!in_array($type,$default))
                 return false;
@@ -121,9 +121,17 @@ class CompanyController extends BaseController
         $lastPhrase = !$oldLicense->getLastDay() ? Yii::t('main','Оплатите для продления.') : Yii::t('main','Осталось')." ".$oldLicense->getLastDay()." ".Help::getNumEnding($oldLicense->getLastDay(),array(Yii::t('main','день'),Yii::t('main','дня'),Yii::t('main','дней')));
         $this->pageCaption=Yii::t('main',"Лицензия");
         $licenseAlert = Yii::t('main',"Действует")." &laquo;".$oldLicense['license']->getName()."&raquo;. ".$lastPhrase;
-        $this->render('more',array('lastLicense'=>$lastLicense,'oldLicense'=>$oldLicense,'manual'=>$manual,'companyId'=>$companyId,'standard'=>$standardLicense, 'licenseAlert' => $licenseAlert));
+        $this->render('more',array('lastLicense'=>$lastLicense,'oldLicense'=>$oldLicense,'manual'=>$manual,'companyId'=>$companyId,'standard'=>$standardLicense, 'licenseAlert' => $licenseAlert,'company'=>$company));
     }
 
+    function actionPreview(){
+        $model = Company::model()->findByPk(Yii::app()->user->companyId);
+        $model->createFileStructure();
+        $model->logo=CUploadedFile::getInstance($model,'logo');
+        $model->logo->saveAs($model->getPreviewPath());
+        echo CHtml::image('/'.$model->getPreviewPath()."?img=".rand(1,99999))."<div id='erase-image'>X</div>";
+        Yii::app()->end();
+    }
     function actionTest(){
 
         $this->render('test');

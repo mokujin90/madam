@@ -25,7 +25,9 @@ class AdminCompanyController extends AdminBaseController{
      * @param $id Company2Lecense id
      */
     public function actionEditLicense($id){
+
         $company2license = Company2License::getLicenseById($id);
+        $company = Company::model()->findByPk($company2license->company_id);
         $model = $company2license['license']->getLicenseType()==0 ? $company2license['license'] : License::createNewClone($company2license->license_id); //чистая форма, по умолчанию
         if(is_null($company2license) || !count($company2license['license'])){
             throw new CHttpException(404, 'The requested page does not exist.');
@@ -52,12 +54,15 @@ class AdminCompanyController extends AdminBaseController{
                 $newCompany2License->sms_upgrade = intval($_POST['added']['sms']);
                 $newCompany2License->save();
             }
+            $company->no_expiration = $_POST['Company']['no_expiration'];
+            $company->save();
             $this->redirect($_POST['url_referrer']!='' && isset($_POST['url_referrer']) ? $_POST['url_referrer'] : Yii::app()->request->urlReferrer);
         }
 
 
         $this->render('/admin/licenseCompanyEdit',array(
             'model'=>$model,
+            'company'=>$company,
             'current'=>$company2license
         ));
     }

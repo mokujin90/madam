@@ -15,6 +15,7 @@
  * @property string $fax
  * @property string $email
  * @property string $site
+ * @property string $no_expiration
  * @property integer $country_id
  * @property string $url
  * @property integer $booking_deadline
@@ -36,7 +37,7 @@ class Company extends CActiveRecord
 {
     public $logo=0;
     public $no_logo=0;
-    static $PATH_LOGO='data/logo/';
+    static $PATH_LOGO='data/';
     static $bookingDeadline = array(
         '1' => '1 час',
         '2' => '2 часa',
@@ -137,6 +138,7 @@ class Company extends CActiveRecord
             'sms_notice_phone' => Yii::t('main', 'Номер мобильного телефона'),
             'hello_text' => Yii::t('main', 'Текст приветствия'),
             'select_timetable' => Yii::t('main', 'Выбор сроков для назначения бронирования'),
+            'no_expiration' => Yii::t('main', 'Бесконеченый лимит')
         );
     }
 
@@ -231,17 +233,27 @@ class Company extends CActiveRecord
 
     }
     public function getLogoPath(){
-        return self::$PATH_LOGO.$this->id.'.png';
+        return $this->getBasePath()."/logo/".$this->id.'.png';
+    }
+    public function getPreviewPath(){
+        return $this->getBasePath()."/preview/".$this->id.'.png';
+    }
+    public function getBasePath(){
+        return self::$PATH_LOGO.$this->id;
     }
     public function drawLogo(){
         $result = '';
         if(file_exists($this->getLogoPath())){
-            $result = '<div class="form-group logo-upload">'.CHtml::image('/'.$this->getLogoPath()).
+            $result = '<div class="form-group logo-upload">'.CHtml::image('/'.$this->getLogoPath()."?img=".rand(1,99999)).
            "<div id='erase-image'>X</div></div>";
         }
         echo $result;
     }
 
+    public function createFileStructure(){
+        Help::make_path('data/'.$this->id."/logo/");
+        Help::make_path('data/'.$this->id."/preview/");
+    }
     /**
      * метод вернет статус у компании, о том тестовый у нее период или нет
      * @return bool
@@ -256,7 +268,7 @@ class Company extends CActiveRecord
      * Вернет данные о том просрочен последний платеж или нет
      */
     public function isExpiredPayed(){
-        return $this->payment_date < Help::currentDate();
+        return ($this->payment_date < Help::currentDate() && $this->no_expiration==0);
     }
     public function issetLogo(){
        return file_exists($this->getLogoPath());

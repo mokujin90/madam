@@ -3,6 +3,7 @@
  * @var $this AdminCompanyController
  * @var $current Company2License
  * @var $model License
+ * @var $company Company
  * @var $current['license'] License
  */
 Yii::app()->clientScript->registerScript('license', 'license.init()', CClientScript::POS_READY);
@@ -59,7 +60,20 @@ Yii::app()->clientScript->registerScript('license', 'license.init()', CClientScr
 <?if($model->getLicenseType()==0):?>
     <?php $this->renderPartial('/admin/_price', array('model'=>$model,'form'=>$form)); ?>
 <?endif;?>
-
+    <div class="box">
+        <div class="box-header green-background">
+            <div class="title"><div class="icon-dollar"></div> <?php echo Yii::t('main','Бессрочность лицензий для этой компании')?></div>
+        </div>
+        <div class="box-content">
+            <div class="form-group">
+                <?php echo $form->labelEx($company,'no_expiration',array('class'=>'col-md-2 control-label')); ?>
+                <div class="col-md-5">
+                    <?php echo $form->checkbox($company,'no_expiration',array('value'=>1, 'uncheckValue'=>0)); ?>
+                    <?php echo $form->error($company,'no_expiration'); ?>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="col-lg-6">
         <button type="submit" value="1" name="save" class="btn btn-success"><?=$model->isNewRecord ? 'Create' : 'Save'?></button>
     </div>
