@@ -124,6 +124,8 @@ class CompanyController extends BaseController
                $newLicense->attributes = $_POST['License'];
                if($newLicense->save()){
                    $newCompany2License->license_id = $newLicense->id;
+                   Help::sendMail(Yii::app()->params['adminEmail'], Yii::t('main', "Необходимо установить цену на лицензию"), 'setPriceForManual', $company);
+
                }
             }//если мы повышаем смс или пользователей и текущий тип лицензии не индивидуальный
             elseif(in_array($type,array('sms','employee')) && $oldLicense['license']->getLicenseType()!=0){
@@ -165,6 +167,6 @@ class CompanyController extends BaseController
     }
     function actionTest(){
 
-        $this->render('test');
+
     }
 }

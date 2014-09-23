@@ -32,6 +32,7 @@ class AdminCompanyController extends AdminBaseController{
         if(is_null($company2license) || !count($company2license['license'])){
             throw new CHttpException(404, 'The requested page does not exist.');
         }
+        $oldPrice = $company2license['license']->price;
         if(isset($_POST['save'])){
             $newCompany2License = new Company2License(); //новая запись
             $newCompany2License->company_id = $company2license->company_id;
@@ -43,7 +44,11 @@ class AdminCompanyController extends AdminBaseController{
                 $newLicense = new License();
                 $newLicense->attributes = $_POST['License'];
                 $newLicense->request_text = Yii::t('main','Индивидуальная лицензия');
+                $newLicense->price = $_POST['License']['price'];
                 if($newLicense->save()){
+                    if($newLicense->price>0 && $oldPrice==0 && $company->email!=''){
+                        Help::sendMail($company->email, Yii::t('main', "Цена  индивидуальной лицензии была назначена"), 'getManualLicense', $newLicense);
+                    }
                     $newCompany2License->license_id = $newLicense->id;
                     $newCompany2License->save();
                 }

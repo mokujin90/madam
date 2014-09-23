@@ -36,6 +36,7 @@
 class Company extends CActiveRecord
 {
     public $logo=0;
+    public $dayLeft=0;
     public $no_logo=0;
     static $PATH_LOGO='data/';
     static $bookingDeadline = array(
