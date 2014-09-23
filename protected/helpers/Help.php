@@ -285,6 +285,28 @@ If you are passing a path with a filename on the end, pass true as the second pa
         return true;
     }
 
+    public static function genSmsText($request, $confirm = false){
+        $dateVal = new DateTime($request->start_time);
+        $company =  $request->user->company;
+        if($confirm){
+            $text = Yii::t('main', "Подтвердите термин {date}. {firm}, {address}, {zip} {city}.", array(
+                'date' => $dateVal->format('d/m/Y H:i'),
+                'firm' => $company->name,
+                'address' => $company->address,
+                'zip' => $company->zip,
+                'city' => $company->city,
+            ));
+        } else {
+            $text = Yii::t('main', "Назначен термин {date}. {firm}, {address}, {zip} {city}.", array(
+                'date' => $dateVal->format('d/m/Y H:i'),
+                'firm' => $company->name,
+                'address' => $company->address,
+                'zip' => $company->zip,
+                'city' => $company->city,
+            ));
+        }
+        return $text;
+    }
     public static function sendSms($to, $message, $model){
         if(empty($to)){
             return false;
@@ -296,7 +318,7 @@ If you are passing a path with a filename on the end, pass true as the second pa
         $param["message"] = $message; // content of message
         $param["route"] = "gold";// using gold route
         $param["from"] = "TERMIN";// sender of SMS
-        $param["debug"] = "1";// SMS will not be sent - test modus
+        //$param["debug"] = "1";// SMS will not be sent - test modus
 
         foreach($param as $key=>$val) // run all parameters
         {

@@ -36,6 +36,37 @@ class CompanyController extends BaseController
         $this->render('settings', array('model' => $model));
     }
 
+    public function actionDistanceInfo()
+    {
+        $this->pageCaption=Yii::t('main',"Выслать счет");
+        $this->mainMenuActiveId="distance";
+
+        $id = Yii::app()->user->companyId;
+        $model = Company::model()->findByPk($id);
+        $model->scenario = 'distance';
+
+        $this->performAjaxValidation($model);
+
+        if (isset($_POST['Company'])) {
+            $model->attributes = $_POST['Company'];
+            if ($model->save()) {
+                $companyId = Yii::app()->user->companyId;
+                $lastLicense = Company2License::getLicenseBycompany($companyId); //последняя запрошенная лицензия пользователя
+                $this->redirect(array('acquiring/salesking','companyId'=>$companyId,'licenseId'=>$lastLicense->id));
+            }
+        }
+
+        $this->render('distanceForm', array('model' => $model));
+    }
+
+    protected function performAjaxValidation($model)
+    {
+        if(isset($_POST['ajax']) && $_POST['ajax']==='validate-form')
+        {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+    }
 
     public function actionDistance(){
         $this->pageCaption=Yii::t('main',"Юр. информация");

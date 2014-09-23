@@ -51,6 +51,7 @@ class WizardController extends BaseController
                 RequestQuestion::createByPost($_POST['answer'],$request->id);
                 RequestField::createByPost($_POST['field'],$request->id);
                 $request->sendNotification($license['license']->email_confirm == 1);
+                $request->sendSmsNotification($license['license']->sms_confirm == 1);
                 $status = self::STATUS_WIZARD_OK;//
             }
             else{
@@ -174,6 +175,7 @@ class WizardController extends BaseController
             $request->is_confirm = 1;
             $request->save(false);
             Help::sendMail($mail, Yii::t('main','Уведомление о создании termin'), 'notification', $request);
+            Help::sendSms($request->getPhoneField(), Help::genSmsText($request), $request);
         }
         if($external){
             $this->redirect(Yii::app()->createUrl('site/panel',array('status'=>'2')));

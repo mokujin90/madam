@@ -81,6 +81,7 @@ class Company extends CActiveRecord
         return array(
             array('logo', 'file','allowEmpty'=>true, 'types' => 'png,jpg,gif'),
             array('country_id', 'required'),
+            array('bic, iban, address, city, name, email, zip', 'required', 'on' => 'distance'),
             array('country_id,language_id, booking_deadline, booking_interval, enable_mail_notice, enable_sms_notice, select_timetable,no_logo', 'numerical', 'integerOnly' => true),
             array('name, address, city, site, url, mail_notice_address', 'length', 'max' => 255),
             array('phone, mobile_phone, fax, sms_notice_phone', 'length', 'max' => 20),

@@ -75,12 +75,13 @@ return array(
         'PAYPAL_MODE'=>'sandbox',   // sandbox/live  default=sandbox
 
         'SOFORT_CONFIG_KEY' => '',
-        'SOFORT_CLIENT_ID' => '',
-        'SOFORT_PDF_TAMPLATE_ID' => '',
-        'SOFORT_EMAIL_TAMPLATE_ID' => '',
-        'SOFORT_DOMAIN' => '',
-        'SOFORT_USER' => '',
-        'SOFORT_PASS' => '',
+
+        'SK_CLIENT_ID' => '',
+        'SK_PDF_TAMPLATE_ID' => 'booBrsn0ur5lX-uLqadCK_',
+        'SK_EMAIL_TAMPLATE_ID' => 'boqgAYn0ur5lX-uLqadCK_',
+        'SK_DOMAIN' => 'wconsults',
+        'SK_USER' => '',
+        'SK_PASS' => '',
 
     ),
 );

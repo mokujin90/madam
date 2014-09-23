@@ -327,6 +327,23 @@ class Request extends CActiveRecord
             Help::sendMail($companyMail, 'Уведомление о создании termin', 'companyNotification', $this);
         }
     }
+    public function sendSmsNotification ($confirm) {
+        $license = Company2License::getCurrentLicense($this->user->company_id);
+        $company = Company::model()->findByPk($this->user->company_id);
+        if(!$license->license->sms_event || !$company->enable_sms_notice){
+            return false;
+        }
+        if ($confirm) {
+            if(!empty($this->user->company->sms_notice_phone)){
+                Help::sendSms($this->user->company->sms_notice_phone, Help::genSmsText($this, true), $this);
+            }
+        } else {
+            Help::sendSms($this->getPhoneField(), Help::genSmsText($this), $this);
+            if(!empty($this->user->company->sms_notice_phone)){
+                Help::sendSms($this->user->company->sms_notice_phone, Help::genSmsText($this), $this);
+            }
+        }
+    }
 
     public function getEmailField(){
         if($field = RequestField::model()->with('field')->find(array('condition' => "request_id = $this->id AND field.validator ='mail'"))){
