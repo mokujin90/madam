@@ -193,6 +193,13 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
             </div>
         </div>
         <?endif;?>
+        <?if($_GET['show']==1):?>
+            <div class="col-xs-12">
+                <div class="alert alert-warning alert-dismissable">
+                    <i class="icon-warning-sign"></i> <?=Yii::t('main', 'Цена вашей лицензии {price} $',array("{price}"=>$oldLicense['license']->price))?>
+                </div>
+            </div>
+        <?endif?>
         <?=CHtml::link('',array('acquiring/paypal','companyId'=>$companyId,'licenseId'=>$lastLicense->id),array('class'=>"buy-button",'id'=>'paypal'))?>
         <?=CHtml::link('',array('acquiring/sofort','companyId'=>$companyId,'licenseId'=>$lastLicense->id),array('class'=>"buy-button",'id'=>'sofort'))?>
         <?=CHtml::link('<i class="icon-envelope"></i> ' . Yii::t('main','отправить счет на email'),array('acquiring/salesking','companyId'=>$companyId,'licenseId'=>$lastLicense->id),array('class'=>"buy-button",'id'=>'salesking'))?>
