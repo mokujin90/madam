@@ -46,7 +46,7 @@ Yii::app()->clientScript->registerScriptFile('/js/jquery.fancybox.pack.js', CCli
 
             <div class="form-group">
                 <div class="controls with-icon-over-input">
-                    <?php echo $form->textField($company,'name',array('placeholder' =>'Company Name', 'class' => 'form-control')); ?>
+                    <?php echo $form->textField($company,'name',array('placeholder' =>'Company Name*', 'class' => 'form-control')); ?>
                     <?php echo $form->error($company,'name'); ?>
                 </div>
             </div>
@@ -63,19 +63,19 @@ Yii::app()->clientScript->registerScriptFile('/js/jquery.fancybox.pack.js', CCli
             </div>
             <div class="form-group">
                 <div class="controls with-icon-over-input">
-                    <?php echo $form->textField($company,'city',array('placeholder' =>'City', 'class' => 'form-control')); ?>
+                    <?php echo $form->textField($company,'city',array('placeholder' =>'City*', 'class' => 'form-control')); ?>
                     <?php echo $form->error($company,'city'); ?>
                 </div>
             </div>
             <div class="form-group">
                 <div class="controls with-icon-over-input">
-                    <?php echo $form->textField($company,'address',array('placeholder' =>'Address', 'class' => 'form-control')); ?>
+                    <?php echo $form->textField($company,'address',array('placeholder' =>'Address*', 'class' => 'form-control')); ?>
                     <?php echo $form->error($company,'address'); ?>
                 </div>
             </div>
             <div class="form-group">
                 <div class="controls with-icon-over-input">
-                    <?php echo $form->numberField($company,'zip',array('placeholder' =>'Zip Code', 'class' => 'form-control')); ?>
+                    <?php echo $form->numberField($company,'zip',array('placeholder' =>'Zip Code*', 'class' => 'form-control')); ?>
                     <?php echo $form->error($company,'zip'); ?>
                 </div>
             </div>

@@ -67,6 +67,13 @@ class AdminLicenseController extends AdminBaseController{
         {
             $model->price = $_POST['License']['price'];
             if($model->save())
+                if($model->price>0){
+                    
+                    $company2License = Company2License::model()->with('company')->findByAttributes(array('license_id'=>$model->id));
+                    if($company2License['company']->email!=""){
+                        Help::sendMail($company2License['company']->email, Yii::t('main', "Цена  индивидуальной лицензии была назначена"), 'getManualLicense', $model);
+                    }
+                }
                 $this->redirect($this->createUrl('adminCompany/approveList'));
         }
         $this->render('/admin/price',array('model'=>$model));

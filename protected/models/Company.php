@@ -88,6 +88,7 @@ class Company extends CActiveRecord
             array('email', 'length', 'max' => 100),
             array('description, zip, hello_text', 'safe'),
 
+            array('zip,name,address,city', 'required','on'=>'signup'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, name, address, description, zip, city, phone, mobile_phone, fax, email, site, country_id, url, booking_deadline, booking_interval, enable_mail_notice, mail_notice_address, enable_sms_notice, sms_notice_phone, hello_text, select_timetable', 'safe', 'on' => 'search'),

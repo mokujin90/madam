@@ -19,7 +19,7 @@ if($this->wizardStep){
 ?>
 
 <div class="dialog">
-    <div class="box-content box-padding">
+    <div style="position: relative;" class="box-content box-padding">
         <div class="fuelux">
             <div class="wizard">
                 <ul class="steps">
@@ -36,10 +36,10 @@ if($this->wizardStep){
                         <span class="step">4</span>
                     </li>
                 </ul>
-                <div class="actions">
-                    <button class="btn btn-xs btn-prev"><i class="icon-arrow-left"></i><?= Yii::t('main','Назад')?>
+                <div style="display: none;" class="actions">
+                    <button id="btn-prev" class="btn btn-xs btn-prev"><i class="icon-arrow-left"></i><?= Yii::t('main','Назад')?>
                     </button>
-                    <button class="btn btn-xs btn-success btn-next" data-last="Finish">
+                    <button  id="btn-next" class="btn btn-xs btn-success btn-next" data-last="Finish">
                         <?= Yii::t('main','Далее')?>
                         <i class="icon-arrow-right"></i>
                     </button>
@@ -122,6 +122,17 @@ if($this->wizardStep){
                 <button name="save" value="1" id="save" hidden style="display: none" type="submit">finish</button>
                 <? $this->endWidget(); ?>
 
+            </div>
+            <div style="margin-top: 10px; float:right;clear:both;width: 123px;height: 25px;" class="wizard">
+
+                <div class="actions-fake">
+                    <button class="btn btn-xs btn-prev"><i class="icon-arrow-left"></i><?= Yii::t('main','Назад')?>
+                    </button>
+                    <button class="btn btn-xs btn-success btn-next" data-last="Finish">
+                        <?= Yii::t('main','Далее')?>
+                        <i class="icon-arrow-right"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
