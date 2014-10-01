@@ -189,8 +189,14 @@ class Company2License extends CActiveRecord
     /**
      * @return mixed - возможно ли исп групповые события
      */
-    static public function enableGroupEvent(){
-        return Company2License::getCurrentLicense()->license->group_event;
+    static public function enableGroupEvent($user_id = false)
+    {
+        if (Yii::app()->user->companyId) {
+            return Company2License::getCurrentLicense()->license->event;
+        } elseif ($user_id) {
+            return Company2License::getCurrentLicense(User::model()->findByPk($user_id)->company_id)->license->event;
+        }
+        return false;
     }
 
     /**
@@ -217,7 +223,11 @@ class Company2License extends CActiveRecord
         $end = clone $start;
         $end->modify('+ 1 month');
 
-        $enableEventCount = Company2License::getCurrentLicense()->license->event;
+        if(Yii::app()->user->companyId) {
+            $enableEventCount = Company2License::getCurrentLicense()->license->event;
+        } else {
+            $enableEventCount = Company2License::getCurrentLicense(User::model()->findByPk($user_id)->company_id)->license->event;
+        }
 
         $criteria = new CDbCriteria();
         $criteria->addColumnCondition(array('user_id' => $user_id));

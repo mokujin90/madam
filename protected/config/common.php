@@ -54,6 +54,7 @@ return array(
                 'gii/<controller:nw+>/<action:nw+>' => 'gii/<controller>/<action>',
 
                 '/'=>'site/index',
+                '/wizard/response.php'=>'wizard/responseSms',
                 '/employee/create/'=>'/employee/update/',
             ),
         ),

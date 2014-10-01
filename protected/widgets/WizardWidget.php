@@ -91,7 +91,7 @@ class WizardWidget extends CWidget{
      * @return string
      */
     public function drawField($field,$value=null){
-        $type = array('char'=>'textField','mail'=>'emailField','numerical'=>'numberField','name'=>'textField','lastname'=>'textField','firm'=>'textField','phone'=>'numberField');
+        $type = array('char'=>'textField','mail'=>'emailField','numerical'=>'numberField','name'=>'textField','lastname'=>'textField','firm'=>'textField','phone'=>'textField');
         $result='';
         $result.=CHtml::label(Yii::t('main',$field->name),'field_'.$field->id.'_label',array('class'=>$field->type!='required' ? 'init control-label':'control-label')).
             CHtml::openTag('div',array('class'=>'controls')).

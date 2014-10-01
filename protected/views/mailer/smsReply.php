@@ -1,8 +1,3 @@
-<?
-/**
- * @var $request Company
- */
-?>
 <table align="center" border="0" cellpadding="0" cellspacing="0" id="backgroundTable" width="100%">
     <tbody>
     <tr>
@@ -14,21 +9,28 @@
                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tbody><tr>
                                     <td align="center" valign="top">
-                                        <h2 style="color: #00acec !important"><?=Yii::t('main','Необходимо выставить цену для компании')?> "<?=$request->name?>"</h2>
+                                        <h2 style="color: #00acec !important"><?=Yii::t('main','Ответ на SMS уведомление')?></h2>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="border-top: 1px solid #dce1e5;border-bottom: 1px solid #dce1e5;" valign="top">
                                         <p style="margin: 1em 0;">
-                                            <?
-                                                $license = Company2License::getLicenseBycompany($request->id);
-                                            ?>
-                                            <?php echo CHtml::link(Yii::t('main','Ссылка'),"http://www.".Yii::app()->params['host']."/admin/Company/approveList")?>
+                                            <?=Yii::t('main','Отправлено')?><br>
+                                            <?$dateVal = new DateTime($request['sms']->send_date)?><br>
+                                            <?=$dateVal->format('d/m/Y H:i');?><br>
+                                            <?=$request['sms']->text;?>
                                         </p>
-
                                     </td>
                                 </tr>
-
+                                <tr>
+                                    <td style="border-top: 1px solid #dce1e5;border-bottom: 1px solid #dce1e5;" valign="top">
+                                        <p style="margin: 1em 0;">
+                                            <?=Yii::t('main','Ответ')?><br>
+                                            <?=$request['reply']['from'];?><br>
+                                            <?=$request['reply']['message'];?>
+                                        </p>
+                                    </td>
+                                </tr>
                                 </tbody></table>
                         </td>
                     </tr>

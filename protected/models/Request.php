@@ -331,6 +331,7 @@ class Request extends CActiveRecord
         $license = Company2License::getCurrentLicense($this->user->company_id);
         $company = Company::model()->findByPk($this->user->company_id);
         if(!$license->license->sms_event || !$company->enable_sms_notice){
+            echo 1;
             return false;
         }
         if ($confirm) {

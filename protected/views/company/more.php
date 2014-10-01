@@ -193,7 +193,7 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
             </div>
         </div>
         <?endif;?>
-        <?if($_GET['show']==1):?>
+        <?if(isset($_GET['show']) && $_GET['show']==1):?>
             <div class="col-xs-12">
                 <div class="alert alert-warning alert-dismissable">
                     <i class="icon-warning-sign"></i> <?=Yii::t('main', 'Цена вашей лицензии {price} $',array("{price}"=>$oldLicense['license']->price))?>

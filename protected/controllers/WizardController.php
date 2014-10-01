@@ -28,7 +28,7 @@ class WizardController extends BaseController
         $company = Company::model()->with('country')->findByPk($id);
         if(is_null($company))
             throw new CHttpException(404, Yii::t('main', 'Страница не найдена'));
-        $license = Company2License::getCurrentLicense();
+        $license = Company2License::getCurrentLicense($id);
         $this->wizardStep = $license['license']->control_dialog == 1 ? true :false;
         $question = $this->wizardStep ? Help::setArray(Question::model()->getNextQuestion($id)) : Question::getQuestion($id); //todo: изменить
 
@@ -229,5 +229,31 @@ class WizardController extends BaseController
         header('Content-Disposition: attachment;filename="'.'TerminExport' . $date->format('YmdHis') . '.ics'.'"');
         header('Cache-Control: max-age=0');
         echo $content;
+    }
+
+    public function actionResponseSms($message_id = 12345, $message = 'message', $from = '12345', $ref = false){
+        $sms2 = new Sms();
+        $sms2->company_id = 1;
+        $sms2->user_id = 1;
+        $sms2->request_id = 46;
+        $sms2->phone = $from;
+        $sms2->send_date = date(Help::DATETIME);
+        $sms2->text = 'RESPONSE' . $message;
+        $sms2->response_code = 200;
+        $sms2->message_id = $message_id;
+        $sms2->save();
+
+        if (!$sms = Sms::model()->with('user')->findByAttributes(array('message_id' => $message_id))) {
+            return;
+        }
+        $model = array();
+        $model['sms'] = $sms;
+        $model['reply'] = array(
+            'message' => $message,
+            'from' => $from
+        );
+
+
+        Help::sendMail($sms->user->login, Yii::t('main', 'Ответ на SMS уведомление'), 'smsReply', $model);
     }
 }
