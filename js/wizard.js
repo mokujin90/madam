@@ -15,13 +15,15 @@
         var kids;
 
         this.$element = $(element);
+        console.log(this.$element);
         this.options = $.extend({}, $.fn.wizard.defaults, options);
         this.currentStep = 1;
-        this.numSteps = this.$element.find('li').length;
+        this.numSteps = $('.steps').find('li').length;
         this.$prevBtn = this.$element.find('button.btn-prev');
         this.$nextBtn = this.$element.find('button.btn-next');
 
         kids = this.$nextBtn.children().detach();
+
         this.nextText = $.trim(this.$nextBtn.text());
         this.$nextBtn.append(kids);
 
@@ -36,6 +38,7 @@
         constructor: Wizard,
 
         setState: function () {
+            console.log('setState');
             var canMovePrev = (this.currentStep > 1);
             var firstStep = (this.currentStep === 1);
             var lastStep = (this.currentStep === this.numSteps);
@@ -56,19 +59,19 @@
             }
 
             // reset classes for all steps
-            var $steps = this.$element.find('li');
+            var $steps = $('.steps').find('li');
             $steps.removeClass('active').removeClass('complete');
             $steps.find('span.badge').removeClass('badge-info').removeClass('badge-success');
 
             // set class for all previous steps
             var prevSelector = 'li:lt(' + (this.currentStep - 1) + ')';
-            var $prevSteps = this.$element.find(prevSelector);
+            var $prevSteps = $('.steps').find(prevSelector);
             $prevSteps.addClass('complete');
             $prevSteps.find('span.badge').addClass('badge-success');
 
             // set class for current step
             var currentSelector = 'li:eq(' + (this.currentStep - 1) + ')';
-            var $currentStep = this.$element.find(currentSelector);
+            var $currentStep = $('.steps').find(currentSelector);
             $currentStep.addClass('active');
             $currentStep.find('span.badge').addClass('badge-info');
 
@@ -111,7 +114,10 @@
             }
             var canMoveNext = (this.currentStep + 1 <= this.numSteps);
             var lastStep = (this.currentStep === this.numSteps);
+            console.log(this.currentStep,this.numSteps);
+            console.log('next');
             if (canMoveNext) {
+
                 var e = $.Event('change');
                 this.$element.trigger(e, {step: this.currentStep, direction: 'next'});
 
@@ -158,10 +164,10 @@
     // WIZARD DATA-API
 
     $(function () {
+
         $('body').on('mousedown.wizard.data-api', '.wizard', function () {
             var $this = $(this);
             //в том случае, когда мы нажимаем на кнопку "next"
-
             if ($this.data('wizard')) return;
             var wizard = $this.wizard($this.data());
             //в том случае, когда мы нажимаем на кнопку "finish"

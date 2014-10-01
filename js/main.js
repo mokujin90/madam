@@ -420,6 +420,7 @@ wizard={
         wizard.one();
         wizard.three();
         wizard.blockEmptyCheckbox();
+
         $(document).on('click.wizard','button.agree',function(){
             if (ajaxQuestionProcess) {
                 return;

@@ -56,15 +56,17 @@ class UserController extends BaseController
     public function actionRegister(){
         $this->showRegisterLink = false;
         $user = new User('signup');
-        $company = new Company();
+        $company = new Company('signup');
         $country = Country::model()->findAll();
 
         if(Yii::app()->request->isAjaxRequest )
         {
             $user->attributes = $_POST['User'];
+            $company->attributes = $_POST['Company'];
             $isValidation = CActiveForm::validate($user,array('login'));
-            if($isValidation!='[]'){
-               echo $isValidation;
+            $companyValidation = CActiveForm::validate($company);
+            if($isValidation!='[]' || $companyValidation!='[]'){
+                echo $result = json_encode(array_merge(json_decode($isValidation, true),json_decode($companyValidation, true)));
                 Yii::app()->end();
             }
         }
