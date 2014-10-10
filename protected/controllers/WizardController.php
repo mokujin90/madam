@@ -15,7 +15,6 @@ class WizardController extends BaseController
     public function actionIndex($id){
 
 
-
         if( Yii::app()->request->isAjaxRequest  && isset($_POST['questionId'])){
             $next = Question::model()->getNextQuestion($id,$_POST['questionId'],Help::setArray($_POST['answerId']),isset($_POST['not']) ? $_POST['not'] : array());
             if(!is_null($next)){

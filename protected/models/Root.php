@@ -29,7 +29,7 @@ class Root extends CActiveRecord
 			array('login, password', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, login, password', 'safe', 'on'=>'search'),
+			array('id, login, password,language_id', 'safe'),
 		);
 	}
 
@@ -41,6 +41,7 @@ class Root extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'lang' => array(self::BELONGS_TO, 'Language', 'language_id'),
 		);
 	}
 

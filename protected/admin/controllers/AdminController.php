@@ -30,6 +30,17 @@ class AdminController extends AdminBaseController
         $this->redirect(Yii::app()->homeUrl);
     }
 
+    public function actionSetting(){
+        $this->layout='adminLayout';
+        $this->mainMenuActiveId='setting';
+        $language = Help::decorate(Language::model()->findAll(),'name');
+        if(isset($_POST)){
+            $this->user->attributes = $_POST['Root'];
+            $this->user->save();
+
+        }
+        $this->render('setting',array('model'=>$this->user,'language'=>$language));
+    }
 }
 
 ?>
