@@ -211,15 +211,19 @@ class AcquiringController extends BaseController {
         } else {
             $clientID = $company->salesking_clinet_id;
         }
+        $dateVal = new DateTime($company->payment_date);
+        $period = $dateVal->format('d.m');
+        $dateVal->modify('- ' . Company2License::addedDay .' days');
+        $period = $dateVal->format('d.m') . '-' . $period;
         $send = array(
             "invoice" => array(
                 "contact_id" => $clientID,
                 "title" => "($title) Your invoice No. [number]",
-                "status" => "open",
+                "status" => "closed",
                 "line_items" => array(
                     array(
                         "line_item" => array(
-                            "name" => $license['license']->getName(),
+                            "name" => $license['license']->getName() . " ($period)",
                             "price_single" => $license['license']->getPrice(),
                         )
                     )
@@ -232,8 +236,8 @@ class AcquiringController extends BaseController {
         $company = Company::model()->findByPk($companyId);
         $license = Company2License::getLicenseById($licenseId);
 
-        $pdfTemplateID = Yii::app()->params['SK_PDF_TAMPLATE_ID'];
-        $emailTemplateID = Yii::app()->params['SK_EMAIL_TAMPLATE_ID'];
+        $pdfTemplateID = Yii::app()->params['SK_PDF_TAMPLATE_ID_RECURRING'];
+        $emailTemplateID = Yii::app()->params['SK_EMAIL_TAMPLATE_ID_RECURRING'];
         $domain = Yii::app()->params['SK_DOMAIN'];
 
         if($company->salesking_clinet_id){
@@ -302,12 +306,19 @@ class AcquiringController extends BaseController {
             $company->salesking_clinet_id = $clientID;
             $company->save(false);
         }
-
+        $dateVal = new DateTime();
+        $now = $dateVal->format('U');
         $send = array(
-            "invoice" => array(
+            "recurring" => array(
                 "contact_id" => $clientID,
                 "title" => "Your invoice No. [number]",
                 "status" => "open",
+                "frequency" => "monthly",
+                "date" => $dateVal->format('Y-m-d'),
+                "number" => $now,
+                "email_template_id" => $emailTemplateID,
+                "pdf_template_id" => $pdfTemplateID,
+                "auto_send" => "email",
                 "line_items" => array(
                     array(
                         "line_item" => array(
@@ -319,21 +330,21 @@ class AcquiringController extends BaseController {
                 )
             )
         );
-        $invoiceRespond = $this->sendJson($send, "https://$domain.salesking.eu/api/invoices/");
+        $invoiceRespond = $this->sendJson($send, "https://$domain.salesking.eu/api/recurrings/");
         if(!$invoiceRespond){
             Yii::app()->user->setFlash('alert', Yii::t('main', 'Ошибка при создании счета. Повторите попытку позже.'));
             $this->redirect('/company/more');
             return;
         }
 
-        $send = array("template_id" => $pdfTemplateID);
+        /*$send = array("template_id" => $pdfTemplateID);
 
         if(empty($company->email)){
             Yii::app()->user->setFlash('alert', Yii::t('main', 'Поле Email компании не заполнено'));
             $this->redirect('/company/more');
             return;
         }
-        if(!$answer = $this->sendJson($send, "https://$domain.salesking.eu/api/invoices/{$invoiceRespond->invoice->id}/print")){
+        if(!$answer = $this->sendJson($send, "https://$domain.salesking.eu/api/recurrings/{$invoiceRespond->recurring->id}/print")){
             Yii::app()->user->setFlash('alert', Yii::t('main', 'Ошибка при создании счета(PDF). Повторите попытку позже'));
             $this->redirect('/company/more');
             return;
@@ -344,21 +355,22 @@ class AcquiringController extends BaseController {
             "send" => "1",
             "archived_pdf" => "1"
         );
-        if(!$this->sendJson($send, "https://$domain.salesking.eu/api/invoices/{$invoiceRespond->invoice->id}/emails")){
+        if(!$this->sendJson($send, "https://$domain.salesking.eu/api/recurrings/{$invoiceRespond->recurring->id}/emails")){
             Yii::app()->user->setFlash('alert', Yii::t('main', 'Ошибка при отправке письма на адрес комании') . ' ' . $company->email);
             $this->redirect('/company/more');
             return;
-        }
-
-        Yii::app()->user->setFlash('alert', Yii::t('main', 'Счет выслан на почту комании') . ' ' . $company->email);
+        }*/
+        $company->salesking_recurring = 1;
+        $company->save(false);
+        Yii::app()->user->setFlash('alert', Yii::t('main', 'Счет будет выслан на почту комании') . ' ' . $company->email);
         $this->redirect('/company/more');
     }
 
     private $saleskingError;
     private function sendJson($json, $url, $put = false){
         $this->saleskingError = false;
-        $username = 'grebenzow@gmail.com';
-        $password = 'nezer8865';
+        $username = Yii::app()->params['SK_USER'];
+        $password = Yii::app()->params['SK_PASS'];
 
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);

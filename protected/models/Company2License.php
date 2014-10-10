@@ -206,6 +206,10 @@ class Company2License extends CActiveRecord
         return Company2License::getCurrentLicense()->license->email_event;
     }
 
+    static public function enableMailConfirm(){
+        return Company2License::getCurrentLicense()->license->email_confirm || Company2License::getCurrentLicense()->license->sms_confirm;
+    }
+
     /**
      * @return mixed - возможно ли исп емейл уведомлений
      */
@@ -258,5 +262,20 @@ class Company2License extends CActiveRecord
         return $different['days_total'];
     }
 
+    static public function getCommonSmsCount($companyId)
+    {
+        $license = Company2License::getCurrentLicense($companyId);
+        $sms = (int)$license->sms_upgrade + (int)$license->license->sms;
+        return $sms;
+    }
 
+    static public function getSendSmsCount($companyId)
+    {
+        return Sms::model()->count(array('condition' => "YEAR(send_date) = YEAR(CURDATE()) AND MONTH(send_date) = MONTH(CURDATE()) AND company_id = $companyId"));
+    }
+
+    static public function enableSmsCount($companyId)
+    {
+        return Company2License::getSendSmsCount($companyId) < Company2License::getCommonSmsCount($companyId);
+    }
 }

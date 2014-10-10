@@ -32,6 +32,13 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
         </div>
     </div>
 <?endif;?>
+<?if($oldLicense['license']->sms && $oldLicense['license']->sms_event):?>
+    <div class="col-xs-12">
+        <div class="alert alert-info alert-dismissable">
+            <i class="icon-info-sign"></i> <?=Company2License::getSendSmsCount($company->id)?> / <?=Company2License::getCommonSmsCount($company->id)?> SMS
+        </div>
+    </div>
+<?endif;?>
 <div class="main-box-body clearfix">
 <?$count=1?>
 <?foreach($standard as $license):?>
@@ -202,8 +209,9 @@ $check=array('control_dialog','group_event','email_confirm','sms_confirm','email
         <?endif?>
         <?=CHtml::link('',array('acquiring/paypal','companyId'=>$companyId,'licenseId'=>$lastLicense->id),array('class'=>"buy-button",'id'=>'paypal'))?>
         <?=CHtml::link('',array('acquiring/sofort','companyId'=>$companyId,'licenseId'=>$lastLicense->id),array('class'=>"buy-button",'id'=>'sofort'))?>
+        <?if(!$company->salesking_recurring):?>
         <?=CHtml::link('<i class="icon-envelope"></i> ' . Yii::t('main','отправить счет на email'),array('company/distanceInfo'),array('class'=>"buy-button",'id'=>'salesking'))?>
-
+        <?endif;?>
     <?else:?>
     <div class="col-xs-12">
         <div class="alert alert-warning alert-dismissable">

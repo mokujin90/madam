@@ -77,12 +77,13 @@ return array(
 
         'SOFORT_CONFIG_KEY' => '',
 
-        'SK_CLIENT_ID' => '',
         'SK_PDF_TAMPLATE_ID' => 'booBrsn0ur5lX-uLqadCK_',
         'SK_EMAIL_TAMPLATE_ID' => 'boqgAYn0ur5lX-uLqadCK_',
+        'SK_PDF_TAMPLATE_ID_RECURRING' => 'bosDy-n0ur5lX-uLqadCK_',
+        'SK_EMAIL_TAMPLATE_ID_RECURRING' => 'boeIlOn0ur5lX-uLqadCK_',
         'SK_DOMAIN' => 'wconsults',
-        'SK_USER' => '',
-        'SK_PASS' => '',
+        'SK_USER' => 'grebenzow@gmail.com',
+        'SK_PASS' => 'nezer8865',
 
     ),
 );

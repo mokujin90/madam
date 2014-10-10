@@ -144,7 +144,7 @@
 <hr>
 <div class="row">
     <div class="form-group">
-        <label class="col-xs-12 col-sm-4 control-label wizard-notice-label"><?= Yii::t('main','Email напоминание')?></label>
+        <label class="col-xs-12 col-sm-4 control-label wizard-notice-label"><?= Yii::t('main','Напоминание')?></label>
         <div class="col-xs-10 col-sm-3">
             <?php echo CHtml::dropDownList('Request[alarm_time]',$request->alarm_time,array('-1'=>Yii::t('main','не получать'),1=>Yii::t('main',"за {n} час",array('{n}'=>1)),2=>Yii::t('main',"за {n} часа",array('{n}'=>2)), 3=>Yii::t('main',"за {n} часа",array('{n}'=>3)), 4=>Yii::t('main',"за {n} часа",array('{n}'=>4))),array('class'=>'form-control'))?>
         </div>

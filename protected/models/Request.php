@@ -319,7 +319,7 @@ class Request extends CActiveRecord
             $companyMail[] = $this->user->company->mail_notice_address;
         }
         $companyMail[] = $this->user->login;
-        if ($confirm) {
+        if ($confirm && $company->enable_confirm) {
             Help::sendMail($this->getEmailField(), 'termin подтверждается', 'processed', $this);
             Help::sendMail($companyMail, 'Уведомление о создании termin с подтверждением', 'companyConfirmation', $this);
         } else {
@@ -331,10 +331,9 @@ class Request extends CActiveRecord
         $license = Company2License::getCurrentLicense($this->user->company_id);
         $company = Company::model()->findByPk($this->user->company_id);
         if(!$license->license->sms_event || !$company->enable_sms_notice){
-            echo 1;
             return false;
         }
-        if ($confirm) {
+        if ($confirm && $company->enable_confirm) {
             if(!empty($this->user->company->sms_notice_phone)){
                 Help::sendSms($this->user->company->sms_notice_phone, Help::genSmsText($this, true), $this);
             }

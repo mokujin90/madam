@@ -311,6 +311,9 @@ If you are passing a path with a filename on the end, pass true as the second pa
         if(empty($to)){
             return false;
         }
+        if(!Company2License::enableSmsCount($model->user->company_id)){
+            return false;
+        }
         $phoneCode = $model->user->company->phone_code;
         if ($to[0] == "0" && isset($phoneCode)) {
             $to = substr_replace($to, "+$phoneCode", 0, 1);
