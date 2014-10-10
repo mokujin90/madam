@@ -68,7 +68,7 @@
                                 <tr>
                                     <td align="center" valign="top">
                                         <p style="margin: 1em 0;">
-                                            Не забывайте про назначенный termin! Через <?=$request->alarm_time?> <?=Help::getNumEnding($request->alarm_time, array('час', 'часа', 'часов'))?>.
+                                            <?=Yii::t('main', 'Не забывайте про назначенный termin! Через {hour} {hourText}', array('{hour}' => $request->alarm_time, '{hourText}' => Help::getNumEnding($request->alarm_time, array('час', 'часа', 'часов'))))?>.
                                         </p>
                                     </td>
                                 </tr>

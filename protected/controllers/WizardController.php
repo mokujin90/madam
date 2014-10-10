@@ -27,7 +27,7 @@ class WizardController extends BaseController
         $company = Company::model()->with('country')->findByPk($id);
         if(is_null($company))
             throw new CHttpException(404, Yii::t('main', 'Страница не найдена'));
-        $license = Company2License::getCurrentLicense();
+        $license = Company2License::getCurrentLicense($id);
         $this->wizardStep = $license['license']->control_dialog == 1 ? true :false;
         $question = $this->wizardStep ? Help::setArray(Question::model()->getNextQuestion($id)) : Question::getQuestion($id); //todo: изменить
 
@@ -43,13 +43,14 @@ class WizardController extends BaseController
             $requestData = json_decode($_POST['jsonResult'],true);
             $endTime = new DateTime($_POST['start_time']);
             $endTime->add(new DateInterval('PT' . ($requestData['time'] == 0 ? 1 : $requestData['time']) . 'M'));
-            $confirm = $license['license']->email_confirm == 1 ? 0 : 1;
+            $confirm = (($license['license']->email_confirm == 1 || $license['license']->sms_confirm == 1) && $company->enable_confirm) ? 0 : 1;
             $alarmMin = $_POST['Request']['alarm_time'];
             $request=Request::create(array('user_id'=>$emplyeeId,'start_time'=>$startTime,'end_time'=>$endTime->format(Help::DATETIME),'is_confirm'=>$confirm,'comment'=>$_POST['Request']['comment'],'alarm_time'=>$alarmMin));
             if( !is_null($request->id)){
                 RequestQuestion::createByPost($_POST['answer'],$request->id);
                 RequestField::createByPost($_POST['field'],$request->id);
                 $request->sendNotification($license['license']->email_confirm == 1);
+                $request->sendSmsNotification($license['license']->sms_confirm == 1);
                 $status = self::STATUS_WIZARD_OK;//
             }
             else{
@@ -166,13 +167,16 @@ class WizardController extends BaseController
             throw new CHttpException(403, Yii::t('main', 'Событие уже подтверждено'));
         }
         $mail = $request->getEmailField();
+        $phone = $request->getPhoneField();
         if ($delete) {
             $request->delete();
             Help::sendMail($mail, Yii::t('main','Уведомление о удалении termin'), 'unconfirmed', $request);
+            Help::sendSms($phone, Yii::t('main','Ваш termin был удален'), $request);
         } else {
             $request->is_confirm = 1;
             $request->save(false);
             Help::sendMail($mail, Yii::t('main','Уведомление о создании termin'), 'notification', $request);
+            Help::sendSms($phone, Help::genSmsText($request), $request);
         }
         if($external){
             $this->redirect(Yii::app()->createUrl('site/panel',array('status'=>'2')));
@@ -226,5 +230,20 @@ class WizardController extends BaseController
         header('Content-Disposition: attachment;filename="'.'TerminExport' . $date->format('YmdHis') . '.ics'.'"');
         header('Cache-Control: max-age=0');
         echo $content;
+    }
+
+    public function actionResponseSms($message_id = 12345, $message = 'message', $from = '12345', $ref = false){
+        if (!$sms = Sms::model()->with('user')->findByAttributes(array('message_id' => $message_id))) {
+            return;
+        }
+        $model = array();
+        $model['sms'] = $sms;
+        $model['reply'] = array(
+            'message' => $message,
+            'from' => $from
+        );
+
+
+        Help::sendMail($sms->user->login, Yii::t('main', 'Ответ на SMS уведомление'), 'smsReply', $model);
     }
 }

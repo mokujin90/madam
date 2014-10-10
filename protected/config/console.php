@@ -14,6 +14,10 @@ $consoleArray =  array(
                 ),
             ),
         ),
+        'user' => array(
+            'class' => 'ConsoleUser',
+            'primaryKey' => 1
+        ),
     ),
 );
 

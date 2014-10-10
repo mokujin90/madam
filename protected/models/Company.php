@@ -80,9 +80,10 @@ class Company extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('logo', 'file','allowEmpty'=>true, 'types' => 'png,jpg,gif'),
+            array('logo', 'file','allowEmpty'=>true, 'types' => 'png,jpg,gif', 'maxSize'=>1024 * 1024 * 2, 'tooLarge'=> Yii::t('main', 'Размер файла слишком велик, он не должен превышать 2MB')),
             array('country_id', 'required'),
-            array('country_id,language_id, booking_deadline, booking_interval, enable_mail_notice, enable_sms_notice, select_timetable,no_logo', 'numerical', 'integerOnly' => true),
+            array('bic, iban, address, city, name, email, zip', 'required', 'on' => 'distance'),
+            array('phone_code, country_id,language_id, booking_deadline, booking_interval, enable_mail_notice, enable_sms_notice, select_timetable,no_logo, enable_confirm', 'numerical', 'integerOnly' => true),
             array('name, address, city, site, url, mail_notice_address', 'length', 'max' => 255),
             array('phone, mobile_phone, fax, sms_notice_phone', 'length', 'max' => 20),
             array('email', 'length', 'max' => 100),
@@ -135,12 +136,14 @@ class Company extends CActiveRecord
             'booking_deadline' => Yii::t('main', 'Крайний срок подачи заявок за'),
             'booking_interval' => Yii::t('main', 'Доступный интервал бронирования'),
             'enable_mail_notice' => Yii::t('main', 'Уведомления по электронной почте'),
+            'enable_confirm' => Yii::t('main', 'Предварительное подтверждение события'),
             'mail_notice_address' => Yii::t('main', 'Адрес электронной почты'),
             'enable_sms_notice' => Yii::t('main', 'Уведомления через СМС'),
             'sms_notice_phone' => Yii::t('main', 'Номер мобильного телефона'),
             'hello_text' => Yii::t('main', 'Текст приветствия'),
             'select_timetable' => Yii::t('main', 'Выбор сроков для назначения бронирования'),
-            'no_expiration' => Yii::t('main', 'Бесконеченый лимит')
+            'no_expiration' => Yii::t('main', 'Бесконеченый лимит'),
+            'phone_code' => Yii::t('main', 'Код телефона'),
         );
     }
 

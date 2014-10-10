@@ -57,6 +57,13 @@
             </div>
         </div>
         <div class="form-group">
+            <?php echo $form->label($model,'phone_code',array('class'=>"col-lg-4 control-label")); ?>
+            <div class="col-lg-8">
+                <?php echo $form->textField($model,'phone_code',array('class'=>'form-control','pattern'=>"^[0-9]+$",'placeholder'=>Yii::t('main','Вводите без знака +'))) ?>
+                <?php echo $form->error($model,'phone_code'); ?>
+            </div>
+        </div>
+        <div class="form-group">
             <?php echo $form->label($model,'mobile_phone',array('class'=>"col-lg-4 control-label")); ?>
             <div class="col-lg-8">
                 <?php echo $form->textField($model,'mobile_phone',array('class'=>'form-control','pattern'=>"^[0-9]+$",'placeholder'=>Yii::t('main','Мобильный'))) ?>

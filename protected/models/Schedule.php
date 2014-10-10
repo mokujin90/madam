@@ -180,7 +180,7 @@ class Schedule extends CActiveRecord
                     $request->addError('start_date', 'Событие накладывается на заблокированный интервал');
                 }
                 if ($groupRequestCount != 0) { //есть параллельное событие
-                    if (!Company2License::enableGroupEvent()) {
+                    if (!Company2License::enableGroupEvent($request->user_id)) {
                         $request->addError('start_date', 'Групповые события не доступны для вашей лицензии.');
                         return false;
                     }

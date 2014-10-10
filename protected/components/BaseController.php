@@ -55,6 +55,12 @@ class BaseController extends CController
    public function accessRules()
     {
         return array(
+            array('allow',
+                'controllers' => array('wizard'),
+                ),
+            array('allow',
+                'actions' => array('getAvailableTime', 'getUserList'),
+            ),
             array('deny',
                 'controllers' => array('company', 'employee', 'requestForm'),
                 'expression' => '($user->getOwner() == 0)'

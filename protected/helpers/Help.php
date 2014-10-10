@@ -285,18 +285,50 @@ If you are passing a path with a filename on the end, pass true as the second pa
         return true;
     }
 
+    public static function genSmsText($request, $confirm = false){
+        $dateVal = new DateTime($request->start_time);
+        $company =  $request->user->company;
+        if($confirm){
+            $text = Yii::t('main', "Confirm Termin {date}. {firm}, {address}, {zip} {city}.", array(
+                '{date}' => $dateVal->format('d/m/Y H:i'),
+                '{firm}' => $company->name,
+                '{address}' => $company->address,
+                '{zip}' => $company->zip,
+                '{city}' => $company->city,
+            ));
+        } else {
+            $text = Yii::t('main', "Termin {date}. {firm}, {address}, {zip} {city}.", array(
+                '{date}' => $dateVal->format('d/m/Y H:i'),
+                '{firm}' => $company->name,
+                '{address}' => $company->address,
+                '{zip}' => $company->zip,
+                '{city}' => $company->city,
+            ));
+        }
+        return $text;
+    }
     public static function sendSms($to, $message, $model){
         if(empty($to)){
             return false;
+        }
+        if(!Company2License::enableSmsCount($model->user->company_id)){
+            return false;
+        }
+        $phoneCode = $model->user->company->phone_code;
+        if ($to[0] == "0" && isset($phoneCode)) {
+            $to = substr_replace($to, "+$phoneCode", 0, 1);
         }
         $url = "http://gateway.smstrade.de"; // URL of gateway
         $request = ""; // initialize variable request
         $param["key"] = "snJBDy2dcddb231eJUaMEKu"; // gateway key
         $param["to"] = $to; // recipient of SMS
         $param["message"] = $message; // content of message
-        $param["route"] = "gold";// using gold route
-        $param["from"] = "TERMIN";// sender of SMS
-        $param["debug"] = "1";// SMS will not be sent - test modus
+        $param["route"] = "basic";// using gold route
+        //$param["from"] = "TERMIN";// sender of SMS
+        $param["message_id"] = 1;
+        $param["ref"] = "smstrade";
+        $param["response"] = 1;
+        //$param["debug"] = "1";// SMS will not be sent - test modus
 
         foreach($param as $key=>$val) // run all parameters
         {
@@ -309,7 +341,6 @@ If you are passing a path with a filename on the end, pass true as the second pa
         $response = @file($url."?".$request); // submit request
 
         $response_code = intval($response[0]); // read response code
-
         $sms = new Sms();
         $sms->company_id = $model->user->company_id;
         $sms->user_id = $model->user_id;
@@ -318,6 +349,7 @@ If you are passing a path with a filename on the end, pass true as the second pa
         $sms->send_date = date(Help::DATETIME);
         $sms->text = $message;
         $sms->response_code = $response_code;
+        $sms->message_id = $response[1];
         $sms->save();
 
         return $response_code == 100;
