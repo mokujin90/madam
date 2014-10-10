@@ -65,16 +65,19 @@
         <div class="navigation">
             <ul class="nav nav-stacked">
                 <li class="">
-                    <?php echo CHtml::link('<i class="icon-cog"></i><span>Base License</span>',array('adminLicense/index'),array('class'=>$this->mainMenuActiveId=='baseLicense'?'in':''))?>
+                    <?php echo CHtml::link('<i class="icon-cog"></i><span>'.Yii::t('main','Базовые лицензии').'</span>',array('adminLicense/index'),array('class'=>$this->mainMenuActiveId=='baseLicense'?'in':''))?>
                 </li>
                 <li class="">
-                    <?php echo CHtml::link('<i class="icon-cog"></i><span>Company</span>',array('adminCompany/index'),array('class'=>$this->mainMenuActiveId=='company'?'in':''))?>
+                    <?php echo CHtml::link('<i class="icon-cog"></i><span>'.Yii::t('main','Компании').'</span>',array('adminCompany/index'),array('class'=>$this->mainMenuActiveId=='company'?'in':''))?>
                 </li>
                 <li class="">
-                    <?php echo CHtml::link('<i class="icon-cog"></i><span>Approve</span>',array('adminCompany/approveList'),array('class'=>$this->mainMenuActiveId=='approve'?'in':''))?>
+                    <?php echo CHtml::link('<i class="icon-cog"></i><span>'.Yii::t('main','Подтвердить лицензии').'</span>',array('adminCompany/approveList'),array('class'=>$this->mainMenuActiveId=='approve'?'in':''))?>
                 </li>
                 <li class="">
-                    <?php echo CHtml::link('<i class="icon-cog"></i><span>Users</span>',array('adminUser/index'),array('class'=>$this->mainMenuActiveId=='user'?'in':''))?>
+                    <?php echo CHtml::link('<i class="icon-cog"></i><span>'.Yii::t('main','Пользователи').'</span>',array('adminUser/index'),array('class'=>$this->mainMenuActiveId=='user'?'in':''))?>
+                </li>
+                <li class="">
+                    <?php echo CHtml::link('<i class="icon-cog"></i><span>'.Yii::t('main','Настройки админки').'</span>',array('admin/setting'),array('class'=>$this->mainMenuActiveId=='setting'?'in':''))?>
                 </li>
             </ul>
         </div>

@@ -3,12 +3,13 @@ class AdminBaseController extends BaseController
 {
     public $menu;
     public $breadcrumbs;
-
     public $layout = '//layouts/column1';
 
     public function init()
     {
         Yii::app()->setComponent('user', Yii::app()->adminUser);
+        $this->user = Root::model()->findByPk(Yii::app()->user->id);
+        Yii::app()->language = is_null($this->user->lang->prefix) ? 'de' : $this->user->lang->prefix;
     }
 
     public function filters()
