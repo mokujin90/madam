@@ -43,7 +43,7 @@ class Company extends CActiveRecord
     public static function getBookingDeadline(){
         return array(
             '1' => '1 ' . Yii::t('main', 'час'),
-            '2' => '2 ' . Yii::t('main', 'часa'),
+            '2' => '2 ' . Yii::t('main', 'часа'),
             '5' => '5 ' . Yii::t('main', 'часов'),
             '10' => '10 ' . Yii::t('main', 'часов'),
             '24' => '1 ' . Yii::t('main', 'сутки'),
