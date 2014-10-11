@@ -60,7 +60,7 @@
             <?= $form->error($model,'calendar_delimit'); ?>
         </div>
         <div class="col-xs-2 col-sm-1">
-            <div class="btn has-popover pull-right" data-content="<?= Yii::t('main', 'Интервалы на которые разбивается внутрненний календарь работника.')?>" data-placement="left" data-original-title="" title=""><i class="icon-question"></i></div>
+            <div class="btn has-popover pull-right" data-content="<?= Yii::t('main', 'Интервалы на которые разбивается внутренний календарь работника.')?>" data-placement="left" data-original-title="" title=""><i class="icon-question"></i></div>
         </div>
     </div>
     <div class="form-group">

@@ -34,7 +34,7 @@ class AdminController extends AdminBaseController
         $this->layout='adminLayout';
         $this->mainMenuActiveId='setting';
         $language = Help::decorate(Language::model()->findAll(),'name');
-        if(isset($_POST)){
+        if(isset($_POST['Root'])){
             $this->user->attributes = $_POST['Root'];
             $this->user->save();
 

@@ -84,7 +84,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" bgcolor="#00acec" valign="middle">
-                                        <h3 style="display: inline-block; margin: 10px 0;"><a href="http://www.<?=Yii::app()->params['host']?>/wizard/print/id/<?=$request->id?>/hash/<?=$request->getHash()?>/" style="color: #ffffff !important"><?=Yii::t('main','Печать назначния')?></a></h3>
+                                        <h3 style="display: inline-block; margin: 10px 0;"><a href="http://www.<?=Yii::app()->params['host']?>/wizard/print/id/<?=$request->id?>/hash/<?=$request->getHash()?>/" style="color: #ffffff !important"><?=Yii::t('main','Печать назначения')?></a></h3>
                                     </td>
                                 </tr>
                                 <tr>
@@ -94,7 +94,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" bgcolor="#00acec" valign="middle">
-                                        <h3 style="display: inline-block; margin: 10px 0;"><a href="http://www.<?=Yii::app()->params['host']?>/wizard/export/id/<?=$request->id?>/hash/<?=$request->getHash()?>/" style="color: #ffffff !important"><?=Yii::t('main','Экспорт назначния')?></a></h3>
+                                        <h3 style="display: inline-block; margin: 10px 0;"><a href="http://www.<?=Yii::app()->params['host']?>/wizard/export/id/<?=$request->id?>/hash/<?=$request->getHash()?>/" style="color: #ffffff !important"><?=Yii::t('main','Экспорт назначения')?></a></h3>
                                     </td>
                                 </tr>
                                 <tr>
