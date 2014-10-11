@@ -391,7 +391,7 @@ class CalendarWidget extends CWidget{
         $row .= CHtml::closeTag('td');
 
         $row .= CHtml::openTag('td', array('class' => 'text-left')); //comment
-        $row .= 'Интервал заблокирован';
+        $row .= Yii::t('main', 'Интервал заблокирован');
         $row .= CHtml::closeTag('td');
 
         $row .= CHtml::openTag('td'); //edit

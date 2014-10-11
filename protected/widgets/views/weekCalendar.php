@@ -79,7 +79,7 @@
                 <?foreach($this->shedule as $day=>$obj):?>
                     <th>
 
-                        <span class="inline-200 th-day"><?=CHtml::checkBox('', false, array('value' => $day, 'class' => 'event-cb-day'))?> <?=$this->dayName[$day]?></span>
+                        <span class="inline-200 th-day"><?=CHtml::checkBox('', false, array('value' => $day, 'class' => 'event-cb-day'))?> <?=Yii::t('main', $this->dayName[$day])?></span>
                         <span class="inline-200"><?=$this->getTitleWeekDate($day)?></span>
                     </th>
                 <?endforeach?>

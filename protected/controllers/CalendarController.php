@@ -114,14 +114,14 @@ class CalendarController extends BaseController
         $license = Company2License::getCurrentLicense();
         if (isset($_POST['save'])) {
 
-            $return = array('message' => 'Ошибка отправки');
+            $return = array('message' => Yii::t('main', 'Ошибка отправки'));
             if ($_POST['save'] == "mail" && !empty($_POST['mail_text'])) {
                 if (Help::sendMail($model->getEmailField(), 'Termin Mail', $_POST['mail_text'], $model, false, true)) {
-                    $return = array('message' => 'Письмо отправлено');
+                    $return = array('message' => Yii::t('main', 'Письмо отправлено'));
                 }
             } elseif ($_POST['save'] == "sms" && !empty($_POST['sms_text'])) {
                 if (Help::sendSms($model->getPhoneField(), $_POST['sms_text'], $model)) {
-                    $return = array('message' => 'SMS отправлено');
+                    $return = array('message' => Yii::t('main', 'SMS отправлено'));
                 }
             }
             echo json_encode($return);
@@ -202,7 +202,8 @@ class CalendarController extends BaseController
             $row[] = $startDate->format('d/m/Y');
             $row[] = $startDate->format('H:i');
             $row[] = $endDate->format('H:i');
-            $row[] = Request::$status[$event->status];
+            $arr = Request::getStatusArr();
+            $row[] = $arr[$event->status];
             foreach ($companyFields as $field) {
                 $exist = false;
                 foreach($event->requestFields as $rfield){

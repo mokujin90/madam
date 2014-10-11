@@ -30,7 +30,8 @@ Yii::app()->clientScript->registerScript('modal', 'modal.init()', CClientScript:
             <div class="time box">
                 <div class="controls">
                     <?=CHtml::label(Yii::t('main','Статус').':',"")?>
-                    <?=Request::$status[$model->status]?>
+                    <?$arr = Request::getStatusArr()?>
+                    <?=$arr[$model->status]?>
                 </div>
                 <div class="controls">
                     <?=CHtml::label(Yii::t('main','Время начала').':',"")?>

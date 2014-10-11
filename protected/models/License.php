@@ -96,7 +96,7 @@ class License extends CActiveRecord
 			'max_employee' => Yii::t('main','Максмум работников'),
 			'event' =>Yii::t('main','События'),
 			'sms' => 'SMS',
-            'max_sms' => 'Максмум SMS',
+            'max_sms' => Yii::t('main', 'Максмум SMS'),
 			'base_lvl' => 'Base Lvl',
 			'is_system' => 'Is System',
 			'request_text' => 'Request Text',

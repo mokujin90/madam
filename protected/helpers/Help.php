@@ -52,11 +52,11 @@ class Help{
      * @param string $key
      * @return array
      */
-    public static function decorate($cursor,$value,$key='id'){
+    public static function decorate($cursor,$value,$key='id', $yiit = false){
         $result = array();
         if(is_array($cursor)){
             foreach($cursor as $item){
-                $result[$item->{$key}] = $item->{$value};
+                $result[$item->{$key}] = $yiit ? Yii::t('main', $item->{$value}) : $item->{$value};
             }
         }
 

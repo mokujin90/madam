@@ -39,20 +39,27 @@ class Company extends CActiveRecord
     public $dayLeft=0;
     public $no_logo=0;
     static $PATH_LOGO='data/';
-    static $bookingDeadline = array(
-        '1' => '1 час',
-        '2' => '2 часa',
-        '5' => '5 часов',
-        '10' => '10 часов',
-        '24' => '1 сутки',
-    );
-    static $bookingInterval = array(
-        '1' => '1 месяц',
-        '2' => '2 месяца',
-        '3' => '3 месяца',
-        '6' => '6 месяцев',
-        '12' => '1 год',
-    );
+
+    public static function getBookingDeadline(){
+        return array(
+            '1' => '1 ' . Yii::t('main', 'час'),
+            '2' => '2 ' . Yii::t('main', 'часa'),
+            '5' => '5 ' . Yii::t('main', 'часов'),
+            '10' => '10 ' . Yii::t('main', 'часов'),
+            '24' => '1 ' . Yii::t('main', 'сутки'),
+        );
+    }
+
+    public static function getBookingInterval(){
+        return array(
+            '1' => '1 ' . Yii::t('main', 'месяц'),
+            '2' => '2 ' . Yii::t('main', 'месяца'),
+            '3' => '3 ' . Yii::t('main', 'месяца'),
+            '6' => '6 ' . Yii::t('main', 'месяцев'),
+            '12' => '1 ' . Yii::t('main', 'год'),
+        );
+    }
+
     public $license;
     /**
      * Returns the static model of the specified AR class.
