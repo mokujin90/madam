@@ -1,8 +1,9 @@
 <?
 /* @var $this CalendarController */
-Yii::app()->clientScript->registerScriptFile('/js/extension/jquery.print.js', CClientScript::POS_END);
 Yii::app()->clientScript->registerScriptFile('/js/main.js', CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile('/js/extension/jquery.print.js', CClientScript::POS_END);
 Yii::app()->clientScript->registerScript('modal', 'modal.init()', CClientScript::POS_END);
+
 
 ?>
 <div>
