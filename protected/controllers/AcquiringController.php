@@ -293,7 +293,7 @@ class AcquiringController extends BaseController {
                 }
                 Yii::app()->user->setFlash('alert', Yii::t('main', 'Ошибка при создании клиента. Проверьте поля: ') . implode(', ', $fields));
             } else {
-                Yii::app()->user->setFlash('alert', Yii::t('main', 'Ошибка при создании клиента. Повторите попытку позже.'));
+                Yii::app()->user->setFlash('alert', Yii::t('main', 'Ошибка при создании клиента. Повторите попытку позже.') . ' ' .Yii::t('main', 'Проверьте правильность заполнения юр. информации и адреса фирмы.'));
             }
             $this->redirect('/company/more');
             return;

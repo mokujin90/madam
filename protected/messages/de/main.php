@@ -1,6 +1,7 @@
 <?php
 
 return array (
+    "Проверьте правильность заполнения юр. информации и адреса фирмы." => 'Bitte überprüfen Sie Firmennamen sowie Adresse und Bankverbindung.',
     "В процессе" => 'Während',
     "Решено" => 'Entschlossen',
     "Отменено" => 'Storniert',
