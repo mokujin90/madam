@@ -36,19 +36,6 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#">
-                            <i class="icon-user"></i>
-                            <?= Yii::t('main','Профиль')?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon-cog"></i>
-                            <?= Yii::t('main','Настройки')?>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
                         <a href="/admin/logout">
                             <i class="icon-signout"></i>
                             <?= Yii::t('main','Выйти')?>
