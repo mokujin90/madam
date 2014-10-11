@@ -62,7 +62,6 @@
                             <?if(count($questions)>1 && $license['license']->control_dialog==1):?>
                                 <?
                                     $simple = $param['simple'];
-
                                     unset($simple[$id]);
                                 ?>
 

@@ -194,6 +194,17 @@ class Question extends CActiveRecord
     }
 
     /**
+     * @param $models Question[]
+     */
+    public static function decorate($models){
+        $return = array();
+        $i = 1;
+        foreach($models as $model){
+            $return[$model->id] = Yii::t('main','Вопрос')." ".$i++;
+        }
+        return $return;
+    }
+    /**
      * Метод, который по объекту определит, а есть ли необходимый следующий вопрос
      */
     public function issetNext(){

@@ -313,5 +313,5 @@ return array (
     'улица, дом' => 'Strasse, Hausnr.',
     'уровень' => 'Stufe',
     'условия' => 'Voraussetzungen',
-    'октябрь'=>'Oktober'
+    'Вопрос' => 'Frage',
 );
