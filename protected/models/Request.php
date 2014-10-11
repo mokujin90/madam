@@ -23,9 +23,17 @@ class Request extends CActiveRecord
     const STATUS_CANCELED=2;
     const REPEAT_TO_COUNT=1;
     const REPEAT_TO_DATE=2;
-    static $status = array(self::STATUS_IN_PROGRESS=>"В процессе", self::STATUS_DECIDED=>"Решено", self::STATUS_CANCELED=>'Отменено');
     static $statusClass = array(self::STATUS_IN_PROGRESS=>"text-blue", self::STATUS_DECIDED=>"text-purple", self::STATUS_CANCELED=>'text-red');
-	/**
+
+    static public function getStatusArr(){
+        return array(
+            self::STATUS_IN_PROGRESS=>Yii::t('main', "В процессе"),
+            self::STATUS_DECIDED=>Yii::t('main', "Решено"),
+            self::STATUS_CANCELED=>Yii::t('main', "Отменено")
+        );
+
+    }
+    /**
 	 * @return string the associated database table name
 	 */
 	public function tableName()

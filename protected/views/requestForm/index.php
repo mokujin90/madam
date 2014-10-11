@@ -106,7 +106,7 @@
                     <?=CHtml::textField("min",'',array('class'=>'form-control'))?>
                 </div>
                 <div class="col-xs-12 col-sm-6">
-                    <label>ABBR</label>
+                    <label><?=Yii::t('main', 'ABBR')?></label>
                     <?=CHtml::textField("abbr",'',array('class'=>'form-control'))?>
                 </div>
             </div>

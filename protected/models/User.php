@@ -26,15 +26,18 @@ class User extends CActiveRecord
     public $scheduleUpdate;
     public $answered;
     public $password_repeat;
-    static $calendarDelimit = array(
-        '10' => '10 минут',
-        '15' => '15 минут',
-        '20' => '20 минут',
-        '30' => '30 минут',
-        '60' => '60 минут',
-        '120' => '2 часа',
-        '0' => 'Индивидуально',
-    );
+
+    public static function getCalendarDelimit(){
+        return array(
+            '10' => '10 ' . Yii::t('main', 'минут'),
+            '15' => '15 ' . Yii::t('main', 'минут'),
+            '20' => '20 ' . Yii::t('main', 'минут'),
+            '30' => '30 ' . Yii::t('main', 'минут'),
+            '60' => '60 ' . Yii::t('main', 'минут'),
+            '120' => '2 ' . Yii::t('main', 'часа'),
+            '0' => Yii::t('main', 'Индивидуально'),
+        );
+    }
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.

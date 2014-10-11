@@ -50,11 +50,11 @@
         <?= $form->labelEx($model,'calendar_delimit', array('class' => "col-xs-12 col-sm-4 control-label")); ?>
         <div class="col-xs-10 col-sm-7">
             <?
-                $data =User::$calendarDelimit;
+                $data =User::getCalendarDelimit();
                 $select = !isset($data[$model->calendar_delimit]) ? 0 :  $model->calendar_delimit;
             ?>
             <?= CHtml::dropDownList('User[calendar_delimit]',$select,$data, array('class' => "form-control may-individual"))?>
-            <?if(!isset(User::$calendarDelimit[$model->calendar_delimit])):?>
+            <?if(!isset($data[$model->calendar_delimit])):?>
                 <?=$form->textField($model,'calendar_delimit', array('class' => "form-control manual-value", 'style'=>'margin-top: 5px;')); ?>
             <?endif;?>
             <?= $form->error($model,'calendar_delimit'); ?>
@@ -65,14 +65,14 @@
     </div>
     <div class="form-group">
         <?
-            $data = User::$calendarDelimit;
+            $data =User::getCalendarDelimit();
             $select = !isset($data[$model->calendar_front_delimit]) ? 0 :  $model->calendar_front_delimit;
         ?>
         <?= $form->labelEx($model,'calendar_front_delimit', array('class' => "col-xs-12 col-sm-4 control-label")); ?>
         <div class="col-xs-10 col-sm-7">
 
             <?= CHtml::dropDownList('User[calendar_front_delimit]',$select,$data, array('class' => "form-control may-individual"))?>
-            <?if(!isset(User::$calendarDelimit[$model->calendar_front_delimit])):?>
+            <?if(!isset($data[$model->calendar_front_delimit])):?>
                 <?=$form->textField($model,'calendar_front_delimit', array('class' => "form-control manual-value", 'style'=>'margin-top: 5px;')); ?>
             <?endif;?>
             <?= $form->error($model,'calendar_front_delimit'); ?>

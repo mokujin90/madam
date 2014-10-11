@@ -102,7 +102,7 @@
                                                     <?=CHtml::numberField("question[".$count."][answer][".$countAnswer."][min]",$answer->min,array('class'=>'form-control'))?>
                                                 </div>
                                                     <div class="col-xs-12 col-sm-6">
-                                                        <label>ABBR</label>
+                                                        <label><?=Yii::t('main', 'ABBR')?></label>
                                                         <?=CHtml::textField("question[".$count."][answer][".$countAnswer."][abbr]",$answer->abbr,array('class'=>'form-control'))?>
                                                     </div>
                                             </div>

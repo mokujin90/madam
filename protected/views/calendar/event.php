@@ -42,7 +42,7 @@ Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript:
             <div class="date">
                 <div class="controls">
                     <?=CHtml::label(Yii::t('main','Статус:'),"datepicker")?>
-                    <?php echo CHtml::dropDownList('event[status]',$model->status,Request::$status,array('class'=>'form-control'))?>
+                    <?php echo CHtml::dropDownList('event[status]',$model->status,Request::getStatusArr(),array('class'=>'form-control'))?>
                 </div>
             </div>
             <div class="time box">

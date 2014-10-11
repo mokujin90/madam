@@ -25,7 +25,7 @@
         <div class="form-group">
             <label class="col-lg-4 control-label"><?=Yii::t('main','Выбор страны')?></label>
             <div class="col-lg-8">
-                <?=CHtml::dropDownList('Company[country_id]',$model->country_id,Help::decorate($country,'name'),array('class'=>"form-control"))?>
+                <?=CHtml::dropDownList('Company[country_id]',$model->country_id,Help::decorate($country,'name', 'id', true),array('class'=>"form-control"))?>
             </div>
         </div>
         <div class="form-group">

@@ -27,7 +27,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
             <div class="form-group">
                 <?php echo $form->label($model,'booking_deadline',array('class'=>"col-xs-12 col-sm-6 control-label")); ?>
                 <div class="col-xs-10 col-sm-4">
-                    <?=CHtml::dropDownList('Company[booking_deadline]',$model->booking_deadline,Company::$bookingDeadline,array('class'=>"form-control"))?>
+                    <?=CHtml::dropDownList('Company[booking_deadline]',$model->booking_deadline,Company::getBookingDeadline(),array('class'=>"form-control"))?>
                 </div>
                 <div class="col-xs-2">
                     <div class="btn has-popover" data-content="<?= Yii::t('main', 'Ограничение срока подачи заявки для клиента(при заказе через виджет)')?>" data-placement="left" data-original-title="" title=""><i class="icon-question"></i></div>
@@ -36,7 +36,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
             <div class="form-group">
                 <?php echo $form->label($model,'booking_interval',array('class'=>"col-xs-12 col-sm-6 control-label")); ?>
                 <div class="col-xs-10 col-sm-4">
-                    <?=CHtml::dropDownList('Company[booking_interval]',$model->booking_interval,Company::$bookingInterval,array('class'=>"form-control"))?>
+                    <?=CHtml::dropDownList('Company[booking_interval]',$model->booking_interval,Company::getBookingInterval(),array('class'=>"form-control"))?>
                 </div>
                 <div class="col-xs-2">
                     <div class="btn has-popover" data-content="<?= Yii::t('main', 'Ограничение интервала бронирования для клиента(при заказе через виджет)')?>" data-placement="left" data-original-title="" title=""><i class="icon-question"></i></div>
