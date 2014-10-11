@@ -8,7 +8,7 @@
 Yii::app()->clientScript->registerCssFile('/css/datepicker3.css');
 
 Yii::app()->clientScript->registerScriptFile('/js/dp/bootstrap-datepicker.js', CClientScript::POS_HEAD);
-Yii::app()->clientScript->registerScriptFile('/js/dp/locales/bootstrap-datepicker.ru.js', CClientScript::POS_HEAD);
+Yii::app()->clientScript->registerScriptFile('/js/dp/locales/bootstrap-datepicker.de.js', CClientScript::POS_HEAD);
 
 Yii::app()->clientScript->registerScriptFile('/js/validate/jquery.validate.min.js', CClientScript::POS_HEAD);
 if($this->wizardStep){
@@ -150,7 +150,7 @@ if($this->wizardStep){
                 weekStart: 1,
                 startDate: globalStartDate,
                 endDate: globalEndDate,
-                language: "ru",
+                language: "<?= Language::getJSPrefix();?>",
                 maxViewMode: 1
             }).bind('changeDate', function(){
                         $('.btn-next').addClass('disabled');

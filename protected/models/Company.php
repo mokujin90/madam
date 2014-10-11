@@ -246,6 +246,14 @@ class Company extends CActiveRecord
     public function getBasePath(){
         return self::$PATH_LOGO.$this->id;
     }
+
+    /**
+     * Метод вернет язык компании или же по умолчанию
+     */
+    public function getLanguage(){
+        return is_null($this->lang->prefix) ? Language::$DEFAULT : $this->lang->prefix;
+    }
+
     public function drawLogo(){
         $result = '';
         if(file_exists($this->getLogoPath())){

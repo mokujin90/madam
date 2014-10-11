@@ -101,6 +101,7 @@ class User extends CActiveRecord
 			'company_id' => 'Company',
 			'login' => Yii::t('main','Логин'),
 			'password' => Yii::t('main','Пароль'),
+            'password_repeat'=>Yii::t('main','Пароль повторно'),
 			'is_owner' => 'Is Owner',
 			'name' => Yii::t('main','Имя'),
 			'lastname' => Yii::t('main','Фамилия'),

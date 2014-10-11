@@ -207,7 +207,7 @@ event={
                 down: "icon-arrow-down"
             },
             defaultDate: new Date(),
-            language: 'ru'
+            language: 'de'
         });
         $.mask.definitions['2'] = "[0-2]";
         $.mask.definitions['5'] = "[0-5]";

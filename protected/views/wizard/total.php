@@ -65,7 +65,7 @@
     <div class="row">
         <div class="form-group">
             <label class="col-xs-12 col-sm-4 control-label"></label>
-            <div class="col-xs-10 col-sm-6"><?=$info->getTermLink('Terms and conditions');?></div>
+            <div class="col-xs-10 col-sm-6"><?=$info->getTermLink('Сроки и условия');?></div>
         </div>
     </div>
 <?endif;?>

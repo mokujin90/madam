@@ -9,7 +9,7 @@
  */
 class Language extends CActiveRecord
 {
-    static $DEFAULT = "ru";
+    static $DEFAULT = "de";
 	/**
 	 * @return string the associated database table name
 	 */
@@ -92,4 +92,8 @@ class Language extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public static function getJSPrefix(){
+        return Yii::app()->language=='en_US' ? 'en' : Yii::app()->language;
+    }
 }

@@ -8,7 +8,7 @@ $this->layout = 'sign';
         <div class="col-sm-4 col-sm-offset-4">
             <h1 class="text-center title"><?= Yii::t('main','Спасибо, что зарегестрировлись')?></h1>
 
-                В ближайшее время Вам придет письмо с кодом подтверждения.
+                <?= Yii::t('main','В ближайшее время Вам придет письмо с кодом подтверждения.')?>
 
             <div class="text-center">
                 <hr class="hr-normal">

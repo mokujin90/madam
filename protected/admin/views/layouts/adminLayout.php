@@ -38,20 +38,20 @@
                     <li>
                         <a href="#">
                             <i class="icon-user"></i>
-                            Profile
+                            <?= Yii::t('main','Профиль')?>
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             <i class="icon-cog"></i>
-                            Settings
+                            <?= Yii::t('main','Настройки')?>
                         </a>
                     </li>
                     <li class="divider"></li>
                     <li>
                         <a href="/admin/logout">
                             <i class="icon-signout"></i>
-                            Sign out
+                            <?= Yii::t('main','Выйти')?>
                         </a>
                     </li>
                 </ul>
@@ -122,7 +122,7 @@
                 <div class="footer-wrapper">
                     <div class="row">
                         <div class="col-sm-6 text">
-                            Copyright © 2013 Your Project Name
+                            Copyright © 2014 Termin
                         </div>
                         <div class="col-sm-6 buttons">
 

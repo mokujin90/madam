@@ -97,6 +97,15 @@ class Country extends CActiveRecord
 	}
 
     static public function getArray($country){
-        return Help::decorate($country,'name');
+        $fakeTranslate = array(
+            Yii::t('main','Россия'),Yii::t('main','Германия'), Yii::t('main','Австрия'), Yii::t('main','Швейцария')
+        );
+        $result = array();
+        if(is_array($country)){
+            foreach($country as $item){
+                $result[$item->id] = Yii::t('main',$item->name);
+            }
+        }
+        return $result;
     }
 }

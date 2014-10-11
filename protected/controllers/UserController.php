@@ -104,7 +104,7 @@ class UserController extends BaseController
 
         switch ($this->action->id) {
             case 'login':
-                $this->addBreadcrumb(array('name' => 'Вход'));
+                $this->addBreadcrumb(array('name' => Yii::t('main','Вход')));
                 break;
         }
 

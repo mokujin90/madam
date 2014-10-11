@@ -2,7 +2,7 @@
 ?>
 <html class=" js no-touch localstorage svg">
 <head>
-    <title>Termin: регистрация</title>
+    <title>Termin: <?= Yii::t('main','регистрация')?> </title>
     <!-- / bootstrap [required] -->
     <link href="/css/bootstrap.css" media="all" rel="stylesheet" type="text/css">
     <!-- / theme file [required] -->
@@ -40,7 +40,7 @@
                             <div class="text-center">
                                 <a href="/user/register">
                                     <i class="icon-user"></i>
-                                    <strong>Register</strong>
+                                    <strong><?= Yii::t('main','Регистраци')?></strong>
                                 </a>
                             </div>
                         </div>

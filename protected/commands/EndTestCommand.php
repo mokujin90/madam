@@ -20,6 +20,7 @@ class EndTestCommand extends CConsoleCommand
             if(!$model->isTestPeriod())
                 continue; //уберем тех пользователей, которые оплатили лицензию в тот же день, что и зарегистрировались
             $model['license'] = Company2License::getCurrentLicense($model->id);
+            Yii::app()->language = $model->getLanguage();
             Help::sendMail(Yii::app()->params['adminEmail'], Yii::t('main', "У компании истекает тестовый срок"), 'endTest', $model, $this);
         }
     }

@@ -38,6 +38,7 @@ class EndNoticeCommand extends CConsoleCommand
                 }
                 if($email=='')
                     continue;//только на email'ы отправляем
+                Yii::app()->language = $model->getLanguage();
                 Help::sendMail($email,$title , 'endNotice'.$notices['user'], $model,true);
             }
         }

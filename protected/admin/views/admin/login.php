@@ -5,7 +5,7 @@ $this->layout = false;
 <html class=" js no-touch localstorage svg">
 <head>
     <meta charset="utf-8">
-    <title>Sign in | Flatty - Flat Administration Template</title>
+        <title><?= Yii::t('main','Административная часть')?></title>
     <!-- / bootstrap [required] -->
     <link href="../css/bootstrap.css" media="all" rel="stylesheet" type="text/css">
     <!-- / theme file [required] -->
@@ -54,7 +54,7 @@ $this->layout = false;
                                 </div>
                             </div>
 
-                            <?php echo CHtml::submitButton('Login', array('class' => 'btn btn-block')); ?>
+                            <?php echo CHtml::submitButton(Yii::t('main','Войти'), array('class' => 'btn btn-block')); ?>
 
                             <?php echo CHtml::endForm() ?>
 

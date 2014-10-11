@@ -2,7 +2,7 @@
 /* @var $this CalendarController */
 Yii::app()->clientScript->registerScriptFile('/js/moment.min.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerScriptFile('/js/bootstrap-datetimepicker.js', CClientScript::POS_HEAD);
-Yii::app()->clientScript->registerScriptFile('/js/locales/bootstrap-datetimepicker.ru.js', CClientScript::POS_HEAD);
+Yii::app()->clientScript->registerScriptFile('/js/locales/bootstrap-datetimepicker.'.Language::getJSPrefix().'.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerCssFile('/css/bootstrap-datetimepicker.min.css');
 
 Yii::app()->clientScript->registerScriptFile('/js/jquery.maskedinput.min.js', CClientScript::POS_HEAD);

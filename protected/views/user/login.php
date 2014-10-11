@@ -6,7 +6,7 @@ $this->layout = 'sign';
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-4 col-sm-offset-4">
-                            <h1 class="text-center title">Sign in</h1>
+                            <h1 class="text-center title"><?= Yii::t('main','Авторизация')?></h1>
 
 
                             <?php
@@ -20,13 +20,13 @@ $this->layout = 'sign';
                             )); ?>
                             <div class="form-group">
                                 <div class="controls with-icon-over-input">
-                                    <?php echo $form->textField($model,'username',array('placeholder' =>'E-mail', 'class' => 'form-control')); ?>
+                                    <?php echo $form->textField($model,'username',array('placeholder' =>Yii::t('main','E-mail'), 'class' => 'form-control')); ?>
                                     <i class="icon-user text-muted"></i>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="controls with-icon-over-input">
-                                    <?php echo $form->passwordField($model,'password',array('placeholder' =>'Password', 'class' => 'form-control')); ?>
+                                    <?php echo $form->passwordField($model,'password',array('placeholder' =>Yii::t('main','Пароль'), 'class' => 'form-control')); ?>
                                     <i class="icon-lock text-muted"></i>
                                 </div>
                             </div>
@@ -34,11 +34,11 @@ $this->layout = 'sign';
                             <div class="checkbox">
                                 <label for="LoginForm_rememberMe">
                                     <?php echo $form->checkBox($model,'rememberMe'); ?>
-                                    Remember me
+                                    <?= Yii::t('main','Запомнить меня')?>
                                 </label>
                             </div>
 
-                            <?php echo CHtml::submitButton('Login', array('class' => 'btn btn-block')); ?>
+                            <?php echo CHtml::submitButton(Yii::t('main','Войти'), array('class' => 'btn btn-block')); ?>
 
                             <?php $this->endWidget(); ?>
 

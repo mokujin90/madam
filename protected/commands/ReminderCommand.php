@@ -17,14 +17,15 @@ class ReminderCommand extends CConsoleCommand
             $dateVal->modify("- {$item->alarm_time} hours");
             if ($dateStart < $dateVal && $dateVal < $dateEnd) {
                 $license = Company2License::getCurrentLicense($item->user->company_id);
+                Yii::app()->language = Company::model()->findByPk($item->user->company_id)->getLanguage();
                 if ($license->license->email_reminder) {
-                    Help::sendMail($item->getEmailField(), 'Напоминание о termin', 'reminder', $item, $this);
+                    Help::sendMail($item->getEmailField(), Yii::t('main','Напоминание о termin'), 'reminder', $item, $this);
                     $item->alarm_time = -1;
                     $item->save(false);
                     echo 'email success';
                 }
                 if ($license->license->sms_reminder) {
-                    $text = Yii::t('main', 'Не забывайте про назначенный termin! Через {hour} {hourText}', array('{hour}' => $request->alarm_time, '{hourText}' => Help::getNumEnding($request->alarm_time, array('час', 'часа', 'часов'))));
+                    $text = Yii::t('main', 'Не забывайте про назначенный termin! Через {hour} {hourText}', array('{hour}' => $item->alarm_time, '{hourText}' => Help::getNumEnding($item->alarm_time, array(Yii::t('main','час'), Yii::t('main','часа'), Yii::t('main','часов')))));
                     Help::sendSms($item->getPhoneField(), $text, $item);
                     $item->alarm_time = -1;
                     $item->save(false);

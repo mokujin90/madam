@@ -13,7 +13,6 @@ class BaseController extends CController
     public $pageCaption = '';
     public $pageIcon = 'cog';
 
-    const DEFAULT_LANG = 'de';
     public function init()
     {
         header('Content-Type: text/html; charset=utf-8');
@@ -34,14 +33,13 @@ class BaseController extends CController
     public function checkLanguage(){
 
         if(!Yii::app()->user->isGuest){
-            $this->company = Company::model()->with('lang')->findByPk($this->user->company_id);
-            $language = count($this->company['lang']) ? $this->company['lang']->prefix : Language::$DEFAULT;
+            $this->company = Company::model()->findByPk($this->user->company_id);
+            $language = $this->company->getLanguage();
         }
         else{
-            $language=self::DEFAULT_LANG;
+            $language=Language::$DEFAULT;
         }
         Yii::app()->language = $language;
-
         new JsTrans('main',$language);
     }
     public function filters()
