@@ -48,10 +48,25 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'value' => '$data["license"]->base_lvl==null ? Yii::t("main","Индивидуальная") : $data["license"]->base_lvl',
         ),
         array(
+            'header' => Yii::t("main", "Работники"),
+            'type' =>'raw',
+            'value' => 'Company2License::getLicenseBycompany($data["company"]->id)->employee_upgrade - Company2License::getCurrentLicense($data["company"]->id)->employee_upgrade ',
+        ),
+        array(
+            'header' => "SMS",
+            'type' =>'raw',
+            'value' => 'Company2License::getLicenseBycompany($data["company"]->id)->sms_upgrade - Company2License::getCurrentLicense($data["company"]->id)->sms_upgrade ',
+        ),
+        array(
             'type' => 'raw',
             'value' => '$data["company"]->no_expiration==0 ? ( $data["license"]->price==0 ?
                         CHtml::link("<button type=\"button\"  class=\"btn btn-info\">".Yii::t("main","Установить цену")."</button>",array("adminLicense/setPrice","id" => $data["license"]->id))
                          : CHtml::link("<button type=\"button\" class=\"btn btn-primary\">".Yii::t("main","Оплатить")."</button>",array("adminCompany/payment","id" => $data->id)) ) : ""',
+        ),
+        array(
+            'type' => 'raw',
+            'value' => '$data["license"]->price > 0 ?
+                CHtml::link("<button type=\"button\" value=\"1\" name=\"save\" class=\"btn btn-success\">".Yii::t("main","Подтвердить")."</button>",array("adminCompany/approve","id" => $data->id)) : ""',
         ),
         array(
             'type' => 'raw',
