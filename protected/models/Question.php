@@ -139,7 +139,9 @@ class Question extends CActiveRecord
             $criteria->order='id ASC';
             // сначала попробуем найти элемент на который не ссылается хотя бы один из вопросов
             $allQuestions = $this->find($criteria);
-            $resultId = $allQuestions->id;
+            if($allQuestions){
+                $resultId = $allQuestions->id;
+            }
         }
         else{
             $criteria = new CDbCriteria();

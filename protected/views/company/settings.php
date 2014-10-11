@@ -30,7 +30,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
                     <?=CHtml::dropDownList('Company[booking_deadline]',$model->booking_deadline,Company::$bookingDeadline,array('class'=>"form-control"))?>
                 </div>
                 <div class="col-xs-2">
-                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="left" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
+                    <div class="btn has-popover" data-content="<?= Yii::t('main', 'Ограничение срока подачи заявки для клиента(при заказе через виджет)')?>" data-placement="left" data-original-title="" title=""><i class="icon-question"></i></div>
                 </div>
             </div>
             <div class="form-group">
@@ -39,7 +39,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
                     <?=CHtml::dropDownList('Company[booking_interval]',$model->booking_interval,Company::$bookingInterval,array('class'=>"form-control"))?>
                 </div>
                 <div class="col-xs-2">
-                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="left" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
+                    <div class="btn has-popover" data-content="<?= Yii::t('main', 'Ограничение интервала бронирования для клиента(при заказе через виджет)')?>" data-placement="left" data-original-title="" title=""><i class="icon-question"></i></div>
                 </div>
             </div>
             <?if(Company2License::enableMailConfirm()):?>
@@ -52,7 +52,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
                         </label>
                     </div>
                     <div class="col-xs-2">
-                        <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="left" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
+                        <div class="btn has-popover" data-content="<?= Yii::t('main', 'При предварительном бронировании, клиенту и работнику будут приходит соответствующие уведомления (SMS/Email - в зависимости от лицензии). Для подтверждения термина, необходимо будет перейти по ссылке в письме, или в календаре работника подтвердить новую бронь. (неподтвержеднные брони выделяются желтым цветом)')?>" data-placement="left" data-original-title="" title=""><i class="icon-question"></i></div>
                     </div>
                 </div>
             <?endif?>
@@ -66,7 +66,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
                     </label>
                 </div>
                 <div class="col-xs-2">
-                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="left" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
+                    <div class="btn has-popover" data-content="<?= Yii::t('main', 'Отправляет Email уведомление, о создании нового термина (при заказе через виджет), на почту клиента, работника + на Email для уведомлений (раздел Настройки)')?>" data-placement="left" data-original-title="" title=""><i class="icon-question"></i></div>
                 </div>
             </div>
             <div class="form-group">
@@ -76,7 +76,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
                     <?php echo $form->error($model,'mail_notice_address'); ?>
                 </div>
                 <div class="col-xs-2">
-                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="left" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
+                    <div class="btn has-popover" data-content="<?= Yii::t('main', 'Дополнительный Email для уведомлений о заказе терминов')?>" data-placement="left" data-original-title="" title=""><i class="icon-question"></i></div>
                 </div>
             </div>
             <hr>
@@ -90,7 +90,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
                     </label>
                 </div>
                 <div class="col-xs-2">
-                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="left" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
+                    <div class="btn has-popover" data-content="<?= Yii::t('main', 'Отправляет SMS уведомление, о создании нового термина (при заказе через виджет), на телефон клиента + на телефон для уведомлений (раздел Настройки)')?>" data-placement="left" data-original-title="" title=""><i class="icon-question"></i></div>
                 </div>
             </div>
             <div class="form-group">
@@ -100,7 +100,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
                     <?php echo $form->error($model,'sms_notice_phone'); ?>
                 </div>
                 <div class="col-xs-2">
-                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="left" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
+                    <div class="btn has-popover" data-content="<?= Yii::t('main', 'Дополнительный телефон для уведомлений о заказе терминов')?>" data-placement="left" data-original-title="" title=""><i class="icon-question"></i></div>
                 </div>
             </div>
             <hr>
@@ -112,7 +112,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
                     <?php echo $form->error($model,'hello_text'); ?>
                 </div>
                 <div class="col-xs-2">
-                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="left" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
+                    <div class="btn has-popover" data-content="<?= Yii::t('main', 'Отображается в виджите на первом этапе заказа термина')?>" data-placement="left" data-original-title="" title=""><i class="icon-question"></i></div>
                 </div>
             </div>
             <div class="form-group">
@@ -122,7 +122,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
                     <?php echo $form->error($model,'logo'); ?>
                 </div>
                 <div class="col-xs-2">
-                    <div class="btn has-popover" data-content="The time frame for Appointment Manager determines at what time interval a schedule is divided at the internal representation in the Schedule Manager. Furthermore, the time scale sets the default length of an appointment, if no further information on the duration of the appointment are available. default: 30 minutes" data-placement="left" data-title="Time frame for Appointment Manager:" data-original-title="" title=""><i class="icon-question"></i></div>
+                    <div class="btn has-popover" data-content="<?= Yii::t('main', 'Логотип компании на странице виджета')?>" data-placement="left" data-original-title="" title=""><i class="icon-question"></i></div>
                 </div>
             </div>
             <div class="form-group logo-upload"><?$model->drawLogo()?></div>
@@ -138,11 +138,8 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
         </div>
         <div class="col-xs-12 col-lg-6">
             <span>
-                <h4><?= Yii::t('main','Онлайн-бронирование назначение')?></h4>
-                <?= Yii::t('main','Регистр онлайн-бронирования назначение ., принять общие настройки для вашего онлайн-бронирования назначения на какое
-                время диапазоны разблокирован для онлайн-бронирования назначения в Интернете, делают для
-                индивидуальному графику одного ( Настройка&gt; вкладка Параметры расписания: Включить для онлайн-бронирования назначения ).')?>
-
+                <h4><?= Yii::t('main','Настройки системы онлайн бронирования')?></h4>
+                <?= Yii::t('main','Набор настроек зависит от возможностей текущей системы. Здесь можно установить доступные интервалы для бронирования, настройки напоминаний по SMS и электронной почте. На вкладке "Интеграция" доступен код для внедрения системы бронирования на сторонние сайты.')?>
             </span>
         </div>
     </div>

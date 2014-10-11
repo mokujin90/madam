@@ -5412,3 +5412,6 @@ input.has-error {
 .company-info-wrap .col-xs-12{
     margin-bottom: 10px;
 }
+.visability-hidden{
+    visibility: hidden;
+}
