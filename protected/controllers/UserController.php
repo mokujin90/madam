@@ -73,8 +73,10 @@ class UserController extends BaseController
         if(isset($_POST['User']) && isset($_POST['Company'])){
             $user->attributes = $_POST['User'];
             $company->attributes = $_POST['Company'];
-
             $company->language_id = $country[$company->country_id]->language_id;
+            if($company->country_id==2){
+                $company->phone_code = "49";
+            }
             if($company->save()){
 
                 $user->is_owner = 1;
