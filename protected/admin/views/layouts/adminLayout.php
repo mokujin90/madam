@@ -36,19 +36,6 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#">
-                            <i class="icon-user"></i>
-                            Profile
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon-cog"></i>
-                            Settings
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
                         <a href="/admin/logout">
                             <i class="icon-signout"></i>
                             Sign out

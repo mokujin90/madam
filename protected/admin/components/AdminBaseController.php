@@ -8,8 +8,11 @@ class AdminBaseController extends BaseController
     public function init()
     {
         Yii::app()->setComponent('user', Yii::app()->adminUser);
-        $this->user = Root::model()->findByPk(Yii::app()->user->id);
-        Yii::app()->language = is_null($this->user->lang->prefix) ? 'de' : $this->user->lang->prefix;
+        if(!$this->user = Root::model()->findByPk(Yii::app()->user->id)){
+            Yii::app()->language = 'de';
+        } else {
+            Yii::app()->language = is_null($this->user->lang) ? 'de' : $this->user->lang->prefix;
+        }
     }
 
     public function filters()
