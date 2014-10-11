@@ -137,7 +137,7 @@ Yii::app()->clientScript->registerScript('modal', 'event.init()', CClientScript:
     <?if(!$model->isNewRecord):?>
         <button class="remove btn btn-danger" type="button"><?=Yii::t('main','Удалить')?></button>
         <?=CHtml::checkBox('event[is_block]',$model->is_block==1 ? true:false,array('value'=>1, 'uncheckValue'=>0,'id'=>'is_block_request'))?>
-        <?php echo CHtml::label('Заблокировано','is_block_request')?>
+        <?php echo CHtml::label(Yii::t('main','Заблокировано'),'is_block_request')?>
     <?endif;?>
 
     <?php $this->endWidget(); ?>

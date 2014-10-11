@@ -20,6 +20,7 @@
             <div class="box-content">
                 <div class="form-group">
                     <?foreach($question as $item):?>
+
                         <div class="question">
                             <div class="col-xs-12">
                                 <label class="control-label"><?=$item->text?></label>

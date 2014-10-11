@@ -22,22 +22,24 @@
         <div class="box-content">
             <div class="form-group">
                 <?foreach($question as $item):?>
-                    <div class="question">
-                        <div class="col-xs-12">
-                            <label class="control-label"><?=$item->text?></label>
+                    <?
+                        $result = array();
+                        foreach($item['answers'] as $id => $answer){
+                            if(isset($request['requestQuestions'][$id])){
+                                $result[] = $answer->text;
+                            }
+                        }
+                    ?>
+                    <?if(count($result)):?>
+                        <div class="question">
+                            <div class="col-xs-12">
+                                <label class="control-label"><?=$item->text?></label>
+                            </div>
+                            <div class="form-group">
+                                <?= implode(', ',$result)?>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <?
-                                $result = '';
-                                foreach($item['answers'] as $id => $answer){
-                                    if(isset($request['requestQuestions'][$id])){
-                                        $result .= $answer->text.", ";
-                                    }
-                                }
-                            echo $result=='' ? "-" :  substr($result, 0, strlen($result)-2);
-                            ?>
-                        </div>
-                    </div>
+                    <?endif;?>
                 <?endforeach?>
             </div>
         </div>

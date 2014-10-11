@@ -57,7 +57,7 @@ class UserController extends BaseController
         $this->showRegisterLink = false;
         $user = new User('signup');
         $company = new Company('signup');
-        $country = Country::model()->findAll();
+        $country = Country::model()->findAllByAttributes(array(),array('index'=>'id'));
 
         if(Yii::app()->request->isAjaxRequest )
         {
@@ -73,6 +73,8 @@ class UserController extends BaseController
         if(isset($_POST['User']) && isset($_POST['Company'])){
             $user->attributes = $_POST['User'];
             $company->attributes = $_POST['Company'];
+
+            $company->language_id = $country[$company->country_id]->language_id;
             if($company->save()){
 
                 $user->is_owner = 1;
