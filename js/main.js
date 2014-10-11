@@ -11,6 +11,12 @@ $( document ).ready(function() {
     employee.init();
 });
 
+function getLang(){
+    if(typeof lang =='undefined'){
+        return 'de';
+    }
+    return lang == 'en_US' ? 'en' : lang;
+}
 var calendarOnChange = false;
 var ajaxQuestionProcess = false;
 
@@ -198,7 +204,7 @@ event={
             pickDate: false,
             forceParse:false
         });*/
-        $(".datepicker-input-fb").datetimepicker({
+            $(".datepicker-input-fb").datetimepicker({
             pickTime: false,
             icons: {
                 time: "icon-time",
@@ -206,8 +212,8 @@ event={
                 up: "icon-arrow-up",
                 down: "icon-arrow-down"
             },
-            defaultDate: new Date(),
-            language: 'de'
+            weekStart: 1,
+            defaultDate: new Date()
         });
         $.mask.definitions['2'] = "[0-2]";
         $.mask.definitions['5'] = "[0-5]";
@@ -506,6 +512,7 @@ wizard={
 
 calendar = {
     init:function(){
+       
         $("#calendar-datepicker").on('change.dp', function(e) {
             calendar.refresh($("#calendar-datepicker").data("DateTimePicker").getDate().format('YYYY-MM-DD'));
         });

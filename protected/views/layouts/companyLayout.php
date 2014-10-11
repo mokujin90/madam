@@ -25,6 +25,7 @@
     <?Yii::app()->clientScript->registerScriptFile('/js/theme.js', CClientScript::POS_END);?>
     <?Yii::app()->clientScript->registerScriptFile('/js/jquery.jgrowl.min.js', CClientScript::POS_END);?>
     <?Yii::app()->clientScript->registerScriptFile('/js/main.js', CClientScript::POS_END);?>
+    <?Yii::app()->clientScript->registerScript('lang', 'lang="'.Yii::app()->language.'";', CClientScript::POS_END);?>
 </head>
 <body class="contrast-red main-nav-opened">
 <header>

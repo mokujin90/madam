@@ -169,6 +169,7 @@ class BaseController extends CController
         if( Yii::app()->request->isAjaxRequest ) {
             Yii::app()->clientScript->scriptMap['jquery.js'] = false;
             Yii::app()->clientScript->scriptMap['jquery-2.0.0.js'] = false;
+            Yii::app()->clientScript->scriptMap['jquery.min.js'] = false;
             Yii::app()->clientScript->scriptMap['anything.js'] = false;
         }
     }
