@@ -9,6 +9,7 @@ return array(
     'languages'=>array('en_US','de'),
     'fileTypes'=>array('php'),
     'overwrite'=>true,
+    'sort' => false,
     'exclude'=>array(
         '.git',
         'yiilite.php',

@@ -52,7 +52,7 @@ Yii::app()->clientScript->registerScript('init', 'company.init()', CClientScript
                         </label>
                     </div>
                     <div class="col-xs-2">
-                        <div class="btn has-popover" data-content="<?= Yii::t('main', 'При предварительном бронировании, клиенту и работнику будут приходит соответствующие уведомления (SMS/Email - в зависимости от лицензии). Для подтверждения термина, необходимо будет перейти по ссылке в письме, или в календаре работника подтвердить новую бронь. (неподтвержеднные брони выделяются желтым цветом)')?>" data-placement="left" data-original-title="" title=""><i class="icon-question"></i></div>
+                        <div class="btn has-popover" data-content="<?= Yii::t('main', 'При предварительном бронировании, клиенту и работнику будут приходит соответствующие уведомления (SMS/Email - в зависимости от лицензии). Для подтверждения термина, необходимо будет перейти по ссылке в письме, или в календаре работника подтвердить новую бронь. (неподтвержденные брони выделяются желтым цветом)')?>" data-placement="left" data-original-title="" title=""><i class="icon-question"></i></div>
                     </div>
                 </div>
             <?endif?>

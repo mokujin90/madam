@@ -6,6 +6,7 @@ return array(
     'languages'=>array('en_US','de'),
     'fileTypes' => array('js'),
     'overwrite' => true,
+    'sort' => false,
     'exclude' => array(
         '.git',
         '.svn',

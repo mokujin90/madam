@@ -349,7 +349,7 @@ If you are passing a path with a filename on the end, pass true as the second pa
         $sms->send_date = date(Help::DATETIME);
         $sms->text = $message;
         $sms->response_code = $response_code;
-        $sms->message_id = $response[1];
+        $sms->message_id = isset($response[1]) ? $response[1] : 0;
         $sms->save();
 
         return $response_code == 100;

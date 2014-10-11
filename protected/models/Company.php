@@ -142,7 +142,7 @@ class Company extends CActiveRecord
             'sms_notice_phone' => Yii::t('main', 'Номер мобильного телефона'),
             'hello_text' => Yii::t('main', 'Текст приветствия'),
             'select_timetable' => Yii::t('main', 'Выбор сроков для назначения бронирования'),
-            'no_expiration' => Yii::t('main', 'Бесконеченый лимит'),
+            'no_expiration' => Yii::t('main', 'Бесконечный лимит'),
             'phone_code' => Yii::t('main', 'Код телефона'),
         );
     }
