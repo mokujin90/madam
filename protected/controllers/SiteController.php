@@ -24,7 +24,7 @@ class SiteController extends BaseController
     public function actionPanel($status=null,$errors=''){
         $this->layout='simple';
 
-        $this->render('index',array('status'=>$status,'errorString'=>$errors));
+        $this->render('panel',array('status'=>$status,'errorString'=>$errors));
     }
 	/**
 	 * This is the default 'index' action that is invoked
@@ -32,16 +32,26 @@ class SiteController extends BaseController
 	 */
 	public function actionIndex()
 	{
-
-        //$this->layout = '//layouts/column1';
-
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
-		//$this->render('index');
-
-	    $this->redirect('user/login');
+        $this->layout = '//layouts/landing';
+        $this->render('index');
+        //$this->redirect('user/login');
     }
-
+    public function actionApport()
+    {
+        $this->layout = '//layouts/landing';
+        $this->render('apport');
+    }
+    public function actionPrice()
+    {
+        $this->layout = '//layouts/landing';
+        $stdLicense = License::getStandardLicense();
+        $this->render('price', array('stdLicense' => $stdLicense));
+    }
+    public function actionMore()
+    {
+        $this->layout = '//layouts/landing';
+        $this->render('more');
+    }
 	/**
 	 * This is the action to handle external exceptions.
 	 */

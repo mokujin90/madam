@@ -46,7 +46,7 @@ class CalendarController extends BaseController
      * @param $user_id
      * @param null $copy
      */
-    public function actionEvent($id=null,$start=null,$end=null,$user_id, $copy = null,$edit=0){
+    public function actionEvent($user_id, $id=null,$start=null,$end=null, $copy = null,$edit=0){
         $this->blockJquery();
         if(empty($id)){//если создаем новую запись вставим из get'a дату начала и конца
             $model = new Request();

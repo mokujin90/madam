@@ -1,0 +1,560 @@
+@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,300);
+@import url(http://fonts.googleapis.com/css?family=Raleway+Dots);
+
+.btn {
+    min-width: 194px;
+    padding: 0 20px;
+    height: 37px;
+    border: none;
+    background: #222;
+    color: #C49F50;
+    margin: 3px auto;
+    display: block;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: bold;
+}
+h2 {
+    text-align: center;
+    font-family: 'Raleway Dots', cursive;
+    color: #A28C5C;
+    font-size: 45px;
+    margin: 20px 0;
+}
+.clear{
+    clear: both;
+}
+.gray-black-line{
+    border-top: 7px solid #F2F2F2;
+    border-bottom: 1px solid #000;
+}
+body{
+    color: #222;
+}
+header{
+    height: 143px;
+    border-bottom: 7px solid #bfbfbf;
+}
+header .header-wrapper{
+    padding-top: 20px;
+    width: 1000px;
+    margin: 0 auto;
+    position: relative;
+}
+header .logo-wrapper {
+    text-decoration: none;
+    text-transform: uppercase;
+    display: inline-block;
+    height: 123px;
+    background: url(/images/landing-icons/logo.png) no-repeat center 35px;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    position: absolute;
+    font-size: 24px;
+    left: 18px;
+    letter-spacing: 1px;
+    font-weight: 400;
+}
+header .logo-wrapper .dark {
+    color: #FFF;
+    background: #000;
+    padding: 0 6px;
+}
+header .logo-wrapper .light {
+    color: #000;
+    padding: 0 6px;
+}
+header .top-menu {
+    margin-left: 250px;
+    margin-top: 6px;
+    height: 20px;
+}
+
+header .top-menu a {
+    color: #000;
+    text-decoration: none;
+    font-size: 15px;
+    margin-right: 28px;
+    display: inline-block;
+}
+
+header .main-menu {
+    float: left;
+}
+
+header .user-menu {
+    float: right;
+}
+
+header .top-menu .user-menu a {
+    margin-right: 80px;
+}
+
+header .header-text {
+    font-family: 'Raleway Dots', cursive;
+    text-transform: uppercase;
+    color: #798087;
+    font-size: 20px;
+    margin-top: 70px;
+    text-align: center;
+}
+header .ios-app {
+    position: absolute;
+    height: 116px;
+    width: 141px;
+    background: url(/images/landing-icons/ios-circle.png);
+    right: 0;
+    top: 55px;
+    color: #C49F50;
+    font-family: 'Yanone Kaffeesatz', Arial, sans-serif;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 30px;
+    text-align: center;
+    padding-top: 25px;
+    font-weight: 300 !important;
+    line-height: 30px;
+    z-index: 10;
+}
+header .ios-app span{
+    font-size: 24px;
+    line-height: 20px;
+}
+header .ios-app b{
+    font-width: 400;
+}
+
+footer{
+    min-height: 243px;
+    background: #222;
+    color: #FFF;
+}
+footer .footer-wrapper{
+    padding-top: 23px;
+    width: 1000px;
+    margin: 0 auto;
+    position: relative;
+}
+footer .footer-menu {
+    overflow: hidden;
+    margin-left: 35px;
+    min-height: 167px;
+}
+footer .footer-menu a {
+    color: #FFF;
+    text-decoration: none;
+    font-size: 15px;
+}
+footer .footer-menu-item {
+    float: left;
+    margin-right: 32px;
+}
+footer .footer-submenu{
+    padding-left: 20px;
+    margin-top: 6px;
+}
+footer .footer-submenu a {
+    color: #C49F50;
+}
+footer .footer-data {
+    border-top: 1px solid #FFF;
+}
+footer .footer-data .copyright {
+    margin-top: 18px;
+    font-size: 13px;
+    float: left;
+}
+.social {
+    float: right;
+    margin-top: 14px;
+    margin-right: 13px;
+}
+.social a {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    margin-left: 7px;
+}
+.social a.twitter{
+    background: url(/images/landing-icons/dark-twitter-icon.png);
+}
+.social a.fb{
+    background: url(/images/landing-icons/dark-fb-icon.png);
+}
+.social a.skype{
+    background: url(/images/landing-icons/dark-skype-icon.png);
+}
+
+.content-wrapper{
+    width: 1000px;
+    margin: 0 auto;
+    position: relative;
+}
+.register-overlay{
+    height: 490px;
+    background: url(/images/register.png) center;
+}
+.register-wrapper .register-opacity-text {
+    position: absolute;
+    height: 355px;
+    width: 465px;
+    background: rgba(0, 0, 0, 0.2);
+    color: #FFF;
+    font-size: 17px;
+    line-height: 22px;
+    padding: 135px 45px 0 45px;
+}
+.register-wrapper .register-opacity-form {
+    position: absolute;
+    height: 400px;
+    width: 352px;
+    background: rgba(255, 255, 255, 0.6);
+    right: 0;
+    top: 28px;
+    padding: 30px 20px 0 20px;
+}
+.request-wrapper .form-input,
+.register-wrapper .register-opacity-form .form-input {
+    height: 37px;
+    width: 330px;
+    margin: 0;
+    border: 1px solid #A8A8A8;
+    padding: 0 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.register-wrapper .register-about {
+    margin-top: 7px;
+}
+.register-wrapper .register-about-text {
+    font-size: 15px;
+}
+.register-wrapper .register-about-item {
+    margin-top: 40px;
+    font-size: 13px;
+    padding-left: 50px;
+}
+.register-wrapper .register-about-item.test-icon {
+    background: url(/images/landing-icons/test-period-icon.png) no-repeat 3px 0;
+    min-height: 34px;
+}
+.register-wrapper .register-about-item.user-icon {
+    background: url(/images/landing-icons/user-icon.png) no-repeat 5px 0;
+    min-height: 42px;
+}
+.about-wrapper {
+    margin-top: 42px;
+    overflow: hidden;
+}
+.about-wrapper .about-item {
+    float: left;
+    width: 230px;
+    padding-left: 75px;
+    margin-right: 26px;
+}
+.about-wrapper .about-item-title {
+    font-size: 23px;
+    margin-top: 8px;
+}
+.about-wrapper .about-item-text {
+    font-size: 12px;
+    margin-top: 24px;
+    line-height: 16px;
+    color: #798087;
+}
+.about-wrapper .about-item.global {
+    background: url(/images/landing-icons/global-icon.png) no-repeat 3px 3px;
+}
+.about-wrapper .about-item.phone {
+    background: url(/images/landing-icons/mobile-icon.png) no-repeat 21px 0;
+}
+.about-wrapper .about-item.comm {
+    background: url(/images/landing-icons/comm-icon.png) no-repeat 1px 0;
+    margin-right: 0;
+    margin-left: 19px;
+}
+.stats-wrapper {
+    margin-top: 80px;
+}
+.stats-wrapper .stats-row {
+    font-size: 21px;
+    line-height: 35px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+.stats-wrapper .stats-row b {
+    font-size: 35px;
+}
+.stats-wrapper .stats-row span {
+    float: left;
+}
+.stats-wrapper .stats-row .first-cell{
+    width: 525px;
+}
+.index-slider-wrapper {
+    margin-top: 63px;
+}
+.index-slider-wrapper .bx-wrapper img{
+    width: 1000px;
+    height: 458px;
+}
+.comment-wrapper .bx-wrapper .bx-viewport,
+.index-slider-wrapper .bx-wrapper .bx-viewport{
+    border: 0;
+    left: 0;
+    background: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.index-slider-wrapper .bx-wrapper .bx-next{
+    background: url(/images/landing-icons/index-slider-right.png) no-repeat;
+    width: 46px;
+    height: 109px;
+    margin-top: -40px;
+    right: 0;
+}
+.index-slider-wrapper .bx-wrapper .bx-prev{
+    background: url(/images/landing-icons/index-slider-left.png) no-repeat;
+    width: 46px;
+    height: 109px;
+    margin-top: -40px;
+    left: 0;
+}
+.index-slider-wrapper .bx-wrapper .bx-prev:hover,
+.index-slider-wrapper .bx-wrapper .bx-next:hover{
+    background-position: 0 0;
+}
+
+.functions-wrapper {
+    margin-top: 70px;
+    text-align: center;
+}
+.functions-wrapper .function-item {
+    float: left;
+    width: 200px;
+    position: relative;
+    padding-left: 76px;
+    min-height: 210px;
+    margin-right: 60px;
+    text-align: left;
+}
+.functions-wrapper .function-item.last {
+    margin-right: 0;
+}
+.functions-wrapper .function-item-number {
+    width: 64px;
+    height: 60px;
+    margin-top: 11px;
+    margin-left: 4px;
+    font-size: 57px;
+    font-weight: bold;
+    text-align: right;
+    line-height: 57px;
+    color: #FFF;
+    background: url(/images/landing-icons/black-circle.png) no-repeat;
+    position: absolute;
+    left: 0;
+}
+.functions-wrapper .function-item-title {
+    font-size: 20px;
+    margin-top: 31px;
+}
+.functions-wrapper .function-item-text {
+    color: #798087;
+    font-size: 12px;
+    margin-top: 24px;
+    line-height: 16px;
+}
+.functions-wrapper .function-more {
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 20px;
+    color: #000;
+}
+.team-wrapper {
+    margin-top: 25px;
+    margin-bottom: 45px;
+    overflow: hidden;
+}
+.team-wrapper h2{
+    margin-bottom: 0;
+}
+.team-wrapper .sub-title {
+    text-align: center;
+    font-size: 15px;
+}
+.team-wrapper .team-item {
+    float: left;
+    min-height: 140px;
+    width: 182px;
+    position: relative;
+    padding-left: 150px;
+}
+.team-wrapper .team-item-avatar {
+    width: 120px;
+    height: 120px;
+    top: 8px;
+    left: 8px;
+    position: absolute;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: inset 0px 0px 20px 8px rgba(0,0,0,0.5);
+}
+.team-wrapper .team-item-avatar img{
+    width: 120px;
+    height: 120px;
+    position: relative;
+    z-index: -2;
+    border-radius: 50%;
+}
+.team-wrapper .team-item-name {
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 56px;
+}
+.team-wrapper .team-item-post {
+    font-size: 16px;
+    color: #798087;
+    margin-top: 5px;
+}
+.team-wrapper .team-item-social {
+    margin-top: 13px;
+}
+.team-wrapper .team-item-social a {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    margin-right: 7px;
+}
+.team-wrapper .team-item-social a.twitter{
+    background: url(/images/landing-icons/twitter-icon.png);
+}
+.team-wrapper .team-item-social a.fb{
+    background: url(/images/landing-icons/fb-icon.png);
+}
+.team-wrapper .team-item-social a.skype{
+    background: url(/images/landing-icons/skype-icon.png);
+}
+.comment-wrapper {
+    margin-top: 47px;
+}
+.comment-wrapper .comment-slide {
+    position: relative;
+    min-height: 120px;
+    padding-left: 160px;
+    padding-right: 100px;
+    padding-top: 26px;
+    margin-bottom: 20px;
+}
+.comment-wrapper .comment-slide img.avatar {
+    width: 85px;
+    height: 85px;
+    top: 0;
+    left: 45px;
+    position: absolute;
+    border-radius: 50%;
+}
+.comment-wrapper .comment-slide .text {
+    font-size: 12px;
+    line-height: 16px;
+}
+.comment-wrapper .comment-slide .name {
+    color: #798087;
+    font-size: 14px;
+    margin-top: 18px;
+}
+.comment-wrapper .comment-slide .post {
+    color: #798087;
+    font-size: 14px;
+}
+.comment-wrapper .bx-wrapper .bx-next {
+    background: url(/images/landing-icons/slider-right.png) no-repeat center;
+    width: 40px;
+    height: 60px;
+    margin-top: -30px;
+    right: 0;
+}
+.comment-wrapper .bx-wrapper .bx-prev{
+    background: url(/images/landing-icons/slider-left.png) no-repeat center;
+    width: 40px;
+    height: 60px;
+    margin-top: -30px;
+    left: 0;
+}
+.comment-wrapper .bx-wrapper .bx-prev:hover,
+.comment-wrapper .bx-wrapper .bx-next:hover{
+    background-position: center;
+}
+.comment-wrapper .bx-wrapper .bx-pager.bx-default-pager {
+    text-align: right;
+    width: 96%;
+    bottom: 0;
+}
+.comment-wrapper .bx-wrapper .bx-pager.bx-default-pager a{
+    text-align: center;
+}
+#price-page .comment-wrapper .bx-wrapper,
+#apport-page .comment-wrapper .bx-wrapper{
+    margin-bottom: 0;
+}
+.request-wrapper {
+    background: #F2F2F2;
+    padding-top: 25px;
+    margin-top: 20px;
+    padding-bottom: 50px;
+}
+.request-wrapper h2{
+    color: #222;
+}
+.request-wrapper .request-form {
+    width: 400px;
+    text-align: center;
+    margin: 0 auto;
+}
+.apport-wrapper {
+    margin-top: 40px;
+}
+.apport-wrapper .apport-image {
+    width: 1000px;
+    margin-bottom: 70px;
+}
+
+.price-wrapper{
+    margin-bottom: 40px;
+}
+.price-wrapper table {
+    width: 100%;
+    margin-bottom: 40px;
+}
+.price-wrapper table .params {
+    font-size: 18px;
+    padding-left: 30px;
+    width: 31%;
+}
+.price-wrapper table th{
+    width: 23%;
+}
+.price-wrapper table td h2{
+    font-size: 70px;
+    line-height: 60px;
+}
+.price-wrapper table td h3{
+    text-align: center;
+    font-family: 'Raleway Dots', cursive;
+    color: #A28C5C;
+    font-size: 30px;
+    margin: 20px 0;
+    line-height: 60px;
+}
+.price-wrapper table td{
+    border-left: 1px solid #c6c6c6;
+    border-right: 1px solid #c6c6c6;
+}
+.price-wrapper table td.params {
+    border-left: 0;
+}
+.price-wrapper p{
+    text-align: right;
+    font-size: 13px;
+    text-transform: uppercase;
+}
