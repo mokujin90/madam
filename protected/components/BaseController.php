@@ -13,6 +13,8 @@ class BaseController extends CController
     public $pageCaption = '';
     public $pageIcon = 'cog';
 
+    public $menuItem = '';//landing
+
     public function init()
     {
         header('Content-Type: text/html; charset=utf-8');
@@ -106,7 +108,29 @@ class BaseController extends CController
         }
         //$this->redirect('/');
     }
-
+    public function userUrlByRole()
+    {
+        if (Yii::app()->user->owner) {
+            return '/company';
+        } else {
+            return '/calendar/index/id/' . Yii::app()->user->id;
+        }
+    }
+    /**
+     * Сахар для ajax-валидации и закрытия приложения
+     * @param array $data
+     */
+    public function renderJSON($data)
+    {
+        header('Content-type: application/json');
+        echo CJSON::encode($data);
+        /*foreach ( Yii::app()->log->routes as $route ) {
+            if ( $route instanceof CWebLogRoute ) {
+                $route->enabled = false; // закрыть ведени всех логов
+            }
+        }*/
+        Yii::app()->end();
+    }
     public function getBreadcrumbs()
     {
         return array_merge(array(array('name' => 'Главная', 'url' => '/')), $this->_breadcrumbs);

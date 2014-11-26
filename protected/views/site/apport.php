@@ -44,6 +44,8 @@
         maxSlides: 1,
         slideWidth: 1000,
         slideMargin: 10,
-        useCSS:true
+        useCSS:true,
+        infiniteLoop: false,
+        hideControlOnEnd: true
     });
 </script>

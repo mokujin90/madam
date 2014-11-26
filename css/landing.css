@@ -1,5 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,300);
-@import url(http://fonts.googleapis.com/css?family=Raleway+Dots);
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,200);
 
 .btn {
     min-width: 194px;
@@ -14,15 +14,27 @@
     font-size: 15px;
     font-weight: bold;
 }
+.btn-a{
+    text-decoration: none;
+}
 h2 {
     text-align: center;
-    font-family: 'Raleway Dots', cursive;
+    font-family: 'Raleway', sans-serif;
     color: #A28C5C;
     font-size: 45px;
     margin: 20px 0;
+    font-weight: 200;
 }
 .clear{
     clear: both;
+}
+.hidden{
+    display: none;
+}
+.errorMessage {
+    color: #F00;
+    margin-bottom: 10px;
+    font-size: 15px;
 }
 .gray-black-line{
     border-top: 7px solid #F2F2F2;
@@ -76,7 +88,9 @@ header .top-menu a {
     margin-right: 28px;
     display: inline-block;
 }
-
+header .top-menu a.active {
+    color: #c49f50;
+}
 header .main-menu {
     float: left;
 }
@@ -90,12 +104,13 @@ header .top-menu .user-menu a {
 }
 
 header .header-text {
-    font-family: 'Raleway Dots', cursive;
+    font-family: 'Raleway', sans-serif;
     text-transform: uppercase;
     color: #798087;
     font-size: 20px;
     margin-top: 70px;
     text-align: center;
+    font-weight: 200;
 }
 header .ios-app {
     position: absolute;
@@ -212,8 +227,7 @@ footer .footer-data .copyright {
     top: 28px;
     padding: 30px 20px 0 20px;
 }
-.request-wrapper .form-input,
-.register-wrapper .register-opacity-form .form-input {
+.form-input {
     height: 37px;
     width: 330px;
     margin: 0;
@@ -540,11 +554,12 @@ footer .footer-data .copyright {
 }
 .price-wrapper table td h3{
     text-align: center;
-    font-family: 'Raleway Dots', cursive;
+    font-family: 'Raleway', sans-serif;
     color: #A28C5C;
     font-size: 30px;
     margin: 20px 0;
     line-height: 60px;
+    font-weight: 200;
 }
 .price-wrapper table td{
     border-left: 1px solid #c6c6c6;
@@ -557,4 +572,10 @@ footer .footer-data .copyright {
     text-align: right;
     font-size: 13px;
     text-transform: uppercase;
+}
+#login-form,
+#register-page form{
+    width: 400px;
+    text-align: center;
+    margin: 0 auto;
 }

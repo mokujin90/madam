@@ -178,13 +178,17 @@
         slideHeight: 480,
         slideMargin: 10,
         useCSS:true,
-        pager:false
+        pager:false,
+        infiniteLoop: false,
+        hideControlOnEnd: true
     });
     $('.comment-bxslider').bxSlider({
         minSlides: 1,
         maxSlides: 1,
         slideWidth: 1000,
         slideMargin: 10,
-        useCSS:true
+        useCSS:true,
+        infiniteLoop: false,
+        hideControlOnEnd: true
     });
 </script>

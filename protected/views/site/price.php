@@ -71,7 +71,7 @@
                 <?=getLicenseRow($stdLicense, $field, true)?>
             <?endforeach;?>
         </table>
-        <button class="btn">Подобрать индивидуальный тариф</button>
+        <a class="btn-a" href="<?=$this->createUrl(Yii::app()->user->isGuest ? 'user/register' : 'company/more')?>"><button class="btn">Подобрать индивидуальный тариф</button></a>
     </div>
 </div>
 <script>
@@ -80,6 +80,8 @@
         maxSlides: 1,
         slideWidth: 1000,
         slideMargin: 10,
-        useCSS:true
+        useCSS:true,
+        infiniteLoop: false,
+        hideControlOnEnd: true
     });
 </script>

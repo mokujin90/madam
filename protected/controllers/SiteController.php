@@ -2,7 +2,6 @@
 
 class SiteController extends BaseController
 {
-
     public function filters()
     {
         return array();
@@ -32,17 +31,20 @@ class SiteController extends BaseController
 	 */
 	public function actionIndex()
 	{
+        $this->menuItem = 'index';
         $this->layout = '//layouts/landing';
         $this->render('index');
         //$this->redirect('user/login');
     }
     public function actionApport()
     {
+        $this->menuItem = 'apport';
         $this->layout = '//layouts/landing';
         $this->render('apport');
     }
     public function actionPrice()
     {
+        $this->menuItem = 'price';
         $this->layout = '//layouts/landing';
         $stdLicense = License::getStandardLicense();
         $this->render('price', array('stdLicense' => $stdLicense));

@@ -29,13 +29,26 @@ class UserController extends BaseController
         }
 
         $model = new LoginForm;
+        $json = array('error' => '[]', 'status' => false, 'url' => $this->createUrl('/'));
+        if (Yii::app()->request->isAjaxRequest) {
+            $json['error'] = CActiveForm::validate($model);
+            if ($json['error'] == '[]') {
+                if ($model->validate() && $model->login()) {
+                    $json['url'] = $this->userUrlByRole();
+                    $json['status'] = true;
+                }
+            }
+            $this->renderJSON($json);
+            return;
+        }
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
             if ($model->validate() && $model->login()) {
                 $this->redirectByRole();
             }
         }
-        $this->render('login', array('model' => $model));
+        $this->layout = '//layouts/landing';
+        $this->render('/site/login', array('model' => $model));
     }
 
     public function actionNotice($id){
@@ -44,7 +57,8 @@ class UserController extends BaseController
             throw new CHttpException(404, Yii::t('main', 'Пользователь не найден'));
         }
         Help::sendMail($user->login, Yii::t('main', 'Подтверждение регистрации'), 'registerConfirm', $user->company);
-        $this->render('emailNotice');
+        $this->layout = '//layouts/landing';
+        $this->render('/site/emailNotice');
     }
 
     public function actionLogout()
@@ -63,7 +77,7 @@ class UserController extends BaseController
         {
             $user->attributes = $_POST['User'];
             $company->attributes = $_POST['Company'];
-            $isValidation = CActiveForm::validate($user,array('login'));
+            $isValidation = CActiveForm::validate($user,array('login', 'password', 'password_repeat'));
             $companyValidation = CActiveForm::validate($company);
             if($isValidation!='[]' || $companyValidation!='[]'){
                 echo $result = json_encode(array_merge(json_decode($isValidation, true),json_decode($companyValidation, true)));
@@ -95,7 +109,9 @@ class UserController extends BaseController
 
             }
         }
-        $this->render('register', array('user' => $user,'company'=>$company,'country'=>Country::model()->getArray($country)));
+        $this->layout = '//layouts/landing';
+        $this->menuItem = 'register';
+        $this->render('/site/register', array('user' => $user,'company'=>$company,'country'=>Country::model()->getArray($country)));
     }
 
 

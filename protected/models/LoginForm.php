@@ -36,8 +36,8 @@ class LoginForm extends CFormModel
     public function attributeLabels()
     {
         return array(
-            'username' => 'Логин',
-            'password' => 'Пароль',
+            'username' => Yii::t('main', 'Логин'),
+            'password' => Yii::t('main', 'Пароль'),
             'rememberMe' => 'Remember me next time',
         );
     }
@@ -52,9 +52,9 @@ class LoginForm extends CFormModel
             $this->_identity = new UserIdentity($this->username, $this->password);
             if (!$this->_identity->authenticate())
              if($this->_identity->errorCode == UserIdentity::ERROR_NEED_CONFIRM){
-                 $this->addError('password', 'Компания не подтверждена. Проверьте свой e-mail.');
+                 $this->addError('password', Yii::t('main', 'Компания не подтверждена. Проверьте свой e-mail.'));
              } else {
-                 $this->addError('password', 'Неверные логин или пароль.');
+                 $this->addError('password', Yii::t('main', 'Неверные логин или пароль.'));
              }
         }
     }
