@@ -2,21 +2,21 @@
     <div class="register-overlay">
         <div class="register-wrapper content-wrapper">
             <div class="register-opacity-text">
-                Lassen Sie Ihre Kunden Termine online buchen. Sparen Sie Zeit am Telefon und konzentrieren Sie sich auf Ihr Kerngeschäft.
+                Ermöglichen Sie Ihren Kunden, Termine online zu buchen. Sparen Sie Zeit am Telefon und konzentrieren Sie sich auf Ihr Kerngeschäft.
                 <br><br>
                 Erschließen Sie neue Wege, Neukunden zu gewinnen und binden Sie Ihre bestehende Kunden noch stärker an Sie.
             </div>
             <div class="register-opacity-form">
-                <form>
-                    <input type="text" value="Ввод текста пример" class="form-input">
-                    <input type="text" value="Ввод текста пример" class="form-input">
-                    <input type="text" value="Ввод текста пример" class="form-input">
-                    <input type="submit" class="btn" value="Регистрация">
+                <form action="user/register" method="post">
+                    <?=CHtml::textField('User[login]', '', array('class'=>"form-input", 'placeholder' =>Yii::t('main','Email')))?>
+                    <?=CHtml::passwordField('User[password]', '', array('class'=>"form-input", 'placeholder' =>Yii::t('main','Пароль')))?>
+                    <?=CHtml::passwordField('User[password_repeat]', '', array('class'=>"form-input", 'placeholder' =>Yii::t('main','Пароль повторно')))?>
+                    <input type="submit" name="shortForm" class="btn" value="Kostenlos anmelden">
                 </form>
                 <div class="register-about">
-                    <div class="register-about-text">Преимущества регистрации прямо сейчас:</div>
-                    <div class="register-about-item test-icon">Überzeugen Sie sich selber kostenlos während der 30-tage Test Periode</div>
-                    <div class="register-about-item user-icon">Alle Funktionen stehen während der Testphase im vollem Umfang zur Verfügung</div>
+                    <!--div class="register-about-text">Преимущества регистрации прямо сейчас:</div-->
+                    <div class="register-about-item test-icon">Überzeugen Sie sich selbst und kostenlos während der 30-tägigen Test Periode</div>
+                    <div class="register-about-item user-icon">Alle Funktionen stehen  Ihnen während der Testphase im vollem Umfang zur Verfügung</div>
                 </div>
             </div>
         </div>
@@ -36,18 +36,18 @@
         </div>
     </div>
     <div class="stats-wrapper content-wrapper">
-        <h2>Hemnogo chisel</h2>
+        <h2>Wichtige Zahlen</h2>
         <div class="stats-row">
             <span class="first-cell">bis <b>60%</b> Zeitersparnis durch wenige Telefonate</span>
-            <span><b>15</b> наград</span>
+            <span></span>
         </div>
         <div class="stats-row">
-            <span class="first-cell"><b>1 000</b> довольных клиентов</span>
-            <span>bis <b>30%</b> сокращение расходов</span>
+            <span class="first-cell"><b>95%</b> Personalkostenersparnis für die Terminvergabe</span>
+            <span></span>
         </div>
         <div class="stats-row">
-            <span class="first-cell"><b>10 000 000</b> секономлено денег</span>
-            <span>bis <b>50%</b> Zeitersparnis durch wenige Telefonate</span>
+            <span class="first-cell"><b>100%</b> Kundenzufriedenheit</span>
+            <span></span>
         </div>
     </div>
     <div class="index-slider-wrapper content-wrapper">
@@ -64,39 +64,33 @@
         <h2>Funktionen</h2>
         <div class="function-item">
             <div class="function-item-number">1</div>
-            <div class="function-item-title">Название функции</div>
-            <div class="function-item-text">Direkte Terminbuchung über Ihre Homepage und Facebook Widget.</div>
+            <div class="function-item-text">Direkte Terminbuchung über Ihre Homepage und Ihre Facebook Widget.</div>
         </div>
         <div class="function-item">
             <div class="function-item-number">2</div>
-            <div class="function-item-title">Название функции</div>
-            <div class="function-item-text">Direkte Terminbuchung über Ihre Homepage und Facebook Widget.</div>
+            <div class="function-item-text">SMS - und E-Mail - Bestätigung/Erinnerung für Ihre Kunden.</div>
         </div>
         <div class="function-item last">
             <div class="function-item-number">3</div>
-            <div class="function-item-title">Название функции</div>
-            <div class="function-item-text">Direkte Terminbuchung über Ihre Homepage und Facebook Widget.</div>
+            <div class="function-item-text">Kontroll Dialog - Terminanfragen werden in Abhängigkeit voneinander gestellt, sodass Terminwünsche optimal definiert werden.</div>
         </div>
         <div class="clear"></div>
         <div class="function-item">
             <div class="function-item-number">4</div>
-            <div class="function-item-title">Название функции</div>
-            <div class="function-item-text">Direkte Terminbuchung über Ihre Homepage und Facebook Widget.</div>
+            <div class="function-item-text">Optimiert für alle Smartphones und Tablets.</div>
         </div>
         <div class="function-item">
             <div class="function-item-number">5</div>
-            <div class="function-item-title">Название функции</div>
-            <div class="function-item-text">Direkte Terminbuchung über Ihre Homepage und Facebook Widget.</div>
+            <div class="function-item-text">Gruppentermine für Seminare und Veranstaltungen.</div>
         </div>
         <div class="function-item last">
             <div class="function-item-number">6</div>
-            <div class="function-item-title">Название функции</div>
-            <div class="function-item-text">Direkte Terminbuchung über Ihre Homepage und Facebook Widget.</div>
+            <div class="function-item-text">Soft Skills Verwaltung der Mitarbeiter. Termine werden automatisch an den Mitarbeiter zugewiesen, der für diese Terminart geeignet ist.</div>
         </div>
         <div class="clear"></div>
-        <a class="function-more" href="<?=$this->createUrl('site/more')?>">Mehr...</a>
+        <!--a class="function-more" href="<?=$this->createUrl('site/more')?>">Mehr...</a-->
     </div>
-    <hr class="gray-black-line">
+    <!--hr class="gray-black-line">
     <div class="team-wrapper content-wrapper">
         <h2>Unseres Team</h2>
         <div class="sub-title">ausgeblendet</div>
@@ -137,7 +131,7 @@
             </div>
         </div>
     </div>
-    <hr class="gray-black-line">
+    <hr class="gray-black-line"-->
     <div class="comment-wrapper content-wrapper">
         <h2>Kunderezensionen</h2>
         <div id="comment-slider">

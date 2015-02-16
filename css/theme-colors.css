@@ -23,7 +23,7 @@
   margin-right: auto; }
 
 .contrast-red header .navbar {
-  background-color: #f34541; }
+  background-color: #222; }
   .contrast-red header .navbar .toggle-nav {
     background-color: #f34541; }
     .contrast-red header .navbar .toggle-nav:active, .contrast-red header .navbar .toggle-nav.active, .contrast-red header .navbar .toggle-nav:hover {
@@ -72,13 +72,13 @@
     .contrast-red header .navbar > .nav > li.medium > a:hover, .contrast-red header .navbar > .nav > li.medium > a:active, .contrast-red header .navbar > .nav > li.medium > a:focus {
       background-color: #cb110d; }
   .contrast-red header .navbar > .nav > li.dark > a {
-    background-color: #c3100c; }
+    background-color: #222; }
     .contrast-red header .navbar > .nav > li.dark > a .label {
       color: #c3100c; }
     .contrast-red header .navbar > .nav > li.dark > a:hover, .contrast-red header .navbar > .nav > li.dark > a:active, .contrast-red header .navbar > .nav > li.dark > a:focus {
-      background-color: #b60f0b; }
+      background-color: #C49F50; }
   .contrast-red header .navbar .widget .dropdown-menu > li.widget-footer a:hover {
-    background-color: #f34541; }
+    background-color: #C49F50; }
 .contrast-red header .navbar .nav li .label {
   color: #f34541; }
 .contrast-red .nav .caret, .contrast-red .nav a:hover .caret {
@@ -88,13 +88,13 @@
   background-color: #f3e5e6;
   color: #f35551; }
 .contrast-red #main-nav .navigation > .nav > li > a.in [class^="icon-"], .contrast-red #main-nav .navigation > .nav > li > a.in [class*=" icon-"] {
-  color: #f34541; }
+    color: #C49F50; }
 .contrast-red #main-nav .navigation > .nav > li:hover > a [class^="icon-"], .contrast-red #main-nav .navigation > .nav > li:hover > a [class*=" icon-"], .contrast-red #main-nav .navigation > .nav > li:focus > a [class^="icon-"], .contrast-red #main-nav .navigation > .nav > li:focus > a [class*=" icon-"], .contrast-red #main-nav .navigation > .nav > li.active > a [class^="icon-"], .contrast-red #main-nav .navigation > .nav > li.active > a [class*=" icon-"] {
-  color: #f34541 !important; }
+  color: #C49F50 !important; }
 .contrast-red #main-nav .navigation > .nav > li .nav > li.active > a [class^="icon-"], .contrast-red #main-nav .navigation > .nav > li .nav > li.active > a [class*=" icon-"] {
-  color: #f34541; }
+  color: #C49F50; }
 .contrast-red #main-nav .navigation > .nav > li .nav > li > a:hover [class^="icon-"], .contrast-red #main-nav .navigation > .nav > li .nav > li > a:hover [class*=" icon-"], .contrast-red #main-nav .navigation > .nav > li .nav > li > a:focus [class^="icon-"], .contrast-red #main-nav .navigation > .nav > li .nav > li > a:focus [class*=" icon-"] {
-  color: #f34541; }
+  color: #C49F50; }
 .contrast-red .box .box-header.contrast-background .actions .btn-link:hover {
   color: #f34541 !important; }
 .contrast-red.contrast-background, .contrast-red .contrast-background {
@@ -143,9 +143,9 @@
 .contrast-red .breadcrumb li:first-child > a:hover {
   color: #f34541 !important; }
 .contrast-red h1 [class^="icon-"] {
-  color: #f34541; }
+  color: #C49F50; }
 .contrast-red .dropdown-menu > .active > a, .contrast-red .dropdown-menu > .active > a:hover, .contrast-red .dropdown-menu > .active > a:focus, .contrast-red .dropdown-menu > li > a:hover, .contrast-red .dropdown-menu > li > a:focus, .contrast-red .dropdown-submenu:hover > a, .contrast-red .dropdown-submenu:focus > a {
-  background-color: #f34541 !important; }
+  background-color: #C49F50 !important; }
 .contrast-red .box .box-header .actions .btn-link:hover {
   color: #f34541; }
 .contrast-red .fuelux .wizard ul li.active {

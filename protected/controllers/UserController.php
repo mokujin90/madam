@@ -53,6 +53,7 @@ class UserController extends BaseController
 
     public function actionNotice($id){
         $user = User::model()->findByPk($id);
+        $this->showFooterRegister = true;
         if (!$user) {
             throw new CHttpException(404, Yii::t('main', 'Пользователь не найден'));
         }
@@ -108,6 +109,8 @@ class UserController extends BaseController
                 }
 
             }
+        } elseif(isset($_POST['User']) && isset($_POST['shortForm'])) {
+            $user->attributes = $_POST['User'];
         }
         $this->layout = '//layouts/landing';
         $this->menuItem = 'register';

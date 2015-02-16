@@ -12,8 +12,8 @@ class BaseController extends CController
     public $mainMenuActiveId;
     public $pageCaption = '';
     public $pageIcon = 'cog';
-
     public $menuItem = '';//landing
+    public $showFooterRegister = false;
 
     public function init()
     {

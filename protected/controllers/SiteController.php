@@ -2,6 +2,7 @@
 
 class SiteController extends BaseController
 {
+
     public function filters()
     {
         return array();
@@ -31,6 +32,7 @@ class SiteController extends BaseController
 	 */
 	public function actionIndex()
 	{
+        $this->showFooterRegister = true;
         $this->menuItem = 'index';
         $this->layout = '//layouts/landing';
         $this->render('index');
@@ -38,12 +40,14 @@ class SiteController extends BaseController
     }
     public function actionApport()
     {
+        $this->showFooterRegister = true;
         $this->menuItem = 'apport';
         $this->layout = '//layouts/landing';
         $this->render('apport');
     }
     public function actionPrice()
     {
+        $this->showFooterRegister = true;
         $this->menuItem = 'price';
         $this->layout = '//layouts/landing';
         $stdLicense = License::getStandardLicense();
@@ -51,6 +55,7 @@ class SiteController extends BaseController
     }
     public function actionMore()
     {
+        $this->showFooterRegister = true;
         $this->layout = '//layouts/landing';
         $this->render('more');
     }

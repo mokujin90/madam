@@ -368,4 +368,8 @@ If you are passing a path with a filename on the end, pass true as the second pa
         $response_code_arr[90] = "sending SMS not possible";
         $response_code_arr[100] = "SMS sent successfully.";*/
     }
+    public static function error($model, $field)
+    {
+        return '<div class="errorMessage" id="' . get_class($model) . '_' . $field . '_em_" style="display: none;"></div>';
+    }
 }

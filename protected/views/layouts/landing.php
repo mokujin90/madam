@@ -22,17 +22,17 @@
 <body>
     <header>
         <div class="header-wrapper">
-            <a href="/" class="logo-wrapper"><span class="dark">termix</span><span class="light">expert</span> </a>
+            <a href="/" class="logo-wrapper"><span class="dark">termin</span><span class="light">expert</span> </a>
             <div class="top-menu">
                 <div class="main-menu">
-                    <?=CHtml::link('Главная', $this->createUrl('site/index'), array('class' => $this->menuItem == 'index' ? 'active' : ''))?>
-                    <?=CHtml::link('Цены', $this->createUrl('site/price'), array('class' => $this->menuItem == 'price' ? 'active' : ''))?>
-                    <?=CHtml::link('Направления', $this->createUrl('site/apport'), array('class' => $this->menuItem == 'apport' ? 'active' : ''))?>
+                    <?=CHtml::link('Home', $this->createUrl('site/index'), array('class' => $this->menuItem == 'index' ? 'active' : ''))?>
+                    <?=CHtml::link('Preise', $this->createUrl('site/price'), array('class' => $this->menuItem == 'price' ? 'active' : ''))?>
+                    <?=CHtml::link('Anwendungsbeispiele', $this->createUrl('site/apport'), array('class' => $this->menuItem == 'apport' ? 'active' : ''))?>
                 </div>
                 <div class="user-menu">
                     <?if(Yii::app()->user->isGuest):?>
-                        <?=CHtml::link('Вход','#auth-content',array('class'=>'auth-fancy'))?>
-                        <?=CHtml::link('Регистрация', $this->createUrl('user/register'), array('class' => $this->menuItem == 'register' ? 'active' : ''))?>
+                        <?=CHtml::link('Login','#auth-content',array('class'=>'auth-fancy'))?>
+                        <?=CHtml::link('Anmeldung', $this->createUrl('user/register'), array('class' => $this->menuItem == 'register' ? 'active' : ''))?>
                     <?else:?>
                         <?=CHtml::link('Управление', $this->userUrlByRole())?>
                     <?endif?>
@@ -42,35 +42,37 @@
                 <b>IOS</b><br><span>application<br><b>free</b></span>
             </a>
             <!--div class="header-text">Онлайн бронирование для вашего бизнеса</div-->
-            <div class="header-text">Book online for your business</div>
+            <div class="header-text">Terminverwalung für Ihr Unternehmen</div>
         </div>
     </header>
     <div class="content">
         <?php echo $content; ?>
     </div>
+    <?if($this->showFooterRegister):?>
     <div class="request-wrapper">
         <div class="content-wrapper">
-            <h2>Cdelaite zayavky</h2>
-            <form class="request-form">
-                <input type="text" value="Ввод текста пример" class="form-input">
-                <input type="text" value="Ввод текста пример" class="form-input">
-                <input type="text" value="Ввод текста пример" class="form-input">
-                <input type="submit" class="btn" value="Регистрация">
+            <h2>Anfragen</h2>
+            <form class="request-form" action="user/register" method="post">
+                <?=CHtml::textField('User[login]', '', array('class'=>"form-input", 'placeholder' =>Yii::t('main','Email')))?>
+                <?=CHtml::passwordField('User[password]', '', array('class'=>"form-input", 'placeholder' =>Yii::t('main','Пароль')))?>
+                <?=CHtml::passwordField('User[password_repeat]', '', array('class'=>"form-input", 'placeholder' =>Yii::t('main','Пароль повторно')))?>
+                <input type="submit" name="shortForm" class="btn" value="Kostenlos anmelden">
             </form>
         </div>
     </div>
+    <?endif?>
     <footer>
         <div class="footer-wrapper">
 
             <div class="footer-menu">
                 <div class="footer-menu-item">
-                    <?=CHtml::link('Главная', $this->createUrl('site/index'), array('class' => $this->menuItem == 'index' ? 'active' : ''))?>
+                    <?=CHtml::link('Home', $this->createUrl('site/index'), array('class' => $this->menuItem == 'index' ? 'active' : ''))?>
                 </div>
                 <div class="footer-menu-item">
-                    <?=CHtml::link('Цены', $this->createUrl('site/price'), array('class' => $this->menuItem == 'price' ? 'active' : ''))?>
+                    <?=CHtml::link('Preise', $this->createUrl('site/price'), array('class' => $this->menuItem == 'price' ? 'active' : ''))?>
                 </div>
                 <div class="footer-menu-item">
-                    <?=CHtml::link('Направления', $this->createUrl('site/apport'), array('class' => $this->menuItem == 'apport' ? 'active' : ''))?>
+                    <?=CHtml::link('Anwendungsbeispiele', $this->createUrl('site/apport'), array('class' => $this->menuItem == 'apport' ? 'active' : ''))?>
                     <ul class="footer-submenu">
                         <li><a href="#">Цены</a></li>
                         <li><a href="#">Цены</a></li>
@@ -110,7 +112,7 @@
         </div>
         <div class="data">
             <?php echo
-            CHtml::ajaxSubmitButton('Войти',CHtml::normalizeUrl(array('user/login')),
+            CHtml::ajaxSubmitButton('Login',CHtml::normalizeUrl(array('user/login')),
                 array(
                     'dataType'=>'json',
                     'type'=>'post',

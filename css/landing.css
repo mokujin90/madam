@@ -57,8 +57,8 @@ header .logo-wrapper {
     text-decoration: none;
     text-transform: uppercase;
     display: inline-block;
-    height: 123px;
-    background: url(/images/landing-icons/logo.png) no-repeat center 35px;
+    /*height: 123px;
+    background: url(/images/landing-icons/logo.png) no-repeat center 35px;*/
     font-family: 'Yanone Kaffeesatz', sans-serif;
     position: absolute;
     font-size: 24px;
@@ -544,21 +544,22 @@ footer .footer-data .copyright {
     font-size: 18px;
     padding-left: 30px;
     width: 31%;
+    font-family: 'Raleway', sans-serif;
 }
 .price-wrapper table th{
     width: 23%;
 }
 .price-wrapper table td h2{
-    font-size: 70px;
-    line-height: 60px;
+    font-size: 40px;
+    line-height: 30px;
 }
 .price-wrapper table td h3{
     text-align: center;
     font-family: 'Raleway', sans-serif;
     color: #A28C5C;
-    font-size: 30px;
+    font-size: 26px;
     margin: 20px 0;
-    line-height: 60px;
+    line-height: 30px;
     font-weight: 200;
 }
 .price-wrapper table td{

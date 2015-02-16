@@ -15,7 +15,13 @@
                                 <tr>
                                     <td align="center" valign="top">
                                         <p style="margin: 1em 0;">
-                                            Для активации компании перейдите по ссылке: <?=CHtml::link('http://www.' . Yii::app()->params['host'] . '/site/CompanyConfirm/id/' . $request->id . '/hash/' . $request->getHash() . '/', 'http://www.' . Yii::app()->params['host'] . '/site/CompanyConfirm/id/' . $request->id . '/hash/' . $request->getHash() . '/')?>
+                                            Hallo,
+                                            <br>
+                                            Vielen Dank für Ihre Registrierung und willkommen bei Termin-Expert.de.
+                                            <br>
+                                            Zur Aktivierung Ihres Zugangs klicken Sie bitte diesen Link:
+                                            <br>
+                                            <?=CHtml::link('http://www.' . Yii::app()->params['host'] . '/site/CompanyConfirm/id/' . $request->id . '/hash/' . $request->getHash() . '/', 'http://www.' . Yii::app()->params['host'] . '/site/CompanyConfirm/id/' . $request->id . '/hash/' . $request->getHash() . '/')?>
                                         </p>
                                     </td>
                                 </tr>

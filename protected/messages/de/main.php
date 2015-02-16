@@ -1,6 +1,8 @@
 <?php
 
 return array (
+    "Компания не подтверждена. Проверьте свой e-mail." => 'Zugang noch nicht aktiviert! Bitte aktivieren Sie Ihren Zugang: Um den Zugang zu aktivieren, müssen Sie auf den Link in der Registrierungsmail klicken',
+    "Неверные логин или пароль." => 'Falsche E-mail oder Passwort',
     "Проверьте правильность заполнения юр. информации и адреса фирмы." => 'Bitte überprüfen Sie Firmennamen sowie Adresse und Bankverbindung.',
     "В процессе" => 'Während',
     "Решено" => 'Entschlossen',
